@@ -26,6 +26,8 @@ class ContentTypes extends Extras
 
     public function get( array $params = [], array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get(
                 uri: $this->uri,
              params: $params,
@@ -81,6 +83,8 @@ class ContentTypes extends Extras
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -109,6 +113,8 @@ class ContentTypes extends Extras
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -131,6 +137,8 @@ class ContentTypes extends Extras
 
     public function delete( array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get( uri: $this->uri, headers: $headers );
     }
 

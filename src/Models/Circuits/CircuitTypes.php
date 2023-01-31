@@ -20,14 +20,19 @@ class CircuitTypes extends Circuits
 
 /*
  *
- *
+ * @param integet $id ID of record to get.
  * @param array $params
  * @param array $headers
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
+    public function get(
+          int $id = 0,
+        array $params = [],
+        array $headers = []
+    ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
         return $this->http->get(
                 uri: $this->uri,
              params: $params,
@@ -43,6 +48,8 @@ class CircuitTypes extends Circuits
 /*
  *
  *
+ * @param string $name
+ * @param string $slug
  * @param array $data Data to send ibn request
  * @param array $params URI parameters
  * @param array $headers HTML request headers
@@ -50,11 +57,16 @@ class CircuitTypes extends Circuits
 */
 
     public function post(
-        array $data,
+       string $name,
+       string $slug,
+        array $data    = [],
         array $params  = [],
         array $headers = []
     ) : array
     {
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
@@ -71,6 +83,8 @@ class CircuitTypes extends Circuits
 /*
  *
  *
+ * @param string $name
+ * @param string $slug
  * @param array $data Data to send ibn request
  * @param array $params URI parameters
  * @param array $headers HTML request headers
@@ -78,11 +92,14 @@ class CircuitTypes extends Circuits
 */
 
     public function put(
-        array $data,
+          int $id = 0,
+        array $data    = [],
         array $params  = [],
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -99,6 +116,8 @@ class CircuitTypes extends Circuits
 /*
  *
  *
+ * @param string $name
+ * @param string $slug
  * @param array $data Data to send ibn request
  * @param array $params URI parameters
  * @param array $headers HTML request headers
@@ -106,11 +125,14 @@ class CircuitTypes extends Circuits
 */
 
     public function patch(
-        array $data,
+          int $id = 0,
+        array $data    = [],
         array $params  = [],
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -131,8 +153,10 @@ class CircuitTypes extends Circuits
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function delete( array $headers = [] ) : array
+    public function delete( int $id = 0, array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get( uri: $this->uri, headers: $headers );
     }
 

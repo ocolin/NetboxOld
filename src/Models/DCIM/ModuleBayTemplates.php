@@ -28,6 +28,8 @@ class ModuleBayTemplates extends DCIM
 
     public function get( array $params = [], array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get(
                 uri: $this->uri,
              params: $params,
@@ -55,6 +57,8 @@ class ModuleBayTemplates extends DCIM
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
@@ -83,6 +87,8 @@ class ModuleBayTemplates extends DCIM
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -111,6 +117,8 @@ class ModuleBayTemplates extends DCIM
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -133,6 +141,8 @@ class ModuleBayTemplates extends DCIM
 
     public function delete( array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get( uri: $this->uri, headers: $headers );
     }
 

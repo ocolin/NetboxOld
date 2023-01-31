@@ -27,6 +27,8 @@ class Providers extends Circuits
 
     public function get( array $params = [], array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get(
                 uri: $this->uri,
              params: $params,
@@ -82,6 +84,8 @@ class Providers extends Circuits
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -110,6 +114,8 @@ class Providers extends Circuits
         array $headers = []
     ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
@@ -132,6 +138,8 @@ class Providers extends Circuits
 
     public function delete( array $headers = [] ) : array
     {
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+
         return $this->http->get( uri: $this->uri, headers: $headers );
     }
 
