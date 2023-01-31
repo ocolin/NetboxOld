@@ -38,16 +38,16 @@ class CircuitTerminations extends Circuits
 */
 
     public function get(
-          int $circuit,
-       string $term_side,
+          #int $circuit,
+       #string $term_side,
           int $id = 0,
         array $params  = [],
         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/";
-        $params['circuit']   = $circuit;
-        $params['term_side'] = $term_side;
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        #$params['circuit']   = $circuit;
+        #$params['term_side'] = $term_side;
 
         return $this->http->get(
                 uri: $this->uri,
@@ -74,13 +74,12 @@ class CircuitTerminations extends Circuits
     public function post(
           int $circuit,
        string $term_side,
-          int $id = 0;
+          int $id = 0,
         array $data    = [],
         array $params  = [],
         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/";
         $data['circuit']   = $circuit;
         $data['term_side'] = $term_side;
 
@@ -117,7 +116,7 @@ class CircuitTerminations extends Circuits
         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/";
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
         $data['circuit']   = $circuit;
         $data['term_side'] = $term_side;
 
@@ -154,7 +153,7 @@ class CircuitTerminations extends Circuits
         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/";
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
         $data['circuit']   = $circuit;
         $data['term_side'] = $term_side;
 
@@ -180,7 +179,7 @@ class CircuitTerminations extends Circuits
 
     public function delete( int $id = 0, array $headers = [] ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/";
+        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
 
         return $this->http->get( uri: $this->uri, headers: $headers );
     }
