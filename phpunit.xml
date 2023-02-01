@@ -29,7 +29,8 @@
         <!-- <file>tests/models/ipam/testServices.php</file> -->
 
 
-        <file>tests/models/dcim/testSites.php</file>
+        <!-- <file>tests/models/dcim/testSites.php</file> -->
+        <file>tests/models/dcim/testRegions.php</file>
             
             
             
