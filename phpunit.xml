@@ -20,7 +20,7 @@
             <file>tests/models/ipam/testAggregates.php</file>
             <file>tests/models/ipam/testAsns.php</file>
             <file>tests/models/ipam/testRoles.php</file> -->
-            <file>tests/models/ipam/testDeviceTargets.php</file>
+            <file>tests/models/ipam/testRouteTargets.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

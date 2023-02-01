@@ -15,20 +15,25 @@ class RouteTargets extends IPAM
     }
 
 
-/* GET METHOD
+/* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Get an individual RouteTarget
+*
+* @param integer $id Numerical ID of RouteTarget record.
+* @param array   $params Optional GET parameters.
+* @param array   $headers Optional request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
+    public function getDetail( 
+          int $id, 
+        array $params  = [], 
+        array $headers = [] 
+    ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
 
         return $this->http->get(
                 uri: $this->uri,
@@ -39,125 +44,94 @@ class RouteTargets extends IPAM
 
 
 
-/* POST METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single RouteTarget.
+*
+* @param string $name Name of RouteTarget.
+* @param array  $data optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function post(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+        string $name,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
+        $data['name'] = $name;
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update RouteTarget
+* 
+* @param integer $id Numerical ID of RouteTarget to update.
+* @param string  $name Name of RouteTarget to update.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+           int $id,
+        string $name,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update RouteTarget value(s).
+*
+* @param integer $id Numerical ID of RouteTarget to update.
+* @param string  $name Name of RouteTarget to update.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+           int $id,
+        string $name,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }
