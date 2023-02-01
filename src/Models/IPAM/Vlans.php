@@ -15,149 +15,109 @@ class Vlans extends IPAM
     }
 
 
-/* GET METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single RIR.
+*
+* @param string $name Name of RIR.
+* @param string $slug 
+* @param array  $data optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function post(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+           int $group,
+           int $vid,
+        string $name,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
+        $data['group'] = $group;
+        $data['name']  = $name;
+        $data['vid']   = $vid;
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update RIR
+* 
+* @param integer $id Numerical ID of RIR to update.
+* @param string  $name Name of RIR to update.
+* @param string  $slug Slug of RIR to update.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+           int $id,
+           int $group,
+           int $vid,
+        string $name,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['group'] = $group;
+        $data['name']  = $name;
+        $data['vid']   = $vid;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update RIR value(s).
+*
+* @param integer $id Numerical ID of RIR to update.
+* @param string  $name Name of RIR to update.
+* @param string  $slug Slug of RIR to update.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+           int $id,
+           int $group,
+           int $vid,
+        string $name,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['group'] = $group;
+        $data['name']  = $name;
+        $data['vid']   = $vid;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }

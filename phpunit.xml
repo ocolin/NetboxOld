@@ -20,11 +20,13 @@
             <file>tests/models/ipam/testAggregates.php</file>
             <file>tests/models/ipam/testAsns.php</file>
             <file>tests/models/ipam/testRoles.php</file>
-            <file>tests/models/ipam/testRouteTargets.php</file> -->
+            <file>tests/models/ipam/testRouteTargets.php</file>
+            <file>tests/models/ipam/testVlanGroups.php</file>
+         -->
 
             
             <!-- <file>tests/models/ipam/testServices.php</file> -->
-            <file>tests/models/ipam/testVlanGroups.php</file>
+            <file>tests/models/ipam/testVlans.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testAsns extends testCore
+class testVlans extends testCore
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class testAsns extends testCore
 
     public function testOptions()
     {
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -44,10 +44,10 @@ class testAsns extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
-        $result = $o->getDetail( id: $asn->id );
+        $o = new Vlans();
+        $result = $o->getDetail( id: $vlan->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -60,7 +60,7 @@ class testAsns extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( id: $asn->id );
+        $this->deleteDetail( id: $vlan->id );
     } 
 
 
@@ -71,9 +71,9 @@ class testAsns extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -89,7 +89,7 @@ class testAsns extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $asn->id );
+        $this->deleteDetail( $vlan->id );
     }
  
 
@@ -100,8 +100,8 @@ class testAsns extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Asns();
-        $result = $this->postDetail( rir: $_ENV['rir']->id );
+        $o = new Vlans();
+        $result = $this->postDetail( vlg: $_ENV['vlg']->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -124,11 +124,11 @@ class testAsns extends testCore
 
     public function testPostList() :void
     {
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->postList(
             data: [
-                [ 'asn' => '1', 'rir' => $_ENV['rir']->id ],
-                [ 'asn' => '2', 'rir' => $_ENV['rir']->id ]
+                [ 'vid' => 1, 'group' => $_ENV['vlg']->id, 'name' => 'post1' ],
+                [ 'vid' => 2, 'group' => $_ENV['vlg']->id, 'name' => 'post2'  ]
             ]  
         );
 
@@ -142,9 +142,9 @@ class testAsns extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $asn )
+        foreach( $result['body'] AS $vlan )
         {
-            $this->deleteDetail( id: $asn->id );
+            $this->deleteDetail( id: $vlan->id );
         }
     }
 
@@ -156,14 +156,15 @@ class testAsns extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->putDetail( 
-                id: $asn->id, 
-               asn: 1, 
-               rir: $_ENV['rir']->id, 
-              data: [ 'description' => 'Updated description' ]
+               id: $vlan->id, 
+              vid: 1, 
+            group: $_ENV['vlg']->id, 
+             name: 'putVlan',
+             data: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -177,7 +178,7 @@ class testAsns extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $asn->id );
+        $this->deleteDetail( $vlan->id );
     }
 
 
@@ -185,18 +186,19 @@ class testAsns extends testCore
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
 
-    public function Asns() : void
+    public function testPutList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->putList(
             data: [
                 [ 
-                             'id' => $asn->id, 
-                            'asn' => 1,
-                            'rir' => $_ENV['rir']->id,
+                             'id' => $vlan->id, 
+                            'vid' => 1,
+                          'group' => $_ENV['vlg']->id,
+                           'name' => 'putVLan',
                     'description' => 'Updated description'
                 ]
             ]
@@ -213,7 +215,7 @@ class testAsns extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $asn->id );
+        $this->deleteDetail( $vlan->id );
     }
 
 
@@ -224,14 +226,15 @@ class testAsns extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->patchDetail(
-                id: $asn->id,
-               asn: 1,
-               rir: $_ENV['rir']->id,
-              data: [ 'description' => 'Patch ASN' ]
+                  id: $vlan->id,
+                 vid: 1,
+               group: $_ENV['vlg']->id,
+                name: 'PatchVlan',
+                data: [ 'description' => 'Patch Vlan' ]
         );
 
         $this->assertIsArray( $result );
@@ -246,7 +249,7 @@ class testAsns extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $asn->id );
+        $this->deleteDetail( $vlan->id );
     }
 
 
@@ -257,16 +260,16 @@ class testAsns extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->patchList(
             data: [
                 [ 
-                             'id' => $asn->id, 
-                            'asn' => 1,
-                            'rir' => $_ENV['rir']->id,
-                    'description' => 'Patch ASN' 
+                       'id' => $vlan->id, 
+                      'vid' => 1,
+                    'group' => $_ENV['vlg']->id,
+                     'name' => 'Patch Vlan' 
                 ]
             ]
         );
@@ -282,7 +285,7 @@ class testAsns extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $asn->id );
+        $this->deleteDetail( $vlan->id );
     }
 
 
@@ -294,10 +297,10 @@ class testAsns extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
         
-        $o = new Asns();
-        $result = $o->deleteDetail( id: $asn->id );
+        $o = new Vlans();
+        $result = $o->deleteDetail( id: $vlan->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -315,11 +318,11 @@ class testAsns extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
 
-        $o = new Asns();
+        $o = new Vlans();
         $result = $o->deleteList(
-            data: [[ 'id' => $asn->id ]]
+            data: [[ 'id' => $vlan->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -332,30 +335,31 @@ class testAsns extends testCore
 
 
 
-/* CREATE AN ASN
+/* CREATE AN VLAN
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $rir ) : array
+    public function postDetail( int $vlg ) : array
     {
-        $o = new Asns();
+        $o = new Vlans();
 
         return $o->postDetail( 
-               asn: 1,
-               rir: $rir,
-              data: [ 
-                    'description' => 'PHPUnit test ASNs',
-              ]
+            group: $vlg,
+              vid: 1,
+             name: 'phpunit-vlan-test',
+             data: [ 
+                    'description' => 'PHPUnit test VLAN',
+             ]
         );
     }
 
 
 
-/* DELETE AN ASN
+/* DELETE AN VLAN
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Asns();
+        $o = new Vlans();
 
         return $o->deleteDetail( id: $id  );
     }
@@ -368,12 +372,12 @@ class testAsns extends testCore
 /**
 * @beforeClass
 */
-    public static function setupRir()
+    public static function setupGroup()
     {
-        $o = new Rirs();
-        $_ENV['rir'] = $o->postDetail(
-            name: 'phptestunit_rir',
-            slug: 'phptestunit_rir'
+        $o = new VlanGroups();
+        $_ENV['vlg'] = $o->postDetail(
+            name: 'phptestunit_vlan_group',
+            slug: 'phptestunit_vlan_group'
         )['body'];
     }
 
@@ -385,10 +389,10 @@ class testAsns extends testCore
 /**
 * @afterClass
 */
-    public static function closeRIR()
+    public static function closeGroup()
     {
-        $o = new Rirs();
-        $o->deleteDetail( id: $_ENV['rir']->id );
-        unset( $_ENV['rir'] );
+        $o = new VlanGroups();
+        $o->deleteDetail( id: $_ENV['vlg']->id );
+        unset( $_ENV['vlg'] );
     }
 }
