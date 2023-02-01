@@ -8,20 +8,19 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testPrefixes extends testCore
+class testIpAddresses extends testCore
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
     public function testOptions()
     {
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -35,61 +34,62 @@ class testPrefixes extends testCore
         $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
-    
+
 
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-public function testGetDetail() : void
-{
-    // SETUP
-    $prefix = $this->postDetail()['body'];
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $prefix = $this->postDetail()['body'];
 
-    $o = new Prefixes();
-    $result = $o->getDetail( id: $prefix->id );
-    
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $o = new IpAddresses();
+        $result = $o->getDetail( id: $prefix->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
-    // CLEAN UP
-    $this->deleteDetail( $prefix->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $prefix->id );
+    }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-public function testGetList() : void
-{
-    // SETUP
-    $prefix = $this->postDetail()['body'];
+    public function testGetList() : void
+    {
+        // SETUP
+        $prefix = $this->postDetail()['body'];
 
-    $o = new Prefixes();
-    $result = $o->getList();
+        $o = new IpAddresses();
+        $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
-    $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
-     // CLEAN UP
-     $this->deleteDetail( $prefix->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $prefix->id );
+    }
+
 
 
 
@@ -98,7 +98,7 @@ public function testGetList() : void
 
     public function testPostDetail() : void
     {
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -116,18 +116,17 @@ public function testGetList() : void
     }
 
 
-
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
 
     public function testPostList() :void
     {
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->postList(
-          data: [
-            [ 'prefix' => '192.168.50.0/24', 'description' => 'aaa' ],
-            [ 'prefix' => '192.168.99.0/24', 'description' => 'bbb' ],
-          ]  
+        data: [
+            [ 'address' => '192.168.66.1/24', 'description' => 'aaa' ],
+            [ 'address' => '192.168.66.2/24', 'description' => 'bbb' ],
+        ]  
         );
 
         $this->assertIsArray( $result );
@@ -156,10 +155,10 @@ public function testGetList() : void
         // SETUP
         $prefix = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->putDetail( 
             id: $prefix->id, 
-            prefix: '192.168.1.0/24', 
+            address: '192.168.66.1/24', 
             data: [ 'description' => 'Updated description' ]
         );
         
@@ -188,12 +187,12 @@ public function testGetList() : void
         // SETUP
         $prefix = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->putList(
             data: [
                 [ 
-                    'id' => $prefix->id, 
-                    'prefix' => '192.168.1.0/24', 
+                    'id'   => $prefix->id, 
+                    'address' => '192.168.66.2/24',
                     'description' => 'Updated description'
                 ]
             ]
@@ -223,10 +222,10 @@ public function testGetList() : void
         // SETUP
         $prefix = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->patchDetail(
             id: $prefix->id,
-            prefix: '192.168.1.0/24',
+            address: '192.168.7.5/25',
             data: [ 'description' => 'zzz' ]
         );
 
@@ -253,15 +252,15 @@ public function testGetList() : void
     public function testPatchList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->patchList(
             data: [
                 [ 
-                             'id' => $prefix->id, 
-                         'prefix' => '192.168.1.0/24',
-                    'description' => 'yyy' 
+                         'id' => $ip->id, 
+                    'address' => '192.168.4.3/24',
+                'description' => 'patchRirs' 
                 ]
             ]
         );
@@ -277,7 +276,7 @@ public function testGetList() : void
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $prefix->id );
+        $this->deleteDetail( $ip->id );
     }
 
 
@@ -289,10 +288,10 @@ public function testGetList() : void
     public function testDeleteDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
         
-        $o = new Prefixes();
-        $result = $o->deleteDetail( id: $prefix->id );
+        $o = new IpAddresses();
+        $result = $o->deleteDetail( id: $ip->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -310,11 +309,11 @@ public function testGetList() : void
     public function testDeleteList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new IpAddresses();
         $result = $o->deleteList(
-            data: [[ 'id' => $prefix->id ]]
+            data: [[ 'id' => $ip->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -327,30 +326,29 @@ public function testGetList() : void
 
 
 
-/* CREATE A PREFIX
+/* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Prefixes();
+        $o = new IpAddresses();
 
         return $o->postDetail( 
-            prefix: '192.168.1.0/24',
+            address: '192.168.77.7/24',
             data: [ 
-                'description' => 'PHPUnit test post prefxes',
-                   'comments' => 'This is for testing, please delete'
+                'description' => 'PHPUnit test post IP Address',
             ]
         );
     }
 
 
 
-/* DELETE A PREFIX
+/* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Prefixes();
+        $o = new IpAddresses();
 
         return $o->deleteDetail( id: $id  );
     }

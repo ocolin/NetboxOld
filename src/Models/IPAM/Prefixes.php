@@ -26,8 +26,8 @@ class Prefixes extends IPAM
 /*
  * Get all Prefixes
  *
- * @param array $params
- * @param array $headers
+ * @param array $params URL parameters.
+ * @param array $headers Customer HTTP request headers.
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 

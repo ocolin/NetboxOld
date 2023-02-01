@@ -12,9 +12,9 @@
 >
     <testsuites>
         <testsuite name="Models">
-            <!-- <file>tests/models/circuits/testCircuitCircuits.php</file> -->
-            <!-- <file>tests/models/circuits/testCircuitTerminations.php</file> -->
-            <file>tests/models/ipam/testPrefixes.php</file>
+            <!-- <file>tests/models/ipam/testPrefixes.php</file> -->
+            <!-- <file>tests/models/ipam/testRirs.php</file> -->
+            <file>tests/models/ipam/testIpAddresses.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

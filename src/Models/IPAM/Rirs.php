@@ -15,134 +15,281 @@ class Rirs extends IPAM
     }
 
 
-/* GET METHOD
+/* GET METHOD LIST
 ---------------------------------------------------------------------------- */
 
 /*
+ * Get all RIRs
  *
- *
- * @param array $params
- * @param array $headers
+ * @param array $params URL parameters.
+ * @param array $headers Customer HTTP request headers.
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
+    public function getList( 
+        array $params  = [], 
+        array $headers = [] 
+    ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
 
         return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
+               uri: $this->uri,
+            params: $params,
+           headers: $headers
         );
     }
 
 
 
-/* POST METHOD
+/* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Get an individual RIR
+*
+* @param integer $id Numerical ID of RIR record.
+* @param array   $params Optional GET parameters.
+* @param array   $headers Optional request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function post(
+    public function getDetail( 
+        int $id, 
+        array $params  = [], 
+        array $headers = [] 
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+
+        return $this->http->get(
+               uri: $this->uri,
+            params: $params,
+           headers: $headers
+        );
+    }
+
+
+
+/* POST METHOD LIST
+---------------------------------------------------------------------------- */
+
+/*
+* Creat multiple RIRs at once.
+*
+* @param array $data An array of RIR arrays. Each sub array MUST have a 
+*  name and slug key. 
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function postList(
         array $data,
-        array $params  = [],
         array $headers = []
     ) : array
     {
         return $this->http->post(
-                uri: $this->uri,
-               body: $data,
-             params: $params,
-            headers: $headers
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
+        );
+    }
+
+/* POST METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/*
+* Create a single RIR.
+*
+* @param string $name Name of RIR.
+* @param string $slug 
+* @param array  $data optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function postDetail(
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
+    ) : array
+    {
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+
+        return $this->http->post(
+               uri: $this->uri,
+              body: $data,
+           headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update RIR
+* 
+* @param integer $id Numerical ID of RIR to update.
+* @param string  $name Name of RIR to update.
+* @param string  $slug Slug of RIR to update.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
+    public function putDetail(
+           int $id,
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+
+        return $this->http->put(
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
+        );
+    }
+
+
+
+/* PUT METHOD LIST
+---------------------------------------------------------------------------- */
+
+/*
+* Updte an array of RIRs.
+*
+* @param array $data List of RIRs to update.
+* @param array $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function putList(
         array $data,
-        array $params  = [],
+        array $headers = []
+   ) : array
+   {
+        return $this->http->put(
+               uri: $this->uri,
+              body: $data,
+           headers: $headers
+        );
+   }
+
+
+
+/* PATCH METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/*
+* Update RIR value(s).
+*
+* @param integer $id Numerical ID of RIR to update.
+* @param string  $name Name of RIR to update.
+* @param string  $slug Slug of RIR to update.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function patchDetail(
+          int $id,
+       string $name,
+       string $slug,
+        array $data    = [],
         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update a list of RIRs.
+*
+* @param array $data Array of RIRs to update.
+* @param array $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
+    public function patchList(
+        array $data    = [],
         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
         return $this->http->put(
-                uri: $this->uri,
-               body: $data,
-             params: $params,
-            headers: $headers
+             uri: $this->uri,
+            body: $data,
+         headers: $headers
         );
     }
 
 
 
-/* DELETE METHOD
+/* DELETE METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Delete an individual RIR.
+* 
+* @param integer $id A unique integer value identifying a RIR.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function delete( array $headers = [] ) : array
+    public function deleteDetail( int $id, array $headers = [] ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
 
-        return $this->http->get( uri: $this->uri, headers: $headers );
+        return $this->http->delete( uri: $this->uri, headers: $headers );
     }
+
+
+
+/* DELETE METHOD LIST
+---------------------------------------------------------------------------- */
+
+/*
+* Delete a list of RIRs.
+* 
+* @param array $data List of RIRs to delete. Each RIR must have an ID.
+* @param array $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function deleteList( 
+        array $data, 
+        array $headers = [] 
+    ) : array
+    {
+        return $this->http->delete( 
+             uri: $this->uri, 
+            body: $data, 
+         headers: $headers 
+        );
+    }
+
 
 
 
@@ -150,10 +297,10 @@ class Rirs extends IPAM
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* List details about API call.
+*
+* @param array $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function options( array $headers = [] ) : array

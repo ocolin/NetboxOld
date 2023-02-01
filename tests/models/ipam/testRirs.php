@@ -8,20 +8,19 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testPrefixes extends testCore
+class testRirs extends testCore
 {
     public function __construct()
     {
         parent::__construct();
     }
 
-
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
     public function testOptions()
     {
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -35,7 +34,8 @@ class testPrefixes extends testCore
         $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
-    
+
+
 
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
@@ -45,7 +45,7 @@ public function testGetDetail() : void
     // SETUP
     $prefix = $this->postDetail()['body'];
 
-    $o = new Prefixes();
+    $o = new Rirs();
     $result = $o->getDetail( id: $prefix->id );
     
     $this->assertIsArray( $result );
@@ -72,7 +72,7 @@ public function testGetList() : void
     // SETUP
     $prefix = $this->postDetail()['body'];
 
-    $o = new Prefixes();
+    $o = new Rirs();
     $result = $o->getList();
 
     $this->assertIsArray( $result );
@@ -98,7 +98,7 @@ public function testGetList() : void
 
     public function testPostDetail() : void
     {
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -122,12 +122,12 @@ public function testGetList() : void
 
     public function testPostList() :void
     {
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->postList(
-          data: [
-            [ 'prefix' => '192.168.50.0/24', 'description' => 'aaa' ],
-            [ 'prefix' => '192.168.99.0/24', 'description' => 'bbb' ],
-          ]  
+        data: [
+            [ 'name' => 'testRir1', 'slug' => 'aaa' ],
+            [ 'name' => 'testRir2', 'slug' => 'bbb' ],
+        ]  
         );
 
         $this->assertIsArray( $result );
@@ -156,10 +156,11 @@ public function testGetList() : void
         // SETUP
         $prefix = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->putDetail( 
             id: $prefix->id, 
-            prefix: '192.168.1.0/24', 
+            name: 'updateRir', 
+            slug: 'updateRir',
             data: [ 'description' => 'Updated description' ]
         );
         
@@ -188,12 +189,13 @@ public function testGetList() : void
         // SETUP
         $prefix = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->putList(
             data: [
                 [ 
-                    'id' => $prefix->id, 
-                    'prefix' => '192.168.1.0/24', 
+                    'id'   => $prefix->id, 
+                    'name' => 'putRir',
+                    'slug' => 'putRir',
                     'description' => 'Updated description'
                 ]
             ]
@@ -223,10 +225,11 @@ public function testGetList() : void
         // SETUP
         $prefix = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->patchDetail(
             id: $prefix->id,
-            prefix: '192.168.1.0/24',
+            name: 'patchRIR',
+            slug: 'patchRIR',
             data: [ 'description' => 'zzz' ]
         );
 
@@ -253,15 +256,16 @@ public function testGetList() : void
     public function testPatchList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $rir = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->patchList(
             data: [
                 [ 
-                             'id' => $prefix->id, 
-                         'prefix' => '192.168.1.0/24',
-                    'description' => 'yyy' 
+                        'id' => $rir->id, 
+                        'name' => 'patchRirs',
+                        'slug' => 'patchRirs',
+                'description' => 'patchRirs' 
                 ]
             ]
         );
@@ -277,7 +281,7 @@ public function testGetList() : void
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $prefix->id );
+        $this->deleteDetail( $rir->id );
     }
 
 
@@ -289,10 +293,10 @@ public function testGetList() : void
     public function testDeleteDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $rir = $this->postDetail()['body'];
         
-        $o = new Prefixes();
-        $result = $o->deleteDetail( id: $prefix->id );
+        $o = new Rirs();
+        $result = $o->deleteDetail( id: $rir->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -310,11 +314,11 @@ public function testGetList() : void
     public function testDeleteList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $rir = $this->postDetail()['body'];
 
-        $o = new Prefixes();
+        $o = new Rirs();
         $result = $o->deleteList(
-            data: [[ 'id' => $prefix->id ]]
+            data: [[ 'id' => $rir->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -326,32 +330,32 @@ public function testGetList() : void
     }
 
 
-
-/* CREATE A PREFIX
+/* CREATE A RIR
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Prefixes();
+        $o = new Rirs();
 
         return $o->postDetail( 
-            prefix: '192.168.1.0/24',
+            name: 'testRir',
+            slug: 'testRir',
             data: [ 
-                'description' => 'PHPUnit test post prefxes',
-                   'comments' => 'This is for testing, please delete'
+                'description' => 'PHPUnit test post RIR',
             ]
         );
     }
 
 
 
-/* DELETE A PREFIX
+/* DELETE A RIR
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Prefixes();
+        $o = new Rirs();
 
         return $o->deleteDetail( id: $id  );
     }
+
 }
