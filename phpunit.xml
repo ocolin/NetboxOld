@@ -32,8 +32,9 @@
         <!-- 
             <file>tests/models/dcim/testSites.php</file> 
             <file>tests/models/dcim/testRegions.php</file>
+            <file>tests/models/dcim/testLocations.php</file>
         -->
-        <file>tests/models/dcim/testLocations.php</file>
+        <file>tests/models/dcim/testPlatforms.php</file>
             
             
             
