@@ -197,13 +197,13 @@ class IPAM
         array $headers = [] 
     ) : array
     {
-    $this->uri .= "{$id}/";
+        $this->uri .= "{$id}/";
 
-    return $this->http->get(
-            uri: $this->uri,
-         params: $params,
-        headers: $headers
-    );
+        return $this->http->get(
+                uri: $this->uri,
+            params: $params,
+            headers: $headers
+        );
     }
 
 }
