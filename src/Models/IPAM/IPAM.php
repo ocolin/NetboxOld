@@ -179,5 +179,31 @@ class IPAM
     }
 
 
+     /* GET METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/*
+ * Get an individual object
+ *
+ * @param integer $id Numerical ID of an object record.
+ * @param array   $params Optional GET parameters.
+ * @param array   $headers Optional request headers.
+ * @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function getDetail( 
+          int $id, 
+        array $params  = [], 
+        array $headers = [] 
+    ) : array
+    {
+    $this->uri .= "{$id}/";
+
+    return $this->http->get(
+            uri: $this->uri,
+         params: $params,
+        headers: $headers
+    );
+    }
 
 }
