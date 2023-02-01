@@ -15,31 +15,6 @@ class Asns extends IPAM
     }
 
 
-/* GET METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
- * Get all ASNs
- *
- * @param array $params Optional URL parameters.
- * @param array $headers Optional Custom HTTP request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function getList( 
-        array $params  = [], 
-        array $headers = [] 
-    ) : array
-    {
-
-        return $this->http->get(
-               uri: $this->uri,
-            params: $params,
-           headers: $headers
-        );
-    }
-
-
 
 /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
@@ -69,29 +44,6 @@ class Asns extends IPAM
     }
 
 
-
-/* POST METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Creat multiple ASNs at once.
-*
-* @param array $data An array of ASN arrays. 
-* @param array $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function postList(
-        array $data,
-        array $headers = []
-    ) : array
-    {
-        return $this->http->post(
-              uri: $this->uri,
-             body: $data,
-          headers: $headers
-        );
-    }
 
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
@@ -160,31 +112,6 @@ class Asns extends IPAM
 
 
 
-/* PUT METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Updte an array of ASNs.
-*
-* @param array $data List of ASNs to update.
-* @param array $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function putList(
-        array $data,
-        array $headers = []
-    ) : array
-    {
-        return $this->http->put(
-              uri: $this->uri,
-             body: $data,
-          headers: $headers
-        );
-    }
-
-
-
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -215,76 +142,6 @@ class Asns extends IPAM
                 uri: $this->uri,
                body: $data,
             headers: $headers
-        );
-    }
-
-
-
-/* PATCH METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
-* Update a list of ASNs.
-*
-* @param array $data Array of ASNs to update.
-* @param array $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function patchList(
-        array $data    = [],
-        array $headers = []
-    ) : array
-    {
-        return $this->http->put(
-               uri: $this->uri,
-              body: $data,
-           headers: $headers
-        );
-    }
-
-
-
-/* DELETE METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
-* Delete an individual ASN.
-* 
-* @param integer $id A unique integer value identifying an ASN.
-* @param array   $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteDetail( int $id, array $headers = [] ) : array
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->delete( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* DELETE METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Delete a list of ASNs.
-* 
-* @param array $data List of ASNs to delete. Each ASN must have an ID.
-* @param array $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteList( 
-        array $data, 
-        array $headers = [] 
-    ) : array
-    {
-        return $this->http->delete( 
-               uri: $this->uri, 
-              body: $data, 
-           headers: $headers 
         );
     }
 }

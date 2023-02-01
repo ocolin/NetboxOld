@@ -20,32 +20,6 @@ class Prefixes extends IPAM
 
 
 
-/* GET METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
- * Get all Prefixes
- *
- * @param array $params URL parameters.
- * @param array $headers Customer HTTP request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function getList( 
-        array $params  = [], 
-        array $headers = [] 
-    ) : array
-    {
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
  /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -74,30 +48,6 @@ class Prefixes extends IPAM
     }
 
 
-
-/* POST METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
- * Creat multiple Prefixes at once.
- *
- * @param array $data An array of prefix arrays. Each sub array MUST have a 
- *  prefix key. ex. data: [['prefix' => '1.1.1.0/24'], ['prefix' => '2.2.2.0/24']]
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function postList(
-        array $data,
-        array $headers = []
-    ) : array
-    {
-        return $this->http->post(
-                uri: $this->uri,
-               body: $data,
-            headers: $headers
-        );
-    }
 
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
@@ -160,31 +110,6 @@ class Prefixes extends IPAM
 
 
 
-/* PUT METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
- * Updte an array of prefixes.
- *
- * @param array $data List of prefixes to update
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-public function putList(
-           array $data,
-           array $headers = []
-       ) : array
-       {
-           return $this->http->put(
-                   uri: $this->uri,
-                  body: $data,
-               headers: $headers
-           );
-       }
-
-
-
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -212,77 +137,6 @@ public function putList(
                 uri: $this->uri,
                body: $data,
             headers: $headers
-        );
-    }
-
-
-
-/* PATCH METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
- * Update a list of prefixes.
- *
- * @param array $data Array of prefixes to update.
- * @param array $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-public function patchList(
-    array $data    = [],
-    array $headers = []
-) : array
-{
-  return $this->http->put(
-          uri: $this->uri,
-         body: $data,
-      headers: $headers
-  );
-}
-
-
-
-/* DELETE METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
- * Delete an individual prefix.
- * 
- * @param integer $id A unique integer value identifying a prefix.
- * @param array   $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteDetail( int $id, array $headers = [] ) : array
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->delete( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* DELETE METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
- * Delete a list of prefixes.
- * 
- * @param array $data List of prefixes to delete.
- * @param array $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteList( 
-        array $data, 
-        array $headers = [] 
-    ) : array
-    {
-
-        return $this->http->delete( 
-                uri: $this->uri, 
-            body: $data, 
-            headers: $headers 
         );
     }
 }

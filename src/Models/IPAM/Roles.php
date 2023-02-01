@@ -15,31 +15,6 @@ class Roles extends IPAM
     }
 
 
-/* GET METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
- * Get all Roles
- *
- * @param array $params URL parameters.
- * @param array $headers Customer HTTP request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function getList( 
-        array $params  = [], 
-        array $headers = [] 
-    ) : array
-    {
-
-        return $this->http->get(
-               uri: $this->uri,
-            params: $params,
-           headers: $headers
-        );
-    }
-
-
 
 /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
@@ -69,30 +44,6 @@ class Roles extends IPAM
     }
 
 
-
-/* POST METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Creat multiple Roles at once.
-*
-* @param array $data An array of Role arrays. Each sub array MUST have a 
-*  name and slug key. 
-* @param array $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function postList(
-        array $data,
-        array $headers = []
-    ) : array
-    {
-        return $this->http->post(
-               uri: $this->uri,
-              body: $data,
-           headers: $headers
-        );
-    }
 
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
@@ -161,31 +112,6 @@ class Roles extends IPAM
 
 
 
-/* PUT METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Updte an array of Roles.
-*
-* @param array $data List of Roles to update.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function putList(
-        array $data,
-        array $headers = []
-    ) : array
-    {
-        return $this->http->put(
-               uri: $this->uri,
-              body: $data,
-           headers: $headers
-        );
-    }
-
-
-
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -217,76 +143,6 @@ class Roles extends IPAM
                 uri: $this->uri,
                body: $data,
             headers: $headers
-        );
-    }
-
-
-
-/* PATCH METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
-* Update a list of Roles.
-*
-* @param array $data Array of Roles to update.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function patchList(
-        array $data    = [],
-        array $headers = []
-    ) : array
-    {
-        return $this->http->put(
-               uri: $this->uri,
-              body: $data,
-           headers: $headers
-        );
-    }
-
-
-
-/* DELETE METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
-* Delete an individual Role.
-* 
-* @param integer $id A unique integer value identifying a Role.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteDetail( int $id, array $headers = [] ) : array
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->delete( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* DELETE METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Delete a list of Roles.
-* 
-* @param array $data List of Roles to delete. Each Role must have an ID.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteList( 
-        array $data, 
-        array $headers = [] 
-    ) : array
-    {
-        return $this->http->delete( 
-               uri: $this->uri, 
-              body: $data, 
-           headers: $headers 
         );
     }
 }

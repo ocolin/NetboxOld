@@ -12,15 +12,15 @@
 >
     <testsuites>
         <testsuite name="Models">
-        <!--
-            <file>tests/models/ipam/testRirs.php</file>
+        
+        <!--     <file>tests/models/ipam/testRirs.php</file>
             <file>tests/models/ipam/testIpAddresses.php</file>
             <file>tests/models/ipam/testIpRanges.php</file>
             <file>tests/models/ipam/testPrefixes.php</file>
             <file>tests/models/ipam/testAggregates.php</file>
             <file>tests/models/ipam/testAsns.php</file>
-        -->
-            <file>tests/models/ipam/testRoles.php</file>
+            <file>tests/models/ipam/testRoles.php</file> -->
+            <file>tests/models/ipam/testDeviceTargets.php</file>
         </testsuite>
     </testsuites>
 </phpunit>
