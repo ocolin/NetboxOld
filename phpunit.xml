@@ -36,8 +36,9 @@
             <file>tests/models/dcim/testPlatforms.php</file>
             <file>tests/models/dcim/testSiteGroups.php</file>
             <file>tests/models/dcim/testManufacturers.php</file>
+            <file>tests/models/dcim/testRackRoles.php</file>
         -->
-        <file>tests/models/dcim/testRackRoles.php</file>
+        <file>tests/models/dcim/testDeviceRoles.php</file>
             
             
             
