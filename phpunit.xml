@@ -13,7 +13,8 @@
     <testsuites>
         <testsuite name="Models">
         
-          <!--   <file>tests/models/ipam/testRirs.php</file>
+          <!--   
+            <file>tests/models/ipam/testRirs.php</file>
             <file>tests/models/ipam/testIpAddresses.php</file>
             <file>tests/models/ipam/testIpRanges.php</file>
             <file>tests/models/ipam/testPrefixes.php</file>
@@ -24,13 +25,15 @@
             <file>tests/models/ipam/testVlanGroups.php</file>
             <file>tests/models/ipam/testVlans.php</file>
             <file>tests/models/ipam/testVrfs.php</file>
-            
          -->
         <!-- <file>tests/models/ipam/testServices.php</file> -->
 
 
-        <!-- <file>tests/models/dcim/testSites.php</file> -->
-        <file>tests/models/dcim/testRegions.php</file>
+        <!-- 
+            <file>tests/models/dcim/testSites.php</file> 
+            <file>tests/models/dcim/testRegions.php</file>
+        -->
+        <file>tests/models/dcim/testLocations.php</file>
             
             
             
