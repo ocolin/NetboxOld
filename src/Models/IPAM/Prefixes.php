@@ -273,34 +273,16 @@ public function patchList(
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-public function deleteList( 
-    array $data, 
-    array $headers = [] 
-) : array
-{
-
-    return $this->http->delete( 
-            uri: $this->uri, 
-           body: $data, 
-        headers: $headers 
-    );
-}
-
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- * List details about API call.
- *
- * @param array $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
+    public function deleteList( 
+        array $data, 
+        array $headers = [] 
+    ) : array
     {
-        return $this->http->options( uri: $this->uri, headers: $headers );
+
+        return $this->http->delete( 
+                uri: $this->uri, 
+            body: $data, 
+            headers: $headers 
+        );
     }
 }

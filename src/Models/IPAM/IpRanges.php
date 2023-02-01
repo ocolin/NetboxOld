@@ -287,22 +287,4 @@ class IpRanges extends IPAM
           headers: $headers 
         );
     }
-
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
-* List details about API call.
-*
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
-    }
 }
