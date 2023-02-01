@@ -10,7 +10,7 @@ class IPAM
 {
     protected HTTP $http;
 
-    protected $uri = 'IPAM/';
+    protected $uri = 'ipam/';
 
     public function __construct( HTTP $http = null )
     {

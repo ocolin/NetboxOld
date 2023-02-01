@@ -62,6 +62,7 @@ class HTTP
     {
         $uri = self::formtParams( $params, $uri );
         $this->headers = array_merge( $this->headers, $headers );
+
         $request = $this->client->request(
             'POST', $uri, [
                 'headers' => $this->headers,
@@ -184,11 +185,14 @@ class HTTP
  * @return array
 */
 
-    public function delete( string $uri, array $headers = [] ) : array
+    public function delete( string $uri, array $body = [], array $headers = [] ) : array
     {
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
-            'DELETE', $uri, [ 'headers' => $this->headers ]
+            'DELETE', $uri, [ 
+                'headers' => $this->headers,
+                'body'    => json_encode( $body )
+            ]
         );
 
         return self::returnResults( $request );
