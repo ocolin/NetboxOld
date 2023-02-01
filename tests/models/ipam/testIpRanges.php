@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testRirs extends testCore
+class testIpRanges extends testCore
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class testRirs extends testCore
 
     public function testOptions()
     {
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -36,60 +36,60 @@ class testRirs extends testCore
 
 
 
-
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-public function testGetDetail() : void
-{
-    // SETUP
-    $rir = $this->postDetail()['body'];
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $range = $this->postDetail()['body'];
 
-    $o = new Rirs();
-    $result = $o->getDetail( id: $rir->id );
-    
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $o = new IpRanges();
+        $result = $o->getDetail( id: $range->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
-    // CLEAN UP
-    $this->deleteDetail( $rir->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $range->id );
+    }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-public function testGetList() : void
-{
-    // SETUP
-    $rir = $this->postDetail()['body'];
+    public function testGetList() : void
+    {
+        // SETUP
+        $range = $this->postDetail()['body'];
 
-    $o = new Rirs();
-    $result = $o->getList();
+        $o = new IpRanges();
+        $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
-    $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
-     // CLEAN UP
-     $this->deleteDetail( $rir->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $range->id );
+    }
+
 
 
 
@@ -98,7 +98,7 @@ public function testGetList() : void
 
     public function testPostDetail() : void
     {
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -116,18 +116,17 @@ public function testGetList() : void
     }
 
 
-
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
 
     public function testPostList() :void
     {
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->postList(
-        data: [
-            [ 'name' => 'testRir1', 'slug' => 'aaa' ],
-            [ 'name' => 'testRir2', 'slug' => 'bbb' ],
-        ]  
+            data: [
+                [ 'start_address' => '192.168.66.1/24', 'end_address' => '192.168.66.254/24' ],
+                [ 'start_address' => '192.168.67.2/24', 'end_address' => '192.168.67.254/24' ]
+            ]  
         );
 
         $this->assertIsArray( $result );
@@ -140,9 +139,9 @@ public function testGetList() : void
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $rir )
+        foreach( $result['body'] AS $range )
         {
-            $this->deleteDetail( id: $rir->id );
+            $this->deleteDetail( id: $range->id );
         }
     }
 
@@ -154,14 +153,14 @@ public function testGetList() : void
     public function testPutDetail() : void
     {
         // SETUP
-        $rir = $this->postDetail()['body'];
+        $range = $this->postDetail()['body'];
 
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->putDetail( 
-            id: $rir->id, 
-            name: 'updateRir', 
-            slug: 'updateRir',
-            data: [ 'description' => 'Updated description' ]
+            id: $range->id, 
+            start_address: '192.168.66.1/24', 
+              end_address: '192.168.66.254/24', 
+                     data: [ 'description' => 'Updated description' ]
         );
         
         
@@ -176,7 +175,7 @@ public function testGetList() : void
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $rir->id );
+        $this->deleteDetail( $range->id );
     }
 
 
@@ -187,16 +186,16 @@ public function testGetList() : void
     public function testPutList() : void
     {
         // SETUP
-        $rir = $this->postDetail()['body'];
+        $range = $this->postDetail()['body'];
 
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->putList(
             data: [
                 [ 
-                    'id'   => $rir->id, 
-                    'name' => 'putRir',
-                    'slug' => 'putRir',
-                    'description' => 'Updated description'
+                             'id'   => $range->id, 
+                    'start_address' => '192.168.66.2/24',
+                      'end_address' => '192.168.66.128/24',
+                      'description' => 'Updated description'
                 ]
             ]
         );
@@ -212,7 +211,7 @@ public function testGetList() : void
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $rir->id );
+        $this->deleteDetail( $range->id );
     }
 
 
@@ -223,14 +222,14 @@ public function testGetList() : void
     public function testPatchDetail() : void
     {
         // SETUP
-        $rir = $this->postDetail()['body'];
+        $range = $this->postDetail()['body'];
 
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->patchDetail(
-            id: $rir->id,
-            name: 'patchRIR',
-            slug: 'patchRIR',
-            data: [ 'description' => 'zzz' ]
+                       id: $range->id,
+            start_address: '192.168.66.2/24',
+              end_address: '192.168.66.128/24',
+                     data: [ 'description' => 'Patch Range' ]
         );
 
         $this->assertIsArray( $result );
@@ -245,7 +244,7 @@ public function testGetList() : void
 
 
         // CLEAN UP
-        $this->deleteDetail( $rir->id );
+        $this->deleteDetail( $range->id );
     }
 
 
@@ -256,16 +255,16 @@ public function testGetList() : void
     public function testPatchList() : void
     {
         // SETUP
-        $rir = $this->postDetail()['body'];
+        $range = $this->postDetail()['body'];
 
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->patchList(
             data: [
                 [ 
-                          'id' => $rir->id, 
-                        'name' => 'patchRirs',
-                        'slug' => 'patchRirs',
-                 'description' => 'patchRirs' 
+                             'id' => $range->id, 
+                  'start_address' => '192.168.66.2/24',
+                    'end_address' => '192.168.66.128/24',
+                    'description' => 'Patch Ranges' 
                 ]
             ]
         );
@@ -281,7 +280,7 @@ public function testGetList() : void
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $rir->id );
+        $this->deleteDetail( $range->id );
     }
 
 
@@ -293,10 +292,10 @@ public function testGetList() : void
     public function testDeleteDetail() : void
     {
         // SETUP
-        $rir = $this->postDetail()['body'];
+        $range = $this->postDetail()['body'];
         
-        $o = new Rirs();
-        $result = $o->deleteDetail( id: $rir->id );
+        $o = new IpRanges();
+        $result = $o->deleteDetail( id: $range->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -314,11 +313,11 @@ public function testGetList() : void
     public function testDeleteList() : void
     {
         // SETUP
-        $rir = $this->postDetail()['body'];
+        $range = $this->postDetail()['body'];
 
-        $o = new Rirs();
+        $o = new IpRanges();
         $result = $o->deleteList(
-            data: [[ 'id' => $rir->id ]]
+            data: [[ 'id' => $range->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -330,32 +329,32 @@ public function testGetList() : void
     }
 
 
-/* CREATE A RIR
+
+/* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Rirs();
+        $o = new IpRanges();
 
         return $o->postDetail( 
-            name: 'testRir',
-            slug: 'testRir',
-            data: [ 
-                'description' => 'PHPUnit test post RIR',
-            ]
+            start_address: '192.168.77.0/24',
+              end_address: '192.168.77.254/24',
+                     data: [ 
+                        'description' => 'PHPUnit test post IP Range',
+                    ]
         );
     }
 
 
 
-/* DELETE A RIR
+/* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Rirs();
+        $o = new IpRanges();
 
         return $o->deleteDetail( id: $id  );
     }
-
 }

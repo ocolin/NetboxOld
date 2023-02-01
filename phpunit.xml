@@ -2,7 +2,7 @@
 <phpunit
     bootstrap="vendor/autoload.php"
     colors="true"
-    stopOnFailure="false"
+    stopOnFailure="true"
     convertDeprecationsToExceptions="true"
     convertErrorsToExceptions="true"
     convertNoticesToExceptions="true"
@@ -14,7 +14,8 @@
         <testsuite name="Models">
             <!-- <file>tests/models/ipam/testPrefixes.php</file> -->
             <!-- <file>tests/models/ipam/testRirs.php</file> -->
-            <file>tests/models/ipam/testIpAddresses.php</file>
+            <!-- <file>tests/models/ipam/testIpAddresses.php</file> -->
+            <file>tests/models/ipam/testIpRanges.php</file>
         </testsuite>
     </testsuites>
 </phpunit>

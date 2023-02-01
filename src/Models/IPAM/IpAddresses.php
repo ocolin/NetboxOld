@@ -19,7 +19,7 @@ class IpAddresses extends IPAM
 ---------------------------------------------------------------------------- */
 
 /*
- * Get all IPs
+ * Get all Ranges
  *
  * @param array $params Optional URL parameters.
  * @param array $headers Optional Custom HTTP request headers.
@@ -33,9 +33,9 @@ class IpAddresses extends IPAM
     {
 
         return $this->http->get(
-            uri: $this->uri,
+               uri: $this->uri,
             params: $params,
-        headers: $headers
+           headers: $headers
         );
     }
 
@@ -45,7 +45,7 @@ class IpAddresses extends IPAM
 ---------------------------------------------------------------------------- */
 
 /*
-* Get an individual IP
+* Get an individual Range
 *
 * @param integer $id Numerical ID of IP record.
 * @param array   $params Optional GET parameters.
@@ -54,7 +54,7 @@ class IpAddresses extends IPAM
 */
 
     public function getDetail( 
-        int $id, 
+          int $id, 
         array $params  = [], 
         array $headers = [] 
     ) : array
@@ -62,9 +62,9 @@ class IpAddresses extends IPAM
         $this->uri .= "{$id}/";
 
         return $this->http->get(
-            uri: $this->uri,
+               uri: $this->uri,
             params: $params,
-        headers: $headers
+           headers: $headers
         );
     }
 
@@ -74,7 +74,7 @@ class IpAddresses extends IPAM
 ---------------------------------------------------------------------------- */
 
 /*
-* Creat multiple IPs at once.
+* Creat multiple ranges at once.
 *
 * @param array $data An array of IP arrays. 
 * @param array $headers Optional HTML request headers.
@@ -87,9 +87,9 @@ class IpAddresses extends IPAM
     ) : array
     {
         return $this->http->post(
-            uri: $this->uri,
-            body: $data,
-        headers: $headers
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
         );
     }
 
@@ -107,16 +107,16 @@ class IpAddresses extends IPAM
 
     public function postDetail(
         string $address,
-        array $data    = [],
-        array $headers = []
+         array $data    = [],
+         array $headers = []
     ) : array
     {
         $data['address'] = $address;
 
         return $this->http->post(
-            uri: $this->uri,
-            body: $data,
-        headers: $headers
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
         );
     }
 
@@ -136,19 +136,19 @@ class IpAddresses extends IPAM
 */
 
     public function putDetail(
-        int $id,
+           int $id,
         string $address,
-        array $data    = [],
-        array $headers = []
+         array $data    = [],
+         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
         $data['address'] = $address;
 
         return $this->http->put(
-            uri: $this->uri,
-            body: $data,
-        headers: $headers
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
         );
     }
 
@@ -171,9 +171,9 @@ class IpAddresses extends IPAM
     ) : array
     {
         return $this->http->put(
-            uri: $this->uri,
-            body: $data,
-        headers: $headers
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
         );
     }
 
@@ -204,7 +204,7 @@ class IpAddresses extends IPAM
 
         return $this->http->put(
                 uri: $this->uri,
-            body: $data,
+               body: $data,
             headers: $headers
         );
     }
@@ -228,9 +228,9 @@ class IpAddresses extends IPAM
     ) : array
     {
         return $this->http->put(
-            uri: $this->uri,
-            body: $data,
-        headers: $headers
+              uri: $this->uri,
+             body: $data,
+          headers: $headers
         );
     }
 
@@ -273,9 +273,9 @@ class IpAddresses extends IPAM
     ) : array
     {
         return $this->http->delete( 
-            uri: $this->uri, 
-            body: $data, 
-        headers: $headers 
+              uri: $this->uri, 
+             body: $data, 
+          headers: $headers 
         );
     }
 
@@ -296,5 +296,4 @@ class IpAddresses extends IPAM
     {
         return $this->http->options( uri: $this->uri, headers: $headers );
     }
-
 }

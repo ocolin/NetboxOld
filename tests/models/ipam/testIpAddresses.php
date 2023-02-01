@@ -42,10 +42,10 @@ class testIpAddresses extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
         $o = new IpAddresses();
-        $result = $o->getDetail( id: $prefix->id );
+        $result = $o->getDetail( id: $ip->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -58,7 +58,7 @@ class testIpAddresses extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $prefix->id );
+        $this->deleteDetail( $ip->id );
     }
 
 
@@ -69,7 +69,7 @@ class testIpAddresses extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
         $o = new IpAddresses();
         $result = $o->getList();
@@ -87,7 +87,7 @@ class testIpAddresses extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $prefix->id );
+        $this->deleteDetail( $ip->id );
     }
 
 
@@ -139,9 +139,9 @@ class testIpAddresses extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $prefix )
+        foreach( $result['body'] AS $ip )
         {
-            $this->deleteDetail( id: $prefix->id );
+            $this->deleteDetail( id: $ip->id );
         }
     }
 
@@ -153,11 +153,11 @@ class testIpAddresses extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
         $o = new IpAddresses();
         $result = $o->putDetail( 
-            id: $prefix->id, 
+            id: $ip->id, 
             address: '192.168.66.1/24', 
             data: [ 'description' => 'Updated description' ]
         );
@@ -185,13 +185,13 @@ class testIpAddresses extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
         $o = new IpAddresses();
         $result = $o->putList(
             data: [
                 [ 
-                    'id'   => $prefix->id, 
+                    'id'   => $ip->id, 
                     'address' => '192.168.66.2/24',
                     'description' => 'Updated description'
                 ]
@@ -209,7 +209,7 @@ class testIpAddresses extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $prefix->id );
+        $this->deleteDetail( $ip->id );
     }
 
 
@@ -220,11 +220,11 @@ class testIpAddresses extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $ip = $this->postDetail()['body'];
 
         $o = new IpAddresses();
         $result = $o->patchDetail(
-            id: $prefix->id,
+            id: $ip->id,
             address: '192.168.7.5/25',
             data: [ 'description' => 'zzz' ]
         );
@@ -241,7 +241,7 @@ class testIpAddresses extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $prefix->id );
+        $this->deleteDetail( $ip->id );
     }
 
 
@@ -260,7 +260,7 @@ class testIpAddresses extends testCore
                 [ 
                          'id' => $ip->id, 
                     'address' => '192.168.4.3/24',
-                'description' => 'patchRirs' 
+                'description' => 'patch IP' 
                 ]
             ]
         );
