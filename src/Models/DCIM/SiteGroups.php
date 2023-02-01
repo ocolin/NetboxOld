@@ -21,7 +21,7 @@ class SiteGroups extends DCIM
 /*
 * Create a single SiteGroup.
 *
-* @param string $name Name of SiteGroupx`x`.
+* @param string $name Name of SiteGroupx.
 * @param string $slug 
 * @param array  $data optionsl data to be sent
 * @param array $headers HTML request headers
