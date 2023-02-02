@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\HTTP;
 
@@ -21,7 +21,7 @@ class DeviceTypes extends DCIM
 /*
 * Create a single DeviceType.
 *
-* @param string $name Name of DeviceType.
+* @param string $model Name of DeviceType.
 * @param string $slug 
 * @param array  $data optionsl data to be sent
 * @param array $headers HTML request headers
@@ -30,13 +30,13 @@ class DeviceTypes extends DCIM
 
     public function postDetail(
            int $manufacturer,
-        string $name,
+        string $model,
         string $slug,
          array $data    = [],
          array $headers = []
     ) : array
     {
-        $data['name']         = $name;
+        $data['model']        = $model;
         $data['slug']         = $slug;
         $data['manufacturer'] = $manufacturer;
 
@@ -56,7 +56,7 @@ class DeviceTypes extends DCIM
 * Update DeviceType
 * 
 * @param integer $id Numerical ID of DeviceType to update.
-* @param string  $name Name of DeviceType to update.
+* @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
 * @param array   $data Optional data to send.
 * @param array   $headers HTML request headers
@@ -66,14 +66,14 @@ class DeviceTypes extends DCIM
     public function putDetail(
            int $id,
            int $manufacturer,
-        string $name,
+        string $model,
         string $slug,
          array $data    = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']         = $name;
+        $data['model']        = $model;
         $data['slug']         = $slug;
         $data['manufacturer'] = $manufacturer;
         
@@ -94,7 +94,7 @@ class DeviceTypes extends DCIM
 * Update DeviceType value(s).
 *
 * @param integer $id Numerical ID of DeviceType to update.
-* @param string  $name Name of DeviceType to update.
+* @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
 * @param array   $data Optional data to modify.
 * @param array   $headers HTML request headers.
@@ -104,14 +104,14 @@ class DeviceTypes extends DCIM
     public function patchDetail(
            int $id,
            int $manufacturer,
-        string $name,
+        string $model,
         string $slug,
          array $data    = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']         = $name;
+        $data['model']        = $model;
         $data['slug']         = $slug;
         $data['manufacturer'] = $manufacturer;
 

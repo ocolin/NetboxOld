@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testDeviceTypes extends testCore
+class testConsolePortTemplates extends testCore
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class testDeviceTypes extends testCore
 
     public function testOptions()
     {
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -44,11 +44,10 @@ class testDeviceTypes extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
-        
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
-        $result = $o->getDetail( id: $devtype->id );
+        $o = new ConsolePortTemplates();
+        $result = $o->getDetail( id: $porttemp->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -61,7 +60,7 @@ class testDeviceTypes extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $devtype->id );
+        $this->deleteDetail( $porttemp->id );
     }
 
 
@@ -72,9 +71,9 @@ class testDeviceTypes extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -90,7 +89,7 @@ class testDeviceTypes extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $devtype->id );
+        $this->deleteDetail( $porttemp->id );
     }
 
 
@@ -100,8 +99,8 @@ class testDeviceTypes extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new DeviceTypes();
-        $result = $this->postDetail( manf: $_ENV['manf']->id );
+        $o = new ConsolePortTemplates();
+        $result = $this->postDetail( devtype: $_ENV['devtype']->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -124,18 +123,16 @@ class testDeviceTypes extends testCore
 
     public function testPostList() :void
     {
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->postList(
         data: [
             [ 
-                       'model' => 'testDeviceType1', 
-                        'slug' => 'aaa', 
-                'manufacturer' => $_ENV['manf']->id
+                'name'        => 'testConsolePortTemplate', 
+                'device_type' => $_ENV['devtype']->id
             ],
             [ 
-                       'model' => 'testDeviceType2', 
-                        'slug' => 'bbb', 
-                'manufacturer' => $_ENV['manf']->id 
+                'name'        => 'testConsolePortTemplate2', 
+                'device_type' => $_ENV['devtype']->id 
             ],
         ]  
         );
@@ -150,9 +147,9 @@ class testDeviceTypes extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $devtype )
+        foreach( $result['body'] AS $porttemp )
         {
-            $this->deleteDetail( id: $devtype->id );
+            $this->deleteDetail( id: $porttemp->id );
         }
     }
 
@@ -164,14 +161,13 @@ class testDeviceTypes extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->putDetail( 
-                      id: $devtype->id, 
-                   model: 'updateDeviceType', 
-                    slug: 'updateDeviceType',
-            manufacturer: $_ENV['manf']->id
+                     id: $porttemp->id, 
+                   name: 'updateConsolePortTemplate', 
+            device_type: $_ENV['devtype']->id
         );
         
         
@@ -186,7 +182,7 @@ class testDeviceTypes extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $devtype->id );
+        $this->deleteDetail( $porttemp->id );
     }
 
 
@@ -197,16 +193,15 @@ class testDeviceTypes extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->putList(
             data: [
                 [ 
-                              'id' => $devtype->id, 
-                           'model' => 'putRegion',
-                            'slug' => 'putRegion',
-                    'manufacturer' => $_ENV['manf']->id
+                           'id'   => $porttemp->id, 
+                           'name' => 'putConsolePortTemplate',
+                    'device_type' => $_ENV['devtype']->id
                 ]
             ]
         );
@@ -222,7 +217,7 @@ class testDeviceTypes extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $devtype->id );
+        $this->deleteDetail( $porttemp->id );
     }
 
 
@@ -233,14 +228,13 @@ class testDeviceTypes extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->patchDetail(
-                      id: $devtype->id,
-                   model: 'patchDeviceType',
-                    slug: 'patchDeviceType',
-            manufacturer: $_ENV['manf']->id
+                     id: $porttemp->id,
+                   name: 'patchConsolePortTemplate',
+            device_type: $_ENV['devtype']->id
         );
 
         $this->assertIsArray( $result );
@@ -255,7 +249,7 @@ class testDeviceTypes extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $devtype->id );
+        $this->deleteDetail( $porttemp->id );
     }
 
 
@@ -266,16 +260,15 @@ class testDeviceTypes extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->patchList(
             data: [
                 [ 
-                           'id' => $devtype->id, 
-                        'model' => 'patchRegion',
-                         'slug' => 'patchRegion',
-                 'manufacturer' => $_ENV['manf']->id 
+                          'id' => $porttemp->id, 
+                        'name' => 'patchConsolePortTemplate',
+                 'device_type' => $_ENV['devtype']->id 
                 ]
             ]
         );
@@ -291,7 +284,7 @@ class testDeviceTypes extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $devtype->id );
+        $this->deleteDetail( $porttemp->id );
     }
 
 
@@ -299,14 +292,14 @@ class testDeviceTypes extends testCore
 
 /* TEST DELETE DETAIL
 ---------------------------------------------------------------------------- */
-/* 
+
     public function testDeleteDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
         
-        $o = new DeviceTypes();
-        $result = $o->deleteDetail( id: $devtype->id );
+        $o = new ConsolePortTemplates();
+        $result = $o->deleteDetail( id: $porttemp->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -315,7 +308,7 @@ class testDeviceTypes extends testCore
         $this->assertIsInt( $result['status'] );
         $this->assertEquals( 204, $result['status'] );
     }
- */
+
 
 
 /* TEST DELETE LIST
@@ -324,11 +317,11 @@ class testDeviceTypes extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
 
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
         $result = $o->deleteList(
-            data: [[ 'id' => $devtype->id ]]
+            data: [[ 'id' => $porttemp->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -343,14 +336,13 @@ class testDeviceTypes extends testCore
 /* CREATE A DEVICE TYPES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $manf ) : array
+    public function postDetail( int $devtype ) : array
     {
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
 
         return $o->postDetail( 
-            model: 'testDeviceType',
-            slug: 'testDeviceType',
-            manufacturer: $manf
+            name: 'testConsolePortTemplate',
+            device_type: $devtype
         );
     }
 
@@ -361,7 +353,7 @@ class testDeviceTypes extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new DeviceTypes();
+        $o = new ConsolePortTemplates();
 
         return $o->deleteDetail( id: $id  );
     }
@@ -373,12 +365,27 @@ class testDeviceTypes extends testCore
 /**
 * @beforeClass
 */
-    public static function setupManf()
+    public static function setupDevType()
+    {
+        self::setupManufacter();
+        $o = new DeviceTypes();
+        $_ENV['devtype'] = $o->postDetail(
+            model: 'phptestunit_devtype',
+             slug: 'phptestunit_devtype',
+             manufacturer: $_ENV['manf']->id
+        )['body'];
+        
+
+        
+    }
+
+
+    public static function setupManufacter()
     {
         $o = new Manufacturers();
         $_ENV['manf'] = $o->postDetail(
-            name: 'phptestunit_manf',
-            slug: 'phptestunit_manf'
+            name: 'phpunit_manf',
+            slug: 'phpunit_manf'
         )['body'];
     }
 
@@ -390,11 +397,22 @@ class testDeviceTypes extends testCore
 /**
 * @afterClass
 */
-    public static function closeManf()
+    public static function closeDevType()
+    {   
+        $o = new DeviceTypes();
+        $o->deleteDetail( id: $_ENV['devtype']->id );
+        self::closeManufacturer();
+        unset( $_ENV['devtype'] );
+    }
+
+
+    public static function closeManufacturer()
     {
         $o = new Manufacturers();
-        $o->deleteDetail( id: $_ENV['manf']->id );
+        $test = $o->deleteDetail( id: $_ENV['manf']->id );
         unset( $_ENV['manf'] );
+        
     }
+
 
 }
