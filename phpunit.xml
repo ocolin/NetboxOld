@@ -43,8 +43,10 @@
             <file>tests/models/dcim/testVirtualChassis.php</file>
             <file>tests/models/dcim/testConsolePortTemplates.php</file>
         -->
-        
+<!--         
         <file>tests/models/tenancy/testContactRoles.php</file>
+ -->
+        <file>tests/models/tenancy/testTenantGroups.php</file>
             
             
             
