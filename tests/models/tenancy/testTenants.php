@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testTenantGroups extends testCore
+class testTenants extends testCore
 {
     public function __construct()
     {
@@ -20,7 +20,7 @@ class testTenantGroups extends testCore
 
     public function testOptions()
     {
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -42,10 +42,10 @@ class testTenantGroups extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
-        $result = $o->getDetail( id: $group->id );
+        $o = new Tenants();
+        $result = $o->getDetail( id: $tenant->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -58,7 +58,7 @@ class testTenantGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $tenant->id );
     }
 
 
@@ -69,9 +69,9 @@ class testTenantGroups extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -87,7 +87,7 @@ class testTenantGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $tenant->id );
     }
 
 
@@ -97,7 +97,7 @@ class testTenantGroups extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -121,11 +121,11 @@ class testTenantGroups extends testCore
 
     public function testPostList() :void
     {
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->postList(
         data: [
-            [ 'name' => 'testTenantGroup1', 'slug' => 'aaa' ],
-            [ 'name' => 'testTenantGroup2', 'slug' => 'bbb' ],
+            [ 'name' => 'testTenant1', 'slug' => 'aaa' ],
+            [ 'name' => 'testTenant2', 'slug' => 'bbb' ],
         ]  
         );
 
@@ -139,9 +139,9 @@ class testTenantGroups extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $group )
+        foreach( $result['body'] AS $tenant )
         {
-            $this->deleteDetail( id: $group->id );
+            $this->deleteDetail( id: $tenant->id );
         }
     }
 
@@ -153,13 +153,13 @@ class testTenantGroups extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->putDetail( 
-              id: $group->id, 
-            name: 'updateTenantGroup', 
-            slug: 'updateTenantGroup',
+              id: $tenant->id, 
+            name: 'updateTenant', 
+            slug: 'updateTenant',
             data: [ 'description' => 'Updated description' ]
         );
         
@@ -175,7 +175,7 @@ class testTenantGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $tenant->id );
     }
 
 
@@ -186,15 +186,15 @@ class testTenantGroups extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->putList(
             data: [
                 [ 
-                           'id'   => $group->id, 
-                           'name' => 'putTenantGroup',
-                           'slug' => 'putTenantGroup',
+                           'id'   => $tenant->id, 
+                           'name' => 'putTenant',
+                           'slug' => 'putTenant',
                     'description' => 'Updated description'
                 ]
             ]
@@ -211,7 +211,7 @@ class testTenantGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $tenant->id );
     }
 
 
@@ -222,14 +222,14 @@ class testTenantGroups extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->patchDetail(
-              id: $group->id,
-            name: 'patchTenantGroup',
-            slug: 'patchTenantGroup',
-            data: [ 'description' => 'TenantGroup test' ]
+              id: $tenant->id,
+            name: 'patchTenant',
+            slug: 'patchTenant',
+            data: [ 'description' => 'Tenant test' ]
         );
 
         $this->assertIsArray( $result );
@@ -244,7 +244,7 @@ class testTenantGroups extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $tenant->id );
     }
 
 
@@ -255,16 +255,16 @@ class testTenantGroups extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->patchList(
             data: [
                 [ 
-                          'id' => $group->id, 
-                        'name' => 'patchTenantGroup',
-                        'slug' => 'patchTenantGroup',
-                 'description' => 'patchTenantGroup' 
+                          'id' => $tenant->id, 
+                        'name' => 'patchTenant',
+                        'slug' => 'patchTenant',
+                 'description' => 'patchTenant' 
                 ]
             ]
         );
@@ -280,7 +280,7 @@ class testTenantGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $tenant->id );
     }
 
 
@@ -292,10 +292,10 @@ class testTenantGroups extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
         
-        $o = new TenantGroups();
-        $result = $o->deleteDetail( id: $group->id );
+        $o = new Tenants();
+        $result = $o->deleteDetail( id: $tenant->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -313,11 +313,11 @@ class testTenantGroups extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $tenant = $this->postDetail()['body'];
 
-        $o = new TenantGroups();
+        $o = new Tenants();
         $result = $o->deleteList(
-            data: [[ 'id' => $group->id ]]
+            data: [[ 'id' => $tenant->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -329,30 +329,30 @@ class testTenantGroups extends testCore
     }
 
 
-/* CREATE A TENANT GROUP
+/* CREATE A TENANT
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new TenantGroups();
+        $o = new Tenants();
 
         return $o->postDetail( 
-            name: 'testTenantGroup',
-            slug: 'testTenantGroup',
+            name: 'testTenant',
+            slug: 'testTenant',
             data: [ 
-                'description' => 'PHPUnit test TenantGroup',
+                'description' => 'PHPUnit test Tenant',
             ]
         );
     }
 
 
 
-/* DELETE A TENANT GROUP
+/* DELETE A TENANT
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new TenantGroups();
+        $o = new Tenants();
 
         return $o->deleteDetail( id: $id  );
     }

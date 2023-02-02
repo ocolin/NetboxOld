@@ -45,8 +45,9 @@
         -->
 <!--         
         <file>tests/models/tenancy/testContactRoles.php</file>
- -->
         <file>tests/models/tenancy/testTenantGroups.php</file>
+ -->
+        <file>tests/models/tenancy/testTenants.php</file>
             
             
             
