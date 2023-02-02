@@ -39,56 +39,56 @@ class testSiteGroups extends testCore
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-public function testGetDetail() : void
-{
-    // SETUP
-    $stgrp = $this->postDetail()['body'];
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $stgrp = $this->postDetail()['body'];
 
-    $o = new SiteGroups();
-    $result = $o->getDetail( id: $stgrp->id );
-    
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $o = new SiteGroups();
+        $result = $o->getDetail( id: $stgrp->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
-    // CLEAN UP
-    $this->deleteDetail( $stgrp->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $stgrp->id );
+    }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-public function testGetList() : void
-{
-    // SETUP
-    $stgrp = $this->postDetail()['body'];
+    public function testGetList() : void
+    {
+        // SETUP
+        $stgrp = $this->postDetail()['body'];
 
-    $o = new SiteGroups();
-    $result = $o->getList();
+        $o = new SiteGroups();
+        $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
-    $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
-     // CLEAN UP
-     $this->deleteDetail( $stgrp->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $stgrp->id );
+    }
 
 
 

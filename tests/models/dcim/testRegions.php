@@ -40,56 +40,56 @@ class testRegions extends testCore
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-public function testGetDetail() : void
-{
-    // SETUP
-    $region = $this->postDetail()['body'];
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $region = $this->postDetail()['body'];
 
-    $o = new Regions();
-    $result = $o->getDetail( id: $region->id );
-    
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $o = new Regions();
+        $result = $o->getDetail( id: $region->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
-    // CLEAN UP
-    $this->deleteDetail( $region->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $region->id );
+    }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-public function testGetList() : void
-{
-    // SETUP
-    $region = $this->postDetail()['body'];
+    public function testGetList() : void
+    {
+        // SETUP
+        $region = $this->postDetail()['body'];
 
-    $o = new Regions();
-    $result = $o->getList();
+        $o = new Regions();
+        $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
-    $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
-     // CLEAN UP
-     $this->deleteDetail( $region->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $region->id );
+    }
 
 
 
@@ -330,7 +330,7 @@ public function testGetList() : void
     }
 
 
-/* CREATE A SITE
+/* CREATE A REGION
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
@@ -348,7 +348,7 @@ public function testGetList() : void
 
 
 
-/* DELETE A RIR
+/* DELETE A REGION
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )

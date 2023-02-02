@@ -39,56 +39,56 @@ class testRackRoles extends testCore
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-public function testGetDetail() : void
-{
-    // SETUP
-    $role = $this->postDetail()['body'];
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $role = $this->postDetail()['body'];
 
-    $o = new RackRoles();
-    $result = $o->getDetail( id: $role->id );
-    
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $o = new RackRoles();
+        $result = $o->getDetail( id: $role->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
-    // CLEAN UP
-    $this->deleteDetail( $role->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $role->id );
+    }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-public function testGetList() : void
-{
-    // SETUP
-    $role = $this->postDetail()['body'];
+    public function testGetList() : void
+    {
+        // SETUP
+        $role = $this->postDetail()['body'];
 
-    $o = new RackRoles();
-    $result = $o->getList();
+        $o = new RackRoles();
+        $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
-    $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
-     // CLEAN UP
-     $this->deleteDetail( $role->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $role->id );
+    }
 
 
 

@@ -39,56 +39,56 @@ class testVirtualChassis extends testCore
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-public function testGetDetail() : void
-{
-    // SETUP
-    $vchas = $this->postDetail()['body'];
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $vchas = $this->postDetail()['body'];
 
-    $o = new VirtualChassis();
-    $result = $o->getDetail( id: $vchas->id );
-    
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $o = new VirtualChassis();
+        $result = $o->getDetail( id: $vchas->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
-    // CLEAN UP
-    $this->deleteDetail( $vchas->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $vchas->id );
+    }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-public function testGetList() : void
-{
-    // SETUP
-    $vchas = $this->postDetail()['body'];
+    public function testGetList() : void
+    {
+        // SETUP
+        $vchas = $this->postDetail()['body'];
 
-    $o = new VirtualChassis();
-    $result = $o->getList();
+        $o = new VirtualChassis();
+        $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
-    $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
-     // CLEAN UP
-     $this->deleteDetail( $vchas->id );
-}
+        // CLEAN UP
+        $this->deleteDetail( $vchas->id );
+    }
 
 
 

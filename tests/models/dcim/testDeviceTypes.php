@@ -8,19 +8,21 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testInventoryItemRoles extends testCore
+class testDeviceTypes extends testCore
 {
     public function __construct()
     {
         parent::__construct();
     }
 
+
+
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
     public function testOptions()
     {
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -42,10 +44,10 @@ class testInventoryItemRoles extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
-        $result = $o->getDetail( id: $role->id );
+        $o = new DeviceTypes();
+        $result = $o->getDetail( id: $devtype->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -58,7 +60,7 @@ class testInventoryItemRoles extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $role->id );
+        $this->deleteDetail( $devtype->id );
     }
 
 
@@ -69,9 +71,9 @@ class testInventoryItemRoles extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -87,7 +89,7 @@ class testInventoryItemRoles extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $role->id );
+        $this->deleteDetail( $devtype->id );
     }
 
 
@@ -97,8 +99,8 @@ class testInventoryItemRoles extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new InventoryItemRoles();
-        $result = $this->postDetail();
+        $o = new DeviceTypes();
+        $result = $this->postDetail( manf: $_ENV['manf']->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -111,7 +113,7 @@ class testInventoryItemRoles extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result['body']->id );
     }
 
 
@@ -121,11 +123,19 @@ class testInventoryItemRoles extends testCore
 
     public function testPostList() :void
     {
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->postList(
         data: [
-            [ 'name' => 'testInventoryItemRoles1', 'slug' => 'aaa' ],
-            [ 'name' => 'testInventoryItemRoles2', 'slug' => 'bbb' ],
+            [ 
+                'name' => 'testDeviceType1', 
+                'slug' => 'aaa', 
+                'manufacturer' => $_ENV['manf']->id
+            ],
+            [ 
+                'name' => 'testDeviceType2', 
+                'slug' => 'bbb', 
+                'manufacturer' => $_ENV['manf']->id 
+            ],
         ]  
         );
 
@@ -139,9 +149,9 @@ class testInventoryItemRoles extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $role )
+        foreach( $result['body'] AS $devtype )
         {
-            $this->deleteDetail( id: $role->id );
+            $this->deleteDetail( id: $devtype->id );
         }
     }
 
@@ -153,14 +163,14 @@ class testInventoryItemRoles extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->putDetail( 
-              id: $role->id, 
-            name: 'updateInventoryItemRoles', 
-            slug: 'updateInventoryItemRoles',
-            data: [ 'description' => 'Updated description' ]
+              id: $devtype->id, 
+            name: 'updateDeviceType', 
+            slug: 'updateDeviceType',
+            manufacturer: $_ENV['manf']->id
         );
         
         
@@ -175,7 +185,7 @@ class testInventoryItemRoles extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $role->id );
+        $this->deleteDetail( $devtype->id );
     }
 
 
@@ -186,16 +196,16 @@ class testInventoryItemRoles extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->putList(
             data: [
                 [ 
-                           'id'   => $role->id, 
-                           'name' => 'putInventoryItemRoles',
-                           'slug' => 'putInventoryItemRoles',
-                    'description' => 'Updated description'
+                           'id'   => $devtype->id, 
+                           'name' => 'putRegion',
+                           'slug' => 'putRegion',
+                    'manufacturer' => $_EMV['manf']->id
                 ]
             ]
         );
@@ -211,7 +221,7 @@ class testInventoryItemRoles extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $role->id );
+        $this->deleteDetail( $devtype->id );
     }
 
 
@@ -222,14 +232,14 @@ class testInventoryItemRoles extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->patchDetail(
-              id: $role->id,
-            name: 'patchInventoryItemRoles',
-            slug: 'patchInventoryItemRoles',
-            data: [ 'description' => 'zzz' ]
+              id: $devtype->id,
+            name: 'patchDeviceType',
+            slug: 'patchDeviceType',
+            manufacturer: $_ENV['manf']->id
         );
 
         $this->assertIsArray( $result );
@@ -244,7 +254,7 @@ class testInventoryItemRoles extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $role->id );
+        $this->deleteDetail( $devtype->id );
     }
 
 
@@ -255,16 +265,16 @@ class testInventoryItemRoles extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->patchList(
             data: [
                 [ 
-                          'id' => $role->id, 
-                        'name' => 'patchInventoryItemRoles',
-                        'slug' => 'patchInventoryItemRoles',
-                 'description' => 'patchInventoryItemRoles' 
+                          'id' => $devtype->id, 
+                        'name' => 'patchRegion',
+                        'slug' => 'patchRegion',
+                 'manufacturer' => $_ENV['manf']->id 
                 ]
             ]
         );
@@ -280,7 +290,7 @@ class testInventoryItemRoles extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $role->id );
+        $this->deleteDetail( $devtype->id );
     }
 
 
@@ -292,10 +302,10 @@ class testInventoryItemRoles extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
         
-        $o = new InventoryItemRoles();
-        $result = $o->deleteDetail( id: $role->id );
+        $o = new DeviceTypes();
+        $result = $o->deleteDetail( id: $devtype->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -313,11 +323,11 @@ class testInventoryItemRoles extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $role = $this->postDetail()['body'];
+        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
 
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
         $result = $o->deleteList(
-            data: [[ 'id' => $role->id ]]
+            data: [[ 'id' => $devtype->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -329,32 +339,61 @@ class testInventoryItemRoles extends testCore
     }
 
 
-/* CREATE A RACK ROLES
+/* CREATE A DEVICE TYPES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail( int $manf ) : array
     {
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
 
         return $o->postDetail( 
-            name: 'testInventoryItemRoles',
-            slug: 'testInventoryItemRoles',
-            data: [ 
-                'description' => 'PHPUnit test InventoryItemRoles',
-            ]
+            name: 'testDeviceType',
+            slug: 'testDeviceType',
+            manufacturer: $manf
         );
     }
 
 
 
-/* DELETE A RACK ROLES
+/* DELETE A DEVICE TYPES
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new InventoryItemRoles();
+        $o = new DeviceTypes();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+/*
+---------------------------------------------------------------------------- */
+
+/**
+* @beforeClass
+*/
+    public static function setupDevType()
+    {
+        $o = new Manufacturer();
+        $_ENV['manf'] = $o->postDetail(
+            name: 'phptestunit_manf',
+            slug: 'phptestunit_manf'
+        )['body'];
+    }
+
+
+
+/*
+---------------------------------------------------------------------------- */
+
+/**
+* @afterClass
+*/
+    public static function closeDevType()
+    {
+        $o = new Manufacturer();
+        $o->deleteDetail( id: $_ENV['manf']->id );
+        unset( $_ENV['manf'] );
     }
 
 }
