@@ -229,6 +229,24 @@ class testCore extends \PHPUnit\Framework\TestCase
     }
 
 
+/* POWER PANEL
+---------------------------------------------------------------------------- */
+
+    public static function createPowerPanel( object $site ) : object
+    {
+        $o = new DCIM\PowerPanels();
+        return $o->postDetail( 
+            name: 'PHPUnit_PowerPanel',
+            site: $site->id
+        )['body'];
+    }
+
+    public static function destroyPowerPanel( object $panel ) : void
+    {
+        $o = new DCIM\PowerPanels();
+        $o->deleteDetail( id: $panrl->id );
+    }
+
 
 /* DEVICE
 ---------------------------------------------------------------------------- */
