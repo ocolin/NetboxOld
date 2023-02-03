@@ -224,6 +224,4 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o->deleteDetail( id: $device->id );    
     }
 
-
-
 }
