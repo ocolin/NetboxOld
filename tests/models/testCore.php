@@ -198,7 +198,6 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $site,
         object $tenant,
         object $devicetype,
-        object $location,
         object $devicerole,
         object $virtual_chassis,
         object $rack
@@ -212,7 +211,6 @@ class testCore extends \PHPUnit\Framework\TestCase
                        site: $site->id,
                      tenant: $tenant->id,
                 device_type: $devicetype->id,
-                   location: $location->id,
                 device_role: $devicerole->id,
             virtual_chassis: $virtual_chassis->id,
                        rack: $rack->id,
