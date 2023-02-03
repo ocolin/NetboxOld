@@ -34,17 +34,25 @@ class Devices extends DCIM
            int $device_type,
            int $device_role,
            int $tenant,
+           int $site,
+           int $rack,
+           int $virtual_chassis,
+           int $vc_position,
         string $name,
         string $face,
          array $options = [],
          array $headers = []
     ) : array
     {
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['device_role'] = $device_role;
-        $options['tenant']      = $tenant;
-        $options['face']        = $face;
+        $options['name']            = $name;
+        $options['device_type']     = $device_type;
+        $options['device_role']     = $device_role;
+        $options['tenant']          = $tenant;
+        $options['face']            = $face;
+        $options['site']            = $site;
+        $options['rack']            = $rack;
+        $options['virtual_chassis'] = $virtual_chassis;
+        $options['vc_position']     = $vc_position;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -76,6 +84,10 @@ class Devices extends DCIM
            int $device_type,
            int $device_role,
            int $tenant,
+           int $site,
+           int $rack,
+           int $virtual_chassis,
+           int $vc_position,
         string $name,
         string $face,
          array $options = [],
@@ -83,11 +95,15 @@ class Devices extends DCIM
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['device_role'] = $device_role;
-        $options['tenant']      = $tenant;
-        $options['face']        = $face;
+        $options['name']            = $name;
+        $options['device_type']     = $device_type;
+        $options['device_role']     = $device_role;
+        $options['tenant']          = $tenant;
+        $options['face']            = $face;
+        $options['site']            = $site;
+        $options['rack']            = $rack;
+        $options['virtual_chassis'] = $virtual_chassis;
+        $options['vc_position']     = $vc_position;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -119,6 +135,10 @@ class Devices extends DCIM
            int $device_type,
            int $device_role,
            int $tenant,
+           int $site,
+           int $rack,
+           int $virtual_chassis,
+           int $vc_position,
         string $name,
         string $face,
          array $options = [],
@@ -126,12 +146,15 @@ class Devices extends DCIM
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['device_role'] = $device_role;
-        $options['tenant']      = $tenant;
-        $options['face']        = $face;
-
+        $options['name']            = $name;
+        $options['device_type']     = $device_type;
+        $options['device_role']     = $device_role;
+        $options['tenant']          = $tenant;
+        $options['face']            = $face;
+        $options['site']            = $site;
+        $options['rack']            = $rack;
+        $options['virtual_chassis'] = $virtual_chassis;
+        $options['vc_position']     = $vc_position;
 
         return $this->http->put(
                 uri: $this->uri,
