@@ -124,7 +124,7 @@ class testRegions extends testCore
     {
         $o = new Regions();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testRegion1', 'slug' => 'aaa' ],
             [ 'name' => 'testRegion2', 'slug' => 'bbb' ],
         ]  
@@ -161,7 +161,7 @@ class testRegions extends testCore
               id: $region->id, 
             name: 'updateRegion', 
             slug: 'updateRegion',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,7 +191,7 @@ class testRegions extends testCore
 
         $o = new Regions();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $region->id, 
                            'name' => 'putRegion',
@@ -230,7 +230,7 @@ class testRegions extends testCore
               id: $region->id,
             name: 'patchRegion',
             slug: 'patchRegion',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ class testRegions extends testCore
 
         $o = new Regions();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $region->id, 
                         'name' => 'patchRegion',
@@ -318,7 +318,7 @@ class testRegions extends testCore
 
         $o = new Regions();
         $result = $o->deleteList(
-            data: [[ 'id' => $region->id ]]
+            options: [[ 'id' => $region->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,7 +340,7 @@ class testRegions extends testCore
         return $o->postDetail( 
             name: 'testRegion',
             slug: 'testRegion',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post Region',
             ]
         );

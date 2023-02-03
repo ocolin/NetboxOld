@@ -123,7 +123,7 @@ class testSiteGroups extends testCore
     {
         $o = new SiteGroups();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testSiteGroup1', 'slug' => 'aaa' ],
             [ 'name' => 'testSiteGroup2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testSiteGroups extends testCore
               id: $stgrp->id, 
             name: 'updateSiteGroup', 
             slug: 'updateSiteGroup',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testSiteGroups extends testCore
 
         $o = new SiteGroups();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $stgrp->id, 
                            'name' => 'putSiteGroup',
@@ -229,7 +229,7 @@ class testSiteGroups extends testCore
               id: $stgrp->id,
             name: 'patchSiteGroup',
             slug: 'patchSiteGroup',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testSiteGroups extends testCore
 
         $o = new SiteGroups();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $stgrp->id, 
                         'name' => 'patchSiteGroups',
@@ -317,7 +317,7 @@ class testSiteGroups extends testCore
 
         $o = new SiteGroups();
         $result = $o->deleteList(
-            data: [[ 'id' => $stgrp->id ]]
+            options: [[ 'id' => $stgrp->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testSiteGroups extends testCore
         return $o->postDetail( 
             name: 'testSiteGroups',
             slug: 'testSiteGroups',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test SiteGroups',
             ]
         );

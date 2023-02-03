@@ -23,7 +23,7 @@ class ConsolePortTemplates extends DCIM
 *
 * @param string  $name Name of ConsolePortTemplates.
 * @param integer $device_type ID of device type. 
-* @param array   $data optionsl data to be sent
+* @param array   $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -31,16 +31,16 @@ class ConsolePortTemplates extends DCIM
     public function postDetail(
            int $device_type,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name']         = $name;
-        $data['device_type'] = $device_type;
+        $options['name']         = $name;
+        $options['device_type'] = $device_type;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -56,7 +56,7 @@ class ConsolePortTemplates extends DCIM
 * @param integer $id Numerical ID of ConsolePortTemplates to update.
 * @param string  $name Name of ConsolePortTemplates to update.
 * @param integer $device_type ID of device type.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,18 +65,18 @@ class ConsolePortTemplates extends DCIM
            int $id,
            int $device_type,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
         
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -92,7 +92,7 @@ class ConsolePortTemplates extends DCIM
 * @param integer $id Numerical ID of ConsolePortTemplates to update.
 * @param string  $name Name of ConsolePortTemplates to update.
 * @param string  $slug Slug of ConsolePortTemplates to update.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -101,18 +101,18 @@ class ConsolePortTemplates extends DCIM
            int $id,
            int $device_type,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
 
 
         return $this->http->put(
                  uri: $this->uri,
-                body: $data,
+                body: $options,
              headers: $headers
         );
     }

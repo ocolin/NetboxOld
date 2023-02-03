@@ -27,7 +27,7 @@ class UsersUsers extends Users
 *
 * @param string $username Login username.
 * @param string $password Login password.
-* @param array  $data optionsl data to be sent.
+* @param array  $options optionsl data to be sent.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -35,16 +35,16 @@ class UsersUsers extends Users
     public function postDetail(
         string $username,
         string $password,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['username'] = $username;
-        $data['password'] = $password;
+        $options['username'] = $username;
+        $options['password'] = $password;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -60,7 +60,7 @@ class UsersUsers extends Users
 * @param integer $id Numerical ID of User to update.
 * @param string  $username Login username.
 * @param string  $password Login password.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -69,17 +69,17 @@ class UsersUsers extends Users
            int $id,
         string $username,
         string $password,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['username'] = $username;
-        $data['password'] = $password;
+        $options['username'] = $username;
+        $options['password'] = $password;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -95,7 +95,7 @@ class UsersUsers extends Users
 * @param integer $id Numerical ID of User to update.
 * @param string  $username Login username.
 * @param string  $password Login password.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -104,17 +104,17 @@ class UsersUsers extends Users
            int $id,
         string $username,
         string $password,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['username'] = $username;
-        $data['password'] = $password;
+        $options['username'] = $username;
+        $options['password'] = $password;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

@@ -24,7 +24,7 @@ class FrontPortTemplates extends DCIM
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
 * @param string  $type port type.
-* @param array   $data optionsl data to be sent
+* @param array   $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -33,17 +33,17 @@ class FrontPortTemplates extends DCIM
            int $device_type,
         string $name,
         string $type,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
-        $data['type']        = $type;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
+        $options['type']        = $type;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -60,7 +60,7 @@ class FrontPortTemplates extends DCIM
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
 * @param string  $type Port type.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,18 +70,18 @@ class FrontPortTemplates extends DCIM
         string $name,
            int $device_type,
         string $type,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
-        $data['type']        = $type;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
+        $options['type']        = $type;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -98,7 +98,7 @@ class FrontPortTemplates extends DCIM
 * @param string  $name Name of template.
 * @param integer $device_typeoo ID of device type. 
 * @param string  $type Port type.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -108,19 +108,19 @@ class FrontPortTemplates extends DCIM
         string $name,
            int $device_type,
         string $type,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
-        $data['type']        = $type;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
+        $options['type']        = $type;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

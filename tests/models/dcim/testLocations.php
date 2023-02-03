@@ -126,7 +126,7 @@ class testLocations extends testCore
     {
         $o = new Locations();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'name' => 'loc1', 'slug' => 'loc1', 'site' => $_ENV['site']->id ],
                 [ 'name' => 'loc2', 'slug' => 'loc2', 'site' => $_ENV['site']->id ]
             ]  
@@ -164,7 +164,7 @@ class testLocations extends testCore
                name: 'putLocation', 
                slug: 'putLocation',
                site: $_ENV['site']->id, 
-               data: [ 'description' => 'Updated description' ]
+               options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -193,7 +193,7 @@ class testLocations extends testCore
 
         $o = new Locations();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                              'id' => $loc->id, 
                            'name' => 'location1test',
@@ -234,7 +234,7 @@ class testLocations extends testCore
                name: 'patchLocationTest',
                slug: 'patchLocationTest',
                site: $_ENV['site']->id,
-               data: [ 'description' => 'Patch Location' ]
+               options: [ 'description' => 'Patch Location' ]
         );
 
         $this->assertIsArray( $result );
@@ -264,7 +264,7 @@ class testLocations extends testCore
 
         $o = new Locations();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                              'id' => $loc->id, 
                            'name' => 'patchLocationTest',
@@ -323,7 +323,7 @@ class testLocations extends testCore
 
         $o = new Locations();
         $result = $o->deleteList(
-            data: [[ 'id' => $loc->id ]]
+            options: [[ 'id' => $loc->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -347,7 +347,7 @@ class testLocations extends testCore
                name: 'phpunit_location',
                slug: 'phpunit_location',
                site: $site,
-              data: [ 
+              options: [ 
                     'description' => 'PHPUnit test Locations',
               ]
         );

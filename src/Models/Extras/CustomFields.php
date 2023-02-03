@@ -23,22 +23,22 @@ class CustomFields extends Extras
 * Create a single Custom Field.
 *
 * @param array  $content_types Array of content types.
-* @param array  $data optional data to be sent.
+* @param array  $options optional data to be sent.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
          array $content_types,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['content_types'] = $content_types;
+        $options['content_types'] = $content_types;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -53,7 +53,7 @@ class CustomFields extends Extras
 * 
 * @param integer $id Numerical ID of Custom Field to update.
 * @param array  $content_types Array of content types.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -61,16 +61,16 @@ class CustomFields extends Extras
     public function putDetail(
            int $id,
          array $content_types,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['content_types'] = $content_types;
+        $options['content_types'] = $content_types;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -85,7 +85,7 @@ class CustomFields extends Extras
 *
 * @param integer $id Numerical ID of Custom Field to update.
 * @param array  $content_types Array of content types.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -93,16 +93,16 @@ class CustomFields extends Extras
     public function patchDetail(
            int $id,
          array $content_types,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['content_types'] = $content_types;
+        $options['content_types'] = $content_types;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

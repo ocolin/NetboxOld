@@ -23,25 +23,25 @@ class ConfigContexts extends Extras
 * Create a single Context.
 *
 * @param string  $name Name of context.
-* @param string  $data Context data.
-* @param array  $data optionsl data to be sent.
+* @param string  $options Context data.
+* @param array  $options optionsl data to be sent.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
-        string $data,
-         array $data    = [],
+        string $optionsdata,
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name'] = $name;
-        $data['data'] = $data;
+        $options['name'] = $name;
+        $options['data'] = $optionsdata;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -56,8 +56,8 @@ class ConfigContexts extends Extras
 * 
 * @param integer $id Numerical ID of Context to update.
 * @param string  $name Name of context.
-* @param string  $data Context data.
-* @param array   $data Optional data to send.
+* @param string  $options Context data.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,18 +65,18 @@ class ConfigContexts extends Extras
     public function putDetail(
            int $id,
         string $name,
-        string $data,
-         array $data    = [],
+        string $optionsdata,
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
-        $data['data'] = $data;
+        $options['name'] = $name;
+        $options['data'] = $options;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -91,8 +91,8 @@ class ConfigContexts extends Extras
 *
 * @param integer $id Numerical ID of Context to update.
 * @param string  $name Name of context.
-* @param string  $data Context data.
-* @param array   $data Optional data to modify.
+* @param string  $options Context data.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -100,18 +100,18 @@ class ConfigContexts extends Extras
     public function patchDetail(
            int $id,
         string $name,
-        string $data,
-         array $data    = [],
+        string $optionsdata,
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
-        $data['data'] = $data;
+        $options['name'] = $name;
+        $options['data'] = $optionsdata;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

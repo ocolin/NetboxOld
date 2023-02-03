@@ -26,7 +26,7 @@ class CustomLinks extends Extras
 * @param string $name Name of custom link.
 * @param string $link_text Text of HTTP link.
 * @param string $link_url HTTP link.
-* @param array  $data optionsl data to be sent.
+* @param array  $options optionsl data to be sent.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,18 +36,18 @@ class CustomLinks extends Extras
         string $name,
         string $link_text,
         string $link_url,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['content_type'] = $content_type;
-        $data['name']         = $name;
-        $data['link_text']    = $link_text;
-        $data['link_url']     = $link_url;
+        $options['content_type'] = $content_type;
+        $options['name']         = $name;
+        $options['link_text']    = $link_text;
+        $options['link_url']     = $link_url;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -65,7 +65,7 @@ class CustomLinks extends Extras
 * @param string  $name Name of custom link.
 * @param string  $link_text Text of HTTP link.
 * @param string  $link_url HTTP link.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -75,19 +75,19 @@ class CustomLinks extends Extras
         string $name,
         string $link_text,
         string $link_url,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['content_type'] = $content_type;
-        $data['name']         = $name;
-        $data['link_text']    = $link_text;
-        $data['link_url']     = $link_url;
+        $options['content_type'] = $content_type;
+        $options['name']         = $name;
+        $options['link_text']    = $link_text;
+        $options['link_url']     = $link_url;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -105,7 +105,7 @@ class CustomLinks extends Extras
 * @param string  $name Name of custom link.
 * @param string  $link_text Text of HTTP link.
 * @param string  $link_url HTTP link.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -115,19 +115,19 @@ class CustomLinks extends Extras
         string $name,
         string $link_text,
         string $link_url,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['content_type'] = $content_type;
-        $data['name']         = $name;
-        $data['link_text']    = $link_text;
-        $data['link_url']     = $link_url;
+        $options['content_type'] = $content_type;
+        $options['name']         = $name;
+        $options['link_text']    = $link_text;
+        $options['link_url']     = $link_url;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

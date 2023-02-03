@@ -123,7 +123,7 @@ class testInventoryItemRoles extends testCore
     {
         $o = new InventoryItemRoles();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testInventoryItemRoles1', 'slug' => 'aaa' ],
             [ 'name' => 'testInventoryItemRoles2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testInventoryItemRoles extends testCore
               id: $role->id, 
             name: 'updateInventoryItemRoles', 
             slug: 'updateInventoryItemRoles',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testInventoryItemRoles extends testCore
 
         $o = new InventoryItemRoles();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $role->id, 
                            'name' => 'putInventoryItemRoles',
@@ -229,7 +229,7 @@ class testInventoryItemRoles extends testCore
               id: $role->id,
             name: 'patchInventoryItemRoles',
             slug: 'patchInventoryItemRoles',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testInventoryItemRoles extends testCore
 
         $o = new InventoryItemRoles();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $role->id, 
                         'name' => 'patchInventoryItemRoles',
@@ -317,7 +317,7 @@ class testInventoryItemRoles extends testCore
 
         $o = new InventoryItemRoles();
         $result = $o->deleteList(
-            data: [[ 'id' => $role->id ]]
+            options: [[ 'id' => $role->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testInventoryItemRoles extends testCore
         return $o->postDetail( 
             name: 'testInventoryItemRoles',
             slug: 'testInventoryItemRoles',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test InventoryItemRoles',
             ]
         );

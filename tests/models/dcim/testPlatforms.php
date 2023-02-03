@@ -124,7 +124,7 @@ class testPlatforms extends testCore
     {
         $o = new Platforms();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testPlatform1', 'slug' => 'aaa' ],
             [ 'name' => 'testPlatform2', 'slug' => 'bbb' ],
         ]  
@@ -161,7 +161,7 @@ class testPlatforms extends testCore
               id: $plat->id, 
             name: 'updatePlatform', 
             slug: 'updatePlatform',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,7 +191,7 @@ class testPlatforms extends testCore
 
         $o = new Platforms();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $plat->id, 
                            'name' => 'putPlatform',
@@ -230,7 +230,7 @@ class testPlatforms extends testCore
               id: $plat->id,
             name: 'patchPlatform',
             slug: 'patchPlatform',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ class testPlatforms extends testCore
 
         $o = new Platforms();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $plat->id, 
                         'name' => 'patchPlatform',
@@ -318,7 +318,7 @@ class testPlatforms extends testCore
 
         $o = new Platforms();
         $result = $o->deleteList(
-            data: [[ 'id' => $plat->id ]]
+            options: [[ 'id' => $plat->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,7 +340,7 @@ class testPlatforms extends testCore
         return $o->postDetail( 
             name: 'testPlatform',
             slug: 'testPlatform',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test Platform',
             ]
         );

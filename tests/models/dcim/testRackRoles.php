@@ -123,7 +123,7 @@ class testRackRoles extends testCore
     {
         $o = new RackRoles();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testRackRoles1', 'slug' => 'aaa' ],
             [ 'name' => 'testRackRoles2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testRackRoles extends testCore
               id: $role->id, 
             name: 'updateRackRoles', 
             slug: 'updateRackRoles',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testRackRoles extends testCore
 
         $o = new RackRoles();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $role->id, 
                            'name' => 'putRackRoles',
@@ -229,7 +229,7 @@ class testRackRoles extends testCore
               id: $role->id,
             name: 'patchRackRoles',
             slug: 'patchRackRoles',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testRackRoles extends testCore
 
         $o = new RackRoles();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $role->id, 
                         'name' => 'patchRackRoles',
@@ -317,7 +317,7 @@ class testRackRoles extends testCore
 
         $o = new RackRoles();
         $result = $o->deleteList(
-            data: [[ 'id' => $role->id ]]
+            options: [[ 'id' => $role->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testRackRoles extends testCore
         return $o->postDetail( 
             name: 'testRackRoles',
             slug: 'testRackRoles',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test RackRoles',
             ]
         );

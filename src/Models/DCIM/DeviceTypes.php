@@ -23,7 +23,7 @@ class DeviceTypes extends DCIM
 *
 * @param string $model Name of DeviceType.
 * @param string $slug 
-* @param array  $data optionsl data to be sent
+* @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -32,17 +32,17 @@ class DeviceTypes extends DCIM
            int $manufacturer,
         string $model,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['model']        = $model;
-        $data['slug']         = $slug;
-        $data['manufacturer'] = $manufacturer;
+        $options['model']        = $model;
+        $options['slug']         = $slug;
+        $options['manufacturer'] = $manufacturer;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -58,7 +58,7 @@ class DeviceTypes extends DCIM
 * @param integer $id Numerical ID of DeviceType to update.
 * @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -68,19 +68,19 @@ class DeviceTypes extends DCIM
            int $manufacturer,
         string $model,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['model']        = $model;
-        $data['slug']         = $slug;
-        $data['manufacturer'] = $manufacturer;
+        $options['model']        = $model;
+        $options['slug']         = $slug;
+        $options['manufacturer'] = $manufacturer;
         
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -96,7 +96,7 @@ class DeviceTypes extends DCIM
 * @param integer $id Numerical ID of DeviceType to update.
 * @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -106,19 +106,19 @@ class DeviceTypes extends DCIM
            int $manufacturer,
         string $model,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['model']        = $model;
-        $data['slug']         = $slug;
-        $data['manufacturer'] = $manufacturer;
+        $options['model']        = $model;
+        $options['slug']         = $slug;
+        $options['manufacturer'] = $manufacturer;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

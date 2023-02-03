@@ -24,7 +24,7 @@ class PowerPanels extends DCIM
 *
 * @param string  $name Name of panel.
 * @param integer $site ID of site the panel belongs to. 
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -32,16 +32,16 @@ class PowerPanels extends DCIM
     public function postDetail(
            int $site,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name']   = $name;
-        $data['site'] = $site;
+        $options['name'] = $name;
+        $options['site'] = $site;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -57,7 +57,7 @@ class PowerPanels extends DCIM
 * @param integer $id Numerical ID of Bay to update.
 * @param string  $name Name of panel.
 * @param integer $site ID of site the panel belongs to. 
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -66,17 +66,17 @@ class PowerPanels extends DCIM
            int $id,
         string $name,
            int $site,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']   = $name;
-        $data['site']   = $site;
+        $options['name'] = $name;
+        $options['site'] = $site;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -92,7 +92,7 @@ class PowerPanels extends DCIM
 * @param integer $id Numerical ID of Bay to update.
 * @param string  $name Name of panel.
 * @param integer $site ID of site the panel belongs to. 
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -101,18 +101,18 @@ class PowerPanels extends DCIM
            int $id,
         string $name,
            int $site,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']   = $name;
-        $data['site']   = $site;
+        $options['name'] = $name;
+        $options['site'] = $site;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

@@ -123,7 +123,7 @@ class testTenants extends testCore
     {
         $o = new Tenants();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testTenant1', 'slug' => 'aaa' ],
             [ 'name' => 'testTenant2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testTenants extends testCore
               id: $tenant->id, 
             name: 'updateTenant', 
             slug: 'updateTenant',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testTenants extends testCore
 
         $o = new Tenants();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $tenant->id, 
                            'name' => 'putTenant',
@@ -229,7 +229,7 @@ class testTenants extends testCore
               id: $tenant->id,
             name: 'patchTenant',
             slug: 'patchTenant',
-            data: [ 'description' => 'Tenant test' ]
+            options: [ 'description' => 'Tenant test' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testTenants extends testCore
 
         $o = new Tenants();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $tenant->id, 
                         'name' => 'patchTenant',
@@ -317,7 +317,7 @@ class testTenants extends testCore
 
         $o = new Tenants();
         $result = $o->deleteList(
-            data: [[ 'id' => $tenant->id ]]
+            options: [[ 'id' => $tenant->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testTenants extends testCore
         return $o->postDetail( 
             name: 'testTenant',
             slug: 'testTenant',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test Tenant',
             ]
         );

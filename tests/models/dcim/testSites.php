@@ -124,7 +124,7 @@ class testSites extends testCore
     {
         $o = new Sites();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testSite1', 'slug' => 'aaa' ],
             [ 'name' => 'testSite2', 'slug' => 'bbb' ],
         ]  
@@ -161,7 +161,7 @@ class testSites extends testCore
               id: $site->id, 
             name: 'updateSite', 
             slug: 'updateSite',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,7 +191,7 @@ class testSites extends testCore
 
         $o = new Sites();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $site->id, 
                            'name' => 'putSite',
@@ -230,7 +230,7 @@ class testSites extends testCore
               id: $site->id,
             name: 'patchSite',
             slug: 'patchSite',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ class testSites extends testCore
 
         $o = new Sites();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $site->id, 
                         'name' => 'patchSite',
@@ -318,7 +318,7 @@ class testSites extends testCore
 
         $o = new Sites();
         $result = $o->deleteList(
-            data: [[ 'id' => $site->id ]]
+            options: [[ 'id' => $site->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,7 +340,7 @@ class testSites extends testCore
         return $o->postDetail( 
             name: 'testSite',
             slug: 'testSite',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post Site',
             ]
         );

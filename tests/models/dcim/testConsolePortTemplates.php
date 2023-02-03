@@ -125,7 +125,7 @@ class testConsolePortTemplates extends testCore
     {
         $o = new ConsolePortTemplates();
         $result = $o->postList(
-        data: [
+        options: [
             [ 
                 'name'        => 'testConsolePortTemplate', 
                 'device_type' => $_ENV['devtype']->id
@@ -197,7 +197,7 @@ class testConsolePortTemplates extends testCore
 
         $o = new ConsolePortTemplates();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $porttemp->id, 
                            'name' => 'putConsolePortTemplate',
@@ -264,7 +264,7 @@ class testConsolePortTemplates extends testCore
 
         $o = new ConsolePortTemplates();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $porttemp->id, 
                         'name' => 'patchConsolePortTemplate',
@@ -321,7 +321,7 @@ class testConsolePortTemplates extends testCore
 
         $o = new ConsolePortTemplates();
         $result = $o->deleteList(
-            data: [[ 'id' => $porttemp->id ]]
+            options: [[ 'id' => $porttemp->id ]]
         );
 
         $this->assertIsArray( $result );

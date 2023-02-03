@@ -27,22 +27,22 @@ class Tokens extends Users
 * Create a single Token.
 *
 * @param integet $user ID of user with token.
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
            int $user,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['user'] = $user;
+        $options['user'] = $user;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -57,7 +57,7 @@ class Tokens extends Users
 * 
 * @param integer $id Numerical ID of Group to update.
 * @param integet $user ID of user with token.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,16 +65,16 @@ class Tokens extends Users
     public function putDetail(
            int $id,
            int $user,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['user'] = $user;
+        $options['user'] = $user;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -89,7 +89,7 @@ class Tokens extends Users
 *
 * @param integer $id Numerical ID of Group to update.
 * @param integet $user ID of user with token.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -97,16 +97,16 @@ class Tokens extends Users
     public function patchDetail(
            int $id,
            int $user,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['user'] = $user;
+        $options['user'] = $user;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

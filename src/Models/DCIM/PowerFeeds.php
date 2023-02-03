@@ -24,7 +24,7 @@ class PowerFeeds extends DCIM
 *
 * @param integer $power_panel ID of Power panel that feed belongs to.
 * @param string  $name Name of Power Feed.
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -32,16 +32,16 @@ class PowerFeeds extends DCIM
     public function postDetail(
            int $power_panel,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['power_panel'] = $power_panel;
-        $data['name']        = $name;
+        $options['power_panel'] = $power_panel;
+        $options['name']        = $name;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -57,7 +57,7 @@ class PowerFeeds extends DCIM
 * @param integer $id Numerical ID of Platform to update.
 * @param integer $power_panel ID of Power panel that feed belongs to.
 * @param string  $name Name of Power Feed.
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -66,17 +66,17 @@ class PowerFeeds extends DCIM
            int $power_panel,
         string $name,
         string $model,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['power_panel'] = $power_panel;
-        $data['name']        = $name;
+        $options['power_panel'] = $power_panel;
+        $options['name']        = $name;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -92,7 +92,7 @@ class PowerFeeds extends DCIM
 * @param integer $id Numerical ID of Platform to update.
 * @param integer $power_panel ID of Power panel that feed belongs to.
 * @param string  $name Name of Power Feed.
-* @param array   $data optionsl data to be sent.
+* @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -101,18 +101,18 @@ class PowerFeeds extends DCIM
            int $power_panel,
         string $name,
         string $model,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['power_panel'] = $power_panel;
-        $data['name']        = $name;
+        $options['power_panel'] = $power_panel;
+        $options['name']        = $name;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

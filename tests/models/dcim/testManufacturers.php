@@ -123,7 +123,7 @@ class testManufacturers extends testCore
     {
         $o = new Manufacturers();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testManufacturers1', 'slug' => 'aaa' ],
             [ 'name' => 'testManufacturers2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testManufacturers extends testCore
               id: $manf->id, 
             name: 'updateManufacturers', 
             slug: 'updateManufacturers',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testManufacturers extends testCore
 
         $o = new Manufacturers();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $manf->id, 
                            'name' => 'putManufacturers',
@@ -229,7 +229,7 @@ class testManufacturers extends testCore
               id: $manf->id,
             name: 'patchManufacturers',
             slug: 'patchManufacturers',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testManufacturers extends testCore
 
         $o = new Manufacturers();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $manf->id, 
                         'name' => 'patchManufacturers',
@@ -317,7 +317,7 @@ class testManufacturers extends testCore
 
         $o = new Manufacturers();
         $result = $o->deleteList(
-            data: [[ 'id' => $manf->id ]]
+            options: [[ 'id' => $manf->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testManufacturers extends testCore
         return $o->postDetail( 
             name: 'testManufacturers',
             slug: 'testManufacturers',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test Manufacturers',
             ]
         );

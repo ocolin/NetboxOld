@@ -126,7 +126,7 @@ class testDeviceTypes extends testCore
     {
         $o = new DeviceTypes();
         $result = $o->postList(
-        data: [
+        options: [
             [ 
                        'model' => 'testDeviceType1', 
                         'slug' => 'aaa', 
@@ -201,7 +201,7 @@ class testDeviceTypes extends testCore
 
         $o = new DeviceTypes();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                               'id' => $devtype->id, 
                            'model' => 'putRegion',
@@ -270,7 +270,7 @@ class testDeviceTypes extends testCore
 
         $o = new DeviceTypes();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                            'id' => $devtype->id, 
                         'model' => 'patchRegion',
@@ -328,7 +328,7 @@ class testDeviceTypes extends testCore
 
         $o = new DeviceTypes();
         $result = $o->deleteList(
-            data: [[ 'id' => $devtype->id ]]
+            options: [[ 'id' => $devtype->id ]]
         );
 
         $this->assertIsArray( $result );

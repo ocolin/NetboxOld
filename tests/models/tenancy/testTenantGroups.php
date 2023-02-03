@@ -123,7 +123,7 @@ class testTenantGroups extends testCore
     {
         $o = new TenantGroups();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testTenantGroup1', 'slug' => 'aaa' ],
             [ 'name' => 'testTenantGroup2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testTenantGroups extends testCore
               id: $group->id, 
             name: 'updateTenantGroup', 
             slug: 'updateTenantGroup',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testTenantGroups extends testCore
 
         $o = new TenantGroups();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $group->id, 
                            'name' => 'putTenantGroup',
@@ -229,7 +229,7 @@ class testTenantGroups extends testCore
               id: $group->id,
             name: 'patchTenantGroup',
             slug: 'patchTenantGroup',
-            data: [ 'description' => 'TenantGroup test' ]
+            options: [ 'description' => 'TenantGroup test' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testTenantGroups extends testCore
 
         $o = new TenantGroups();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $group->id, 
                         'name' => 'patchTenantGroup',
@@ -317,7 +317,7 @@ class testTenantGroups extends testCore
 
         $o = new TenantGroups();
         $result = $o->deleteList(
-            data: [[ 'id' => $group->id ]]
+            options: [[ 'id' => $group->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testTenantGroups extends testCore
         return $o->postDetail( 
             name: 'testTenantGroup',
             slug: 'testTenantGroup',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test TenantGroup',
             ]
         );

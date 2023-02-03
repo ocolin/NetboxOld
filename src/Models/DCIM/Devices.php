@@ -25,7 +25,7 @@ class Devices extends DCIM
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
 * #param string  $face Rack face.
-* @param array   $data optionsl data to be sent
+* @param array   $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,19 +36,19 @@ class Devices extends DCIM
            int $tenant,
         string $name,
         string $face,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
-        $data['device_role'] = $device_role;
-        $data['tenant']      = $tenant;
-        $data['face']        = $face;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
+        $options['device_role'] = $device_role;
+        $options['tenant']      = $tenant;
+        $options['face']        = $face;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -66,7 +66,7 @@ class Devices extends DCIM
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
 * #param string  $face Rack face.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -78,20 +78,20 @@ class Devices extends DCIM
            int $tenant,
         string $name,
         string $face,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
-        $data['device_role'] = $device_role;
-        $data['tenant']      = $tenant;
-        $data['face']        = $face;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
+        $options['device_role'] = $device_role;
+        $options['tenant']      = $tenant;
+        $options['face']        = $face;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -109,7 +109,7 @@ class Devices extends DCIM
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
 * #param string  $face Rack face.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -121,21 +121,21 @@ class Devices extends DCIM
            int $tenant,
         string $name,
         string $face,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']        = $name;
-        $data['device_type'] = $device_type;
-        $data['device_role'] = $device_role;
-        $data['tenant']      = $tenant;
-        $data['face']        = $face;
+        $options['name']        = $name;
+        $options['device_type'] = $device_type;
+        $options['device_role'] = $device_role;
+        $options['tenant']      = $tenant;
+        $options['face']        = $face;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

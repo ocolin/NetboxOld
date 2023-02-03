@@ -123,7 +123,7 @@ class testVirtualChassis extends testCore
     {
         $o = new VirtualChassis();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testVirtualChassis1' ],
             [ 'name' => 'testVirtualChassis2' ],
         ]  
@@ -188,7 +188,7 @@ class testVirtualChassis extends testCore
 
         $o = new VirtualChassis();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                     'id'   => $vchas->id, 
                     'name' => 'putVirtualChassis',
@@ -253,7 +253,7 @@ class testVirtualChassis extends testCore
 
         $o = new VirtualChassis();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                        'id' => $vchas->id, 
                      'name' => 'patchVirtualChassis',
@@ -309,7 +309,7 @@ class testVirtualChassis extends testCore
 
         $o = new VirtualChassis();
         $result = $o->deleteList(
-            data: [[ 'id' => $vchas->id ]]
+            options: [[ 'id' => $vchas->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -330,7 +330,7 @@ class testVirtualChassis extends testCore
 
         return $o->postDetail( 
             name: 'testVirtualChassis',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test VirtualChassis',
             ]
         );

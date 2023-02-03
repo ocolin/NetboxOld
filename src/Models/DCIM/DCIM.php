@@ -60,19 +60,19 @@ class DCIM
 /*
 * Delete a list of objects.
 * 
-* @param array $data List of object to delete. Each object must have an ID.
+* @param array $options List of object to delete. Each object must have an ID.
 * @param array $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function deleteList( 
-        array $data, 
+        array $options, 
         array $headers = [] 
     ) : array
     {
         return $this->http->delete( 
                 uri: $this->uri, 
-               body: $data, 
+               body: $options, 
             headers: $headers 
         );
     }
@@ -84,19 +84,19 @@ class DCIM
 /*
 * Update a list of objects.
 *
-* @param array $data Array of Objects to update.
+* @param array $options Array of Objects to update.
 * @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchList(
-        array $data    = [],
+        array $options    = [],
         array $headers = []
     ) : array
     {
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -109,19 +109,19 @@ class DCIM
 /*
 * Updte an array of object.
 *
-* @param array $data List of objects to update.
+* @param array $options List of objects to update.
 * @param array $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putList(
-        array $data,
+        array $options,
         array $headers = []
     ) : array
     {
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -159,20 +159,20 @@ class DCIM
 /*
 * Create multiple objects at once.
 *
-* @param array $data An array of object arrays. Each sub array MUST have a 
+* @param array $options An array of object arrays. Each sub array MUST have a 
 *  name and slug key. 
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postList(
-        array $data,
+        array $options,
         array $headers = []
     ) : array
     {
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

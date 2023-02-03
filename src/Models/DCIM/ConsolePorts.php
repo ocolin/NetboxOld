@@ -24,7 +24,7 @@ class ConsolePorts extends DCIM
 *
 * @param string  $name Name of Console Port.
 * @param integer $device ID of device port belongs to. 
-* @param array  $data optionsl data to be sent
+* @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -32,16 +32,16 @@ class ConsolePorts extends DCIM
     public function postDetail(
            int $device,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name']   = $name;
-        $data['device'] = $device;
+        $options['name']   = $name;
+        $options['device'] = $device;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -57,7 +57,7 @@ class ConsolePorts extends DCIM
 * @param integer $id Numerical ID of Consol Port to update.
 * @param string  $name Name of Console Port.
 * @param integer $device ID of device port belongs to. 
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -66,17 +66,17 @@ class ConsolePorts extends DCIM
            int $id,
         string $name,
            int $device,
-          array $data    = [],
+          array $options = [],
           array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']   = $name;
-        $data['device'] = $device;
+        $options['name']   = $name;
+        $options['device'] = $device;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -92,7 +92,7 @@ class ConsolePorts extends DCIM
 * @param integer $id Numerical ID of Console Port to update.
 * @param string  $name Name of Console Port.
 * @param integer $device ID of device port belongs to. 
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -101,18 +101,18 @@ class ConsolePorts extends DCIM
            int $id,
         string $name,
            int $device,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']   = $name;
-        $data['device'] = $device;
+        $options['name']   = $name;
+        $options['device'] = $device;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

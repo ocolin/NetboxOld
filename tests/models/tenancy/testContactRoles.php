@@ -123,7 +123,7 @@ class testContactRoles extends testCore
     {
         $o = new ContactRoles();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testContactRole1', 'slug' => 'aaa' ],
             [ 'name' => 'testContactRole2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testContactRoles extends testCore
               id: $role->id, 
             name: 'updateContactRole', 
             slug: 'updateContactRole',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testContactRoles extends testCore
 
         $o = new ContactRoles();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $role->id, 
                            'name' => 'putContactRole',
@@ -229,7 +229,7 @@ class testContactRoles extends testCore
               id: $role->id,
             name: 'patchContactRole',
             slug: 'patchContactRole',
-            data: [ 'description' => 'ContactRole test' ]
+            options: [ 'description' => 'ContactRole test' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testContactRoles extends testCore
 
         $o = new ContactRoles();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $role->id, 
                         'name' => 'patchContactRole',
@@ -317,7 +317,7 @@ class testContactRoles extends testCore
 
         $o = new ContactRoles();
         $result = $o->deleteList(
-            data: [[ 'id' => $role->id ]]
+            options: [[ 'id' => $role->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testContactRoles extends testCore
         return $o->postDetail( 
             name: 'testContactRole',
             slug: 'testContactRole',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test ContactRole',
             ]
         );

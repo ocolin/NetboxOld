@@ -23,7 +23,7 @@ class Manufacturers extends DCIM
 *
 * @param string $name Name of Manufacturer.
 * @param string $slug 
-* @param array  $data optionsl data to be sent
+* @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -31,16 +31,16 @@ class Manufacturers extends DCIM
     public function postDetail(
         string $name,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name'] = $name;
-        $data['slug'] = $slug;
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -56,7 +56,7 @@ class Manufacturers extends DCIM
 * @param integer $id Numerical ID of Manufacturer to update.
 * @param string  $name Name of Manufacturer to update.
 * @param string  $slug Slug of Manufacturer to update.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,17 +65,17 @@ class Manufacturers extends DCIM
            int $id,
         string $name,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
-        $data['slug'] = $slug;
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -91,7 +91,7 @@ class Manufacturers extends DCIM
 * @param integer $id Numerical ID of Manufacturer to update.
 * @param string  $name Name of Manufacturer to update.
 * @param string  $slug Slug of Manufacturer to update.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -100,17 +100,17 @@ class Manufacturers extends DCIM
            int $id,
         string $name,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
-        $data['slug'] = $slug;
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

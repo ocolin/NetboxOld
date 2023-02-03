@@ -123,7 +123,7 @@ class testDeviceRoles extends testCore
     {
         $o = new DeviceRoles();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testDeviceRoles1', 'slug' => 'aaa' ],
             [ 'name' => 'testDeviceRoles2', 'slug' => 'bbb' ],
         ]  
@@ -160,7 +160,7 @@ class testDeviceRoles extends testCore
               id: $role->id, 
             name: 'updateDeviceRoles', 
             slug: 'updateDeviceRoles',
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,7 +190,7 @@ class testDeviceRoles extends testCore
 
         $o = new DeviceRoles();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $role->id, 
                            'name' => 'putDeviceRoles',
@@ -229,7 +229,7 @@ class testDeviceRoles extends testCore
               id: $role->id,
             name: 'patchDeviceRoles',
             slug: 'patchDeviceRoles',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testDeviceRoles extends testCore
 
         $o = new DeviceRoles();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $role->id, 
                         'name' => 'patchDeviceRoles',
@@ -317,7 +317,7 @@ class testDeviceRoles extends testCore
 
         $o = new DeviceRoles();
         $result = $o->deleteList(
-            data: [[ 'id' => $role->id ]]
+            options: [[ 'id' => $role->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,7 +339,7 @@ class testDeviceRoles extends testCore
         return $o->postDetail( 
             name: 'testDeviceRoles',
             slug: 'testDeviceRoles',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test DeviceRoles',
             ]
         );

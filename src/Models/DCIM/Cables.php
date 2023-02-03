@@ -25,7 +25,7 @@ class Cables extends DCIM
 * @param integer $termination_a_id Connection A numercal ID.
 * @param string  $termination_b_type Connection B type.
 * @param integer $termination_b_id Connection B numercal ID.
-* @param array  $data optionsl data to be sent
+* @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -35,18 +35,18 @@ class Cables extends DCIM
            int $termination_a_id,
         string $termination_b_type,
            int $termination_b_id,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['termination_a_type'] = $termination_a_type;
-        $data['termination_a_id']   = $termination_a_id;
-        $data['termination_b_type'] = $termination_b_type;
-        $data['termination_b_id']   = $termination_b_id;
+        $options['termination_a_type'] = $termination_a_type;
+        $options['termination_a_id']   = $termination_a_id;
+        $options['termination_b_type'] = $termination_b_type;
+        $options['termination_b_id']   = $termination_b_id;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -64,7 +64,7 @@ class Cables extends DCIM
 * @param integer $termination_a_id Connection A numercal ID.
 * @param string  $termination_b_type Connection B type.
 * @param integer $termination_b_id Connection B numercal ID.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -75,19 +75,19 @@ class Cables extends DCIM
            int $termination_a_id,
         string $termination_b_type,
            int $termination_b_id,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['termination_a_type'] = $termination_a_type;
-        $data['termination_a_id']   = $termination_a_id;
-        $data['termination_b_type'] = $termination_b_type;
-        $data['termination_b_id']   = $termination_b_id;
+        $options['termination_a_type'] = $termination_a_type;
+        $options['termination_a_id']   = $termination_a_id;
+        $options['termination_b_type'] = $termination_b_type;
+        $options['termination_b_id']   = $termination_b_id;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -105,7 +105,7 @@ class Cables extends DCIM
 * @param integer $termination_a_id Connection A numercal ID.
 * @param string  $termination_b_type Connection B type.
 * @param integer $termination_b_id Connection B numercal ID.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -116,20 +116,20 @@ class Cables extends DCIM
            int $termination_a_id,
         string $termination_b_type,
            int $termination_b_id,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['termination_a_type'] = $termination_a_type;
-        $data['termination_a_id']   = $termination_a_id;
-        $data['termination_b_type'] = $termination_b_type;
-        $data['termination_b_id']   = $termination_b_id;
+        $options['termination_a_type'] = $termination_a_type;
+        $options['termination_a_id']   = $termination_a_id;
+        $options['termination_b_type'] = $termination_b_type;
+        $options['termination_b_id']   = $termination_b_id;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
