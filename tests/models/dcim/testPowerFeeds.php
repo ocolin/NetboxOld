@@ -1,0 +1,378 @@
+<?php 
+
+declare( strict_types = 1 );
+
+namespace Cruzio\Netbox\Models\DCIM;
+
+use Cruzio\Netbox\Models\testCore;
+
+require_once __DIR__ . '/../testCore.php';
+
+class testPowerFeeds extends testCore
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+
+
+/* TEST OPTIONS
+---------------------------------------------------------------------------- */
+
+    public function testOptions()
+    {
+        $o = new PowerFeeds();
+        $result = $o->options();
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'name', $result['body'] );
+    }
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->getDetail( id: $feed->id );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+ 
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+    public function testGetList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->getList();
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+
+
+
+/* TEST POST DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPostDetail() : void
+    {
+        $o = new PowerFeeds();
+        $result = $this->postDetail();
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 201, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        //CLEAN UP
+        $this->deleteDetail( $result['body']->id );
+    }
+
+
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+
+    public function testPostList() :void
+    {
+        $o = new PowerFeeds();
+        $result = $o->postList(
+            options: [[ 
+                       'name' => 'PHPUnit_PowerFeed',
+                'power_panel' => $_ENV['panel']->id
+            ]] 
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 201, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsArray( $result['body'] );
+
+        //CLEAN UP
+        foreach( $result['body'] AS $feed )
+        {
+            $this->deleteDetail( id: $feed->id );
+        }
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPutDetail() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->putDetail( 
+                     id: $feed->id, 
+                   name: 'PHPUnit_PowerFeed',
+            power_panel: $_ENV['panel']->id              
+        );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+
+
+
+/* TEST PUT LIST
+---------------------------------------------------------------------------- */
+
+    public function testPutList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->putList(
+            options: [
+                [ 
+                             'id' => $feed->id,
+                           'name' => 'PHPUnit_PowerFeed',
+                    'power_panel' => $_ENV['panel']->id
+                ]
+            ]
+        );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsArray( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPatchDetail() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->patchDetail(
+                     id: $feed->id, 
+                   name: 'PHPUnit_PowerFeed',
+            power_panel: $_ENV['panel']->id
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+
+
+
+/* TEST PATCH LIST
+---------------------------------------------------------------------------- */
+
+    public function testPatchList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->patchList(
+            options: [
+                [ 
+                             'id' => $feed->id,
+                           'name' => 'PHPUnit_PowerFeed',
+                    'power_panel' => $_ENV['panel']->id
+                ]
+            ]
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsArray( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testDeleteDetail() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+        
+        $o = new PowerFeeds();
+        $result = $o->deleteDetail( id: $feed->id );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 204, $result['status'] );
+    }
+
+
+
+/* TEST DELETE LIST
+---------------------------------------------------------------------------- */
+
+    public function testDeleteList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()['body'];
+
+        $o = new PowerFeeds();
+        $result = $o->deleteList(
+            options: [[ 'id' => $feed->id ]]
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 204, $result['status'] );
+    }
+
+
+
+/* CREATE A RACK ROLES
+---------------------------------------------------------------------------- */
+
+    public function postDetail() : array
+    {
+        $o = new PowerFeeds();
+
+        return $o->postDetail( 
+                   name: 'PHPUnit_PowerFeed',
+            power_panel: $_ENV['panel']->id
+        );
+    }
+
+
+
+/* DELETE A RACK ROLES
+---------------------------------------------------------------------------- */
+
+    public function deleteDetail( int $id )
+    {
+        $o = new PowerFeeds();
+
+        return $o->deleteDetail( id: $id  );
+    }
+
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+/**
+* @beforeClass
+*/
+    public static function setupTest()
+    {
+        $_ENV['site']  = self::createSite();
+        $_ENV['panel'] = self::createPowerPanel( site: $_ENV['site'] );
+
+    }
+
+/**
+* @afterClass
+*/
+    public static function closeTest()
+    {
+        self::destroyPowerPanel( panel: $_ENV['panel'] );
+        self::destroySite( site: $_ENV['site'] );
+
+        unset( $_ENV['site'] );
+        unset( $_ENV['panel'] );
+    }
+}

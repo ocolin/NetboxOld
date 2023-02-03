@@ -63,9 +63,9 @@ class PowerFeeds extends DCIM
 */
 
     public function putDetail(
+           int $id,
            int $power_panel,
         string $name,
-        string $model,
          array $options = [],
          array $headers = []
     ) : array
@@ -98,9 +98,9 @@ class PowerFeeds extends DCIM
 */
 
     public function patchDetail(
+           int $id,
            int $power_panel,
         string $name,
-        string $model,
          array $options = [],
          array $headers = []
     ) : array

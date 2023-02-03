@@ -244,8 +244,9 @@ class testCore extends \PHPUnit\Framework\TestCase
     public static function destroyPowerPanel( object $panel ) : void
     {
         $o = new DCIM\PowerPanels();
-        $o->deleteDetail( id: $panrl->id );
+        $o->deleteDetail( id: $panel->id );
     }
+
 
 
 /* DEVICE
