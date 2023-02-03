@@ -45,13 +45,14 @@
             <file>tests/models/dcim/testDevices.php</file>
             <file>tests/models/dcim/testConsolePorts.php</file>
             <file>tests/models/dcim/testConsoleServerPorts.php</file>
+            <file>tests/models/dcim/testConsoleServerPortTemplates.php</file>
         -->
         <!-- 
         <file>tests/models/tenancy/testContactRoles.php</file>
         <file>tests/models/tenancy/testTenantGroups.php</file>
         <file>tests/models/tenancy/testTenants.php</file>
  -->
-        <file>tests/models/dcim/testConsoleServerPortTemplates.php</file>
+        <file>tests/models/dcim/testDeviceBays.php</file>
             
             
             

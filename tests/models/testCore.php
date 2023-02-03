@@ -92,7 +92,8 @@ class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             manufacturer: $manf->id,
                    model: 'PHPUnit_DeviceType',
-                    slug: 'PHPUnit_DeviceType'
+                    slug: 'PHPUnit_DeviceType',
+                 options: [ 'subdevice_role' => 'parent' ]
         )['body'];
     }
 
