@@ -15,5 +15,114 @@ class FhrpGroupAssignments extends IPAM
     }
 
 
+    
+/* POST METHOD DETAIL
+---------------------------------------------------------------------------- */
 
+/*
+* Create a single Fhrp Group Assignment.
+*
+* @param integer $group ID of group assignment belongs to.
+* @param string  $interface_type Type of interface.
+* @param integer $interface_id ID of interface.
+* @param array   $data optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function postDetail(
+           int $group,
+        string $interface_type,
+           int $interface_id,
+         array $data    = [],
+         array $headers = []
+    ) : array
+    {
+        $data['group']          = $group;
+        $data['interface_type'] = $interface_type;
+        $data['interface_id']   = $interface_id;
+
+        return $this->http->post(
+                uri: $this->uri,
+               body: $data,
+            headers: $headers
+        );
+    }
+
+
+
+/* PUT METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/*
+* Update Fhrp Group Assignment
+* 
+* @param integer $id Numerical ID of Fhrp Group Assignment to update.
+* @param integer $group ID of group assignment belongs to.
+* @param string  $interface_type Type of interface.
+* @param integer $interface_id ID of interface.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function putDetail(
+           int $id,
+           int $group,
+        string $interface_type,
+           int $interface_id,
+         array $data    = [],
+         array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $data['group']          = $group;
+        $data['interface_type'] = $interface_type;
+        $data['interface_id']   = $interface_id;
+
+        return $this->http->put(
+               uri: $this->uri,
+               body: $data,
+            headers: $headers
+        );
+    }
+
+
+
+/* PATCH METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/*
+* Update Fhrp Group Assignment value(s).
+*
+* @param integer $id Numerical ID of Fhrp Group Assignment to update.
+* @param integer $group ID of group assignment belongs to.
+* @param string  $interface_type Type of interface.
+* @param integer $interface_id ID of interface.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function patchDetail(
+           int $id,
+           int $group,
+        string $interface_type,
+           int $interface_id,
+         array $data    = [],
+         array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $data['group']          = $group;
+        $data['interface_type'] = $interface_type;
+        $data['interface_id']   = $interface_id;
+
+
+        return $this->http->put(
+                uri: $this->uri,
+               body: $data,
+            headers: $headers
+        );
+    }
 }

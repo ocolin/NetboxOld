@@ -15,53 +15,24 @@ class CircuitTypes extends Circuits
     }
 
 
-/* GET METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- * @param integet $id ID of record to get.
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single Circuit Type.
+*
+* @param string $name Name of Circuit Type.
+* @param string $slug 
+* @param array  $data optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get(
-          int $id = 0,
-        array $params = [],
-        array $headers = []
-    ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param string $name
- * @param string $slug
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function post(
-       string $name,
-       string $slug,
-        array $data    = [],
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
         $data['name'] = $name;
@@ -70,110 +41,77 @@ class CircuitTypes extends Circuits
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param string $name
- * @param string $slug
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Circuit Type
+* 
+* @param integer $id Numerical ID of Circuit Type to update.
+* @param string  $name Name of Circuit Type to update.
+* @param string  $slug Slug of Circuit Type to update.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-          int $id = 0,
-        array $data    = [],
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+           int $id,
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
+        $data['slug'] = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param string $name
- * @param string $slug
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Circuit Type value(s).
+*
+* @param integer $id Numerical ID of Circuit Type to update.
+* @param string  $name Name of Circuit Type to update.
+* @param string  $slug Slug of Circuit Type to update.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-          int $id = 0,
-        array $data    = [],
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+           int $id,
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
+        $data['slug'] = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( int $id = 0, array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }

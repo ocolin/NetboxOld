@@ -14,150 +14,112 @@ class ExportTemplates extends Extras
         $this->uri .= 'export-templates/';
     }
 
+    
 
-/* GET METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single Template.
+*
+* @param string $content_type Template content type.
+* @param string $name Name of Template.
+* @param string $template_code Code inside template.
+* @param array  $data optionsl data to be sent.
+* @param array  $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function post(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+        string $content_type,
+        string $name,
+        string $template_code,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
+        $data['content_type']  = $content_type;
+        $data['name']          = $name;
+        $data['template_code'] = $template_code;
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Template Link
+* 
+* @param integer $id Numerical ID of Template to update.
+* @param string $content_type Template content type.
+* @param string $name Name of Template.
+* @param string $template_code Code inside template.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+        string $content_type,
+        string $name,
+        string $template_code,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['content_type']  = $content_type;
+        $data['name']          = $name;
+        $data['template_code'] = $template_code;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Template value(s).
+*
+* @param integer $id Numerical ID of Template to update.
+* @param string $content_type Template content type.
+* @param string $name Name of Template.
+* @param string $template_code Code inside template.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+        string $content_type,
+        string $name,
+        string $template_code,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['content_type']  = $content_type;
+        $data['name']          = $name;
+        $data['template_code'] = $template_code;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }

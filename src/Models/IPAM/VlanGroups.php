@@ -20,9 +20,9 @@ class VlanGroups extends IPAM
 ---------------------------------------------------------------------------- */
 
 /*
-* Create a single RIR.
+* Create a single VLAN Group.
 *
-* @param string $name Name of RIR.
+* @param string $name Name of VLAN Group.
 * @param string $slug 
 * @param array  $data optionsl data to be sent
 * @param array $headers HTML request headers
@@ -52,11 +52,11 @@ class VlanGroups extends IPAM
 ---------------------------------------------------------------------------- */
 
 /*
-* Update RIR
+* Update VLAN Group
 * 
-* @param integer $id Numerical ID of RIR to update.
-* @param string  $name Name of RIR to update.
-* @param string  $slug Slug of RIR to update.
+* @param integer $id Numerical ID of VLAN Group to update.
+* @param string  $name Name of VLAN Group to update.
+* @param string  $slug Slug of VLAN Group to update.
 * @param array   $data Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.

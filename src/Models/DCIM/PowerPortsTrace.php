@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\HTTP;
 

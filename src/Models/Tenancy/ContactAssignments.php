@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Tenancy;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class ContactAssignments extends Renancy
+class ContactAssignments extends Tenancy
 {
     public function __construct( HTTP $http = null )
     {
@@ -15,149 +15,104 @@ class ContactAssignments extends Renancy
     }
 
 
-/* GET METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single Contact Assignment.
+*
+* @param string $name Name of Contact Assignment.
+* @param string $slug 
+* @param array  $data optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function post(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Contact Assignment
+* 
+* @param integer $id Numerical ID of Contact Assignment to update.
+* @param string  $name Name of Contact Assignment to update.
+* @param string  $slug Slug of Contact Assignment to update.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+           int $id,
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
+        $data['slug'] = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Contact Assignment value(s).
+*
+* @param integer $id Numerical ID of Contact Assignment to update.
+* @param string  $name Name of Contact Assignment to update.
+* @param string  $slug Slug of Contact Assignment to update.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+           int $id,
+        string $name,
+        string $slug,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['name'] = $name;
+        $data['slug'] = $slug;
+
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }

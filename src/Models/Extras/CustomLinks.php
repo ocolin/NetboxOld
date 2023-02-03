@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\Netbox\Models\Extras;
 
 use Cruzio\Netbox\Models\HTTP;
 
@@ -14,150 +14,121 @@ class CustomLinks extends Extras
         $this->uri .= 'custom-links/';
     }
 
+    
 
-/* GET METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single Custom Link.
+*
+* @param string $content_type Link content type.
+* @param string $name Name of custom link.
+* @param string $link_text Text of HTTP link.
+* @param string $link_url HTTP link.
+* @param array  $data optionsl data to be sent.
+* @param array  $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function post(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+        string $content_type,
+        string $name,
+        string $link_text,
+        string $link_url,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
+        $data['content_type'] = $content_type;
+        $data['name']         = $name;
+        $data['link_text']    = $link_text;
+        $data['link_url']     = $link_url;
+
         return $this->http->post(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Custom Link
+* 
+* @param integer $id Numerical ID of User to update.
+* @param string  $content_type Link content type.
+* @param string  $name Name of custom link.
+* @param string  $link_text Text of HTTP link.
+* @param string  $link_url HTTP link.
+* @param array   $data Optional data to send.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+        string $content_type,
+        string $name,
+        string $link_text,
+        string $link_url,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['content_type'] = $content_type;
+        $data['name']         = $name;
+        $data['link_text']    = $link_text;
+        $data['link_url']     = $link_url;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update Custom Link value(s).
+*
+* @param integer $id Numerical ID of User to update.
+* @param string  $content_type Link content type.
+* @param string  $name Name of custom link.
+* @param string  $link_text Text of HTTP link.
+* @param string  $link_url HTTP link.
+* @param array   $data Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+        string $content_type,
+        string $name,
+        string $link_text,
+        string $link_url,
+         array $data    = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $data['content_type'] = $content_type;
+        $data['name']         = $name;
+        $data['link_text']    = $link_text;
+        $data['link_url']     = $link_url;
 
         return $this->http->put(
                 uri: $this->uri,
                body: $data,
-             params: $params,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }
