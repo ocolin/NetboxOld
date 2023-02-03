@@ -86,8 +86,6 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $manf
     ) : object
     {
-        //$manf = $manf ?? self::createManufacturer( label: '_Devtype' );
-
         $o = new DCIM\DeviceTypes();
         return $o->postDetail(
             manufacturer: $manf->id,
@@ -188,6 +186,46 @@ class testCore extends \PHPUnit\Framework\TestCase
     {
         $o = new DCIM\VirtualChassis();
         $o->deleteDetail( id: $chassis->id );
+    }
+
+
+
+/* MOBILE BAY
+---------------------------------------------------------------------------- */
+
+    public static function createModuleBay( object $device ) : object
+    {
+        $o = new DCIM\ModuleBays();
+        return $o->postDetail( 
+            name: 'PHPUnit_Modbay', 
+            device: $device->id 
+        )['body'];
+    }
+
+    public static function destroyModuleBay( object $bay ) : void
+    {
+        $o = new DCIM\ModuleBays();
+        $o->deleteDetail( id: $bay->id );
+    }
+
+
+
+/* MOBILE TYPE
+---------------------------------------------------------------------------- */
+
+    public static function createModuleType( object $manufacturer ) : object
+    {
+        $o = new DCIM\ModuleTypes();
+        return $o->postDetail(
+            manufacturer: $manufacturer->id,
+                   model: 'PHPUnit_ModType'
+        )['body'];
+    }
+
+    public static function destroyModuleType( object $modtype ) : void
+    {
+        $o = new DCIM\ModuleTypes();
+        $o->deleteDetail( id: $modtype->id );
     }
 
 

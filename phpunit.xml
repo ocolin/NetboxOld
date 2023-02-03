@@ -53,6 +53,7 @@
             <file>tests/models/dcim/testInventoryItemTemplates.php</file>
             <file>tests/models/dcim/testModuleBays.php</file>
             <file>tests/models/dcim/testModuleBayTemplates.php</file>
+            <file>tests/models/dcim/testModuleTypes.php</file>
         -->
 
         <!-- 
@@ -60,7 +61,7 @@
         <file>tests/models/tenancy/testTenantGroups.php</file>
         <file>tests/models/tenancy/testTenants.php</file>
  -->
-        <file>tests/models/dcim/testModuleTypes.php</file>
+        <file>tests/models/dcim/testModules.php</file>
             
             
             
