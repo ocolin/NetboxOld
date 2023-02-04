@@ -66,10 +66,10 @@ class Racks extends DCIM
 */
 
     public function putDetail(
+            int $id,
             int $site,
             int $location,
          string $name,
-         string $description,
           array $options = [],
           array $headers = []
     ) : array
@@ -104,6 +104,7 @@ class Racks extends DCIM
 */
 
     public function patchDetail(
+           int $id,
            int $site,
            int $location,
         string $name,

@@ -58,6 +58,7 @@
             <file>tests/models/dcim/testPowerPanels.php</file>
             <file>tests/models/dcim/testPowerFeeds.php</file>
             <file>tests/models/dcim/testPowerOutlets.php</file>
+            <file>tests/models/dcim/testPowerOutletTemplates.php</file>
         -->
 
         <!-- 
@@ -65,7 +66,7 @@
         <file>tests/models/tenancy/testTenantGroups.php</file>
         <file>tests/models/tenancy/testTenants.php</file>
  -->
-        <file>tests/models/dcim/testPowerOutletTemplates.php</file>
+        <file>tests/models/dcim/testRacks.php</file>
             
             
             
