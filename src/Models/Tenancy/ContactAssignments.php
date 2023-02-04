@@ -21,22 +21,31 @@ class ContactAssignments extends Tenancy
 /*
 * Create a single Contact Assignment.
 *
-* @param string $name Name of Contact Assignment.
-* @param string $slug 
+* @param string  $content_type
+* @param integet $object_id
+* @param integet $contact
+* @param integet $role
+* @paran string  $priority
 * @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
-        string $name,
-        string $slug,
+        string $content_type,
+           int $object_id,
+           int $contact,
+           int $role,
+        string $priority,
          array $options    = [],
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options['content_type'] = $content_type;
+        $options['object_id']    = $object_id;
+        $options['contact']      = $contact;
+        $options['role']         = $role;
+        $options['priority']     = $priority;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -54,8 +63,11 @@ class ContactAssignments extends Tenancy
 * Update Contact Assignment
 * 
 * @param integer $id Numerical ID of Contact Assignment to update.
-* @param string  $name Name of Contact Assignment to update.
-* @param string  $slug Slug of Contact Assignment to update.
+* @param string  $content_type
+* @param integet $object_id
+* @param integet $contact
+* @param integet $role
+* @paran string  $priority
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -63,15 +75,21 @@ class ContactAssignments extends Tenancy
 
     public function putDetail(
            int $id,
-        string $name,
-        string $slug,
+        string $content_type,
+           int $object_id,
+           int $contact,
+           int $role,
+        string $priority,
          array $options    = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options['content_type'] = $content_type;
+        $options['object_id']    = $object_id;
+        $options['contact']      = $contact;
+        $options['role']         = $role;
+        $options['priority']     = $priority;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -89,8 +107,11 @@ class ContactAssignments extends Tenancy
 * Update Contact Assignment value(s).
 *
 * @param integer $id Numerical ID of Contact Assignment to update.
-* @param string  $name Name of Contact Assignment to update.
-* @param string  $slug Slug of Contact Assignment to update.
+* @param string  $content_type
+* @param integet $object_id
+* @param integet $contact
+* @param integet $role
+* @paran string  $priority
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -98,15 +119,21 @@ class ContactAssignments extends Tenancy
 
     public function patchDetail(
            int $id,
-        string $name,
-        string $slug,
+        string $content_type,
+           int $object_id,
+           int $contact,
+           int $role,
+        string $priority,
          array $options    = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options['content_type'] = $content_type;
+        $options['object_id']    = $object_id;
+        $options['contact']      = $contact;
+        $options['role']         = $role;
+        $options['priority']     = $priority;
 
 
         return $this->http->put(

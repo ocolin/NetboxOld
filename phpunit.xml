@@ -73,7 +73,9 @@
         <file>tests/models/tenancy/testTenants.php</file>
         <file>tests/models/tenancy/testContactGroups.php</file>
         <file>tests/models/tenancy/testContactGroups.php</file>
+        <file>tests/models/tenancy/testContacts.php</file>
  -->
+    <!-- <file>tests/models/tenancy/testContactAssignments.php</file> -->
  <!-- 
         // CIRCUITS
         <file>tests/models/circuits/testCircuitTypes.php</file>
@@ -82,7 +84,7 @@
          <file>tests/models/circuits/testCircuits.php</file>
          <file>tests/models/circuits/testCircuitTerminations.php</file>
  -->
-         <file>tests/models/tenancy/testContacts.php</file>
+         <file>tests/models/users/testUsers.php</file>
             
             
             

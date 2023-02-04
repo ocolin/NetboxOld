@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Users;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class Premissions extends Users
+class Premissions extends UsersCore
 {
 
 /*

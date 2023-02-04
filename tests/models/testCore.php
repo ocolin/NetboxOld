@@ -17,6 +17,28 @@ class testCore extends \PHPUnit\Framework\TestCase
         parent::__construct();
     }
 
+
+
+/* CONTACT 
+---------------------------------------------------------------------------- */
+
+    public static function createContact( object $group ) : object
+    {
+        $o = new Tenancy\Contacts();
+        return $o->postDetail(
+              name: 'PHPUnit_Contact',
+             group: $group->id
+        )['body'];
+    }
+
+    public static function destroyContact( object $contact ) :void
+    {
+        $o = new Tenancy\Contacts();
+        $o->deleteDetail( id: $contact->id );
+    }
+
+
+
 /* CONTACT GROUP
 ---------------------------------------------------------------------------- */
 
@@ -34,6 +56,26 @@ class testCore extends \PHPUnit\Framework\TestCase
     {
         $o = new Tenancy\ContactGroups();
         $o->deleteDetail( id: $group->id );
+    }
+
+
+
+/* CONTACT ROLE
+---------------------------------------------------------------------------- */
+
+    public static function createContactRole() : object
+    {
+        $o = new Tenancy\ContactRoles();
+        return $o->postDetail(
+              name: 'PHPUnit_ContactRole',
+              slug: 'PHPUnit_ContactRole',
+        )['body'];
+    }
+
+    public static function destroyContactRole( object $role ) :void
+    {
+        $o = new Tenancy\ContactRoles();
+        $o->deleteDetail( id: $role->id );
     }
 
 

@@ -197,4 +197,16 @@ function clearContact()
     }
 }
 
+function clearCotactRole()
+{
+    $o = new Tenancy\ContactRoles();
+    $roles = $o->getList()['body'];
+
+    foreach( $roles->results as $role )
+    {
+        $o->deleteDetail( id: $role->id );
+    }
+}
+
+
 
