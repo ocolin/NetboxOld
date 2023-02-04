@@ -69,7 +69,10 @@
         <file>tests/models/tenancy/testTenantGroups.php</file>
         <file>tests/models/tenancy/testTenants.php</file>
  -->
+ <!-- 
         <file>tests/models/circuits/testCircuitTypes.php</file>
+ -->
+         <file>tests/models/circuits/testProviders.php</file>
             
             
             
