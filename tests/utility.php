@@ -25,6 +25,7 @@ function clearAll()
     clearTenants();
     clearManufacturers();
     clearSites();
+    clearProviders();
 }
 
 function clearDevices()
@@ -137,5 +138,15 @@ function clearModuleBays()
     }
 }
 
+function clearProviders()
+{
+    $o = new Circuits\Providers();
+    $provs = $o->getList()['body'];
+
+    foreach( $provs->results as $prov )
+    {
+        $o->deleteDetail( id: $prov->id );
+    }
+}
 
 

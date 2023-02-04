@@ -71,8 +71,9 @@
  -->
  <!-- 
         <file>tests/models/circuits/testCircuitTypes.php</file>
- -->
          <file>tests/models/circuits/testProviders.php</file>
+ -->
+         <file>tests/models/circuits/testProviderNetworks.php</file>
             
             
             

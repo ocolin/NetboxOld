@@ -18,6 +18,25 @@ class testCore extends \PHPUnit\Framework\TestCase
     }
 
 
+/* PROVIDER
+---------------------------------------------------------------------------- */
+
+    public static function createProvider() : object
+    {
+        $o = new Circuits\Providers();
+        return $o->postDetail(
+            name: 'PHPUnit_Provider',
+            slug: 'PHPUnit_Provider'
+        )['body'];
+    }
+
+    public static function destroyProvider( object $provider ) :void
+    {
+        $o = new Circuits\Providers();
+        $o->deleteDetail( id: $provider->id );
+    }
+
+
 
 /* SITE
 ---------------------------------------------------------------------------- */
