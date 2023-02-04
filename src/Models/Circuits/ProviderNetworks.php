@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class ProviderNetworks extends Circuits
+class ProviderNetworks extends CircuitsCore
 {
     public function __construct( HTTP $http = null)
     {

@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class CircuitTerminations extends Circuits
+class CircuitTerminations extends CircuitsCore
 {
 
 /* CONSTRUCTOR

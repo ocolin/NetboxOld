@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class CircuitTypes extends Circuits
+class CircuitTypes extends CircuitsCore
 {
     public function __construct( HTTP $http = null )
     {

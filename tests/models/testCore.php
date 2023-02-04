@@ -37,6 +37,24 @@ class testCore extends \PHPUnit\Framework\TestCase
     }
 
 
+/* CIRCUIT TYPE
+---------------------------------------------------------------------------- */
+
+    public static function createCircuitType() : object
+    {
+        $o = new Circuits\CircuitTypes();
+        return $o->postDetail(
+            name: 'PHPUnit_CrtType',
+            slug: 'PHPUnit_CrtType'
+        )['body'];
+    }
+
+    public static function destroyCircuitType( object $ct ) :void
+    {
+        $o = new Circuits\CircuitTypes();
+        $o->deleteDetail( id: $ct->id );
+    }
+
 
 /* SITE
 ---------------------------------------------------------------------------- */

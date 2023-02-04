@@ -6,173 +6,41 @@ namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class Circuits
+class Circuits extends CircuitsCore
 {
-    protected HTTP $http;
-
-    protected string $uri = 'circuits/';
-
     public function __construct( HTTP $http = null )
     {
-        $this->http = $http ?? new HTTP();
+        parent::__construct( http: $http );
+        $this->uri .= 'circuits/';
     }
 
 
-
-/* OPTIONS METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
-* List details about API call.
+* Create a single Circuit.
 *
-* @param array $headers HTML request headers.
+* @param string  $cid Name of circuit ID.
+* @param integer $provider ID of circuit provider.
+* @param integer $type ID of circuit type.
+* @param array   $options optionsl data to be sent
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
-    }
-
-
-/* DELETE METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
-* Delete an individual object.
-* 
-* @param integer $id A unique integer value identifying an object.
-* @param array   $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteDetail( int $id, array $headers = [] ) : array
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->delete( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* DELETE METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Delete a list of objects.
-* 
-* @param array $options List of object to delete. Each object must have an ID.
-* @param array $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function deleteList( 
-        array $options, 
-        array $headers = [] 
+    public function postDetail(
+        string $cid,
+           int $provider,
+           int $type,
+         array $options = [],
+         array $headers = []
     ) : array
     {
-        return $this->http->delete( 
-                uri: $this->uri, 
-               body: $options, 
-            headers: $headers 
-        );
-    }
+        $options['cid']      = $cid;
+        $options['provider'] = $provider;
+        $options['type']     = $type;
 
-
-    
-/* PATCH METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/*
-* Update a list of objects.
-*
-* @param array $options Array of Objects to update.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function patchList(
-        array $options    = [],
-        array $headers = []
-    ) : array
-    {
-        return $this->http->put(
-                uri: $this->uri,
-               body: $options,
-            headers: $headers
-        );
-    }
-
-
-
-/* PUT METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Updte an array of object.
-*
-* @param array $options List of objects to update.
-* @param array $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function putList(
-        array $options,
-        array $headers = []
-    ) : array
-    {
-        return $this->http->put(
-                uri: $this->uri,
-               body: $options,
-            headers: $headers
-        );
-    }
-
-
-
-/* GET METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Get all Objects
-*
-* @param array $params Optional URL parameters.
-* @param array $headers Optional Custom HTTP request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function getList( 
-        array $params  = [], 
-        array $headers = [] 
-    ) : array
-    {
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD LIST
----------------------------------------------------------------------------- */
-
-/*
-* Create multiple objects at once.
-*
-* @param array $options An array of object arrays. Each sub array MUST have a 
-*  name and slug key. 
-* @param array $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function postList(
-        array $options,
-        array $headers = []
-    ) : array
-    {
         return $this->http->post(
                 uri: $this->uri,
                body: $options,
@@ -182,29 +50,77 @@ class Circuits
 
 
 
- /* GET METHOD DETAIL
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
-* Get an individual object
-*
-* @param integer $id Numerical ID of an object record.
-* @param array   $params Optional GET parameters.
-* @param array   $headers Optional request headers.
+* Update Module
+* 
+* @param integer $id Numerical ID of Consol Port to update.
+* @param string  $cid Name of circuit ID.
+* @param integer $provider ID of circuit provider.
+* @param integer $type ID of circuit type.
+* @param array   $options Optional data to send.
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function getDetail( 
-          int $id, 
-        array $params  = [], 
-        array $headers = [] 
+    public function putDetail(
+           int $id,
+        string $cid,
+           int $provider,
+           int $type,
+          array $options = [],
+          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
+        $options['cid']      = $cid;
+        $options['provider'] = $provider;
+        $options['type']     = $type;
 
-        return $this->http->get(
+        return $this->http->put(
                 uri: $this->uri,
-             params: $params,
+               body: $options,
+            headers: $headers
+        );
+    }
+
+
+
+/* PATCH METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/*
+* Update Module value(s).
+*
+* @param integer $id Numerical ID of Console Port to update.
+* @param string  $cid Name of circuit ID.
+* @param integer $provider ID of circuit provider.
+* @param integer $type ID of circuit type.
+* @param array   $options Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
+*/
+
+    public function patchDetail(
+           int $id,
+        string $cid,
+           int $provider,
+           int $type,
+         array $options = [],
+         array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $options['cid']      = $cid;
+        $options['provider'] = $provider;
+        $options['type']     = $type;
+
+
+        return $this->http->put(
+                uri: $this->uri,
+               body: $options,
             headers: $headers
         );
     }
