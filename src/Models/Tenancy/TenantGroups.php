@@ -35,7 +35,7 @@ class TenantGroups extends Tenancy
     public function postDetail(
         string $name,
         string $slug,
-         array $options    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
@@ -69,7 +69,7 @@ class TenantGroups extends Tenancy
            int $id,
         string $name,
         string $slug,
-         array $options    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
@@ -104,7 +104,7 @@ class TenantGroups extends Tenancy
            int $id,
         string $name,
         string $slug,
-         array $options    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {

@@ -17,6 +17,26 @@ class testCore extends \PHPUnit\Framework\TestCase
         parent::__construct();
     }
 
+/* CONTACT GROUP
+---------------------------------------------------------------------------- */
+
+    public static function createContactGroup() : object
+    {
+        $o = new Tenancy\ContactGroups();
+        return $o->postDetail(
+              name: 'PHPUnit_ContactGrp',
+              slug: 'PHPUnit_ContactGrp',
+            parent: null
+        )['body'];
+    }
+
+    public static function destroyContactGroup( object $group ) :void
+    {
+        $o = new Tenancy\ContactGroups();
+        $o->deleteDetail( id: $group->id );
+    }
+
+
 
 /* PROVIDER
 ---------------------------------------------------------------------------- */
@@ -35,6 +55,31 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o = new Circuits\Providers();
         $o->deleteDetail( id: $provider->id );
     }
+
+
+/* CIRCUIT
+---------------------------------------------------------------------------- */
+
+    public static function createCircuit(
+        object $provider,
+        object $circuit_type
+    ) : object
+    {
+        $o = new Circuits\Circuits();
+        return $o->postDetail(
+                     cid: 'PHPUnit_Circuit',
+                provider: $provider->id,
+                    type: $circuit_type->id
+        )['body'];
+    }
+
+    public static function destroyCircuit( object $circuit ) :void
+    {
+        $o = new Circuits\Circuits();
+        $o->deleteDetail( id: $circuit->id );
+    }
+
+
 
 
 /* CIRCUIT TYPE

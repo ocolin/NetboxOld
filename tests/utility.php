@@ -27,6 +27,9 @@ function clearAll()
     clearSites();
     clearProviders();
     clearCircuitType();
+    clearCircuit();
+    clearContactGroup();
+    clearContact();
 }
 
 function clearDevices()
@@ -158,6 +161,39 @@ function clearCircuitType()
     foreach( $cts->results as $ct )
     {
         $o->deleteDetail( id: $ct->id );
+    }
+}
+
+function clearCircuit()
+{
+    $o = new Circuits\Circuits();
+    $cts = $o->getList()['body'];
+
+    foreach( $cts->results as $ct )
+    {
+        $o->deleteDetail( id: $ct->id );
+    }
+}
+
+function clearContactGroup()
+{
+    $o = new Tenancy\ContactGroups();
+    $groups = $o->getList()['body'];
+
+    foreach( $groups->results as $group )
+    {
+        $o->deleteDetail( id: $group->id );
+    }
+}
+
+function clearContact()
+{
+    $o = new Tenancy\Contacts();
+    $contacts = $o->getList()['body'];
+
+    foreach( $contacts->results as $contact )
+    {
+        $o->deleteDetail( id: $contact->id );
     }
 }
 

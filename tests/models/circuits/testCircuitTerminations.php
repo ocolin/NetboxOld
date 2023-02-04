@@ -1,0 +1,393 @@
+<?php 
+
+declare( strict_types = 1 );
+
+namespace Cruzio\Netbox\Models\Circuits;
+
+use Cruzio\Netbox\Models\testCore;
+
+require_once __DIR__ . '/../testCore.php';
+
+class testCircuitTerminations extends testCore
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+
+
+/* TEST OPTIONS
+---------------------------------------------------------------------------- */
+
+    public function testOptions()
+    {
+        $o = new CircuitTerminations();
+        $result = $o->options();
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'name', $result['body'] );
+    }
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testGetDetail() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->getDetail( id: $term->id );   
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        // CLEAN UP
+        $this->deleteDetail( $term->id );
+    }
+ 
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+    public function testGetList() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->getList();
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'results', $result['body'] );
+        $this->assertIsArray( $result['body']->results );
+        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+
+        // CLEAN UP
+        $this->deleteDetail( $term->id );
+    }
+
+
+
+/* TEST POST DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPostDetail() : void
+    {
+        $o = new CircuitTerminations();
+        $result = $this->postDetail();
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 201, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        //CLEAN UP
+        $this->deleteDetail( $result['body']->id );
+    }
+
+
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/* 
+    // GETTING: A circuit termination must attach to either a site or a provider network.
+    public function testPostList() :void
+    {
+        $o = new CircuitTerminations();
+        $result = $o->postList(
+            options: [[ 
+                'term_side' => 'A',
+                  'circuit' => $_ENV['circuit']->id,
+                  'options' => [ 'site' => $_ENV['site']->id ]
+            ]] 
+        );
+        print_r( $result['body']);
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 201, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsArray( $result['body'] );
+
+        //CLEAN UP
+        foreach( $result['body'] AS $term )
+        {
+            $this->deleteDetail( id: $term->id );
+        }
+    }
+ */
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPutDetail() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->putDetail( 
+                   id: $term->id, 
+            term_side: 'A',
+              circuit: $_ENV['circuit']->id,   
+              options: [ 'site' => $_ENV['site']->id ]        
+        );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        // CLEAN UP
+        $this->deleteDetail( $term->id );
+    }
+
+
+
+/* TEST PUT LIST
+---------------------------------------------------------------------------- */
+
+    public function testPutList() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->putList(
+            options: [
+                [ 
+                       'id' => $term->id,
+                'term_side' => 'A',
+                  'circuit' => $_ENV['circuit']->id,
+                 'options'  =>  [ 'site' => $_ENV['site']->id ]
+                ]
+            ]
+        );
+        
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsArray( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+
+        // CLEAN UP
+        $this->deleteDetail( $term->id );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPatchDetail() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->patchDetail(
+                   id: $term->id, 
+            term_side: 'A',
+              circuit: $_ENV['circuit']->id,
+              options: [ 'site' => $_ENV['site']->id ]
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'] );
+
+        // CLEAN UP
+        $this->deleteDetail( $term->id );
+    }
+
+
+
+/* TEST PATCH LIST
+---------------------------------------------------------------------------- */
+
+    public function testPatchList() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->patchList(
+            options: [
+                [ 
+                           'id' => $term->id,
+                    'term_side' => 'A',
+                      'circuit' => $_ENV['circuit']->id,
+                     'options'  =>  [ 'site' => $_ENV['site']->id ]
+                ]
+            ]
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 200, $result['status'] );
+        $this->assertIsArray( $result['headers'] );
+        $this->assertIsArray( $result['body'] );
+        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+
+        // CLEAN UP
+        $this->deleteDetail( $term->id );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testDeleteDetail() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+        
+        $o = new CircuitTerminations();
+        $result = $o->deleteDetail( id: $term->id );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 204, $result['status'] );
+    }
+
+
+
+/* TEST DELETE LIST
+---------------------------------------------------------------------------- */
+
+    public function testDeleteList() : void
+    {
+        // SETUP
+        $term = $this->postDetail()['body'];
+
+        $o = new CircuitTerminations();
+        $result = $o->deleteList(
+            options: [[ 'id' => $term->id ]]
+        );
+
+        $this->assertIsArray( $result );
+        $this->assertArrayHasKey( 'status',  $result );
+        $this->assertArrayHasKey( 'headers', $result );
+        $this->assertArrayHasKey( 'body',    $result );
+        $this->assertIsInt( $result['status'] );
+        $this->assertEquals( 204, $result['status'] );
+    }
+
+
+
+/* CREATE A RACK ROLES
+---------------------------------------------------------------------------- */
+
+    public function postDetail() : array
+    {
+        $o = new CircuitTerminations();
+
+        return $o->postDetail( 
+            term_side: 'A',
+              circuit: $_ENV['circuit']->id,
+              options: [ 'site' => $_ENV['site']->id ]
+        );
+    }
+
+
+
+/* DELETE A RACK ROLES
+---------------------------------------------------------------------------- */
+
+    public function deleteDetail( int $id )
+    {
+        $o = new CircuitTerminations();
+
+        return $o->deleteDetail( id: $id  );
+    }
+
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+/**
+* @beforeClass
+*/
+    public static function setupTest()
+    {
+        $_ENV['provider']     = self::createProvider();
+        $_ENV['circuit_type'] = self::createCircuitType();
+        $_ENV['site']         = self::createSite();
+        $_ENV['circuit']      = self::createCircuit(
+                provider: $_ENV['provider'],
+            circuit_type: $_ENV['circuit_type']
+        );
+    }
+
+/**
+* @afterClass
+*/
+    public static function closeTest()
+    {
+        self::destroyCircuit( circuit: $_ENV['circuit'] );
+        self::destroyProvider( provider: $_ENV['provider'] );
+        self::destroyCircuitType( ct: $_ENV['circuit_type'] );
+        self::destroySite( site: $_ENV['site'] );
+
+        unset( $_ENV['provider'] );
+        unset( $_ENV['circuit_type'] );
+        unset( $_ENV['circuit'] );
+    }
+}

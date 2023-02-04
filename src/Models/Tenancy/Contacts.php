@@ -26,21 +26,21 @@ class Contacts extends Tenancy
 * Create a single Contact.
 *
 * @param string $name Name of Contact.
-* @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param string $group ID of group contact belongs to. 
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
-        string $slug,
-         array $options    = [],
+           int $group,
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options['name']  = $name;
+        $options['group'] = $group;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -59,23 +59,23 @@ class Contacts extends Tenancy
 * 
 * @param integer $id Numerical ID of Contact to update.
 * @param string  $name Name of Contact to update.
-* @param string  $slug Slug of Contact to update.
+* @param string $group ID of group contact belongs to.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
            int $id,
         string $name,
-        string $slug,
-         array $options    = [],
+           int $group,
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options['name']  = $name;
+        $options['group'] = $group;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -94,7 +94,7 @@ class Contacts extends Tenancy
 *
 * @param integer $id Numerical ID of Contact to update.
 * @param string  $name Name of Contact to update.
-* @param string  $slug Slug of Contact to update.
+* @param string $group ID of group contact belongs to.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -103,14 +103,14 @@ class Contacts extends Tenancy
     public function patchDetail(
            int $id,
         string $name,
-        string $slug,
-         array $options    = [],
+           int $group,
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options['name']  = $name;
+        $options['group'] = $group;
 
 
         return $this->http->put(
