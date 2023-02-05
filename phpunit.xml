@@ -87,9 +87,10 @@
 <!-- 
         // USERS
         <file>tests/models/users/testUsers.php</file>
+        <file>tests/models/users/testGroups.php</file>
  -->
 
-         <file>tests/models/users/testGroups.php</file>
+         <file>tests/models/users/testTokens.php</file>
             
             
             

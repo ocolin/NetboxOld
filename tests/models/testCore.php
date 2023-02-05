@@ -19,12 +19,32 @@ class testCore extends \PHPUnit\Framework\TestCase
 
 
 
+/* USER 
+---------------------------------------------------------------------------- */
+
+    public static function createUser() : object
+    {
+        $o = new Users\Users();
+        return $o->postDetail(
+            username: 'PHPUnit_Username',
+            password: 'PHPUnit_Password'
+        )['body'];
+    }
+
+    public static function destroyUser( object $user ) :void
+    {
+        $o = new Users\Users();
+        $o->deleteDetail( id: $user->id );
+    }
+
+
+
 /* CONTACT 
 ---------------------------------------------------------------------------- */
 
     public static function createContact( object $group ) : object
     {
-        $o = new Tenancy\Contacts();
+        $o = new Users\Contacts();
         return $o->postDetail(
               name: 'PHPUnit_Contact',
              group: $group->id
@@ -33,7 +53,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyContact( object $contact ) :void
     {
-        $o = new Tenancy\Contacts();
+        $o = new Users\Contacts();
         $o->deleteDetail( id: $contact->id );
     }
 
@@ -44,7 +64,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createContactGroup() : object
     {
-        $o = new Tenancy\ContactGroups();
+        $o = new Users\ContactGroups();
         return $o->postDetail(
               name: 'PHPUnit_ContactGrp',
               slug: 'PHPUnit_ContactGrp',
@@ -54,7 +74,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyContactGroup( object $group ) :void
     {
-        $o = new Tenancy\ContactGroups();
+        $o = new Users\ContactGroups();
         $o->deleteDetail( id: $group->id );
     }
 
@@ -65,7 +85,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createContactRole() : object
     {
-        $o = new Tenancy\ContactRoles();
+        $o = new Users\ContactRoles();
         return $o->postDetail(
               name: 'PHPUnit_ContactRole',
               slug: 'PHPUnit_ContactRole',
@@ -74,7 +94,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyContactRole( object $role ) :void
     {
-        $o = new Tenancy\ContactRoles();
+        $o = new Users\ContactRoles();
         $o->deleteDetail( id: $role->id );
     }
 
@@ -234,7 +254,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createTenant() : object
     {
-        $o = new Tenancy\Tenants();
+        $o = new Users\Tenants();
         return $o->postDetail(
             name: 'PHPUnit_Tenant',
             slug: 'PHPUnit_Tenant'
@@ -243,7 +263,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyTenant( object $tenant ) :void
     {
-        $o = new Tenancy\Tenants();
+        $o = new Users\Tenants();
         $o->deleteDetail( id: $tenant->id );
     }
 
