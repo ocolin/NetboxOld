@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\HTTP;
 
 class ConfigContexts extends Extras
 {
-    public function __construct(  HTTP $http = null )
+    public function __construct( HTTP $http = null )
     {
         parent::__construct( http: $http );
         $this->uri .= 'config-contexts/';
