@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\HTTP;
 
 class CustomLinks extends Extras
 {
-    public function __construct()
+    public function __construct( HTTP $http = null  )
     {
         parent::__construct( http: $http );
         $this->uri .= 'custom-links/';
@@ -32,7 +32,7 @@ class CustomLinks extends Extras
 */
 
     public function postDetail(
-        string $content_type,
+         array $content_types,
         string $name,
         string $link_text,
         string $link_url,
@@ -40,10 +40,10 @@ class CustomLinks extends Extras
          array $headers = []
     ) : array
     {
-        $options['content_type'] = $content_type;
-        $options['name']         = $name;
-        $options['link_text']    = $link_text;
-        $options['link_url']     = $link_url;
+        $options['content_types'] = $content_types;
+        $options['name']          = $name;
+        $options['link_text']     = $link_text;
+        $options['link_url']      = $link_url;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -71,7 +71,8 @@ class CustomLinks extends Extras
 */
 
     public function putDetail(
-        string $content_type,
+           int $id,
+         array $content_types,
         string $name,
         string $link_text,
         string $link_url,
@@ -80,10 +81,10 @@ class CustomLinks extends Extras
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type'] = $content_type;
-        $options['name']         = $name;
-        $options['link_text']    = $link_text;
-        $options['link_url']     = $link_url;
+        $options['content_types'] = $content_types;
+        $options['name']          = $name;
+        $options['link_text']     = $link_text;
+        $options['link_url']      = $link_url;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -111,7 +112,8 @@ class CustomLinks extends Extras
 */
 
     public function patchDetail(
-        string $content_type,
+           int $id,
+         array $content_types,
         string $name,
         string $link_text,
         string $link_url,
@@ -120,10 +122,10 @@ class CustomLinks extends Extras
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type'] = $content_type;
-        $options['name']         = $name;
-        $options['link_text']    = $link_text;
-        $options['link_url']     = $link_url;
+        $options['content_types'] = $content_types;
+        $options['name']          = $name;
+        $options['link_text']     = $link_text;
+        $options['link_url']      = $link_url;
 
         return $this->http->put(
                 uri: $this->uri,

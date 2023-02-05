@@ -94,8 +94,9 @@
         // EXTRAS
         <file>tests/models/extras/testConfigContexts.php</file>
         <file>tests/models/extras/testContentTypes.php</file>
+        <file>tests/models/extras/testCustomFields.php</file>
  -->
-         <file>tests/models/extras/testCustomFields.php</file>
+         <file>tests/models/extras/testCustomLinks.php</file>
             
             
             

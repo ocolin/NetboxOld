@@ -30,6 +30,7 @@ function clearAll()
     clearCircuit();
     clearContactGroup();
     clearContact();
+    clearCustomLinks();
 }
 
 function clearDevices()
@@ -205,6 +206,17 @@ function clearCotactRole()
     foreach( $roles->results as $role )
     {
         $o->deleteDetail( id: $role->id );
+    }
+}
+
+function clearCustomLinks()
+{
+    $o = new Extras\CustomLinks();
+    $links = $o->getList()['body'];
+
+    foreach( $links->results as $link )
+    {
+        $o->deleteDetail( id: $link->id );
     }
 }
 

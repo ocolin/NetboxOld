@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\HTTP;
 
 class ExportTemplates extends Extras
 {
-    public function __construct()
+    public function __construct( HTTP $http = null )
     {
         parent::__construct( http: $http );
         $this->uri .= 'export-templates/';
