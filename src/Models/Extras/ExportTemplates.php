@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\Netbox\Models\Extras;
 
 use Cruzio\Netbox\Models\HTTP;
 
@@ -31,16 +31,16 @@ class ExportTemplates extends Extras
 */
 
     public function postDetail(
-        string $content_type,
+         array $content_types,
         string $name,
         string $template_code,
          array $options = [],
          array $headers = []
     ) : array
     {
-        $options['content_type']  = $content_type;
-        $options['name']          = $name;
-        $options['template_code'] = $template_code;
+        $options['content_types']  = $content_types;
+        $options['name']           = $name;
+        $options['template_code']  = $template_code;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -67,7 +67,8 @@ class ExportTemplates extends Extras
 */
 
     public function putDetail(
-        string $content_type,
+           int $id,
+         array $content_types,
         string $name,
         string $template_code,
          array $options = [],
@@ -75,9 +76,9 @@ class ExportTemplates extends Extras
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type']  = $content_type;
-        $options['name']          = $name;
-        $options['template_code'] = $template_code;
+        $options['content_types']  = $content_types;
+        $options['name']           = $name;
+        $options['template_code']  = $template_code;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -104,7 +105,8 @@ class ExportTemplates extends Extras
 */
 
     public function patchDetail(
-        string $content_type,
+           int $id,
+         array $content_types,
         string $name,
         string $template_code,
          array $options = [],
@@ -112,9 +114,9 @@ class ExportTemplates extends Extras
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type']  = $content_type;
-        $options['name']          = $name;
-        $options['template_code'] = $template_code;
+        $options['content_types']  = $content_types;
+        $options['name']           = $name;
+        $options['template_code']  = $template_code;
 
         return $this->http->put(
                 uri: $this->uri,

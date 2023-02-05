@@ -220,5 +220,16 @@ function clearCustomLinks()
     }
 }
 
+function clearExportTemplates()
+{
+    $o = new Extras\ExportTemplates();
+    $temps = $o->getList()['body'];
+
+    foreach( $temps->results as $temp )
+    {
+        $o->deleteDetail( id: $temp->id );
+    }
+}
+
 
 
