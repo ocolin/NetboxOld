@@ -100,7 +100,12 @@
         //<file>tests/models/extras/testImageAttachments.php</file>
         <file>tests/models/extras/testTags.php</file>
  -->
+<!--  
+        // VIRTUALIZATION
          <file>tests/models/virtualization/testClusterGroups.php</file>
+ -->
+
+          <file>tests/models/virtualization/testClusterTypes.php</file>
             
             
             

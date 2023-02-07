@@ -24,9 +24,9 @@ class ClusterGroups extends Virtualization
 ---------------------------------------------------------------------------- */
 
 /*
-* Create a single Platform.
+* Create a single Cluster Group.
 *
-* @param string $name Name of Platform.
+* @param string $name Name of Cluster Group.
 * @param string $slug 
 * @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
@@ -56,11 +56,11 @@ class ClusterGroups extends Virtualization
 ---------------------------------------------------------------------------- */
 
 /*
-* Update Platform
+* Update Cluster Group
 * 
-* @param integer $id Numerical ID of Platform to update.
-* @param string  $name Name of Platform to update.
-* @param string  $slug Slug of Platform to update.
+* @param integer $id Numerical ID of Cluster Group to update.
+* @param string  $name Name of Cluster Group to update.
+* @param string  $slug Slug of Cluster Group to update.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -91,11 +91,11 @@ class ClusterGroups extends Virtualization
 ---------------------------------------------------------------------------- */
 
 /*
-* Update Platform value(s).
+* Update Cluster Group value(s).
 *
-* @param integer $id Numerical ID of Platform to update.
-* @param string  $name Name of Platform to update.
-* @param string  $slug Slug of Platform to update.
+* @param integer $id Numerical ID of Cluster Group to update.
+* @param string  $name Name of Cluster Group to update.
+* @param string  $slug Slug of Cluster Group to update.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
