@@ -19,149 +19,107 @@ class WirelessLanGroups extends Wireless
     }
 
 
-/* GET METHOD
+/* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $params
- * @param array $headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single LAN Group.
+*
+* @param string $name Name of LAN Group.
+* @param string $slug 
+* @param array  $options optionsl data to be sent
+* @param array $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function get( array $params = [], array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function post(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function postDetail(
+        string $name,
+        string $slug,
+          ?int $parent,
+         array $options = [],
+         array $headers = []
     ) : array
     {
+        $options['name'] = $name;
+        $options['slug'] = $slug;
+
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
-             params: $params,
+               body: $options,
             headers: $headers
         );
     }
 
 
 
-/* PUT METHOD
+/* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update LAN Group
+* 
+* @param integer $id Numerical ID of LAN Group to update.
+* @param string  $name Name of LAN Group to update.
+* @param string  $slug Slug of LAN Group to update.
+* @param array   $options Optional data to send.
+* @param array   $headers HTML request headers
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function put(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function putDetail(
+           int $id,
+        string $name,
+        string $slug,
+          ?int $parent,
+         array $options = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
-             params: $params,
+               body: $options,
             headers: $headers
         );
     }
 
 
 
-/* PATCH METHOD
+/* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- *
- *
- * @param array $data Data to send ibn request
- * @param array $params URI parameters
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update LAN Group value(s).
+*
+* @param integer $id Numerical ID of LAN Group to update.
+* @param string  $name Name of LAN Group to update.
+* @param string  $slug Slug of LAN Group to update.
+* @param array   $options Optional data to modify.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-    public function patch(
-        array $data,
-        array $params  = [],
-        array $headers = []
+    public function patchDetail(
+           int $id,
+        string $name,
+        string $slug,
+          ?int $parent,
+         array $options = [],
+         array $headers = []
     ) : array
     {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
+        $this->uri .= "{$id}/";
+        $options['name'] = $name;
+        $options['slug'] = $slug;
+
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
-             params: $params,
+               body: $options,
             headers: $headers
         );
-    }
-
-
-
-/* DELETE METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function delete( array $headers = [] ) : array
-    {
-        if( $id !== 0 ) { $this->uri .= "{$id}/"; }
-
-        return $this->http->get( uri: $this->uri, headers: $headers );
-    }
-
-
-
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
-
-/*
- *
- *
- * @param array $headers HTML request headers
- * @return array Array of HTTP status, headers, and body from Netbox API.
-*/
-
-    public function options( array $headers = [] ) : array
-    {
-        return $this->http->options( uri: $this->uri, headers: $headers );
     }
 }

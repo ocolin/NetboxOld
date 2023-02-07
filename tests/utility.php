@@ -32,6 +32,7 @@ function clearAll()
     clearContact();
     clearCustomLinks();
     clearTags();
+    clearWirelessLanGroups();
 }
 
 function clearDevices()
@@ -240,6 +241,18 @@ function clearTags()
     foreach( $tags->results as $tag )
     {
         $o->deleteDetail( id: $tag->id );
+    }
+}
+
+
+function clearWirelessLanGroups()
+{
+    $o = new Wireless\WirelessLanGroups();
+    $groups = $o->getList()['body'];
+
+    foreach( $groups->results as $group )
+    {
+        $o->deleteDetail( id: $group->id );
     }
 }
 
