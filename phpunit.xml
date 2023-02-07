@@ -104,8 +104,12 @@
         // VIRTUALIZATION
          <file>tests/models/virtualization/testClusterGroups.php</file>
  -->
+<!-- 
+        // WIRELESS
+        <file>tests/models/wireless/testWirelessLanGroups.php</file>
+ -->
 
-          <file>tests/models/wireless/testWirelessLanGroups.php</file>
+        <file>tests/models/wireless/testWirelessLans.php</file>
             
             
             
