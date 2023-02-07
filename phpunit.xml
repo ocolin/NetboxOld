@@ -96,8 +96,10 @@
         <file>tests/models/extras/testContentTypes.php</file>
         <file>tests/models/extras/testCustomFields.php</file>
         <file>tests/models/extras/testCustomLinks.php</file>
+        <file>tests/models/extras/testExportTemplates.php</file>
+        //<file>tests/models/extras/testImageAttachments.php</file>
  -->
-         <file>tests/models/extras/testExportTemplates.php</file>
+         <file>tests/models/extras/testTags.php</file>
             
             
             

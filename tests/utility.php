@@ -31,6 +31,7 @@ function clearAll()
     clearContactGroup();
     clearContact();
     clearCustomLinks();
+    clearTags();
 }
 
 function clearDevices()
@@ -228,6 +229,17 @@ function clearExportTemplates()
     foreach( $temps->results as $temp )
     {
         $o->deleteDetail( id: $temp->id );
+    }
+}
+
+function clearTags()
+{
+    $o = new Extras\Tags();
+    $tags = $o->getList()['body'];
+
+    foreach( $tags->results as $tag )
+    {
+        $o->deleteDetail( id: $tag->id );
     }
 }
 
