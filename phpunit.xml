@@ -11,10 +11,79 @@
     verbose="true"
 >
     <testsuites>
-        <testsuite name="Models">
-        
-<!--   
-            // IPAM
+<!-- 
+        <testsuite name="Circuit_Models">
+            <file>tests/models/circuits/testCircuitTerminations.php</file>
+            <file>tests/models/circuits/testCircuitTypes.php</file>
+            <file>tests/models/circuits/testCircuits.php</file>
+            <file>tests/models/circuits/testProviderNetworks.php</file>
+            <file>tests/models/circuits/testProviders.php</file>
+        </testsuite>
+-->
+            
+
+<!-- 
+        <testsuite name="DCIM_Models">
+
+
+            <file>tests/models/dcim/testConsolePorts.php</file>
+            <file>tests/models/dcim/testConsolePortTemplates.php</file>
+            <file>tests/models/dcim/testConsoleServerPorts.php</file>
+            <file>tests/models/dcim/testConsoleServerPortTemplates.php</file>
+
+            <file>tests/models/dcim/testDeviceBays.php</file>
+            <file>tests/models/dcim/testDeviceBayTemplates.php</file>
+            <file>tests/models/dcim/testDeviceRoles.php</file>
+            <file>tests/models/dcim/testDevices.php</file>
+            <file>tests/models/dcim/testDeviceTypes.php</file>
+            <file>tests/models/dcim/testFrontPorts.php</file>
+
+            <file>tests/models/dcim/testInterfaces.php</file>
+            <file>tests/models/dcim/testInterfaceTemplates.php</file>
+            <file>tests/models/dcim/testInventoryItemRoles.php</file>
+            <file>tests/models/dcim/testInventoryItems.php</file>
+            <file>tests/models/dcim/testInventoryItemTemplates.php</file>
+            <file>tests/models/dcim/testLocations.php</file>
+            <file>tests/models/dcim/testManufacturers.php</file>
+            <file>tests/models/dcim/testModuleBays.php</file>
+            <file>tests/models/dcim/testModuleBayTemplates.php</file>
+            <file>tests/models/dcim/testModules.php</file>
+            <file>tests/models/dcim/testModuleTypes.php</file>
+            <file>tests/models/dcim/testPlatforms.php</file>
+            <file>tests/models/dcim/testPowerFeeds.php</file>
+            <file>tests/models/dcim/testPowerOutlets.php</file>
+
+            <file>tests/models/dcim/testPowerOutletTemplates.php</file>
+            <file>tests/models/dcim/testPowerPanels.php</file>
+
+
+
+
+            <file>tests/models/dcim/testRackRoles.php</file>
+            <file>tests/models/dcim/testRacks.php</file>
+
+            <file>tests/models/dcim/testRearPorts.php</file>
+            
+            <file>tests/models/dcim/testRearPortTemplates.php</file>
+            <file>tests/models/dcim/testRegions.php</file>
+            <file>tests/models/dcim/testSiteGroups.php</file>
+            <file>tests/models/dcim/testSites.php</file> 
+            <file>tests/models/dcim/testVirtualChassis.php</file>
+        </testsuite>
+ -->
+<!-- 
+        <testsuite name="Extras_Models">
+            <file>tests/models/extras/testConfigContexts.php</file>
+            <file>tests/models/extras/testContentTypes.php</file>
+            <file>tests/models/extras/testCustomFields.php</file>
+            <file>tests/models/extras/testCustomLinks.php</file>
+            <file>tests/models/extras/testExportTemplates.php</file>
+            //<file>tests/models/extras/testImageAttachments.php</file>
+            <file>tests/models/extras/testTags.php</file>
+        </testsuite>
+         -->
+<!-- 
+        <testsuite name="IPAM_Models">
             <file>tests/models/ipam/testRirs.php</file>
             <file>tests/models/ipam/testIpAddresses.php</file>
             <file>tests/models/ipam/testIpRanges.php</file>
@@ -26,93 +95,49 @@
             <file>tests/models/ipam/testVlanGroups.php</file>
             <file>tests/models/ipam/testVlans.php</file>
             <file>tests/models/ipam/testVrfs.php</file>
--->
-        <!-- <file>tests/models/ipam/testServices.php</file> -->
+        </testsuite>
+         -->
+<!-- 
+        <testsuite name="Tenancy_Models">
+            <file>tests/models/tenancy/testContactRoles.php</file>
+            <file>tests/models/tenancy/testTenantGroups.php</file>
+            <file>tests/models/tenancy/testTenants.php</file>
+            <file>tests/models/tenancy/testContactGroups.php</file>
+            <file>tests/models/tenancy/testContactGroups.php</file>
+            <file>tests/models/tenancy/testContacts.php</file>
+        </testsuite>
+ -->
+<!-- 
+        <testsuite name="Users_Models">
+            <file>tests/models/users/testUsers.php</file>
+            <file>tests/models/users/testGroups.php</file>
+            <file>tests/models/users/testTokens.php</file>
+        </testsuite>
+ -->
+<!-- 
+        <testsuite name="Virtualization_Models">
+            <file>tests/models/virtualization/testClusterGroups.php</file>
+        </testsuite>
+ -->
+<!-- 
+        <testsuite name="Wireless_Models">
+            <file>tests/models/wireless/testWirelessLanGroups.php</file>
+            <file>tests/models/wireless/testWirelessLans.php</file>
+            <file>tests/models/wireless/testWirelessLinks.php</file>
+        </testsuite>
+ -->
+        <testsuite name="Models">
+
+            <!-- <file>tests/models/dcim/testCables.php</file> -->
+
+            <file>tests/models/dcim/testFrontPorts.php</file>
 
 
-<!-- 
-        // DCIM
-        <file>tests/models/dcim/testSites.php</file> 
-        <file>tests/models/dcim/testRegions.php</file>
-        <file>tests/models/dcim/testLocations.php</file>
-        <file>tests/models/dcim/testPlatforms.php</file>
-        <file>tests/models/dcim/testSiteGroups.php</file>
-        <file>tests/models/dcim/testManufacturers.php</file>
-        <file>tests/models/dcim/testRackRoles.php</file>
-        <file>tests/models/dcim/testDeviceRoles.php</file>
-        <file>tests/models/dcim/testInterfaces.php</file>
-        <file>tests/models/dcim/testInventoryItemRoles.php</file>
-        <file>tests/models/dcim/testDeviceTypes.php</file>
-        <file>tests/models/dcim/testVirtualChassis.php</file>
-        <file>tests/models/dcim/testConsolePortTemplates.php</file>
-        <file>tests/models/dcim/testDevices.php</file>
-        <file>tests/models/dcim/testConsolePorts.php</file>
-        <file>tests/models/dcim/testConsoleServerPorts.php</file>
-        <file>tests/models/dcim/testConsoleServerPortTemplates.php</file>
-        <file>tests/models/dcim/testDeviceBays.php</file>
-        <file>tests/models/dcim/testDeviceBayTemplates.php</file>
-        <file>tests/models/dcim/testInterfaceTemplates.php</file>
-        <file>tests/models/dcim/testInventoryItems.php</file>
-        <file>tests/models/dcim/testInventoryItemTemplates.php</file>
-        <file>tests/models/dcim/testModuleBays.php</file>
-        <file>tests/models/dcim/testModuleBayTemplates.php</file>
-        <file>tests/models/dcim/testModuleTypes.php</file>
-        <file>tests/models/dcim/testModules.php</file>
-        <file>tests/models/dcim/testPowerPanels.php</file>
-        <file>tests/models/dcim/testPowerFeeds.php</file>
-        <file>tests/models/dcim/testPowerOutlets.php</file>
-        <file>tests/models/dcim/testPowerOutletTemplates.php</file>
-        <file>tests/models/dcim/testRacks.php</file>
-        <file>tests/models/dcim/testRearPorts.php</file>
-        <file>tests/models/dcim/testRearPortTemplates.php</file>
--->
-
-<!-- 
-        // TENENCY
-        <file>tests/models/tenancy/testContactRoles.php</file>
-        <file>tests/models/tenancy/testTenantGroups.php</file>
-        <file>tests/models/tenancy/testTenants.php</file>
-        <file>tests/models/tenancy/testContactGroups.php</file>
-        <file>tests/models/tenancy/testContactGroups.php</file>
-        <file>tests/models/tenancy/testContacts.php</file>
- -->
-    <!-- <file>tests/models/tenancy/testContactAssignments.php</file> -->
- <!-- 
-        // CIRCUITS
-        <file>tests/models/circuits/testCircuitTypes.php</file>
-         <file>tests/models/circuits/testProviders.php</file>
-         <file>tests/models/circuits/testProviderNetworks.php</file>
-         <file>tests/models/circuits/testCircuits.php</file>
-         <file>tests/models/circuits/testCircuitTerminations.php</file>
- -->
-<!-- 
-        // USERS
-        <file>tests/models/users/testUsers.php</file>
-        <file>tests/models/users/testGroups.php</file>
-        <file>tests/models/users/testTokens.php</file>
- -->
-<!-- 
-        // EXTRAS
-        <file>tests/models/extras/testConfigContexts.php</file>
-        <file>tests/models/extras/testContentTypes.php</file>
-        <file>tests/models/extras/testCustomFields.php</file>
-        <file>tests/models/extras/testCustomLinks.php</file>
-        <file>tests/models/extras/testExportTemplates.php</file>
-        //<file>tests/models/extras/testImageAttachments.php</file>
-        <file>tests/models/extras/testTags.php</file>
- -->
-<!--  
-        // VIRTUALIZATION
-         <file>tests/models/virtualization/testClusterGroups.php</file>
- -->
-<!-- 
-        // WIRELESS
-        <file>tests/models/wireless/testWirelessLanGroups.php</file>
-        <file>tests/models/wireless/testWirelessLans.php</file>
- -->
-
-        <file>tests/models/wireless/testWirelessLinks.php</file>
-            
+<!--         
+    <file>tests/models/wireless/testWirelessLinks.php</file>
+    <file>tests/models/tenancy/testContactAssignments.php</file>
+    <file>tests/models/ipam/testServices.php</file>
+ -->            
             
             
         </testsuite>

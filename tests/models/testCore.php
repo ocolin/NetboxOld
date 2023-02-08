@@ -475,4 +475,49 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o->deleteDetail( id: $lan->id );
     }
 
+    
+
+/*
+---------------------------------------------------------------------------- */
+
+    public static function createCircuitTermination( 
+        object $circuit, 
+        object $site,
+        string $term = 'A'
+    )
+    {
+        $o = new Circuits\CircuitTerminations();
+        return $o->postDetail(
+            circuit: $circuit->id,
+            term_side: $term,
+            options: [ 'site' => $site->id ]
+        )['body'];
+    }
+
+    public static function destroyCircuitTermination( object $term )
+    {
+        $o = new Circuits\CircuitTerminations();
+        $o->deleteDetail( id: $term->id );
+    }
+
+
+
+/*
+---------------------------------------------------------------------------- */
+
+    public static function createRearPort( object $device )
+    {
+        $o = new DCIM\RearPorts();
+        return $o->postDetail(
+            name: 'PHPUnit_RearPort',
+            type: '8p8c',
+            device: $device->id
+        )['body'];
+    }
+
+    public static function destroyRearPorts( object $port )
+    {
+        $o = new DCIM\RearPorts();
+        $o->deleteDetail( id: $port->id );
+    }
 }

@@ -24,6 +24,7 @@ function clearAll()
     clearDeviceType();
     clearTenants();
     clearManufacturers();
+    clearProviderNetworks();
     clearProviders();
     clearCircuitType();
     clearCircuit();
@@ -153,7 +154,18 @@ function clearProviders()
 
     foreach( $provs->results as $prov )
     {
-        $o->deleteDetail( id: $prov->id );
+        $test = $o->deleteDetail( id: $prov->id );
+    }
+}
+
+function clearProviderNetworks()
+{
+    $o = new Circuits\ProviderNetworks();
+    $provs = $o->getList()['body'];
+
+    foreach( $provs->results as $prov )
+    {
+        $test = $o->deleteDetail( id: $prov->id );
     }
 }
 
