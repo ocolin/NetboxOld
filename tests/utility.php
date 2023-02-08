@@ -24,7 +24,6 @@ function clearAll()
     clearDeviceType();
     clearTenants();
     clearManufacturers();
-    clearSites();
     clearProviders();
     clearCircuitType();
     clearCircuit();
@@ -33,6 +32,7 @@ function clearAll()
     clearCustomLinks();
     clearTags();
     clearWirelessLanGroups();
+    clearSites();
 }
 
 function clearDevices()
@@ -130,7 +130,8 @@ function clearSites()
 
     foreach( $sites->results as $site )
     {
-        $o->deleteDetail( id: $site->id );
+        $a = new DCIM\Sites();
+        $test = $a->deleteDetail( id: $site->id );
     }
 }
 

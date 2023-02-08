@@ -23,7 +23,7 @@ class WirelessLans extends Wireless
 ---------------------------------------------------------------------------- */
 
 /*
-* Create a single LAN Group.
+* Create a single LAN.
 *
 * @param string  $ssid Name of LAN to update.
 * @param array  $options optionsl data to be sent
@@ -52,7 +52,7 @@ class WirelessLans extends Wireless
 ---------------------------------------------------------------------------- */
 
 /*
-* Update LAN Group
+* Update LAN
 * 
 * @param integer $id Numerical ID of LAN Group to update.
 * @param string  $ssid Name of LAN to update.

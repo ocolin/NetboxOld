@@ -40,6 +40,7 @@
         <file>tests/models/dcim/testManufacturers.php</file>
         <file>tests/models/dcim/testRackRoles.php</file>
         <file>tests/models/dcim/testDeviceRoles.php</file>
+        <file>tests/models/dcim/testInterfaces.php</file>
         <file>tests/models/dcim/testInventoryItemRoles.php</file>
         <file>tests/models/dcim/testDeviceTypes.php</file>
         <file>tests/models/dcim/testVirtualChassis.php</file>
@@ -107,9 +108,10 @@
 <!-- 
         // WIRELESS
         <file>tests/models/wireless/testWirelessLanGroups.php</file>
+        <file>tests/models/wireless/testWirelessLans.php</file>
  -->
 
-        <file>tests/models/wireless/testWirelessLans.php</file>
+        <file>tests/models/wireless/testWirelessLinks.php</file>
             
             
             

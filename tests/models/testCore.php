@@ -168,10 +168,11 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createSite() : object
     {
+        $rand = rand( 1, 100000 );
         $o = new DCIM\Sites();
         return $o->postDetail(
-            name: 'PHPUnit_Site',
-            slug: 'PHPUnit_Site'
+            name: 'PHPUnit_Site-' . $rand,
+            slug: 'PHPUnit_Site-' . $rand
         )['body'];
     }
 
@@ -254,7 +255,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createTenant() : object
     {
-        $o = new Users\Tenants();
+        $o = new Tenancy\Tenants();
         return $o->postDetail(
             name: 'PHPUnit_Tenant',
             slug: 'PHPUnit_Tenant'
@@ -263,7 +264,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyTenant( object $tenant ) :void
     {
-        $o = new Users\Tenants();
+        $o = new Tenancy\Tenants();
         $o->deleteDetail( id: $tenant->id );
     }
 
@@ -276,10 +277,11 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $site
     ) : object
     {
+        $rand = rand( 1, 100000 );
         $o = new DCIM\Locations();
         return $o->postDetail(
-            name: 'PHPUnit_Location' ,
-            slug: 'PHPUnit_Location',
+            name: 'PHPUnit_Location' . $rand,
+            slug: 'PHPUnit_Location' . $rand,
             site: $site->id
         )['body'];
     }
@@ -300,9 +302,10 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $location
     ) : object
     {
+        $rand = rand( 1, 100000 );
         $o = new DCIM\Racks();
         return $o->postDetail(
-            name: 'PHPUnit_Rack',
+            name: 'PHPUnit_Rack-' . $rand,
             site: $site->id,
             location: $location->id
         )['body'];
@@ -322,8 +325,9 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createVirtualChassis() : object
     {
+        $rand = rand( 1, 100000 );
         $o = new DCIM\VirtualChassis();
-        return $o->postDetail( name: 'PHPUnit_VChas' )['body'];
+        return $o->postDetail( name: 'PHPUnit_VChas-' . $rand )['body'];
     }
 
     public static function destroyVirtualChassis( object $chassis ) : void
@@ -405,11 +409,13 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $rack
     ) : object
     {
+        $rand1 = rand( 0, 100000 );
+        $rand2 = rand( 0, 100 );
         $o = new DCIM\Devices();
         return $o->postDetail(
-                       name: 'PHPUit_device',
+                       name: 'PHPUit_device' . $rand1,
                        face: 'front',
-                vc_position: 1,
+                vc_position: $rand2,
                        site: $site->id,
                      tenant: $tenant->id,
                 device_type: $devicetype->id,
@@ -423,6 +429,50 @@ class testCore extends \PHPUnit\Framework\TestCase
     {
         $o = new DCIM\Devices();
         $o->deleteDetail( id: $device->id );    
+    }
+
+
+
+/* INTERFACE
+---------------------------------------------------------------------------- */
+
+    public static function createInterface( object $device )
+    {
+        $rand = rand( 0,100000 );
+        $o = new DCIM\Interfaces();
+        return $o->postDetail(
+              name: 'PHPUnit_Interface-' . $rand,
+              type: 'ieee802.11ac',
+            device: $device->id,
+            options: [ 
+                'rf_role' => 'station',
+            ]
+        )['body'];
+    }
+
+    public static function destroyInterface( object $interface )
+    {
+        $o = new DCIM\Interfaces();
+        $o->deleteDetail( id: $interface->id );
+    }
+
+
+/* WIRELESS LAN
+---------------------------------------------------------------------------- */
+
+    public static function createWirelessLan()
+    {
+        $rand = rand( 1, 100000 );
+        $o = new Wireless\WirelessLans();
+        return $o->postDetail(
+            ssid: 'PHPUnit_SSID-' . $rand
+        )['body'];
+    }
+
+    public static function destroyWirelessLan( object $lan )
+    {
+        $o = new Wireless\WirelessLans();
+        $o->deleteDetail( id: $lan->id );
     }
 
 }
