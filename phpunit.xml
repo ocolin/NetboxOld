@@ -63,7 +63,7 @@
             <file>tests/models/dcim/testRacks.php</file>
 
             <file>tests/models/dcim/testRearPorts.php</file>
-            
+
             <file>tests/models/dcim/testRearPortTemplates.php</file>
             <file>tests/models/dcim/testRegions.php</file>
             <file>tests/models/dcim/testSiteGroups.php</file>
@@ -130,7 +130,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/dcim/testFrontPorts.php</file>
+            <file>tests/models/dcim/testFrontPortTemplates.php</file>
 
 
 <!--         

@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testFrontPorts extends testCore
+class testFrontports extends testCore
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class testFrontPorts extends testCore
 
     public function testOptions()
     {
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -45,7 +45,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->getDetail( id: $port->id );
         
         $this->assertIsArray( $result );
@@ -72,7 +72,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -98,7 +98,7 @@ class testFrontPorts extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -122,7 +122,7 @@ class testFrontPorts extends testCore
 
     public function testPostList() :void
     {
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->postList(
             options: [[ 
                      'name' => 'PHPUnit_FrontPort',
@@ -158,7 +158,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->putDetail( 
                    id: $port->id, 
                  name: 'PHPUnit_FrontPort',
@@ -191,7 +191,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->putList(
             options: [[ 
                        'id' => $port->id,
@@ -226,7 +226,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->patchDetail(
                    id: $port->id, 
                  name: 'PHPUnit_FrontPort',
@@ -259,7 +259,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->patchList(
             options: [[ 
                        'id' => $port->id,
@@ -294,7 +294,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
         
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->deleteDetail( id: $port->id );
 
         $this->assertIsArray( $result );
@@ -315,7 +315,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new Frontports();
         $result = $o->deleteList(
             options: [[ 'id' => $port->id ]]
         );
@@ -335,7 +335,7 @@ class testFrontPorts extends testCore
 
     public function postDetail() : array
     {
-        $o = new FrontPorts();
+        $o = new Frontports();
 
         return $o->postDetail( 
                  name: 'PHPUnit_FrontPort',
@@ -352,7 +352,7 @@ class testFrontPorts extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new FrontPorts();
+        $o = new Frontports();
 
         return $o->deleteDetail( id: $id  );
     }

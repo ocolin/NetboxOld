@@ -23,6 +23,7 @@ class FrontPortTemplates extends DCIM
 *
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
+* @param integer $rear_port ID of rear port.
 * @param string  $type port type.
 * @param array   $options optionsl data to be sent
 * @param array   $headers HTML request headers
@@ -30,8 +31,9 @@ class FrontPortTemplates extends DCIM
 */
 
     public function postDetail(
-           int $device_type,
         string $name,
+           int $device_type,
+           int $rear_port,
         string $type,
          array $options = [],
          array $headers = []
@@ -40,6 +42,8 @@ class FrontPortTemplates extends DCIM
         $options['name']        = $name;
         $options['device_type'] = $device_type;
         $options['type']        = $type;
+        $options['rear_port']   = $rear_port;
+
 
         return $this->http->post(
                 uri: $this->uri,
@@ -59,6 +63,7 @@ class FrontPortTemplates extends DCIM
 * @param integer $id Numerical ID of Consol Port to update.
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
+* @param integer $rear_port ID of rear port.
 * @param string  $type Port type.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
@@ -69,6 +74,7 @@ class FrontPortTemplates extends DCIM
            int $id,
         string $name,
            int $device_type,
+           int $rear_port,
         string $type,
          array $options = [],
          array $headers = []
@@ -78,6 +84,7 @@ class FrontPortTemplates extends DCIM
         $options['name']        = $name;
         $options['device_type'] = $device_type;
         $options['type']        = $type;
+        $options['rear_port']   = $rear_port;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -97,6 +104,7 @@ class FrontPortTemplates extends DCIM
 * @param integer $id Numerical ID of Console Port to update.
 * @param string  $name Name of template.
 * @param integer $device_typeoo ID of device type. 
+* @param integer $rear_port ID of rear port.
 * @param string  $type Port type.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
@@ -107,6 +115,7 @@ class FrontPortTemplates extends DCIM
            int $id,
         string $name,
            int $device_type,
+           int $rear_port,
         string $type,
          array $options = [],
          array $headers = []
@@ -116,6 +125,7 @@ class FrontPortTemplates extends DCIM
         $options['name']        = $name;
         $options['device_type'] = $device_type;
         $options['type']        = $type;
+        $options['rear_port']   = $rear_port;
 
 
         return $this->http->put(

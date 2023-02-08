@@ -413,7 +413,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         $rand2 = rand( 0, 100 );
         $o = new DCIM\Devices();
         return $o->postDetail(
-                       name: 'PHPUit_device' . $rand1,
+                       name: 'PHPUnit_device-' . $rand1,
                        face: 'front',
                 vc_position: $rand2,
                        site: $site->id,
@@ -519,5 +519,25 @@ class testCore extends \PHPUnit\Framework\TestCase
     {
         $o = new DCIM\RearPorts();
         $o->deleteDetail( id: $port->id );
+    }
+
+
+/*
+---------------------------------------------------------------------------- */
+
+    public static function createRearPortTemplate( object $device_type )
+    {
+        $o = new DCIM\RearPortTemplates();
+        return $o->postDetail(
+            device_type: $device_type->id,
+            name: 'PHPUnit_RearPortTempl',
+            type: '8p8c',
+        )['body'];
+    }
+
+    public static function destroyRearPortsTemplate( object $templ )
+    {
+        $o = new DCIM\RearPortTemplates();
+        $o->deleteDetail( id: $templ->id );
     }
 }

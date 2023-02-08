@@ -23,6 +23,7 @@ function clearAll()
     clearLocation();
     clearDeviceType();
     clearTenants();
+    clearPlatforms();
     clearManufacturers();
     clearProviderNetworks();
     clearProviders();
@@ -120,7 +121,18 @@ function clearManufacturers()
 
     foreach( $manfs->results as $manf )
     {
-        $o->deleteDetail( id: $manf->id );
+       $test = $o->deleteDetail( id: $manf->id );
+    }
+}
+
+function clearPlatforms()
+{
+    $o = new DCIM\Platforms();
+    $platforms = $o->getList()['body'];
+
+    foreach( $platforms->results as $platform )
+    {
+       $test = $o->deleteDetail( id: $platform->id );
     }
 }
 
