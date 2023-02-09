@@ -97,7 +97,7 @@
             <file>tests/models/ipam/testRirs.php</file>
             <file>tests/models/ipam/testRoles.php</file>
             <file>tests/models/ipam/testRouteTargets.php</file>
-            
+            <file>tests/models/ipam/testServices.php</file>
             
             <file>tests/models/ipam/testVlanGroups.php</file>
             
@@ -138,7 +138,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/ipam/testServices.php</file>
+            <file>tests/models/ipam/testServiceTemplates.php</file>
 
 
 <!--         
