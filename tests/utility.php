@@ -15,6 +15,9 @@ clearAll();
 
 function clearAll()
 {
+    clearClusters();
+    clearClusterTypes();
+    clearClusterGroups();
     clearDevices();
     clearModuleBays();
     clearRackRoles();
@@ -48,6 +51,43 @@ function clearDevices()
         $o->deleteDetail( id: $device->id) ;
     }
 }
+
+
+
+function clearClusterTypes()
+{
+    $o = new Virtualization\ClusterTypes();
+    $types = $o->getList()['body'];
+
+    foreach( $types->results as $type )
+    {
+        $o->deleteDetail( id: $type->id) ;
+    }
+}
+
+function clearClusterGroups()
+{
+    $o = new Virtualization\ClusterGroups();
+    $groups = $o->getList()['body'];
+
+    foreach( $groups->results as $group )
+    {
+        $o->deleteDetail( id: $group->id) ;
+    }
+}
+
+
+function clearClusters()
+{
+    $o = new Virtualization\Clusters();
+    $clusters = $o->getList()['body'];
+
+    foreach( $clusters->results as $cluster )
+    {
+        $o->deleteDetail( id: $cluster->id) ;
+    }
+}
+
 
 function clearRackRoles()
 {

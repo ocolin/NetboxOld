@@ -130,6 +130,7 @@
         <testsuite name="Virtualization_Models">
             <file>tests/models/virtualization/testClusterGroups.php</file>
             <file>tests/models/virtualization/testClusterTypes.php</file>
+            <file>tests/models/virtualization/testClusters.php</file>
         </testsuite>
  -->
 <!-- 
@@ -143,7 +144,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/virtualization/testClusters.php</file>
+            <file>tests/models/virtualization/testVirtualMachines.php</file>
 
 
 <!--         

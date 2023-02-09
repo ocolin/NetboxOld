@@ -581,4 +581,30 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o->deleteDetail( id: $group->id );
     }
 
+
+
+/* CLUSTER
+---------------------------------------------------------------------------- */
+
+    public static function createCluster(
+        object $type,
+        object $group,
+        object $site
+    )
+    {
+        $o = new Virtualization\Clusters();
+        return $o->postDetail(
+             name: 'PHPUnit_Cluster',
+             type: $type->id,
+            group: $group->id,
+             site: $site->id
+        )['body'];
+    }
+
+    public static function destroyCluster( object $cluster )
+    {
+        $o = new Virtualization\Clusters();
+        $o->deleteDetail( id: $cluster->id );
+    }
+
 }
