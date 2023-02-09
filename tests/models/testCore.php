@@ -540,4 +540,45 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o = new DCIM\RearPortTemplates();
         $o->deleteDetail( id: $templ->id );
     }
+
+
+
+/* CLUSTER TYPE
+---------------------------------------------------------------------------- */
+
+    public static function createClusterType()
+    {
+        $o = new Virtualization\ClusterTypes();
+        return $o->postDetail(
+            name: 'PHPUnit_ClusterType',
+            slug: 'PHPUnit_ClusterType'
+        )['body'];
+    }
+
+    public static function destroyClusterType( object $type )
+    {
+        $o = new Virtualization\ClusterTypes();
+        $o->deleteDetail( id: $type->id );
+    }
+
+
+
+/* CLUSTER GROUP
+---------------------------------------------------------------------------- */
+
+    public static function createClusterGroup()
+    {
+        $o = new Virtualization\ClusterGroups();
+        return $o->postDetail(
+            name: 'PHPUnit_ClusterGroup',
+            slug: 'PHPUnit_ClusterGroup'
+        )['body'];
+    }
+
+    public static function destroyClusterGroup( object $group )
+    {
+        $o = new Virtualization\ClusterGroups();
+        $o->deleteDetail( id: $group->id );
+    }
+
 }

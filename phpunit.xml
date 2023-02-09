@@ -98,7 +98,7 @@
             <file>tests/models/ipam/testRoles.php</file>
             <file>tests/models/ipam/testRouteTargets.php</file>
             <file>tests/models/ipam/testServices.php</file>
-            
+            <file>tests/models/ipam/testServiceTemplates.php</file>
             <file>tests/models/ipam/testVlanGroups.php</file>
             
             <file>tests/models/ipam/testVlans.php</file>
@@ -107,24 +107,29 @@
          -->
 <!-- 
         <testsuite name="Tenancy_Models">
+
+            <file>tests/models/tenancy/testContactGroups.php</file>
             <file>tests/models/tenancy/testContactRoles.php</file>
+            <file>tests/models/tenancy/testContacts.php</file>
             <file>tests/models/tenancy/testTenantGroups.php</file>
             <file>tests/models/tenancy/testTenants.php</file>
-            <file>tests/models/tenancy/testContactGroups.php</file>
-            <file>tests/models/tenancy/testContactGroups.php</file>
-            <file>tests/models/tenancy/testContacts.php</file>
         </testsuite>
  -->
 <!-- 
         <testsuite name="Users_Models">
-            <file>tests/models/users/testUsers.php</file>
+
             <file>tests/models/users/testGroups.php</file>
+
             <file>tests/models/users/testTokens.php</file>
+            <file>tests/models/users/testUsers.php</file>
+            
+            
         </testsuite>
  -->
 <!-- 
         <testsuite name="Virtualization_Models">
             <file>tests/models/virtualization/testClusterGroups.php</file>
+            <file>tests/models/virtualization/testClusterTypes.php</file>
         </testsuite>
  -->
 <!-- 
@@ -138,7 +143,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/ipam/testServiceTemplates.php</file>
+            <file>tests/models/virtualization/testClusters.php</file>
 
 
 <!--         
