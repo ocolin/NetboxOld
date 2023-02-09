@@ -34,17 +34,17 @@ class FhrpGroupAssignments extends IPAM
            int $group,
         string $interface_type,
            int $interface_id,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['group']          = $group;
-        $data['interface_type'] = $interface_type;
-        $data['interface_id']   = $interface_id;
+        $options['group']          = $group;
+        $options['interface_type'] = $interface_type;
+        $options['interface_id']   = $interface_id;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -71,18 +71,18 @@ class FhrpGroupAssignments extends IPAM
            int $group,
         string $interface_type,
            int $interface_id,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['group']          = $group;
-        $data['interface_type'] = $interface_type;
-        $data['interface_id']   = $interface_id;
+        $options['group']          = $group;
+        $options['interface_type'] = $interface_type;
+        $options['interface_id']   = $interface_id;
 
         return $this->http->put(
                uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -109,19 +109,19 @@ class FhrpGroupAssignments extends IPAM
            int $group,
         string $interface_type,
            int $interface_id,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['group']          = $group;
-        $data['interface_type'] = $interface_type;
-        $data['interface_id']   = $interface_id;
+        $options['group']          = $group;
+        $options['interface_type'] = $interface_type;
+        $options['interface_id']   = $interface_id;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

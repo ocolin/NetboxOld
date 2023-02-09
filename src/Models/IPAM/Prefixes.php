@@ -34,15 +34,15 @@ class Prefixes extends IPAM
     
     public function postDetail(
         string $prefix,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['prefix'] = $prefix;
+        $options['prefix'] = $prefix;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -65,16 +65,16 @@ class Prefixes extends IPAM
     public function putDetail(
        string $prefix,
           int $id,
-        array $data    = [],
+        array $options = [],
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['prefix'] = $prefix;
+        $options['prefix'] = $prefix;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -96,17 +96,17 @@ class Prefixes extends IPAM
     public function patchDetail(
           int $id,
        string $prefix,
-        array $data    = [],
+        array $options = [],
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['prefix'] = $prefix;
+        $options['prefix'] = $prefix;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

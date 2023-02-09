@@ -61,20 +61,20 @@ class IPAM
 /*
 * Delete a list of objects.
 * 
-* @param array $data List of object to delete. Each object must have an ID.
+* @param array $options List of object to delete. Each object must have an ID.
 * @param array $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function deleteList( 
-        array $data, 
+        array $options, 
         array $headers = [] 
     ) : array
     {
         return $this->http->delete( 
-               uri: $this->uri, 
-              body: $data, 
-           headers: $headers 
+                uri: $this->uri, 
+               body: $options, 
+            headers: $headers 
         );
     }
 
@@ -85,20 +85,20 @@ class IPAM
 /*
 * Update a list of objects.
 *
-* @param array $data Array of Objects to update.
+* @param array $options Array of Objects to update.
 * @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchList(
-        array $data    = [],
+        array $options    = [],
         array $headers = []
     ) : array
     {
         return $this->http->put(
-            uri: $this->uri,
-            body: $data,
-        headers: $headers
+                uri: $this->uri,
+               body: $options,
+            headers: $headers
         );
     }
 
@@ -110,34 +110,34 @@ class IPAM
 /*
 * Updte an array of object.
 *
-* @param array $data List of objects to update.
+* @param array $options List of objects to update.
 * @param array $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putList(
-        array $data,
+        array $options,
         array $headers = []
     ) : array
     {
         return $this->http->put(
-               uri: $this->uri,
-              body: $data,
-           headers: $headers
+                uri: $this->uri,
+               body: $options,
+            headers: $headers
         );
     }
 
-    
+
 
 /* GET METHOD LIST
 ---------------------------------------------------------------------------- */
 
 /*
- * Get all Objects
- *
- * @param array $params Optional URL parameters.
- * @param array $headers Optional Custom HTTP request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Get all Objects
+*
+* @param array $params Optional URL parameters.
+* @param array $headers Optional Custom HTTP request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function getList( 
@@ -147,9 +147,9 @@ class IPAM
     {
 
         return $this->http->get(
-               uri: $this->uri,
-            params: $params,
-           headers: $headers
+                uri: $this->uri,
+             params: $params,
+            headers: $headers
         );
     }
 
@@ -160,35 +160,35 @@ class IPAM
 /*
 * Create multiple objects at once.
 *
-* @param array $data An array of object arrays. Each sub array MUST have a 
+* @param array $options An array of object arrays. Each sub array MUST have a 
 *  name and slug key. 
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postList(
-        array $data,
+        array $options,
         array $headers = []
     ) : array
     {
         return $this->http->post(
-               uri: $this->uri,
-               body: $data,
+                uri: $this->uri,
+               body: $options,
             headers: $headers
         );
     }
 
 
-     /* GET METHOD DETAIL
+ /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /*
- * Get an individual object
- *
- * @param integer $id Numerical ID of an object record.
- * @param array   $params Optional GET parameters.
- * @param array   $headers Optional request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Get an individual object
+*
+* @param integer $id Numerical ID of an object record.
+* @param array   $params Optional GET parameters.
+* @param array   $headers Optional request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function getDetail( 
@@ -201,9 +201,16 @@ class IPAM
 
         return $this->http->get(
                 uri: $this->uri,
-            params: $params,
+             params: $params,
             headers: $headers
         );
     }
 
+
+
+    public static function destroySite( string $id ) : void
+    {
+        $o = new Site();
+        $o->deleteDetail( id: $id );
+    }
 }

@@ -17,6 +17,7 @@ function clearAll()
 {
     clearDevices();
     clearModuleBays();
+    clearRackRoles();
     clearRacks();
     clearVirtualChassis();
     clearDeviceRole();
@@ -45,6 +46,17 @@ function clearDevices()
     foreach( $devices->results as $device )
     {
         $o->deleteDetail( id: $device->id) ;
+    }
+}
+
+function clearRackRoles()
+{
+    $o = new DCIM\RackRoles();
+    $roles = $o->getList()['body'];
+
+    foreach( $roles->results as $role )
+    {
+        $o->deleteDetail( id: $role->id);
     }
 }
 

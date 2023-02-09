@@ -32,16 +32,16 @@ class IpRanges extends IPAM
     public function postDetail(
         string $start_address,
         string $end_address,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['start_address'] = $start_address;
-        $data['end_address']   = $end_address;
+        $options['start_address'] = $start_address;
+        $options['end_address']   = $end_address;
 
         return $this->http->post(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -66,17 +66,17 @@ class IpRanges extends IPAM
            int $id,
         string $start_address,
         string $end_address,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['start_address'] = $start_address;
-        $data['end_address']   = $end_address;
+        $options['start_address'] = $start_address;
+        $options['end_address']   = $end_address;
 
         return $this->http->put(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -101,17 +101,17 @@ class IpRanges extends IPAM
            int $id,
         string $start_address,
         string $end_address,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['start_address'] = $start_address;
-        $data['end_address']   = $end_address;
+        $options['start_address'] = $start_address;
+        $options['end_address']   = $end_address;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

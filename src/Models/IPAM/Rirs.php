@@ -32,16 +32,16 @@ class Rirs extends IPAM
     public function postDetail(
         string $name,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name'] = $name;
-        $data['slug'] = $slug;
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
         return $this->http->post(
                uri: $this->uri,
-              body: $data,
+              body: $options,
            headers: $headers
         );
     }
@@ -66,17 +66,17 @@ class Rirs extends IPAM
            int $id,
         string $name,
         string $slug,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
-        $data['slug'] = $slug;
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
         return $this->http->put(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -101,18 +101,18 @@ class Rirs extends IPAM
           int $id,
        string $name,
        string $slug,
-        array $data    = [],
+        array $options = [],
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
-        $data['slug'] = $slug;
+        $options['name'] = $name;
+        $options['slug'] = $slug;
 
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

@@ -32,16 +32,16 @@ class Asns extends IPAM
     public function postDetail(
            int $asn,
            int $rir,
-         array $data    = [],
-        array $headers = []
+         array $options = [],
+         array $headers = []
     ) : array
     {
-        $data['asn'] = $asn;
-        $data['rir'] = $rir;
+        $options['asn'] = $asn;
+        $options['rir'] = $rir;
 
         return $this->http->post(
                uri: $this->uri,
-              body: $data,
+              body: $options,
            headers: $headers
         );
     }
@@ -66,17 +66,17 @@ class Asns extends IPAM
           int $id,
           int $asn,
           int $rir,
-        array $data    = [],
+        array $options = [],
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['asn'] = $asn;
-        $data['rir'] = $rir;
+        $options['asn'] = $asn;
+        $options['rir'] = $rir;
 
         return $this->http->put(
                uri: $this->uri,
-              body: $data,
+              body: $options,
            headers: $headers
         );
     }
@@ -101,17 +101,17 @@ class Asns extends IPAM
           int $id,
           int $asn,
           int $rir,
-        array $data    = [],
+        array $options = [],
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['asn'] = $asn;
-        $data['rir'] = $rir;
+        $options['asn'] = $asn;
+        $options['rir'] = $rir;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

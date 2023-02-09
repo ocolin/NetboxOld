@@ -30,15 +30,15 @@ class IpAddresses extends IPAM
 
     public function postDetail(
         string $address,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['address'] = $address;
+        $options['address'] = $address;
 
         return $this->http->post(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -61,16 +61,16 @@ class IpAddresses extends IPAM
     public function putDetail(
            int $id,
         string $address,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['address'] = $address;
+        $options['address'] = $address;
 
         return $this->http->put(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -93,16 +93,16 @@ class IpAddresses extends IPAM
     public function patchDetail(
           int $id,
        string $address,
-        array $data    = [],
+        array $options = [],
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['address'] = $address;
+        $options['address'] = $address;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

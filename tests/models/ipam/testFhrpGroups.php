@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 declare( strict_types = 1 );
 
@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testServices extends testCore
+class testFhrpGroups extends testCore
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class testServices extends testCore
 
     public function testOptions()
     {
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -37,16 +37,17 @@ class testServices extends testCore
     }
 
 
+
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
     public function testGetDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
-        $result = $o->getDetail( id: $service->id );
+        $o = new FhrpGroups();
+        $result = $o->getDetail( id: $group->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -59,9 +60,9 @@ class testServices extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $service->id );
-    }
- 
+        $this->deleteDetail( id: $group->id );
+    } 
+
 
 
 /* TEST GET LIST
@@ -70,9 +71,9 @@ class testServices extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -88,8 +89,9 @@ class testServices extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $service->id );
+        $this->deleteDetail( $group->id );
     }
+
 
 
 
@@ -98,7 +100,7 @@ class testServices extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -112,9 +114,8 @@ class testServices extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result['body']->id );
     }
-
 
 
 /* TEST POST LIST
@@ -122,14 +123,12 @@ class testServices extends testCore
 
     public function testPostList() :void
     {
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->postList(
-            options: [[ 
-                        'name' => 'PHPUnit_Service',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                      'device' => $_ENV['device']->id
-            ]] 
+            data: [[ 
+                'protocol' => 'vrrp2',
+                'group_id' => 1 
+            ]]  
         );
 
         $this->assertIsArray( $result );
@@ -142,9 +141,9 @@ class testServices extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $service )
+        foreach( $result['body'] AS $group )
         {
-            $this->deleteDetail( id: $service->id );
+            $this->deleteDetail( id: $group->id );
         }
     }
 
@@ -156,16 +155,14 @@ class testServices extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->putDetail( 
-                  id: $service->id, 
-                name: 'PHPUnit_Service',
-               ports: [1],
-            protocol: 'tcp',
-             options: [ 'device' => $_ENV['device']->id ]               
-        );
+                  id: $group->id, 
+            protocol: 'vrrp2',
+            group_id: 1
+        );        
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -178,7 +175,7 @@ class testServices extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $service->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -189,17 +186,15 @@ class testServices extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->putList(
-            options: [
+            data: [
                 [ 
-                          'id' => $service->id,
-                        'name' => 'PHPUnit_Service',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                     'options' => [ 'device' => $_ENV['device']->id ]
+                          'id' => $group->id, 
+                    'protocol' => 'vrrp2',
+                    'group_id' => 1 
                 ]
             ]
         );
@@ -215,7 +210,7 @@ class testServices extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $service->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -226,15 +221,13 @@ class testServices extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->patchDetail(
-                  id: $service->id, 
-                name: 'PHPUnit_Service',
-               ports: [1],
-            protocol: 'tcp',
-             options: [ 'device' => $_ENV['device']->id ]
+                      id: $group->id,
+                protocol: 'vrrp2',
+                group_id: 1
         );
 
         $this->assertIsArray( $result );
@@ -247,8 +240,9 @@ class testServices extends testCore
         $this->assertIsObject( $result['body'] );
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
+
         // CLEAN UP
-        $this->deleteDetail( $service->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -259,17 +253,15 @@ class testServices extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->patchList(
-            options: [
+            data: [
                 [ 
-                          'id' => $service->id,
-                        'name' => 'PHPUnit_Service',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                     'options' => [ 'device' => $_ENV['device']->id ]
+                          'id' => $group->id, 
+                    'protocol' => 'vrrp2',
+                    'group_id' => 1 
                 ]
             ]
         );
@@ -285,8 +277,9 @@ class testServices extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $service->id );
+        $this->deleteDetail( $group->id );
     }
+
 
 
 
@@ -296,10 +289,10 @@ class testServices extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
         
-        $o = new Services();
-        $result = $o->deleteDetail( id: $service->id );
+        $o = new FhrpGroups();
+        $result = $o->deleteDetail( id: $group->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -317,11 +310,11 @@ class testServices extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Services();
+        $o = new FhrpGroups();
         $result = $o->deleteList(
-            options: [[ 'id' => $service->id ]]
+            data: [[ 'id' => $group->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -334,86 +327,28 @@ class testServices extends testCore
 
 
 
-/* CREATE A RACK ROLES
+/* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Services();
+        $o = new FhrpGroups();
 
         return $o->postDetail( 
-                name: 'PHPUnit_Service',
-               ports: [1],
-            protocol: 'tcp',
-            options: [ 'device' => $_ENV['device']->id ]
+            protocol: 'vrrp2',
+            group_id: 1
         );
     }
 
 
 
-/* DELETE A RACK ROLES
+/* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Services();
+        $o = new FhrpGroups();
 
         return $o->deleteDetail( id: $id  );
-    }
-
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-/**
-* @beforeClass
-*/
-    public static function setupTest()
-    {
-        $_ENV['site']     = self::createSite();
-        $_ENV['manf']     = self::createManufacturer();
-        $_ENV['tenant']   = self::createTenant();
-        $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
-        $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
-        $_ENV['devrole']  = self::createDeviceRole();
-        $_ENV['vc']       = self::createVirtualChassis();
-        $_ENV['rack']     = self::createRack( 
-            site: $_ENV['site'], location: $_ENV['location'] 
-        );
-        $_ENV['device']   = self::createDevice(
-                       site: $_ENV['site'],
-                     tenant: $_ENV['tenant'],
-                 devicetype: $_ENV['devtype'],
-                 devicerole: $_ENV['devrole'],
-            virtual_chassis: $_ENV['vc'],
-                       rack: $_ENV['rack']
-        );
-    }
-
-/**
-* @afterClass
-*/
-    public static function closeTest()
-    {
-        self::destroyDevice( device: $_ENV['device'] );
-        self::destroyRack( rack: $_ENV['rack'] );
-        self::destroyVirtualChassis( chassis: $_ENV['vc'] );
-        self::destroyDeviceRole( devrole: $_ENV['devrole'] );
-        self::destroyLocation( location: $_ENV['location'] );
-        self::destroyDeviceType( devtype: $_ENV['devtype'] );
-        self::destroyTenant( tenant: $_ENV['tenant'] );
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['rack'] );
-        unset( $_ENV['vc'] );
-        unset( $_ENV['devrole'] );
-        unset( $_ENV['location'] );
-        unset( $_ENV['devtype'] );
-        unset( $_ENV['tenant'] );
-        unset( $_ENV['manf'] );
-        unset( $_ENV['site'] );
-        unset( $_ENV['device'] );
     }
 }

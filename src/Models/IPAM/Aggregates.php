@@ -32,16 +32,16 @@ class Aggregates extends IPAM
     public function postDetail(
         string $prefix,
            int $rir,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['prefix'] = $prefix;
-        $data['rir']    = $rir;
+        $options['prefix'] = $prefix;
+        $options['rir']    = $rir;
 
         return $this->http->post(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -66,17 +66,17 @@ class Aggregates extends IPAM
            int $id,
         string $prefix,
            int $rir,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['prefix'] = $prefix;
-        $data['rir']    = $rir;
+        $options['prefix'] = $prefix;
+        $options['rir']    = $rir;
 
         return $this->http->put(
               uri: $this->uri,
-             body: $data,
+             body: $options,
           headers: $headers
         );
     }
@@ -101,17 +101,17 @@ class Aggregates extends IPAM
            int $id,
         string $prefix,
            int $rir,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['prefix'] = $prefix;
-        $data['rir']    = $rir;
+        $options['prefix'] = $prefix;
+        $options['rir']    = $rir;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

@@ -25,7 +25,7 @@ class Services extends IPAM
 * @param string  $name Name of Service.
 * @param integer $ports Number or ports in Service 
 * @param string  $protocol Service protocol: tcp, udp, sctp
-* @param array   $data optionsl data to be sent
+* @param array   $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -34,17 +34,17 @@ class Services extends IPAM
         string $name,
          array $ports,
         string $protocol,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name']     = $name;
-        $data['ports']    = $ports;
-        $data['protocol'] = $protocol;
+        $options['name']     = $name;
+        $options['ports']    = $ports;
+        $options['protocol'] = $protocol;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -61,7 +61,7 @@ class Services extends IPAM
 * @param string  $name Name of Service to update.
 * @param integer $ports Number or ports in Service 
 * @param string  $protocol Service protocol: tcp, udp, sctp
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -71,18 +71,18 @@ class Services extends IPAM
         string $name,
          array $ports,
         string $protocol,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']     = $name;
-        $data['ports']    = $ports;
-        $data['protocol'] = $protocol;
+        $options['name']     = $name;
+        $options['ports']    = $ports;
+        $options['protocol'] = $protocol;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -99,7 +99,7 @@ class Services extends IPAM
 * @param string  $name Name of Service to update.
 * @param integer $ports Number or ports in Service 
 * @param string  $protocol Service protocol: tcp, udp, sctp
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -109,18 +109,18 @@ class Services extends IPAM
         string $name,
          array $ports,
         string $protocol,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name']     = $name;
-        $data['ports']    = $ports;
-        $data['protocol'] = $protocol;
+        $options['name']     = $name;
+        $options['ports']    = $ports;
+        $options['protocol'] = $protocol;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

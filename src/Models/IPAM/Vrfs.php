@@ -22,22 +22,22 @@ class Vrfs extends IPAM
 * Create a single VRF.
 *
 * @param string $name Name of VRF.
-* @param array  $data optionsl data to be sent
+* @param array  $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
-        $data['name'] = $name;
+        $options['name'] = $name;
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -52,7 +52,7 @@ class Vrfs extends IPAM
 * 
 * @param integer $id Numerical ID of VRF to update.
 * @param string  $name Name of VRF to update.
-* @param array   $data Optional data to send.
+* @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -60,16 +60,16 @@ class Vrfs extends IPAM
     public function putDetail(
            int $id,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
+        $options['name'] = $name;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }
@@ -84,7 +84,7 @@ class Vrfs extends IPAM
 *
 * @param integer $id Numerical ID of VRF to update.
 * @param string  $name Name of VRF to update.
-* @param array   $data Optional data to modify.
+* @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -92,16 +92,16 @@ class Vrfs extends IPAM
     public function patchDetail(
            int $id,
         string $name,
-         array $data    = [],
+         array $options = [],
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $data['name'] = $name;
+        $options['name'] = $name;
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data,
+               body: $options,
             headers: $headers
         );
     }

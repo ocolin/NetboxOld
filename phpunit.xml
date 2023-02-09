@@ -58,7 +58,7 @@
             <file>tests/models/dcim/testPowerPorts.php</file>
 
             <file>tests/models/dcim/testPowerPortTemplates.php</file>
-
+            <file>tests/models/dcim/testRackReservations.php</file>
             <file>tests/models/dcim/testRackRoles.php</file>
             <file>tests/models/dcim/testRacks.php</file>
 
@@ -84,15 +84,23 @@
          -->
 <!-- 
         <testsuite name="IPAM_Models">
-            <file>tests/models/ipam/testRirs.php</file>
-            <file>tests/models/ipam/testIpAddresses.php</file>
-            <file>tests/models/ipam/testIpRanges.php</file>
-            <file>tests/models/ipam/testPrefixes.php</file>
             <file>tests/models/ipam/testAggregates.php</file>
             <file>tests/models/ipam/testAsns.php</file>
+
+            <file>tests/models/ipam/testFhrpGroups.php</file>
+            <file>tests/models/ipam/testIpAddresses.php</file>
+            <file>tests/models/ipam/testIpRanges.php</file>
+
+            <file>tests/models/ipam/testPrefixes.php</file>
+
+
+            <file>tests/models/ipam/testRirs.php</file>
             <file>tests/models/ipam/testRoles.php</file>
             <file>tests/models/ipam/testRouteTargets.php</file>
+            
+            
             <file>tests/models/ipam/testVlanGroups.php</file>
+            
             <file>tests/models/ipam/testVlans.php</file>
             <file>tests/models/ipam/testVrfs.php</file>
         </testsuite>
@@ -130,7 +138,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/dcim/testRackReservations.php</file>
+            <file>tests/models/ipam/testServices.php</file>
 
 
 <!--         
