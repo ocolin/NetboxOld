@@ -24,16 +24,16 @@ class RackReservations extends DCIM
 *
 * @param integer $rack  ID of Rack being reserved.
 * @param integer $units ID of unit in rack.
-* @param integer $user ID of user reserving rack.
+* @param array   $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array   $options optionsl data to be sent
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
            int $rack,
-           int $units,
+         array $units,
            int $user,
         string $description,
          array $options = [],
@@ -62,7 +62,7 @@ class RackReservations extends DCIM
 * 
 * @param integer $id Numerical ID of Consol Port to update.
 * @param integer $rack  ID of Rack being reserved.
-* @param integer $units ID of unit in rack.
+* @param array   $units ID of unit in rack.
 * @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
 * @param array   $options Optional data to send.
@@ -73,7 +73,7 @@ class RackReservations extends DCIM
     public function putDetail(
             int $id,
             int $rack,
-            int $units,
+          array $units,
             int $user,
          string $description,
           array $options = [],
@@ -103,7 +103,7 @@ class RackReservations extends DCIM
 *
 * @param integer $id Numerical ID of Console Port to update.
 * @param integer $rack  ID of Rack being reserved.
-* @param integer $units ID of unit in rack.
+* @param array   $units ID of unit in rack.
 * @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
 * @param array   $options Optional data to modify.
@@ -114,7 +114,7 @@ class RackReservations extends DCIM
     public function patchDetail(
            int $id,
            int $rack,
-           int $units,
+         array $units,
            int $user,
         string $description,
          array $options = [],

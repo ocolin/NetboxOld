@@ -477,7 +477,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     
 
-/*
+/* CIRCUIT TERMINATION
 ---------------------------------------------------------------------------- */
 
     public static function createCircuitTermination( 
@@ -502,7 +502,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
 
 
-/*
+/* REAR PORT
 ---------------------------------------------------------------------------- */
 
     public static function createRearPort( object $device )
@@ -522,7 +522,7 @@ class testCore extends \PHPUnit\Framework\TestCase
     }
 
 
-/*
+/* REAR PORT TEMPLATE
 ---------------------------------------------------------------------------- */
 
     public static function createRearPortTemplate( object $device_type )

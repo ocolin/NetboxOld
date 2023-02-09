@@ -57,7 +57,7 @@
             <file>tests/models/dcim/testPowerPanels.php</file>
             <file>tests/models/dcim/testPowerPorts.php</file>
 
-
+            <file>tests/models/dcim/testPowerPortTemplates.php</file>
 
             <file>tests/models/dcim/testRackRoles.php</file>
             <file>tests/models/dcim/testRacks.php</file>
@@ -130,7 +130,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/dcim/testPowerPortTemplates.php</file>
+            <file>tests/models/dcim/testRackReservations.php</file>
 
 
 <!--         
