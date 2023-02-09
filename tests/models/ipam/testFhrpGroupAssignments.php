@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testFhrpGroups extends testCore
+class testFhrpGroupAssignments extends testCore
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class testFhrpGroups extends testCore
 
     public function testOptions()
     {
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -44,10 +44,10 @@ class testFhrpGroups extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
-        $result = $o->getDetail( id: $group->id );
+        $o = new FhrpGroupAssignments();
+        $result = $o->getDetail( id: $assign->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -60,7 +60,7 @@ class testFhrpGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( id: $group->id );
+        $this->deleteDetail( id: $assign->id );
     } 
 
 
@@ -71,9 +71,9 @@ class testFhrpGroups extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -89,7 +89,7 @@ class testFhrpGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $assign->id );
     }
 
 
@@ -100,7 +100,7 @@ class testFhrpGroups extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -123,11 +123,13 @@ class testFhrpGroups extends testCore
 
     public function testPostList() :void
     {
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->postList(
             options: [[ 
-                'protocol' => 'vrrp2',
-                'group_id' => 1 
+                         'group' => $_ENV['group']->id,
+                'interface_type' => 'dcim.device',
+                  'interface_id' => $_ENV['interface']->id,
+                      'priority' => 1
             ]]  
         );
 
@@ -141,9 +143,9 @@ class testFhrpGroups extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $group )
+        foreach( $result['body'] AS $assign )
         {
-            $this->deleteDetail( id: $group->id );
+            $this->deleteDetail( id: $assign->id );
         }
     }
 
@@ -155,13 +157,15 @@ class testFhrpGroups extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->putDetail( 
-                  id: $group->id, 
-            protocol: 'vrrp2',
-            group_id: 1
+                        id: $assign->id,
+                     group: $_ENV['group']->id,
+            interface_type: 'dcim.device',
+              interface_id: $_ENV['interface']->id,
+                  priority: 1
         );        
         
         $this->assertIsArray( $result );
@@ -175,7 +179,7 @@ class testFhrpGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $assign->id );
     }
 
 
@@ -186,15 +190,17 @@ class testFhrpGroups extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->putList(
             options: [
                 [ 
-                          'id' => $group->id, 
-                    'protocol' => 'vrrp2',
-                    'group_id' => 1 
+                                'id' => $assign->id, 
+                             'group' => $_ENV['group']->id,
+                    'interface_type' => 'dcim.device',
+                      'interface_id' => $_ENV['interface']->id,
+                          'priority' => 1
                 ]
             ]
         );
@@ -210,7 +216,7 @@ class testFhrpGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $assign->id );
     }
 
 
@@ -221,13 +227,15 @@ class testFhrpGroups extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->patchDetail(
-                      id: $group->id,
-                protocol: 'vrrp2',
-                group_id: 1
+                        id: $assign->id,
+                     group: $_ENV['group']->id,
+            interface_type: 'dcim.device',
+              interface_id: $_ENV['interface']->id,
+                  priority: 1
         );
 
         $this->assertIsArray( $result );
@@ -242,7 +250,7 @@ class testFhrpGroups extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $assign->id );
     }
 
 
@@ -253,15 +261,17 @@ class testFhrpGroups extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->patchList(
             options: [
                 [ 
-                          'id' => $group->id, 
-                    'protocol' => 'vrrp2',
-                    'group_id' => 1 
+                                'id' => $assign->id,
+                             'group' => $_ENV['group']->id,
+                    'interface_type' => 'dcim.device',
+                      'interface_id' => $_ENV['interface']->id,
+                          'priority' => 1
                 ]
             ]
         );
@@ -277,7 +287,7 @@ class testFhrpGroups extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $group->id );
+        $this->deleteDetail( $assign->id );
     }
 
 
@@ -289,10 +299,10 @@ class testFhrpGroups extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
         
-        $o = new FhrpGroups();
-        $result = $o->deleteDetail( id: $group->id );
+        $o = new FhrpGroupAssignments();
+        $result = $o->deleteDetail( id: $assign->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -310,11 +320,11 @@ class testFhrpGroups extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $group = $this->postDetail()['body'];
+        $assign = $this->postDetail()['body'];
 
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
         $result = $o->deleteList(
-            options: [[ 'id' => $group->id ]]
+            options: [[ 'id' => $assign->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -332,11 +342,13 @@ class testFhrpGroups extends testCore
 
     public function postDetail() : array
     {
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
 
         return $o->postDetail( 
-            protocol: 'vrrp2',
-            group_id: 1
+            group: $_ENV['group']->id,
+            interface_type: 'dcim.device',
+            interface_id: $_ENV['interface']->id,
+            priority: 1
         );
     }
 
@@ -347,8 +359,66 @@ class testFhrpGroups extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new FhrpGroups();
+        $o = new FhrpGroupAssignments();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+/**
+* @beforeClass
+*/
+    public static function setupTest()
+    {
+        $_ENV['group']    = self::createFhrpGroup();
+        $_ENV['site']     = self::createSite();
+        $_ENV['manf']     = self::createManufacturer();
+        $_ENV['tenant']   = self::createTenant();
+        $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
+        $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
+        $_ENV['devrole']  = self::createDeviceRole();
+        $_ENV['vc']       = self::createVirtualChassis();
+        $_ENV['rack']     = self::createRack( 
+            site: $_ENV['site'], location: $_ENV['location'] 
+        );
+        $_ENV['device']   = self::createDevice(
+                       site: $_ENV['site'],
+                     tenant: $_ENV['tenant'],
+                 devicetype: $_ENV['devtype'],
+                 devicerole: $_ENV['devrole'],
+            virtual_chassis: $_ENV['vc'],
+                       rack: $_ENV['rack']
+        );
+        $_ENV['interface'] = self::createInterface( device: $_ENV['device'] );
+    }
+
+/**
+* @afterClass
+*/
+    public static function closeTest()
+    {
+        self::destroyInterface( interface: $_ENV['interface'] );
+        self::destroyDevice( device: $_ENV['device'] );
+        self::destroyRack( rack: $_ENV['rack'] );
+        self::destroyVirtualChassis( chassis: $_ENV['vc'] );
+        self::destroyDeviceRole( devrole: $_ENV['devrole'] );
+        self::destroyLocation( location: $_ENV['location'] );
+        self::destroyDeviceType( devtype: $_ENV['devtype'] );
+        self::destroyTenant( tenant: $_ENV['tenant'] );
+        self::destroyManufacturer( manf: $_ENV['manf'] );
+        self::destroySite( site: $_ENV['site'] );
+        self::destroyFhrpGroup( group: $_ENV['group'] );
+
+        unset( $_ENV['group'] );
+        unset( $_ENV['interface'] );
+        unset( $_ENV['rack'] );
+        unset( $_ENV['vc'] );
+        unset( $_ENV['devrole'] );
+        unset( $_ENV['location'] );
+        unset( $_ENV['devtype'] );
+        unset( $_ENV['tenant'] );
+        unset( $_ENV['manf'] );
+        unset( $_ENV['site'] );
+        unset( $_ENV['device'] );
     }
 }

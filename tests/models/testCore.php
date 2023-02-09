@@ -607,4 +607,44 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o->deleteDetail( id: $cluster->id );
     }
 
+
+
+/* VIRTUAL MACHINE
+---------------------------------------------------------------------------- */
+
+    public static function createVM( object $cluster )
+    {
+        $o = new Virtualization\VirtualMachines();
+        return $o->postDetail(
+               name: 'PHPUnit_VM',
+            cluster: $cluster->id
+        )['body'];
+    }
+
+    public static function destroyVM( object $vm )
+    {
+        $o = new Virtualization\VirtualMachines();
+        $o->deleteDetail( id: $vm->id );
+    }
+
+
+
+/* FHRP GROUP
+---------------------------------------------------------------------------- */
+
+    public static function createFhrpGroup()
+    {
+        $o = new IPAM\FhrpGroups();
+        return $o->postDetail(
+            protocol: 'vrrp2',
+            group_id: 1
+        )['body'];
+    }
+
+    public static function destroyFhrpGroup( object $group )
+    {
+        $o = new IPAM\FhrpGroups();
+        $o->deleteDetail( id: $group->id );
+    }
+
 }

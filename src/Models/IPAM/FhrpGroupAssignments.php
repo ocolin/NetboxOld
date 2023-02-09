@@ -34,6 +34,7 @@ class FhrpGroupAssignments extends IPAM
            int $group,
         string $interface_type,
            int $interface_id,
+           int $priority,
          array $options = [],
          array $headers = []
     ) : array
@@ -41,6 +42,7 @@ class FhrpGroupAssignments extends IPAM
         $options['group']          = $group;
         $options['interface_type'] = $interface_type;
         $options['interface_id']   = $interface_id;
+        $options['priority']       = $priority;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -71,6 +73,7 @@ class FhrpGroupAssignments extends IPAM
            int $group,
         string $interface_type,
            int $interface_id,
+           int $priority,
          array $options = [],
          array $headers = []
     ) : array
@@ -79,6 +82,7 @@ class FhrpGroupAssignments extends IPAM
         $options['group']          = $group;
         $options['interface_type'] = $interface_type;
         $options['interface_id']   = $interface_id;
+        $options['priority']       = $priority;
 
         return $this->http->put(
                uri: $this->uri,
@@ -109,6 +113,7 @@ class FhrpGroupAssignments extends IPAM
            int $group,
         string $interface_type,
            int $interface_id,
+           int $priority,
          array $options = [],
          array $headers = []
     ) : array
@@ -117,7 +122,7 @@ class FhrpGroupAssignments extends IPAM
         $options['group']          = $group;
         $options['interface_type'] = $interface_type;
         $options['interface_id']   = $interface_id;
-
+        $options['priority']       = $priority;
 
         return $this->http->put(
                 uri: $this->uri,

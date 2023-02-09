@@ -86,7 +86,7 @@
         <testsuite name="IPAM_Models">
             <file>tests/models/ipam/testAggregates.php</file>
             <file>tests/models/ipam/testAsns.php</file>
-
+            <file>tests/models/ipam/testFhrpGroupAssignments.php</file>
             <file>tests/models/ipam/testFhrpGroups.php</file>
             <file>tests/models/ipam/testIpAddresses.php</file>
             <file>tests/models/ipam/testIpRanges.php</file>
@@ -131,6 +131,8 @@
             <file>tests/models/virtualization/testClusterGroups.php</file>
             <file>tests/models/virtualization/testClusterTypes.php</file>
             <file>tests/models/virtualization/testClusters.php</file>
+            <file>tests/models/virtualization/testVirtualMachines.php</file>
+            <file>tests/models/virtualization/testInterfaces.php</file>
         </testsuite>
  -->
 <!-- 
@@ -144,7 +146,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/virtualization/testVirtualMachines.php</file>
+            <file>tests/models/ipam/testFhrpGroupAssignments.php</file>
 
 
 <!--         
