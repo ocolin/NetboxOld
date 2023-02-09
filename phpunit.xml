@@ -37,7 +37,7 @@
             <file>tests/models/dcim/testDevices.php</file>
             <file>tests/models/dcim/testDeviceTypes.php</file>
             <file>tests/models/dcim/testFrontPorts.php</file>
-
+            <file>tests/models/dcim/testFrontPortTemplates.php</file>
             <file>tests/models/dcim/testInterfaces.php</file>
             <file>tests/models/dcim/testInterfaceTemplates.php</file>
             <file>tests/models/dcim/testInventoryItemRoles.php</file>
@@ -130,7 +130,7 @@
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/dcim/testFrontPortTemplates.php</file>
+            <file>tests/models/dcim/testPowerPorts.php</file>
 
 
 <!--         

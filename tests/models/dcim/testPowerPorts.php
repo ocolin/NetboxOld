@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class testFrontPorts extends testCore
+class testPowerPorts extends testCore
 {
     public function __construct()
     {
@@ -22,7 +22,7 @@ class testFrontPorts extends testCore
 
     public function testOptions()
     {
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -45,7 +45,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->getDetail( id: $port->id );
         
         $this->assertIsArray( $result );
@@ -72,7 +72,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -98,7 +98,7 @@ class testFrontPorts extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -122,13 +122,11 @@ class testFrontPorts extends testCore
 
     public function testPostList() :void
     {
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->postList(
             options: [[ 
-                     'name' => 'PHPUnit_FrontPort',
+                     'name' => 'PHPUnit_PowerPort',
                    'device' => $_ENV['device']->id,
-                     'type' => '8p8c',
-                'rear_port' => $_ENV['rearPort']->id
             ]] 
         );
 
@@ -158,13 +156,11 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->putDetail( 
                    id: $port->id, 
-                 name: 'PHPUnit_FrontPort',
-               device: $_ENV['device']->id,
-                 type: '8p8c',
-            rear_port: $_ENV['rearPort']->id             
+                 name: 'PHPUnit_PowerPort',
+               device: $_ENV['device']->id,         
         );
         
         $this->assertIsArray( $result );
@@ -191,14 +187,12 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->putList(
             options: [[ 
                        'id' => $port->id,
-                     'name' => 'PHPUnit_FrontPort',
+                     'name' => 'PHPUnit_PowerPort',
                    'device' => $_ENV['device']->id,
-                     'type' => '8p8c',
-                'rear_port' => $_ENV['rearPort']->id
             ]]
         );
         
@@ -226,13 +220,11 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->patchDetail(
                    id: $port->id, 
-                 name: 'PHPUnit_FrontPort',
+                 name: 'PHPUnit_PowerPort',
                device: $_ENV['device']->id,
-                 type: '8p8c',
-            rear_port: $_ENV['rearPort']->id
         );
 
         $this->assertIsArray( $result );
@@ -259,14 +251,12 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->patchList(
             options: [[ 
                        'id' => $port->id,
-                     'name' => 'PHPUnit_FrontPort',
+                     'name' => 'PHPUnit_PowerPort',
                    'device' => $_ENV['device']->id,
-                     'type' => '8p8c',
-                'rear_port' => $_ENV['rearPort']->id
             ]]
         );
 
@@ -294,7 +284,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
         
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->deleteDetail( id: $port->id );
 
         $this->assertIsArray( $result );
@@ -315,7 +305,7 @@ class testFrontPorts extends testCore
         // SETUP
         $port = $this->postDetail()['body'];
 
-        $o = new FrontPorts();
+        $o = new PowerPorts();
         $result = $o->deleteList(
             options: [[ 'id' => $port->id ]]
         );
@@ -335,13 +325,11 @@ class testFrontPorts extends testCore
 
     public function postDetail() : array
     {
-        $o = new FrontPorts();
+        $o = new PowerPorts();
 
         return $o->postDetail( 
-                 name: 'PHPUnit_FrontPort',
+                 name: 'PHPUnit_PowerPort',
                device: $_ENV['device']->id,
-                 type: '8p8c',
-            rear_port: $_ENV['rearPort']->id
         );
     }
 
@@ -352,7 +340,7 @@ class testFrontPorts extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new FrontPorts();
+        $o = new PowerPorts();
 
         return $o->deleteDetail( id: $id  );
     }
@@ -385,7 +373,6 @@ class testFrontPorts extends testCore
             virtual_chassis: $_ENV['vc'],
                        rack: $_ENV['rack']
         );
-        $_ENV['rearPort'] = self::createRearPort( $_ENV['device'] );
     }
 
 /**
@@ -393,7 +380,6 @@ class testFrontPorts extends testCore
 */
     public static function closeTest()
     {
-        self::destroyRearPorts( port: $_ENV['rearPort'] );
         self::destroyDevice( device: $_ENV['device'] );
         self::destroyRack( rack: $_ENV['rack'] );
         self::destroyVirtualChassis( chassis: $_ENV['vc'] );
