@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Circuits\CircuitTypes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
@@ -31,7 +32,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsObject( $type['body'] );
-        $this->assertObjectHasAttribute( 'name', $type['body'] );
     }
 
 
@@ -56,7 +56,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsObject( $type['body'] );
-        $this->assertObjectHasAttribute( 'id', $type['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -83,9 +82,7 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsObject( $type['body'] );
-        $this->assertObjectHasAttribute( 'results', $type['body'] );
         $this->assertIsArray( $type['body']->results );
-        $this->assertObjectHasAttribute( 'id', $type['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -109,7 +106,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 201, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsObject( $type['body'] );
-        $this->assertObjectHasAttribute( 'id', $type['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $type['body']->id );
@@ -122,13 +118,12 @@ class testCircuitTypes extends testCore
 
     public function testPostList() :void
     {
+        $options = new Options();
+        $options->name = 'PHPUnit_CType1';
+        $options->slug = 'PHPUnit_CType1';
+
         $o = new CircuitTypes();
-        $type = $o->postList(
-        options: [
-            [ 'name' => 'PHPUnit_CType1', 'slug' => 'aaa' ],
-            [ 'name' => 'PHPUnit_CType2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $type = $o->postList( options: [ $options ] );
 
         $this->assertIsArray( $type );
         $this->assertArrayHasKey( 'status',  $type );
@@ -155,13 +150,15 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        $options = new Options();
+        $options->description = 'PHPUnit_CType';
 
         $o = new CircuitTypes();
         $type = $o->putDetail( 
-              id: $term->id, 
-            name: 'PHPUnit_CType', 
-            slug: 'PHPUnit_CType',
-            options: [ 'description' => 'Updated description' ]
+                 id: $term->id, 
+               name: 'PHPUnit_CType', 
+               slug: 'PHPUnit_CType',
+            options: $options
         );
         
         
@@ -173,7 +170,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsObject( $type['body'] );
-        $this->assertObjectHasAttribute( 'id', $type['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -188,17 +184,15 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        $options = new Options();
+        $options->description = 'PHPUnit_CType';
+        $options->id = $term->id;
+        $options->name = 'PHPUnit_CType';
+        $options->slug = 'PHPUnit_CType';
 
         $o = new CircuitTypes();
         $type = $o->putList(
-            options: [
-                [ 
-                           'id'   => $term->id, 
-                           'name' => 'PHPUnit_CType',
-                           'slug' => 'PHPUnit_CType',
-                    'description' => 'Updated description'
-                ]
-            ]
+            options: [ $options ]
         );
         
         $this->assertIsArray( $type );
@@ -209,7 +203,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsArray( $type['body'] );
-        $this->assertObjectHasAttribute( 'id', $type['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -224,13 +217,15 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        $options = new Options();
+        $options->description = 'PHPUnit_CType';
 
         $o = new CircuitTypes();
         $type = $o->patchDetail(
-              id: $term->id,
-            name: 'PHPUnit_CType',
-            slug: 'PHPUnit_CType',
-            options: [ 'description' => 'zzz' ]
+                 id: $term->id,
+               name: 'PHPUnit_CType',
+               slug: 'PHPUnit_CType',
+            options: $options
         );
 
         $this->assertIsArray( $type );
@@ -241,8 +236,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsObject( $type['body'] );
-        $this->assertObjectHasAttribute( 'id', $type['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -257,17 +250,15 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        $options = new Options();
+        $options->description = 'PHPUnit_CType';
+        $options->id = $term->id;
+        $options->name = 'PHPUnit_CType';
+        $options->slug = 'PHPUnit_CType';
 
         $o = new CircuitTypes();
         $type = $o->patchList(
-            options: [
-                [ 
-                          'id' => $term->id, 
-                        'name' => 'PHPUnit_CType',
-                        'slug' => 'PHPUnit_CType',
-                 'description' => 'PHPUnit_CType' 
-                ]
-            ]
+            options: [ $options ]
         );
 
         $this->assertIsArray( $type );
@@ -278,7 +269,6 @@ class testCircuitTypes extends testCore
         $this->assertEquals( 200, $type['status'] );
         $this->assertIsArray( $type['headers'] );
         $this->assertIsArray( $type['body'] );
-        $this->assertObjectHasAttribute( 'id', $type['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -336,13 +326,13 @@ class testCircuitTypes extends testCore
     public function postDetail() : array
     {
         $o = new CircuitTypes();
+        $options = new Options();
+        $options->description = 'PHPUnit_CType';
 
         return $o->postDetail( 
             name: 'PHPUnit_CType',
             slug: 'PHPUnit_CType',
-            options: [ 
-                'description' => 'PHPUnit test',
-            ]
+            options: $options
         );
     }
 

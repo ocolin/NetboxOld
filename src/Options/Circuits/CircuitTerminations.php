@@ -2,21 +2,21 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options;
+namespace Cruzio\Netbox\Options\Circuits;
 
 #[\AllowDynamicProperties]
 class CircuitTerminations
 {
-    public int    $circuit          = 0;
-    public int    $site             = 0;
-    public int    $provider_network = 0;
-    public int    $port_speed       = 0;
-    public int    $upstream_speed   = 0;
-    public bool   $mark_connected   = false;
-    public string $term_side        = 'A';
-    public string $xconnect_id      = '';
-    public string $pp_info          = '';
-    public string $description      = '';
+    public int    $circuit;
+    public int    $site;
+    public int    $provider_network;
+    public int    $port_speed;
+    public int    $upstream_speed;
+    public bool   $mark_connected;
+    public string $term_side;
+    public string $xconnect_id;
+    public string $pp_info;
+    public string $description;
 
     // cable
 

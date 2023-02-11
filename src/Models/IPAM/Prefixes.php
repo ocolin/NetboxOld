@@ -5,15 +5,18 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\IPAM\Prefixes AS Options;
 
 class Prefixes extends IPAM
 {
+    protected Options $options;
 
 /* CONSTRUCTOR
 ---------------------------------------------------------------------------- */
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'prefixes/';
     }

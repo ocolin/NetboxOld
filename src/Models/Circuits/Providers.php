@@ -5,11 +5,16 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Circuits\Providers AS Options;
+
 
 class Providers extends CircuitsCore
 {
+    protected Options $options;
+    
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'providers/';
     }

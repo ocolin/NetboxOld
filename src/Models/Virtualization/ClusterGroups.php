@@ -5,15 +5,18 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Virtualization;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Virtualization\ClusterGroups AS Options;
 
 class ClusterGroups extends Virtualization
 {
+    protected Options $options;
 
 /*
 ---------------------------------------------------------------------------- */
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'cluster-groups/';
     }

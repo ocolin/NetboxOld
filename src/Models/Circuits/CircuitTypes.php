@@ -5,11 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Circuits\CircuitTypes AS Options;
 
 class CircuitTypes extends CircuitsCore
 {
+    protected Options $options;
+
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'circuit-types/';
     }
@@ -23,7 +27,7 @@ class CircuitTypes extends CircuitsCore
 *
 * @param string $name Name of Circuit Type.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
+* @param Options $options optionsl data to be sent
 * @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -31,12 +35,13 @@ class CircuitTypes extends CircuitsCore
     public function postDetail(
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -56,7 +61,7 @@ class CircuitTypes extends CircuitsCore
 * @param integer $id Numerical ID of Circuit Type to update.
 * @param string  $name Name of Circuit Type to update.
 * @param string  $slug Slug of Circuit Type to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,13 +70,14 @@ class CircuitTypes extends CircuitsCore
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -91,7 +97,7 @@ class CircuitTypes extends CircuitsCore
 * @param integer $id Numerical ID of Circuit Type to update.
 * @param string  $name Name of Circuit Type to update.
 * @param string  $slug Slug of Circuit Type to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -100,13 +106,14 @@ class CircuitTypes extends CircuitsCore
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,

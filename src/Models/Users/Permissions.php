@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Users;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Users\Premissions AS Options;
 
 class Premissions extends UsersCore
 {

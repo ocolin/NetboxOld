@@ -5,15 +5,18 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Wireless;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Wireless\WirelessLinks AS Options;
 
 class WirelessLinks extends Wireless
 {
+    protected Options $options;
 
 /*
 ---------------------------------------------------------------------------- */
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'wireless-links/';
     }

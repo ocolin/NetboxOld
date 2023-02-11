@@ -5,11 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\DCIM\RearPortTemplates AS Options;
 
 class RearPortTemplates extends DCIM
 {
+    protected Options $options;
+    
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'rear-port-templates/';
     }

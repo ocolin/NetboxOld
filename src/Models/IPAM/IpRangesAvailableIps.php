@@ -8,6 +8,7 @@ use Cruzio\Netbox\Models\HTTP;
 
 class IpRangesAvailableIps extends IPAM
 {
+    
     public function __construct( HTTP $http = null )
     {
         parent::__construct( http: $http );

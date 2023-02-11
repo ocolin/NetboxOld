@@ -2,14 +2,14 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options;
+namespace Cruzio\Netbox\Options\Circuits;
 
 #[\AllowDynamicProperties]
 class CircuitTypes
 {
-    public string  $name          = '';
-    public string  $slug          = '';
-    public string  $description   = '';
-    public ?object $tags          = null;
-    public array   $custom_fields = [];
+    public string  $name;
+    public string  $slug;
+    public string  $description;
+    public array   $tags;
+    public array   $custom_fields;
 }

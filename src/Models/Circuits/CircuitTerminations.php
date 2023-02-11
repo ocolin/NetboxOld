@@ -5,9 +5,11 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS Options;
 
 class CircuitTerminations extends CircuitsCore
 {
+    protected Options $options;
 
 /* CONSTRUCTOR
 ---------------------------------------------------------------------------- */
@@ -18,6 +20,7 @@ class CircuitTerminations extends CircuitsCore
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'circuit-terminations/';
     }

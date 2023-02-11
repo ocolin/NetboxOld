@@ -155,8 +155,8 @@ image attachments
             <file>tests/models/wireless/testWirelessLinks.php</file>
         </testsuite>
 
-        <testsuite name="Models">
-
+        <testsuite name="test_test">
+            <file>tests/models/circuits/testCircuitTypes.php</file>
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
             <!-- <file>tests/models/users/testConfig.php</file> -->

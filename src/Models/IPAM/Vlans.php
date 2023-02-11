@@ -5,11 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\IPAM\Vlans AS Options;
 
 class Vlans extends IPAM
 {
+    protected Options $options;
+
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'vlans/';
     }

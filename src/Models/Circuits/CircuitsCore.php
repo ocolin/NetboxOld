@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class CircuitsCore
+abstract class CircuitsCore
 {
     protected HTTP $http;
 

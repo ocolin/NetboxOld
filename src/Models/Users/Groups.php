@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Users;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Users\Groups AS Options;
 
 class Groups extends UsersCore
 {
