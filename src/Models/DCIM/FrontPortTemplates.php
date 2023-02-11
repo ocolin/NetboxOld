@@ -18,15 +18,15 @@ class FrontPortTemplates extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single template.
 *
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
 * @param integer $rear_port ID of rear port.
 * @param string  $type port type.
-* @param array   $options optionsl data to be sent
-* @param array   $headers HTML request headers
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -57,7 +57,7 @@ class FrontPortTemplates extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update template
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -66,7 +66,7 @@ class FrontPortTemplates extends DCIM
 * @param integer $rear_port ID of rear port.
 * @param string  $type Port type.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -98,7 +98,7 @@ class FrontPortTemplates extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update template value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

@@ -15,7 +15,7 @@ class HTTP
 /*
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * @param Client  $client
  * @param string  $base_uri
  * @param boolean $verify
@@ -43,7 +43,7 @@ class HTTP
 /* POST METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Create an object.
  *
  * @param string $uri
@@ -78,7 +78,7 @@ class HTTP
 /* PUT METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Modify an existing object. Requires all mandatory fields to be specified.
  *
  * @param string $uri
@@ -112,7 +112,7 @@ class HTTP
 /* PATCH METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Modify an existing object. Only fields to be modified are specified
  *
  * @param string $uri
@@ -146,7 +146,7 @@ class HTTP
 /* GET METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Retrieve an object or list of objects.
  *
  * @param string $uri
@@ -177,7 +177,7 @@ class HTTP
 /* DELETE METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Delete an existing object.
  *
  * @param string $uri
@@ -203,7 +203,7 @@ class HTTP
 /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Inspect a particular REST API endpoint and return all supported actions
  *  and their available parameters.
  *
@@ -227,7 +227,7 @@ class HTTP
 /* DEFAULT SEND HEADERS
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Generate a default set of headers so none are needed for most queries. Includes
  *  the authentication token which can be overiden with each call if specified.
  *
@@ -248,7 +248,7 @@ class HTTP
 /* FORMAT RESPONSE
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Format the Guzzle HTTP request response into an array
 */
 
@@ -266,11 +266,11 @@ class HTTP
 /* FORMAT URL PARAMETERS
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Format an array of parametsrs into a URL query
  *
- * @param array $params
- * @param string $uri
+ * @param array   $params
+ * @param string  $uri
  * @return string final URI with parameters encoded into it, or plain uri.
 */
 

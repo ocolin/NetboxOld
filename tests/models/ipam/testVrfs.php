@@ -125,7 +125,7 @@ class testVrfs extends testCore
     {
         $o = new Vrfs();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'name' => 'testVRF1', 'description' => 'aaa' ],
                 [ 'name' => 'testVRF2', 'description' => 'bbb' ],
             ]  
@@ -159,9 +159,9 @@ class testVrfs extends testCore
 
         $o = new Vrfs();
         $result = $o->putDetail( 
-              id: $vrf->id, 
-            name: 'updateVRF', 
-            data: [ 'description' => 'Updated description' ]
+                 id: $vrf->id, 
+               name: 'updateVRF', 
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,7 +191,7 @@ class testVrfs extends testCore
 
         $o = new Vrfs();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                              'id' => $vrf->id, 
                            'name' => 'putVRF',
@@ -226,9 +226,9 @@ class testVrfs extends testCore
 
         $o = new Vrfs();
         $result = $o->patchDetail(
-              id: $vrf->id,
-            name: 'patchVRF',
-            data: [ 'description' => 'Patching VRF Test' ]
+                 id: $vrf->id,
+               name: 'patchVRF',
+            options: [ 'description' => 'Patching VRF Test' ]
         );
 
         $this->assertIsArray( $result );
@@ -257,7 +257,7 @@ class testVrfs extends testCore
 
         $o = new Vrfs();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $vrf->id, 
                         'name' => 'patchVRT',
@@ -313,7 +313,7 @@ class testVrfs extends testCore
 
         $o = new Vrfs();
         $result = $o->deleteList(
-            data: [[ 'id' => $vrf->id ]]
+            options: [[ 'id' => $vrf->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -335,7 +335,7 @@ class testVrfs extends testCore
 
         return $o->postDetail( 
             name: 'testVRFs',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test VRFs',
             ]
         );

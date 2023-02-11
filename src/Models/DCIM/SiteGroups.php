@@ -18,13 +18,13 @@ class SiteGroups extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single SiteGroup.
 *
 * @param string $name Name of SiteGroupx.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -50,14 +50,14 @@ class SiteGroups extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update SiteGroup
 * 
 * @param integer $id Numerical ID of SiteGroup to update.
 * @param string  $name Name of SiteGroup to update.
 * @param string  $slug Slug of SiteGroup to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -85,7 +85,7 @@ class SiteGroups extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update SiteGroup value(s).
 *
 * @param integer $id Numerical ID of SiteGroup to update.

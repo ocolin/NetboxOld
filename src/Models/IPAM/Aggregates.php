@@ -19,7 +19,7 @@ class Aggregates extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Aggregate.
 *
 * @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
@@ -51,7 +51,7 @@ class Aggregates extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Aggregate
 * 
 * @param integer $id Numerical ID of Aggregate to update.
@@ -86,7 +86,7 @@ class Aggregates extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Aggregate value(s).
 *
 * @param integer $id Numerical ID of Aggregate to update.

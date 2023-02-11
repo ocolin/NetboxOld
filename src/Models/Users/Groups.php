@@ -22,12 +22,12 @@ class Groups extends UsersCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Group.
 *
 * @param string $name Name of Group.
-* @param array  $options optionsl data to be sent
-* @param array  $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -51,13 +51,13 @@ class Groups extends UsersCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Group.
 * 
 * @param integer $id Numerical ID of Group to update.
 * @param string  $name Name of Group.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -83,7 +83,7 @@ class Groups extends UsersCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Group value(s).
 *
 * @param integer $id Numerical ID of Group to update.

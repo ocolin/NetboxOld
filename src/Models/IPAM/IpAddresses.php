@@ -19,7 +19,7 @@ class IpAddresses extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single IP.
 *
 * @param string $address IP address. 
@@ -48,7 +48,7 @@ class IpAddresses extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update IP
 * 
 * @param integer $id Numerical ID of IP to update.
@@ -80,7 +80,7 @@ class IpAddresses extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update IP value(s).
 *
 * @param integer $id Numerical ID of IP to update.

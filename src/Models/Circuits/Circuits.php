@@ -18,7 +18,7 @@ class Circuits extends CircuitsCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Circuit.
 *
 * @param string  $cid Name of circuit ID.
@@ -53,7 +53,7 @@ class Circuits extends CircuitsCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Module
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -91,7 +91,7 @@ class Circuits extends CircuitsCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Module value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

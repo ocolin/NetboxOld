@@ -22,13 +22,13 @@ class Contacts extends Tenancy
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Contact.
 *
 * @param string $name Name of Contact.
 * @param string $group ID of group contact belongs to. 
 * @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -54,7 +54,7 @@ class Contacts extends Tenancy
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Contact
 * 
 * @param integer $id Numerical ID of Contact to update.
@@ -89,7 +89,7 @@ class Contacts extends Tenancy
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Contact value(s).
 *
 * @param integer $id Numerical ID of Contact to update.

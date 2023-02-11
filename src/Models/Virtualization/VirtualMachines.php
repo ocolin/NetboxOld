@@ -22,7 +22,7 @@ class VirtualMachines extends Virtualization
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Virtual Machine.
 *
 * @param string  $name Name of Virtual Machine.
@@ -54,14 +54,14 @@ class VirtualMachines extends Virtualization
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Virtual Machine
 * 
 * @param integer $id Numerical ID of Virtual Machine to update.
 * @param string  $name Name of Virtual Machine to update.
 * @param integer $cluster ID of cluster machine belongs to. 
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -89,7 +89,7 @@ class VirtualMachines extends Virtualization
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Virtual Machine value(s).
 *
 * @param integer $id Numerical ID of Virtual Machine to update.

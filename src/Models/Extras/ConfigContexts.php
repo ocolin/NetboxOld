@@ -19,7 +19,7 @@ class ConfigContexts extends Extras
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Context.
 *
 * @param string  $name Name of context.
@@ -51,7 +51,7 @@ class ConfigContexts extends Extras
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Context
 * 
 * @param integer $id Numerical ID of Context to update.
@@ -86,7 +86,7 @@ class ConfigContexts extends Extras
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Context value(s).
 *
 * @param integer $id Numerical ID of Context to update.

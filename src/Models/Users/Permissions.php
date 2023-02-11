@@ -23,7 +23,7 @@ class Premissions extends UsersCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Permission.
 *
 * @param string $name Name of Permission.
@@ -55,14 +55,14 @@ class Premissions extends UsersCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Permission.
 * 
 * @param integer $id Numerical ID of Permission to update.
 * @param string  $name Name of Permission.
 * @param array   $object_types String array of objects.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -89,7 +89,7 @@ class Premissions extends UsersCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Permission value(s).
 *
 * @param integer $id Numerical ID of Permission to update.

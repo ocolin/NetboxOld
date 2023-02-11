@@ -124,7 +124,7 @@ public function testGetList() : void
     {
         $o = new Prefixes();
         $result = $o->postList(
-          data: [
+          options: [
             [ 'prefix' => '192.168.50.0/24', 'description' => 'aaa' ],
             [ 'prefix' => '192.168.99.0/24', 'description' => 'bbb' ],
           ]  
@@ -158,9 +158,9 @@ public function testGetList() : void
 
         $o = new Prefixes();
         $result = $o->putDetail( 
-            id: $prefix->id, 
-            prefix: '192.168.1.0/24', 
-            data: [ 'description' => 'Updated description' ]
+                 id: $prefix->id, 
+             prefix: '192.168.1.0/24', 
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,10 +190,10 @@ public function testGetList() : void
 
         $o = new Prefixes();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
-                    'id' => $prefix->id, 
-                    'prefix' => '192.168.1.0/24', 
+                             'id' => $prefix->id, 
+                         'prefix' => '192.168.1.0/24', 
                     'description' => 'Updated description'
                 ]
             ]
@@ -225,9 +225,9 @@ public function testGetList() : void
 
         $o = new Prefixes();
         $result = $o->patchDetail(
-            id: $prefix->id,
-            prefix: '192.168.1.0/24',
-            data: [ 'description' => 'zzz' ]
+                 id: $prefix->id,
+             prefix: '192.168.1.0/24',
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -257,7 +257,7 @@ public function testGetList() : void
 
         $o = new Prefixes();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                              'id' => $prefix->id, 
                          'prefix' => '192.168.1.0/24',
@@ -314,7 +314,7 @@ public function testGetList() : void
 
         $o = new Prefixes();
         $result = $o->deleteList(
-            data: [[ 'id' => $prefix->id ]]
+            options: [[ 'id' => $prefix->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -336,7 +336,7 @@ public function testGetList() : void
 
         return $o->postDetail( 
             prefix: '192.168.1.0/24',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post prefxes',
                    'comments' => 'This is for testing, please delete'
             ]

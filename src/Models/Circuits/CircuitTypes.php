@@ -18,7 +18,7 @@ class CircuitTypes extends CircuitsCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Circuit Type.
 *
 * @param string $name Name of Circuit Type.
@@ -50,7 +50,7 @@ class CircuitTypes extends CircuitsCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Circuit Type
 * 
 * @param integer $id Numerical ID of Circuit Type to update.
@@ -85,7 +85,7 @@ class CircuitTypes extends CircuitsCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Circuit Type value(s).
 *
 * @param integer $id Numerical ID of Circuit Type to update.

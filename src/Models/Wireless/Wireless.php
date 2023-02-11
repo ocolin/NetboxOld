@@ -22,7 +22,7 @@ class Wireless
 /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * List details about API call.
 *
 * @param array $headers HTML request headers.
@@ -38,7 +38,7 @@ class Wireless
 /* DELETE METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Delete an individual object.
 * 
 * @param integer $id A unique integer value identifying an object.
@@ -58,7 +58,7 @@ class Wireless
 /* DELETE METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Delete a list of objects.
 * 
 * @param array $options List of object to delete. Each object must have an ID.
@@ -82,7 +82,7 @@ class Wireless
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update a list of objects.
 *
 * @param array $options Array of Objects to update.
@@ -107,7 +107,7 @@ class Wireless
 /* PUT METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Updte an array of object.
 *
 * @param array $options List of objects to update.
@@ -132,7 +132,7 @@ class Wireless
 /* GET METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Get all Objects
 *
 * @param array $params Optional URL parameters.
@@ -157,12 +157,12 @@ class Wireless
 /* POST METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create multiple objects at once.
 *
 * @param array $options An array of object arrays. Each sub array MUST have a 
 *  name and slug key. 
-* @param array $headers HTML request headers
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -182,7 +182,7 @@ class Wireless
 /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Get an individual object
 *
 * @param integer $id Numerical ID of an object record.

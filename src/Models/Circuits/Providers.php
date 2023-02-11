@@ -19,7 +19,7 @@ class Providers extends CircuitsCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Provider.
 *
 * @param string $name Name of Provider.
@@ -51,7 +51,7 @@ class Providers extends CircuitsCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Provider.
 * 
 * @param integer $id Numerical ID of Provider to update.
@@ -86,7 +86,7 @@ class Providers extends CircuitsCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Provider value(s).
 *
 * @param integer $id Numerical ID of Provider to update.

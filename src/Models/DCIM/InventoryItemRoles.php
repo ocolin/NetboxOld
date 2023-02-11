@@ -19,13 +19,13 @@ class InventoryItemRoles extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Inventory Item Role.
 *
 * @param string $name Name of Inventory Item Role.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -51,14 +51,14 @@ class InventoryItemRoles extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Inventory Item Role
 * 
 * @param integer $id Numerical ID of Inventory Item Role to update.
 * @param string  $name Name of Inventory Item Role to update.
 * @param string  $slug Slug of Inventory Item Role to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -86,7 +86,7 @@ class InventoryItemRoles extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Inventory Item Role value(s).
 *
 * @param integer $id Numerical ID of Inventory Item Role to update.

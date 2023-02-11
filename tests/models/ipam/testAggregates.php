@@ -125,7 +125,7 @@ class testAggregates extends testCore
     {
         $o = new Aggregates();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'prefix' => '192.168.66.0/24', 'rir' => $_ENV['rir']->id ],
                 [ 'prefix' => '192.168.67.0/24', 'rir' => $_ENV['rir']->id ]
             ]  
@@ -159,10 +159,10 @@ class testAggregates extends testCore
 
         $o = new Aggregates();
         $result = $o->putDetail( 
-                id: $agr->id, 
-            prefix: '192.168.66.0/24', 
-               rir: $_ENV['rir']->id, 
-              data: [ 'description' => 'Updated description' ]
+                 id: $agr->id, 
+             prefix: '192.168.66.0/24', 
+                rir: $_ENV['rir']->id, 
+            options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -191,7 +191,7 @@ class testAggregates extends testCore
 
         $o = new Aggregates();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                            'id'   => $agr->id, 
                          'prefix' => '192.168.66.0/24',
@@ -227,10 +227,10 @@ class testAggregates extends testCore
 
         $o = new Aggregates();
         $result = $o->patchDetail(
-                id: $agr->id,
-            prefix: '192.168.66.0/24',
-               rir: $_ENV['rir']->id,
-              data: [ 'description' => 'Patch Aggregate' ]
+                 id: $agr->id,
+             prefix: '192.168.66.0/24',
+                rir: $_ENV['rir']->id,
+            options: [ 'description' => 'Patch Aggregate' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ class testAggregates extends testCore
 
         $o = new Aggregates();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                              'id' => $agr->id, 
                          'prefix' => '192.168.66.0/24',
@@ -318,7 +318,7 @@ class testAggregates extends testCore
 
         $o = new Aggregates();
         $result = $o->deleteList(
-            data: [[ 'id' => $agr->id ]]
+            options: [[ 'id' => $agr->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -339,11 +339,11 @@ class testAggregates extends testCore
         $o = new Aggregates();
 
         return $o->postDetail( 
-            prefix: '192.168.77.0/24',
-               rir: $rir,
-              data: [ 
-                        'description' => 'PHPUnit test post Aggregates',
-                    ]
+             prefix: '192.168.77.0/24',
+                rir: $rir,
+            options: [ 
+                        'description' => 'PHPUnit_Aggregate',
+            ]
         );
     }
 

@@ -18,13 +18,13 @@ class Vlans extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single RIR.
 *
 * @param string $name Name of RIR.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -52,14 +52,14 @@ class Vlans extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update RIR
 * 
 * @param integer $id Numerical ID of RIR to update.
 * @param string  $name Name of RIR to update.
 * @param string  $slug Slug of RIR to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -89,7 +89,7 @@ class Vlans extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update RIR value(s).
 *
 * @param integer $id Numerical ID of RIR to update.

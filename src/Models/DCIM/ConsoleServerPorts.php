@@ -18,7 +18,7 @@ class ConsoleServerPorts extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Server Port.
 *
 * @param string  $name Name of Server Port.
@@ -50,7 +50,7 @@ class ConsoleServerPorts extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Server Port
 * 
 * @param integer $id Numerical ID of Server Port to update.
@@ -85,7 +85,7 @@ class ConsoleServerPorts extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Server Port value(s).
 *
 * @param integer $id Numerical ID of Server Port to update.

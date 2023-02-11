@@ -18,14 +18,14 @@ class Modules extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Module.
 *
 * @param integer $device ID of device Module belongs to.
 * @param integer $module_bay ID of bay Module belongs to.
 * @param integer $module_type ID of type of Module.
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -54,7 +54,7 @@ class Modules extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Module
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -62,7 +62,7 @@ class Modules extends DCIM
 * @param integer $module_bay ID of bay Module belongs to.
 * @param integer $module_type ID of type of Module.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -92,7 +92,7 @@ class Modules extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Module value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

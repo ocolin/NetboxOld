@@ -18,13 +18,13 @@ class Sites extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Site.
 *
 * @param string $name Name of Site.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -50,14 +50,14 @@ class Sites extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Site
 * 
 * @param integer $id Numerical ID of Site to update.
 * @param string  $name Name of Site to update.
 * @param string  $slug Slug of Site to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -85,7 +85,7 @@ class Sites extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Site value(s).
 *
 * @param integer $id Numerical ID of Site to update.

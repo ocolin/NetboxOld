@@ -22,13 +22,13 @@ class Tenants extends Tenancy
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Tenant.
 *
 * @param string $name Name of Tenant.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -54,14 +54,14 @@ class Tenants extends Tenancy
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Tenant
 * 
 * @param integer $id Numerical ID of Tenant to update.
 * @param string  $name Name of Tenant to update.
 * @param string  $slug Slug of Tenant to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -89,7 +89,7 @@ class Tenants extends Tenancy
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Tenant value(s).
 *
 * @param integer $id Numerical ID of Tenant to update.

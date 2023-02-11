@@ -19,7 +19,7 @@ class PowerPanels extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a Panel Outlet.
 *
 * @param string  $name Name of panel.
@@ -51,7 +51,7 @@ class PowerPanels extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Panel
 * 
 * @param integer $id Numerical ID of Bay to update.
@@ -86,7 +86,7 @@ class PowerPanels extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Panel value(s).
 *
 * @param integer $id Numerical ID of Bay to update.

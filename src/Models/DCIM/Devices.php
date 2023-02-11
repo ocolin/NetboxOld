@@ -18,13 +18,13 @@ class Devices extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Device.
 *
 * @param integer $device_type ID of Device type Device belongs to. 
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
-* #param string  $face Rack face.
+* @param string  $face Rack face.
 * @param array   $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -66,14 +66,14 @@ class Devices extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Device
 * 
 * @param integer $id Numerical ID of Template to update.
 * @param integer $device_type ID of Device type Device belongs to. 
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
-* #param string  $face Rack face.
+* @param string  $face Rack face.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -117,14 +117,14 @@ class Devices extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Device value(s).
 *
 * @param integer $id Numerical ID of Template to update.
 * @param integer $device_type ID of Device type Device belongs to. 
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
-* #param string  $face Rack face.
+* @param string  $face Rack face.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.

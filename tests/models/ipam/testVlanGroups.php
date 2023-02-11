@@ -124,10 +124,10 @@ public function testGetList() : void
     {
         $o = new VlanGroups();
         $result = $o->postList(
-        data: [
-            [ 'name' => 'testVLanGroup1', 'slug' => 'testVLanGroup1' ],
-            [ 'name' => 'testVlanGroup1', 'slug' => 'testVLanGroup2' ],
-        ]  
+            options: [
+                [ 'name' => 'testVLanGroup1', 'slug' => 'testVLanGroup1' ],
+                [ 'name' => 'testVlanGroup1', 'slug' => 'testVLanGroup2' ],
+            ]  
         );
 
         $this->assertIsArray( $result );
@@ -158,10 +158,10 @@ public function testGetList() : void
 
         $o = new VlanGroups();
         $result = $o->putDetail( 
-            id: $vgrp->id, 
-            name: 'testVLanGroup1', 
-            slug: 'testVLanGroup1',
-            data: [ 'description' => 'Updated description' ]
+                 id: $vgrp->id, 
+               name: 'testVLanGroup1', 
+               slug: 'testVLanGroup1',
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,11 +191,11 @@ public function testGetList() : void
 
         $o = new VlanGroups();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
-                    'id'   => $vgrp->id, 
-                    'name' => 'putVlanGroup',
-                    'slug' => 'putVlanGroup',
+                             'id' => $vgrp->id, 
+                           'name' => 'putVlanGroup',
+                           'slug' => 'putVlanGroup',
                     'description' => 'Updated description'
                 ]
             ]
@@ -227,10 +227,10 @@ public function testGetList() : void
 
         $o = new VlanGroups();
         $result = $o->patchDetail(
-            id: $vgrp->id,
-            name: 'patchVlanGroup',
-            slug: 'patchVlanGroup',
-            data: [ 'description' => 'Patching VlanGroup' ]
+                 id: $vgrp->id,
+               name: 'patchVlanGroup',
+               slug: 'patchVlanGroup',
+            options: [ 'description' => 'Patching VlanGroup' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ public function testGetList() : void
 
         $o = new VlanGroups();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $vgrp->id, 
                         'name' => 'patchVlanGroup',
@@ -318,7 +318,7 @@ public function testGetList() : void
 
         $o = new VlanGroups();
         $result = $o->deleteList(
-            data: [[ 'id' => $vgrp->id ]]
+            options: [[ 'id' => $vgrp->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -341,7 +341,7 @@ public function testGetList() : void
         return $o->postDetail( 
             name: 'testVlanGroup',
             slug: 'testVlanGroup',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post VlanGroup',
             ]
         );

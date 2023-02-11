@@ -18,13 +18,13 @@ class DeviceTypes extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single DeviceType.
 *
 * @param string $model Name of DeviceType.
 * @param string $slug 
 * @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -52,7 +52,7 @@ class DeviceTypes extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update DeviceType
 * 
 * @param integer $id Numerical ID of DeviceType to update.
@@ -90,7 +90,7 @@ class DeviceTypes extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update DeviceType value(s).
 *
 * @param integer $id Numerical ID of DeviceType to update.

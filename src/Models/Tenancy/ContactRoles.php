@@ -22,13 +22,13 @@ class ContactRoles extends Tenancy
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Contact Role.
 *
 * @param string $name Name of Contact Role.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -54,14 +54,14 @@ class ContactRoles extends Tenancy
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Contact Role
 * 
 * @param integer $id Numerical ID of Contact Role to update.
 * @param string  $name Name of Contact Role to update.
 * @param string  $slug Slug of Contact Role to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -89,7 +89,7 @@ class ContactRoles extends Tenancy
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Contact Role value(s).
 *
 * @param integer $id Numerical ID of Contact Role to update.

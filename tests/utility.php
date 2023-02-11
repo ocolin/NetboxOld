@@ -15,6 +15,8 @@ clearAll();
 
 function clearAll()
 {
+    clearIpAddresses();
+    clearIpRanges();
     clearClusters();
     clearClusterTypes();
     clearClusterGroups();
@@ -52,7 +54,27 @@ function clearDevices()
     }
 }
 
+function clearIpRanges()
+{
+    $o = new IPAM\IpRanges();
+    $ranges = $o->getList()['body'];
 
+    foreach( $ranges->results as $range )
+    {
+        $o->deleteDetail( id: $range->id) ;
+    }
+}
+
+function clearIpAddresses()
+{
+    $o = new IPAM\IpAddresses();
+    $ips = $o->getList()['body'];
+
+    foreach( $ips->results as $ip )
+    {
+        $o->deleteDetail( id: $ip->id) ;
+    }
+}
 
 function clearClusterTypes()
 {

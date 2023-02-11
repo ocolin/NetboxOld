@@ -18,13 +18,13 @@ class Manufacturers extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Manufacturer.
 *
 * @param string $name Name of Manufacturer.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -50,14 +50,14 @@ class Manufacturers extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Manufacturer
 * 
 * @param integer $id Numerical ID of Manufacturer to update.
 * @param string  $name Name of Manufacturer to update.
 * @param string  $slug Slug of Manufacturer to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -85,7 +85,7 @@ class Manufacturers extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Manufacturer value(s).
 *
 * @param integer $id Numerical ID of Manufacturer to update.

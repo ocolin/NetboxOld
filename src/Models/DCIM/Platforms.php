@@ -18,13 +18,13 @@ class Platforms extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Platform.
 *
 * @param string $name Name of Platform.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -50,14 +50,14 @@ class Platforms extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Platform
 * 
 * @param integer $id Numerical ID of Platform to update.
 * @param string  $name Name of Platform to update.
 * @param string  $slug Slug of Platform to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -85,7 +85,7 @@ class Platforms extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Platform value(s).
 *
 * @param integer $id Numerical ID of Platform to update.

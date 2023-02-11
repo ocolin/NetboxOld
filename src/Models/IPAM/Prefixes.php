@@ -23,12 +23,12 @@ class Prefixes extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Create a single prefix.
  *
  * @param string $prefix IP Subnet. ex prefix: '1.1.1.0/24'
- * @param array  $data optionsl data to be sent
- * @param array $headers HTML request headers
+ * @param array  $data optionsl data to be sent.
+ * @param array  $headers HTML request headers.
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
     
@@ -52,13 +52,13 @@ class Prefixes extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Update prefix
  *
  * @param string  $prefix IP Subnet. ex prefix: '1.1.1.0/24'
- * @param integer $id Numerical ID of prefix to update
- * @param array   $data Data to send ibn request
- * @param array   $headers HTML request headers
+ * @param integer $id Numerical ID of prefix to update.
+ * @param array   $data Data to send ibn request.
+ * @param array   $headers HTML request headers.
  * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -84,7 +84,7 @@ class Prefixes extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  * Update prefix value(s).
  *
  * @param integer $id Numerical ID of prefix to update.

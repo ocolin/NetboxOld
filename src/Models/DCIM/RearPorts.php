@@ -18,14 +18,14 @@ class RearPorts extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Rear Port.
 *
 * @param string  $name Name of Rear Port.
 * @param integer $device ID of device port belongs to. 
 * @param string  $type Type of port connection. 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -53,7 +53,7 @@ class RearPorts extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Rear Port
 * 
 * @param integer $id Numerical ID of Rear Port to update.
@@ -61,7 +61,7 @@ class RearPorts extends DCIM
 * @param integer $device ID of device port belongs to. 
 * @param string  $type Type of port connection. 
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -91,7 +91,7 @@ class RearPorts extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Rear Port value(s).
 *
 * @param integer $id Numerical ID of Rear Port to update.

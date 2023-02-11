@@ -18,7 +18,7 @@ class ImageAttachments extends Extras
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Attachment.
 *
 * @param string  $content_type Image file format.
@@ -58,7 +58,7 @@ class ImageAttachments extends Extras
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Attachment
 * 
 * @param integer $id Numerical ID of Context to update.
@@ -100,7 +100,7 @@ class ImageAttachments extends Extras
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Attachment value(s).
 *
 * @param integer $id Numerical ID of Context to update.

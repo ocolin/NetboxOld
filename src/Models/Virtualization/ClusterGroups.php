@@ -23,13 +23,13 @@ class ClusterGroups extends Virtualization
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Cluster Group.
 *
 * @param string $name Name of Cluster Group.
 * @param string $slug 
 * @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -55,7 +55,7 @@ class ClusterGroups extends Virtualization
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cluster Group
 * 
 * @param integer $id Numerical ID of Cluster Group to update.
@@ -90,7 +90,7 @@ class ClusterGroups extends Virtualization
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cluster Group value(s).
 *
 * @param integer $id Numerical ID of Cluster Group to update.

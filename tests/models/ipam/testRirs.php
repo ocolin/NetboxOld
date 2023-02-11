@@ -124,7 +124,7 @@ public function testGetList() : void
     {
         $o = new Rirs();
         $result = $o->postList(
-        data: [
+        options: [
             [ 'name' => 'testRir1', 'slug' => 'aaa' ],
             [ 'name' => 'testRir2', 'slug' => 'bbb' ],
         ]  
@@ -158,10 +158,10 @@ public function testGetList() : void
 
         $o = new Rirs();
         $result = $o->putDetail( 
-            id: $rir->id, 
-            name: 'updateRir', 
-            slug: 'updateRir',
-            data: [ 'description' => 'Updated description' ]
+                 id: $rir->id, 
+               name: 'updateRir', 
+               slug: 'updateRir',
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,11 +191,11 @@ public function testGetList() : void
 
         $o = new Rirs();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
-                    'id'   => $rir->id, 
-                    'name' => 'putRir',
-                    'slug' => 'putRir',
+                            'id'  => $rir->id, 
+                           'name' => 'putRir',
+                           'slug' => 'putRir',
                     'description' => 'Updated description'
                 ]
             ]
@@ -227,10 +227,10 @@ public function testGetList() : void
 
         $o = new Rirs();
         $result = $o->patchDetail(
-            id: $rir->id,
-            name: 'patchRIR',
-            slug: 'patchRIR',
-            data: [ 'description' => 'zzz' ]
+                 id: $rir->id,
+               name: 'patchRIR',
+               slug: 'patchRIR',
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ public function testGetList() : void
 
         $o = new Rirs();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $rir->id, 
                         'name' => 'patchRirs',
@@ -318,7 +318,7 @@ public function testGetList() : void
 
         $o = new Rirs();
         $result = $o->deleteList(
-            data: [[ 'id' => $rir->id ]]
+            options: [[ 'id' => $rir->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,7 +340,7 @@ public function testGetList() : void
         return $o->postDetail( 
             name: 'testRir',
             slug: 'testRir',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post RIR',
             ]
         );

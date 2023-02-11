@@ -125,7 +125,7 @@ class testRouteTargets extends testCore
     {
         $o = new RouteTargets();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'name' => 'testRT1', 'description' => 'aaa' ],
                 [ 'name' => 'testRT2', 'description' => 'bbb' ],
             ]  
@@ -159,9 +159,9 @@ class testRouteTargets extends testCore
 
         $o = new RouteTargets();
         $result = $o->putDetail( 
-              id: $rt->id, 
-            name: 'updateRT1', 
-            data: [ 'description' => 'Updated description' ]
+                 id: $rt->id, 
+               name: 'updateRT1', 
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,7 +191,7 @@ class testRouteTargets extends testCore
 
         $o = new RouteTargets();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                              'id' => $rt->id, 
                            'name' => 'putRT',
@@ -226,9 +226,9 @@ class testRouteTargets extends testCore
 
         $o = new RouteTargets();
         $result = $o->patchDetail(
-              id: $rt->id,
-            name: 'patchRT',
-            data: [ 'description' => 'zzz' ]
+                 id: $rt->id,
+               name: 'patchRT',
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -257,7 +257,7 @@ class testRouteTargets extends testCore
 
         $o = new RouteTargets();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $rt->id, 
                         'name' => 'patchRT',
@@ -313,7 +313,7 @@ class testRouteTargets extends testCore
 
         $o = new RouteTargets();
         $result = $o->deleteList(
-            data: [[ 'id' => $rt->id ]]
+            options: [[ 'id' => $rt->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -335,7 +335,7 @@ class testRouteTargets extends testCore
 
         return $o->postDetail( 
             name: 'testRT',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test RouteTarget',
             ]
         );

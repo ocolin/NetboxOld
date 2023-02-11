@@ -18,7 +18,7 @@ class ModuleTypes extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Type.
 *
 * @param integer $manufacturer ID of module manufacturer.
@@ -50,7 +50,7 @@ class ModuleTypes extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Type
 * 
 * @param integer $id Numerical ID of Platform to update.
@@ -85,7 +85,7 @@ class ModuleTypes extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Type value(s).
 *
 * @param integer $id Numerical ID of Platform to update.

@@ -19,7 +19,7 @@ class CustomLinks extends Extras
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Custom Link.
 *
 * @param string $content_type Link content type.
@@ -57,7 +57,7 @@ class CustomLinks extends Extras
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Custom Link
 * 
 * @param integer $id Numerical ID of User to update.
@@ -98,7 +98,7 @@ class CustomLinks extends Extras
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Custom Link value(s).
 *
 * @param integer $id Numerical ID of User to update.

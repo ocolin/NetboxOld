@@ -15,7 +15,7 @@ class ContentTypes
     }
 
 
-/*
+/**
 * List details about API call.
 *
 * @param array $headers HTML request headers.
@@ -32,7 +32,7 @@ class ContentTypes
  /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Get an individual object
 *
 * @param integer $id Numerical ID of an object record.

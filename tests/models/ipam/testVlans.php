@@ -126,7 +126,7 @@ class testVlans extends testCore
     {
         $o = new Vlans();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'vid' => 1, 'group' => $_ENV['vlg']->id, 'name' => 'post1' ],
                 [ 'vid' => 2, 'group' => $_ENV['vlg']->id, 'name' => 'post2'  ]
             ]  
@@ -160,11 +160,11 @@ class testVlans extends testCore
 
         $o = new Vlans();
         $result = $o->putDetail( 
-               id: $vlan->id, 
-              vid: 1, 
-            group: $_ENV['vlg']->id, 
-             name: 'putVlan',
-             data: [ 'description' => 'Updated description' ]
+                  id: $vlan->id, 
+                 vid: 1, 
+               group: $_ENV['vlg']->id, 
+                name: 'putVlan',
+             options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -193,7 +193,7 @@ class testVlans extends testCore
 
         $o = new Vlans();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                              'id' => $vlan->id, 
                             'vid' => 1,
@@ -230,11 +230,11 @@ class testVlans extends testCore
 
         $o = new Vlans();
         $result = $o->patchDetail(
-                  id: $vlan->id,
-                 vid: 1,
-               group: $_ENV['vlg']->id,
-                name: 'PatchVlan',
-                data: [ 'description' => 'Patch Vlan' ]
+                     id: $vlan->id,
+                    vid: 1,
+                  group: $_ENV['vlg']->id,
+                   name: 'PatchVlan',
+                options: [ 'description' => 'Patch Vlan' ]
         );
 
         $this->assertIsArray( $result );
@@ -264,7 +264,7 @@ class testVlans extends testCore
 
         $o = new Vlans();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                        'id' => $vlan->id, 
                       'vid' => 1,
@@ -322,7 +322,7 @@ class testVlans extends testCore
 
         $o = new Vlans();
         $result = $o->deleteList(
-            data: [[ 'id' => $vlan->id ]]
+            options: [[ 'id' => $vlan->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -343,10 +343,10 @@ class testVlans extends testCore
         $o = new Vlans();
 
         return $o->postDetail( 
-            group: $vlg,
-              vid: 1,
-             name: 'phpunit-vlan-test',
-             data: [ 
+               group: $vlg,
+                 vid: 1,
+                name: 'phpunit-vlan-test',
+             options: [ 
                     'description' => 'PHPUnit test VLAN',
              ]
         );

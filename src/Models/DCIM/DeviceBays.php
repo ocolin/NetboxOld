@@ -18,7 +18,7 @@ class DeviceBays extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Bay.
 *
 * @param string  $name Name of Bay.
@@ -50,7 +50,7 @@ class DeviceBays extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Bay
 * 
 * @param integer $id Numerical ID of Bay to update.
@@ -85,7 +85,7 @@ class DeviceBays extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Bay value(s).
 *
 * @param integer $id Numerical ID of Bay to update.

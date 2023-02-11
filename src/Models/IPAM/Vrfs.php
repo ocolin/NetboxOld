@@ -18,12 +18,12 @@ class Vrfs extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single VRF.
 *
 * @param string $name Name of VRF.
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -47,13 +47,13 @@ class Vrfs extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update VRF
 * 
 * @param integer $id Numerical ID of VRF to update.
 * @param string  $name Name of VRF to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -79,7 +79,7 @@ class Vrfs extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update VRF value(s).
 *
 * @param integer $id Numerical ID of VRF to update.

@@ -18,16 +18,16 @@ class ContactAssignments extends Tenancy
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Contact Assignment.
 *
 * @param string  $content_type
-* @param integet $object_id
-* @param integet $contact
-* @param integet $role
-* @paran string  $priority
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param integer $object_id
+* @param integer $contact
+* @param integer $role
+* @param string  $priority
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -59,17 +59,17 @@ class ContactAssignments extends Tenancy
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Contact Assignment
 * 
 * @param integer $id Numerical ID of Contact Assignment to update.
 * @param string  $content_type
-* @param integet $object_id
-* @param integet $contact
-* @param integet $role
-* @paran string  $priority
+* @param integer $object_id
+* @param integer $contact
+* @param integer $role
+* @param string  $priority
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -103,15 +103,15 @@ class ContactAssignments extends Tenancy
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Contact Assignment value(s).
 *
 * @param integer $id Numerical ID of Contact Assignment to update.
 * @param string  $content_type
-* @param integet $object_id
-* @param integet $contact
-* @param integet $role
-* @paran string  $priority
+* @param integer $object_id
+* @param integer $contact
+* @param integer $role
+* @param string  $priority
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.

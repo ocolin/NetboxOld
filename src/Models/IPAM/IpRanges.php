@@ -19,12 +19,12 @@ class IpRanges extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
-* Create a single IP.
+/**
+* Create a single Range.
 *
 * @param string $start_address First IP address of range. 
 * @param string $end_address Last IP address of range. 
-* @param array  $data Optionsl data to be sent.
+* @param array  $data Optional data to be sent.
 * @param array  $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -51,10 +51,10 @@ class IpRanges extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
-* Update IP
+/**
+* Update Range
 * 
-* @param integer $id Numerical ID of IP to update.
+* @param integer $id Numerical ID of Range to update.
 * @param string  $start_address First IP address of range. 
 * @param string  $end_address Last IP address of range. 
 * @param array   $data Optional data to send.
@@ -86,10 +86,10 @@ class IpRanges extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
-* Update IP value(s).
+/**
+* Update Range value(s).
 *
-* @param integer $id Numerical ID of IP to update.
+* @param integer $id Numerical ID of Range to update.
 * @param string  $start_address First IP address of range. 
 * @param string  $end_address Last IP address of range. 
 * @param array   $data Optional data to modify.

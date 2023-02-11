@@ -123,9 +123,9 @@ class testIpAddresses extends testCore
     {
         $o = new IpAddresses();
         $result = $o->postList(
-        data: [
-            [ 'address' => '192.168.66.1/24', 'description' => 'aaa' ],
-            [ 'address' => '192.168.66.2/24', 'description' => 'bbb' ],
+            options: [
+                [ 'address' => '192.168.66.1/24', 'description' => 'aaa' ],
+                [ 'address' => '192.168.66.2/24', 'description' => 'bbb' ],
         ]  
         );
 
@@ -157,9 +157,9 @@ class testIpAddresses extends testCore
 
         $o = new IpAddresses();
         $result = $o->putDetail( 
-            id: $ip->id, 
+                 id: $ip->id, 
             address: '192.168.66.1/24', 
-            data: [ 'description' => 'Updated description' ]
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -189,7 +189,7 @@ class testIpAddresses extends testCore
 
         $o = new IpAddresses();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                     'id'   => $ip->id, 
                     'address' => '192.168.66.2/24',
@@ -224,9 +224,9 @@ class testIpAddresses extends testCore
 
         $o = new IpAddresses();
         $result = $o->patchDetail(
-            id: $ip->id,
+                 id: $ip->id,
             address: '192.168.7.5/25',
-            data: [ 'description' => 'zzz' ]
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -256,7 +256,7 @@ class testIpAddresses extends testCore
 
         $o = new IpAddresses();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                          'id' => $ip->id, 
                     'address' => '192.168.4.3/24',
@@ -313,7 +313,7 @@ class testIpAddresses extends testCore
 
         $o = new IpAddresses();
         $result = $o->deleteList(
-            data: [[ 'id' => $ip->id ]]
+            options: [[ 'id' => $ip->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -335,7 +335,7 @@ class testIpAddresses extends testCore
 
         return $o->postDetail( 
             address: '192.168.77.7/24',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post IP Address',
             ]
         );

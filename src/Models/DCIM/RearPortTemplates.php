@@ -18,7 +18,7 @@ class RearPortTemplates extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Template.
 *
 * @param string  $name Name of Template.
@@ -53,7 +53,7 @@ class RearPortTemplates extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Template
 * 
 * @param integer $id Numerical ID of Template to update.
@@ -91,7 +91,7 @@ class RearPortTemplates extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Template value(s).
 *
 * @param integer $id Numerical ID of Template to update.

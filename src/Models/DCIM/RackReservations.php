@@ -19,15 +19,15 @@ class RackReservations extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Reservation.
 *
 * @param integer $rack  ID of Rack being reserved.
 * @param integer $units ID of unit in rack.
 * @param array   $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
-* @param array   $options optionsl data to be sent
-* @param array   $headers HTML request headers
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -57,7 +57,7 @@ class RackReservations extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Reservation
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -66,7 +66,7 @@ class RackReservations extends DCIM
 * @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -98,7 +98,7 @@ class RackReservations extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Reservation value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

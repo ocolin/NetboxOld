@@ -18,15 +18,15 @@ class FrontPorts extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Port.
 *
 * @param string  $name Name of Port.
 * @param integer $device ID of device Port is on. 
 * @param string  $type Port type.
 * @param integer $rear_port ID of rear port.
-* @param array   $options optionsl data to be sent
-* @param array   $headers HTML request headers
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -56,7 +56,7 @@ class FrontPorts extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Port
 * 
 * @param integer $id Numerical ID of Port to update.
@@ -65,7 +65,7 @@ class FrontPorts extends DCIM
 * @param string  $type Port type.
 * @param integer $rear_port ID of rear port.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -97,7 +97,7 @@ class FrontPorts extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Port value(s).
 *
 * @param integer $id Numerical ID of Port to update.

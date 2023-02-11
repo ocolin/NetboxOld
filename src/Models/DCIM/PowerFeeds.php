@@ -19,7 +19,7 @@ class PowerFeeds extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Power Feed.
 *
 * @param integer $power_panel ID of Power panel that feed belongs to.
@@ -51,7 +51,7 @@ class PowerFeeds extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Power Feed
 * 
 * @param integer $id Numerical ID of Platform to update.
@@ -86,7 +86,7 @@ class PowerFeeds extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Power Feed value(s).
 *
 * @param integer $id Numerical ID of Platform to update.

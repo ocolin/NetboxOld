@@ -11,7 +11,24 @@
     verbose="true"
 >
     <testsuites>
-<!-- 
+<!--
+TODO:
+IpRangesAvailableIps POST
+PrefixesAvailableIps POST
+PrefixesAvailablePrefixes POST
+
+/users/permissions/
+/tenancy/contact-assignments/
+/dcim/cables/
+/dcim/connected-device/
+​/dcim​/console-ports​/{id}​/trace​/
+/dcim/power-outlets/{id}/trace/
+/dcim/power-ports/{id}/trace/
+/dcim/racks/{id}/elevation/
+/dcim/rear-ports/{id}/
+image attachments
+-->
+
         <testsuite name="Circuit_Models">
             <file>tests/models/circuits/testCircuitTerminations.php</file>
             <file>tests/models/circuits/testCircuitTypes.php</file>
@@ -19,10 +36,8 @@
             <file>tests/models/circuits/testProviderNetworks.php</file>
             <file>tests/models/circuits/testProviders.php</file>
         </testsuite>
--->
-            
 
-<!-- 
+
         <testsuite name="DCIM_Models">
 
 
@@ -70,19 +85,19 @@
             <file>tests/models/dcim/testSites.php</file> 
             <file>tests/models/dcim/testVirtualChassis.php</file>
         </testsuite>
- -->
-<!-- 
+
+
         <testsuite name="Extras_Models">
             <file>tests/models/extras/testConfigContexts.php</file>
             <file>tests/models/extras/testContentTypes.php</file>
             <file>tests/models/extras/testCustomFields.php</file>
             <file>tests/models/extras/testCustomLinks.php</file>
             <file>tests/models/extras/testExportTemplates.php</file>
-            //<file>tests/models/extras/testImageAttachments.php</file>
+
             <file>tests/models/extras/testTags.php</file>
         </testsuite>
-         -->
-<!-- 
+        
+
         <testsuite name="IPAM_Models">
             <file>tests/models/ipam/testAggregates.php</file>
             <file>tests/models/ipam/testAsns.php</file>
@@ -90,22 +105,22 @@
             <file>tests/models/ipam/testFhrpGroups.php</file>
             <file>tests/models/ipam/testIpAddresses.php</file>
             <file>tests/models/ipam/testIpRanges.php</file>
-
+            <file>tests/models/ipam/testIpRangesAvailableIps.php</file>
             <file>tests/models/ipam/testPrefixes.php</file>
-
-
+            <file>tests/models/ipam/testPrefixesAvailableIps.php</file>
+            <file>tests/models/ipam/testPrefixesAvailablePrefixes.php</file>
             <file>tests/models/ipam/testRirs.php</file>
             <file>tests/models/ipam/testRoles.php</file>
             <file>tests/models/ipam/testRouteTargets.php</file>
             <file>tests/models/ipam/testServices.php</file>
             <file>tests/models/ipam/testServiceTemplates.php</file>
             <file>tests/models/ipam/testVlanGroups.php</file>
-            
+            <file>tests/models/ipam/testVlanGroupsAvailableVlans.php</file>
             <file>tests/models/ipam/testVlans.php</file>
             <file>tests/models/ipam/testVrfs.php</file>
         </testsuite>
-         -->
-<!-- 
+        
+
         <testsuite name="Tenancy_Models">
 
             <file>tests/models/tenancy/testContactGroups.php</file>
@@ -114,19 +129,17 @@
             <file>tests/models/tenancy/testTenantGroups.php</file>
             <file>tests/models/tenancy/testTenants.php</file>
         </testsuite>
- -->
-<!-- 
-        <testsuite name="Users_Models">
 
+
+        <testsuite name="Users_Models">
+            <file>tests/models/users/testConfig.php</file>
             <file>tests/models/users/testGroups.php</file>
 
             <file>tests/models/users/testTokens.php</file>
-            <file>tests/models/users/testUsers.php</file>
-            
-            
+            <file>tests/models/users/testUsers.php</file> 
         </testsuite>
- -->
-<!-- 
+
+
         <testsuite name="Virtualization_Models">
             <file>tests/models/virtualization/testClusterGroups.php</file>
             <file>tests/models/virtualization/testClusterTypes.php</file>
@@ -134,19 +147,19 @@
             <file>tests/models/virtualization/testVirtualMachines.php</file>
             <file>tests/models/virtualization/testInterfaces.php</file>
         </testsuite>
- -->
-<!-- 
+
+
         <testsuite name="Wireless_Models">
             <file>tests/models/wireless/testWirelessLanGroups.php</file>
             <file>tests/models/wireless/testWirelessLans.php</file>
             <file>tests/models/wireless/testWirelessLinks.php</file>
         </testsuite>
- -->
+
         <testsuite name="Models">
 
             <!-- <file>tests/models/dcim/testCables.php</file> -->
 
-            <file>tests/models/ipam/testFhrpGroupAssignments.php</file>
+            <!-- <file>tests/models/users/testConfig.php</file> -->
 
 
 <!--         

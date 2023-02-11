@@ -22,13 +22,13 @@ class ClusterTypes extends Virtualization
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Cluster Type.
 *
 * @param string $name Name of Cluster Type.
 * @param string $slug 
 * @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -54,7 +54,7 @@ class ClusterTypes extends Virtualization
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cluster Type
 * 
 * @param integer $id Numerical ID of Cluster Type to update.
@@ -89,7 +89,7 @@ class ClusterTypes extends Virtualization
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cluster Type value(s).
 *
 * @param integer $id Numerical ID of Cluster Type to update.

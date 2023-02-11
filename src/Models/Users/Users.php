@@ -22,7 +22,7 @@ class Users extends UsersCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single User.
 *
 * @param string $username Login username.
@@ -54,7 +54,7 @@ class Users extends UsersCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update User
 * 
 * @param integer $id Numerical ID of User to update.
@@ -89,7 +89,7 @@ class Users extends UsersCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update User value(s).
 *
 * @param integer $id Numerical ID of User to update.

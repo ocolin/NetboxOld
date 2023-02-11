@@ -12,7 +12,7 @@ class CircuitTerminations extends CircuitsCore
 /* CONSTRUCTOR
 ---------------------------------------------------------------------------- */
 
-/*
+/**
  *
 */
 
@@ -27,7 +27,7 @@ class CircuitTerminations extends CircuitsCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Termination.
 *
 * @param string  $term_side Terminal side: A or B.
@@ -59,7 +59,7 @@ class CircuitTerminations extends CircuitsCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Termination
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -94,7 +94,7 @@ class CircuitTerminations extends CircuitsCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Termination value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

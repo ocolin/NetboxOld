@@ -19,7 +19,7 @@ class CustomFields extends Extras
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Custom Field.
 *
 * @param string $name Name of custom field.
@@ -53,7 +53,7 @@ class CustomFields extends Extras
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Custom Field
 * 
 * @param integer $id Numerical ID of Custom Field to update.
@@ -90,7 +90,7 @@ class CustomFields extends Extras
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Custom Field value(s).
 *
 * @param integer $id Numerical ID of Custom Field to update.

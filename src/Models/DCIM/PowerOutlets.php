@@ -19,7 +19,7 @@ class PowerOutlets extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Outlet.
 *
 * @param string  $name Name of Outlet.
@@ -51,7 +51,7 @@ class PowerOutlets extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Bay
 * 
 * @param integer $id Numerical ID of Bay to update.
@@ -86,7 +86,7 @@ class PowerOutlets extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Bay value(s).
 *
 * @param integer $id Numerical ID of Bay to update.

@@ -64,7 +64,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createContactGroup() : object
     {
-        $o = new Users\ContactGroups();
+        $o = new Tenancy\ContactGroups();
         return $o->postDetail(
               name: 'PHPUnit_ContactGrp',
               slug: 'PHPUnit_ContactGrp',
@@ -74,7 +74,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyContactGroup( object $group ) :void
     {
-        $o = new Users\ContactGroups();
+        $o = new Tenancy\ContactGroups();
         $o->deleteDetail( id: $group->id );
     }
 
@@ -85,7 +85,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createContactRole() : object
     {
-        $o = new Users\ContactRoles();
+        $o = new Tenancy\ContactRoles();
         return $o->postDetail(
               name: 'PHPUnit_ContactRole',
               slug: 'PHPUnit_ContactRole',
@@ -94,7 +94,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyContactRole( object $role ) :void
     {
-        $o = new Users\ContactRoles();
+        $o = new Tenancy\ContactRoles();
         $o->deleteDetail( id: $role->id );
     }
 
@@ -644,6 +644,78 @@ class testCore extends \PHPUnit\Framework\TestCase
     public static function destroyFhrpGroup( object $group )
     {
         $o = new IPAM\FhrpGroups();
+        $o->deleteDetail( id: $group->id );
+    }
+
+
+/* IP RANGE
+---------------------------------------------------------------------------- */
+
+    public static function createIpRange()
+    {
+        $o = new IPAM\IpRanges();
+        return $o->postDetail(
+            start_address: '192.168.55.1',
+              end_address: '192.168.55.254'
+        )['body'];
+    }
+
+    public static function destroyIpRange( object $range )
+    {
+        $o = new IPAM\IpRanges();
+        $o->deleteDetail( id: $range->id );
+    }
+
+
+
+/* IP ADDRESS
+---------------------------------------------------------------------------- */
+
+    public static function createIpAddress()
+    {
+        $o = new IPAM\IpAddresses();
+        return $o->postDetail( address: '192.168.55.55/24')['body'];
+    }
+
+    public static function destroyIpAddress( object $ip )
+    {
+        $o = new IPAM\IpAddresses();
+        $o->deleteDetail( id: $ip->id );
+    }
+
+
+
+/* PREFIX
+---------------------------------------------------------------------------- */
+
+    public static function createPrefix()
+    {
+        $o = new IPAM\Prefixes();
+        return $o->postDetail( prefix: '192.168.55.0/25' )['body'];
+    }
+
+    public static function destroyPrefix( object $prefix )
+    {
+        $o = new IPAM\Prefixes();
+        $o->deleteDetail( id: $prefix->id );
+    }
+
+
+/* VLAN GROUP
+---------------------------------------------------------------------------- */
+
+    public static function createVlanGroup()
+    {
+        $o = new IPAM\VlanGroups();
+        return $o->postDetail(
+            name: 'PHPUnit_VlanGroup',
+            slug: 'PHPUnit_VlanGroup'
+        )['body'];
+    }
+
+    public static function destroyVlanGroup( object $group )
+    {
+        $o = new IPAM\VlanGroups();
         $o->deleteDetail( id: $group->id );
     }
 

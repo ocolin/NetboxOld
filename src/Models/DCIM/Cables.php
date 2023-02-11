@@ -18,7 +18,7 @@ class Cables extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Cable.
 *
 * @param string  $termination_a_type Connection A type.
@@ -56,7 +56,7 @@ class Cables extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cable
 * 
 * @param integer $id Numerical ID of Site to update.
@@ -97,7 +97,7 @@ class Cables extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cable value(s).
 *
 * @param integer $id Numerical ID of Site to update.

@@ -18,7 +18,7 @@ class ConsoleServerPortTemplates extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single template.
 *
 * @param string  $name Name of template.
@@ -50,7 +50,7 @@ class ConsoleServerPortTemplates extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update template
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -85,7 +85,7 @@ class ConsoleServerPortTemplates extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update template value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

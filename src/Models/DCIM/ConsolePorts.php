@@ -19,7 +19,7 @@ class ConsolePorts extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Console Port.
 *
 * @param string  $name Name of Console Port.
@@ -51,7 +51,7 @@ class ConsolePorts extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Console Port
 * 
 * @param integer $id Numerical ID of Consol Port to update.
@@ -86,7 +86,7 @@ class ConsolePorts extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Console Port value(s).
 *
 * @param integer $id Numerical ID of Console Port to update.

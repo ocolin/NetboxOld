@@ -22,7 +22,7 @@ class Clusters extends Virtualization
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Cluster.
 *
 * @param string  $name Name of Cluster.
@@ -60,7 +60,7 @@ class Clusters extends Virtualization
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cluster 
 * 
 * @param integer $id Numerical ID of Cluster to update.
@@ -101,7 +101,7 @@ class Clusters extends Virtualization
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Cluster value(s).
 *
 * @param integer $id Numerical ID of Cluster to update.

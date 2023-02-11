@@ -19,7 +19,7 @@ class ExportTemplates extends Extras
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Template.
 *
 * @param string $content_type Template content type.
@@ -54,13 +54,13 @@ class ExportTemplates extends Extras
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Template Link
 * 
 * @param integer $id Numerical ID of Template to update.
-* @param string $content_type Template content type.
-* @param string $name Name of Template.
-* @param string $template_code Code inside template.
+* @param string  $content_type Template content type.
+* @param string  $name Name of Template.
+* @param string  $template_code Code inside template.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -92,13 +92,13 @@ class ExportTemplates extends Extras
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Template value(s).
 *
 * @param integer $id Numerical ID of Template to update.
-* @param string $content_type Template content type.
-* @param string $name Name of Template.
-* @param string $template_code Code inside template.
+* @param string  $content_type Template content type.
+* @param string  $name Name of Template.
+* @param string  $template_code Code inside template.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.

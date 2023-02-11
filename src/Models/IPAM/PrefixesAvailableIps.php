@@ -8,12 +8,43 @@ use Cruzio\Netbox\Models\HTTP;
 
 class PrefixesAvailableIps extends IPAM
 {
-    public function __construct( int $id, HTTP $http = null )
+    public function __construct( HTTP $http = null )
     {
         parent::__construct( http: $http );
-        $this->uri .= "prefixes/{$id}/available-ips/";
+        $this->uri .= "prefixes/";
+    }
+
+/* GET METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+    public function getDetail( 
+          int $id,
+        array $params  = [],
+        array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/available-ips/";
+
+        return $this->http->get( 
+                uri: $this->uri, 
+             params: $params,
+            headers: $headers 
+        );
     }
 
 
+    
+/* POST METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+    public function postDetail( 
+           int $id, 
+        object $data ,
+         array $headers = []
+    )
+    {
+        $this->uri .= "{$id}/available-ips/";
+        // NEEDS TO BE ADDED
+    }
 
 }

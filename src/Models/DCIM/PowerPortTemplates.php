@@ -19,13 +19,13 @@ class PowerPortTemplates extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Template.
 *
 * @param string  $name Name of Template.
 * @param integer $device_type ID of Device Type belongs to. 
-* @param array  $options optionsl data to be sent.
-* @param array $headers HTML request headers.
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -51,7 +51,7 @@ class PowerPortTemplates extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Template
 * 
 * @param integer $id Numerical ID of Template to update.
@@ -86,7 +86,7 @@ class PowerPortTemplates extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Template value(s).
 *
 * @param integer $id Numerical ID of Template to update.

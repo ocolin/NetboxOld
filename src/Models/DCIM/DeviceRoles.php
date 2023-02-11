@@ -18,7 +18,7 @@ class DeviceRoles extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Device Role.
 *
 * @param string $name Name of Device Role.
@@ -50,7 +50,7 @@ class DeviceRoles extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Device Role
 * 
 * @param integer $id Numerical ID of Device Role to update.
@@ -85,7 +85,7 @@ class DeviceRoles extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Device Role value(s).
 *
 * @param integer $id Numerical ID of Device Role to update.

@@ -18,13 +18,13 @@ class ModuleBays extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Bay.
 *
 * @param string  $name Name of Bay.
 * @param integer $device ID of Bay belongs to. 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -50,14 +50,14 @@ class ModuleBays extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Bay
 * 
 * @param integer $id Numerical ID of Bay to update.
 * @param string  $name Name of Bay.
 * @param integer $device ID of Bay belongs to. 
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -85,7 +85,7 @@ class ModuleBays extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Bay value(s).
 *
 * @param integer $id Numerical ID of Bay to update.

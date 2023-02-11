@@ -19,7 +19,7 @@ class ProviderNetworks extends CircuitsCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Network Provider.
 *
 * @param string  $name Name of provider network.
@@ -51,7 +51,7 @@ class ProviderNetworks extends CircuitsCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Network Provider
 * 
 * @param integer $id Numerical ID of Network Provider to update.
@@ -86,7 +86,7 @@ class ProviderNetworks extends CircuitsCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Network Provider value(s).
 *
 * @param integer $id Numerical ID of Network Provider to update.

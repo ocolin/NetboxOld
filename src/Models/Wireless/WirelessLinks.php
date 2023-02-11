@@ -22,12 +22,12 @@ class WirelessLinks extends Wireless
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
-* Create a single LAN.
+/**
+* Create a single Link.
 *
-* @param string  $ssid Name of LAN to update.
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param string $ssid Name of link to update.
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -53,13 +53,13 @@ class WirelessLinks extends Wireless
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
-* Update LAN
+/**
+* Update link
 * 
-* @param integer $id Numerical ID of LAN Group to update.
-* @param string  $ssid Name of LAN to update.
+* @param integer $id Numerical ID of link to update.
+* @param string  $ssid Name of link to update.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -87,11 +87,11 @@ class WirelessLinks extends Wireless
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
-* Update LAN value(s).
+/**
+* Update Link value(s).
 *
-* @param integer $id Numerical ID of LAN Group to update.
-* @param string  $ssid Name of LAN to update.
+* @param integer $id Numerical ID of link to update.
+* @param string  $ssid Name of link to update.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.

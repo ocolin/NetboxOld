@@ -123,7 +123,7 @@ class testIpRanges extends testCore
     {
         $o = new IpRanges();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'start_address' => '192.168.66.1/24', 'end_address' => '192.168.66.254/24' ],
                 [ 'start_address' => '192.168.67.2/24', 'end_address' => '192.168.67.254/24' ]
             ]  
@@ -157,10 +157,10 @@ class testIpRanges extends testCore
 
         $o = new IpRanges();
         $result = $o->putDetail( 
-            id: $range->id, 
+                       id: $range->id, 
             start_address: '192.168.66.1/24', 
               end_address: '192.168.66.254/24', 
-                     data: [ 'description' => 'Updated description' ]
+                  options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -190,9 +190,9 @@ class testIpRanges extends testCore
 
         $o = new IpRanges();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
-                             'id'   => $range->id, 
+                               'id' => $range->id, 
                     'start_address' => '192.168.66.2/24',
                       'end_address' => '192.168.66.128/24',
                       'description' => 'Updated description'
@@ -229,7 +229,7 @@ class testIpRanges extends testCore
                        id: $range->id,
             start_address: '192.168.66.2/24',
               end_address: '192.168.66.128/24',
-                     data: [ 'description' => 'Patch Range' ]
+                  options: [ 'description' => 'Patch Range' ]
         );
 
         $this->assertIsArray( $result );
@@ -259,7 +259,7 @@ class testIpRanges extends testCore
 
         $o = new IpRanges();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                              'id' => $range->id, 
                   'start_address' => '192.168.66.2/24',
@@ -317,7 +317,7 @@ class testIpRanges extends testCore
 
         $o = new IpRanges();
         $result = $o->deleteList(
-            data: [[ 'id' => $range->id ]]
+            options: [[ 'id' => $range->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,7 +340,7 @@ class testIpRanges extends testCore
         return $o->postDetail( 
             start_address: '192.168.77.0/24',
               end_address: '192.168.77.254/24',
-                     data: [ 
+                     options: [ 
                         'description' => 'PHPUnit test post IP Range',
                     ]
         );

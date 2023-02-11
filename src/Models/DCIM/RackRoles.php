@@ -18,13 +18,13 @@ class RackRoles extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Rack Role.
 *
 * @param string $name Name of Rack Role.
 * @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array  $options optionsl data to be sent.
+* @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -50,7 +50,7 @@ class RackRoles extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Rack Role
 * 
 * @param integer $id Numerical ID of Rack Role to update.
@@ -85,7 +85,7 @@ class RackRoles extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Rack Role value(s).
 *
 * @param integer $id Numerical ID of Rack Role to update.

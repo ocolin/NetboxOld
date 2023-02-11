@@ -18,6 +18,14 @@ class Config extends UsersCore
         $this->uri .= 'config/';
     }
 
-/// CLASS IS GET METHOD ONLY IN PARENT
+
+
+/* GET METHOD
+---------------------------------------------------------------------------- */
+
+    public function get() : array
+    {
+        return $this->http->get( uri: $this->uri );
+    }
 
 }

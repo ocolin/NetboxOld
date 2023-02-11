@@ -126,7 +126,7 @@ class testAsns extends testCore
     {
         $o = new Asns();
         $result = $o->postList(
-            data: [
+            options: [
                 [ 'asn' => '1', 'rir' => $_ENV['rir']->id ],
                 [ 'asn' => '2', 'rir' => $_ENV['rir']->id ]
             ]  
@@ -160,10 +160,10 @@ class testAsns extends testCore
 
         $o = new Asns();
         $result = $o->putDetail( 
-                id: $asn->id, 
-               asn: 1, 
-               rir: $_ENV['rir']->id, 
-              data: [ 'description' => 'Updated description' ]
+                 id: $asn->id, 
+                asn: 1, 
+                rir: $_ENV['rir']->id, 
+            options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -192,7 +192,7 @@ class testAsns extends testCore
 
         $o = new Asns();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
                              'id' => $asn->id, 
                             'asn' => 1,
@@ -228,10 +228,10 @@ class testAsns extends testCore
 
         $o = new Asns();
         $result = $o->patchDetail(
-                id: $asn->id,
-               asn: 1,
-               rir: $_ENV['rir']->id,
-              data: [ 'description' => 'Patch ASN' ]
+                 id: $asn->id,
+                asn: 1,
+                rir: $_ENV['rir']->id,
+            options: [ 'description' => 'Patch ASN' ]
         );
 
         $this->assertIsArray( $result );
@@ -261,7 +261,7 @@ class testAsns extends testCore
 
         $o = new Asns();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                              'id' => $asn->id, 
                             'asn' => 1,
@@ -319,7 +319,7 @@ class testAsns extends testCore
 
         $o = new Asns();
         $result = $o->deleteList(
-            data: [[ 'id' => $asn->id ]]
+            options: [[ 'id' => $asn->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,11 +340,11 @@ class testAsns extends testCore
         $o = new Asns();
 
         return $o->postDetail( 
-               asn: 1,
-               rir: $rir,
-              data: [ 
-                    'description' => 'PHPUnit test ASNs',
-              ]
+                asn: 1,
+                rir: $rir,
+            options: [ 
+                'description' => 'PHPUnit test ASNs',
+            ]
         );
     }
 

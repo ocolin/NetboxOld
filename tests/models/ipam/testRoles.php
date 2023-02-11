@@ -124,9 +124,9 @@ class testRoles extends testCore
     {
         $o = new Roles();
         $result = $o->postList(
-        data: [
-            [ 'name' => 'testRole1', 'slug' => 'aaa' ],
-            [ 'name' => 'testRole2', 'slug' => 'bbb' ],
+            options: [
+                [ 'name' => 'testRole1', 'slug' => 'aaa' ],
+                [ 'name' => 'testRole2', 'slug' => 'bbb' ],
         ]  
         );
 
@@ -158,10 +158,10 @@ class testRoles extends testCore
 
         $o = new Roles();
         $result = $o->putDetail( 
-            id: $role->id, 
-            name: 'updateRole', 
-            slug: 'updateRole',
-            data: [ 'description' => 'Updated description' ]
+                 id: $role->id, 
+               name: 'updateRole', 
+               slug: 'updateRole',
+            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -191,11 +191,11 @@ class testRoles extends testCore
 
         $o = new Roles();
         $result = $o->putList(
-            data: [
+            options: [
                 [ 
-                    'id'   => $role->id, 
-                    'name' => 'putRole',
-                    'slug' => 'putRole',
+                             'id' => $role->id, 
+                           'name' => 'putRole',
+                           'slug' => 'putRole',
                     'description' => 'Updated description'
                 ]
             ]
@@ -227,10 +227,10 @@ class testRoles extends testCore
 
         $o = new Roles();
         $result = $o->patchDetail(
-            id: $role->id,
-            name: 'patchRole',
-            slug: 'patchRole',
-            data: [ 'description' => 'zzz' ]
+                 id: $role->id,
+               name: 'patchRole',
+               slug: 'patchRole',
+            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -260,7 +260,7 @@ class testRoles extends testCore
 
         $o = new Roles();
         $result = $o->patchList(
-            data: [
+            options: [
                 [ 
                           'id' => $role->id, 
                         'name' => 'patchRole',
@@ -318,7 +318,7 @@ class testRoles extends testCore
 
         $o = new Roles();
         $result = $o->deleteList(
-            data: [[ 'id' => $role->id ]]
+            options: [[ 'id' => $role->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -340,7 +340,7 @@ class testRoles extends testCore
         return $o->postDetail( 
             name: 'testRole',
             slug: 'testRole',
-            data: [ 
+            options: [ 
                 'description' => 'PHPUnit test post Role',
             ]
         );

@@ -18,14 +18,14 @@ class Interfaces extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single interface.
 *
 * @param string  $name Name of interface.
 * @param integer $device ID of device. 
 * @param string  $type interface type.
-* @param array   $options optionsl data to be sent
-* @param array   $headers HTML request headers
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -53,7 +53,7 @@ class Interfaces extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update interface
 * 
 * @param integer $id Numerical ID of interface to update.
@@ -61,7 +61,7 @@ class Interfaces extends DCIM
 * @param integer $device ID of device. 
 * @param string  $type interface type.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -91,7 +91,7 @@ class Interfaces extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update interface value(s).
 *
 * @param integer $id Numerical ID of interface to update.

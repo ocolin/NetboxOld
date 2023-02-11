@@ -23,7 +23,7 @@ class Interfaces extends Virtualization
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Virtual Machine.
 *
 * @param string  $name Name of Virtual Machine.
@@ -55,7 +55,7 @@ class Interfaces extends Virtualization
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Virtual Machine
 * 
 * @param integer $id Numerical ID of Virtual Machine to update.
@@ -90,7 +90,7 @@ class Interfaces extends Virtualization
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Virtual Machine value(s).
 *
 * @param integer $id Numerical ID of Virtual Machine to update.

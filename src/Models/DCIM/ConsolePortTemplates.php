@@ -18,7 +18,7 @@ class ConsolePortTemplates extends DCIM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single ConsolePortTemplates.
 *
 * @param string  $name Name of ConsolePortTemplates.
@@ -50,7 +50,7 @@ class ConsolePortTemplates extends DCIM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update ConsolePortTemplates
 * 
 * @param integer $id Numerical ID of ConsolePortTemplates to update.
@@ -86,7 +86,7 @@ class ConsolePortTemplates extends DCIM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update ConsolePortTemplates value(s).
 *
 * @param integer $id Numerical ID of ConsolePortTemplates to update.

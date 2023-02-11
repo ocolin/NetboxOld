@@ -18,7 +18,7 @@ class ServiceTemplates extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Service Template.
 *
 * @param string  $name Name of Service Template.
@@ -53,7 +53,7 @@ class ServiceTemplates extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Service Template 
 * 
 * @param integer $id Numerical ID of Service Template to update.
@@ -91,7 +91,7 @@ class ServiceTemplates extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Service Template value(s).
 *
 * @param integer $id Numerical ID of Service Template to update.

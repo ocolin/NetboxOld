@@ -22,7 +22,7 @@ class Extras
 /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * List details about API call.
 *
 * @param array $headers HTML request headers.
@@ -38,7 +38,7 @@ class Extras
 /* DELETE METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Delete an individual object.
 * 
 * @param integer $id A unique integer value identifying an object.
@@ -58,7 +58,7 @@ class Extras
 /* DELETE METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Delete a list of objects.
 * 
 * @param array $options List of object to delete. Each object must have an ID.
@@ -83,7 +83,7 @@ class Extras
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update a list of objects.
 *
 * @param array $options Array of Objects to update.
@@ -108,7 +108,7 @@ class Extras
 /* PUT METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Updte an array of object.
 *
 * @param array $options List of objects to update.
@@ -133,7 +133,7 @@ class Extras
 /* GET METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Get all Objects
 *
 * @param array $params Optional URL parameters.
@@ -159,7 +159,7 @@ class Extras
 /* POST METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create multiple objects at once.
 *
 * @param array $options An array of object arrays. Each sub array MUST have a 
@@ -185,7 +185,7 @@ class Extras
  /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Get an individual object
 *
 * @param integer $id Numerical ID of an object record.

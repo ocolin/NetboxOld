@@ -19,7 +19,7 @@ class Asns extends IPAM
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single ASN.
 *
 * @param integer $asn Numeric value of ASN
@@ -51,7 +51,7 @@ class Asns extends IPAM
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update ASN
 * 
 * @param integer $id Numerical ID of ASN to update.
@@ -86,7 +86,7 @@ class Asns extends IPAM
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update ASN value(s).
 *
 * @param integer $id Numerical ID of ASN to update.

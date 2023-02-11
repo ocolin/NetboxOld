@@ -22,14 +22,14 @@ class ContactGroups extends Tenancy
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Region.
 *
 * @param string  $name Name of Region.
 * @param string  $slug 
 * @param integer $parent Parent group ID.
-* @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers.
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -57,7 +57,7 @@ class ContactGroups extends Tenancy
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Site
 * 
 * @param integer $id Numerical ID of Region to update.
@@ -65,7 +65,7 @@ class ContactGroups extends Tenancy
 * @param string  $slug Slug of Region to update.
 * @param integer $parent Parent group ID.
 * @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -95,7 +95,7 @@ class ContactGroups extends Tenancy
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Region value(s).
 *
 * @param integer $id Numerical ID of Region to update.

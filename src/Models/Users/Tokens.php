@@ -23,10 +23,10 @@ class Tokens extends UsersCore
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Create a single Token.
 *
-* @param integet $user ID of user with token.
+* @param integer $user ID of user with token.
 * @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -52,11 +52,11 @@ class Tokens extends UsersCore
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Group.
 * 
 * @param integer $id Numerical ID of Group to update.
-* @param integet $user ID of user with token.
+* @param integer $user ID of user with token.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -84,11 +84,11 @@ class Tokens extends UsersCore
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Update Group value(s).
 *
 * @param integer $id Numerical ID of Group to update.
-* @param integet $user ID of user with token.
+* @param integer $user ID of user with token.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
