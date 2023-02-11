@@ -67,6 +67,7 @@ class Premissions extends UsersCore
 */
 
     public function putDetail(
+           int $id,
         string $name,
          array $object_types,
          array $options = [],
@@ -101,6 +102,7 @@ class Premissions extends UsersCore
 */
 
     public function patchDetail(
+           int $id,
         string $name,
          array $object_types,
          array $options = [],

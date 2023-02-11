@@ -23,7 +23,7 @@ class Services extends IPAM
 * Create a single Service.
 *
 * @param string  $name Name of Service.
-* @param integer $ports Number or ports in Service 
+* @param array   $ports Number of ports in Service 
 * @param string  $protocol Service protocol: tcp, udp, sctp
 * @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
@@ -59,7 +59,7 @@ class Services extends IPAM
 * 
 * @param integer $id Numerical ID of Service to update.
 * @param string  $name Name of Service to update.
-* @param integer $ports Number or ports in Service.
+* @param array   $ports Number of ports in Service.
 * @param string  $protocol Service protocol: tcp, udp, sctp.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
@@ -97,7 +97,7 @@ class Services extends IPAM
 *
 * @param integer $id Numerical ID of Service to update.
 * @param string  $name Name of Service to update.
-* @param integer $ports Number or ports in Service.
+* @param array   $ports Number of ports in Service.
 * @param string  $protocol Service protocol: tcp, udp, sctp
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.

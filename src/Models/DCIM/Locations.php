@@ -21,11 +21,11 @@ class Locations extends DCIM
 /**
 * Create a single Location.
 *
-* @param string $name Name of Location.
-* @param string $slug 
-* @param integet $site ID of site location is in.
-* @param array  $options optionsl data to be sent.
-* @param array $headers HTML request headers.
+* @param string  $name Name of Location.
+* @param string  $slug 
+* @param integer $site ID of site location is in.
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -59,7 +59,7 @@ class Locations extends DCIM
 * @param integer $id Numerical ID of Location to update.
 * @param string  $name Name of Location to update.
 * @param string  $slug Slug of Location to update.
-* @param integet $site ID of site location is in.
+* @param integer $site ID of site location is in.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -98,7 +98,7 @@ class Locations extends DCIM
 * @param string  $name Name of Location to update.
 * @param string  $slug Slug of Location to update.
 * @param array   $options Optional data to modify.
-* @param integet $site ID of site location is in.
+* @param integer $site ID of site location is in.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */

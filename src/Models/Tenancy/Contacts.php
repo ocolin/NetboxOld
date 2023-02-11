@@ -25,10 +25,10 @@ class Contacts extends Tenancy
 /**
 * Create a single Contact.
 *
-* @param string $name Name of Contact.
-* @param string $group ID of group contact belongs to. 
-* @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers.
+* @param string  $name Name of Contact.
+* @param integer $group ID of group contact belongs to. 
+* @param array   $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -59,7 +59,7 @@ class Contacts extends Tenancy
 * 
 * @param integer $id Numerical ID of Contact to update.
 * @param string  $name Name of Contact to update.
-* @param string $group ID of group contact belongs to.
+* @param integer $group ID of group contact belongs to.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -94,7 +94,7 @@ class Contacts extends Tenancy
 *
 * @param integer $id Numerical ID of Contact to update.
 * @param string  $name Name of Contact to update.
-* @param string $group ID of group contact belongs to.
+* @param integer $group ID of group contact belongs to.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.

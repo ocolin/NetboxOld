@@ -38,7 +38,7 @@ class CircuitsCore
 /* DELETE METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/*
+/**
 * Delete an individual object.
 * 
 * @param integer $id A unique integer value identifying an object.

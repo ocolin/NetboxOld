@@ -23,7 +23,7 @@ class ConfigContexts extends Extras
 * Create a single Context.
 *
 * @param string  $name Name of context.
-* @param string  $data Context data.
+* @param array   $data Context data.
 * @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -56,7 +56,7 @@ class ConfigContexts extends Extras
 * 
 * @param integer $id Numerical ID of Context to update.
 * @param string  $name Name of context.
-* @param string  $data Context data.
+* @param array   $data Context data.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
@@ -91,7 +91,7 @@ class ConfigContexts extends Extras
 *
 * @param integer $id Numerical ID of Context to update.
 * @param string  $name Name of context.
-* @param string  $data Context data.
+* @param array   $data Context data.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.

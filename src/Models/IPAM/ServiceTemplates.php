@@ -22,7 +22,7 @@ class ServiceTemplates extends IPAM
 * Create a single Service Template.
 *
 * @param string  $name Name of Service Template.
-* @param integer $ports Number or ports in Service Template.
+* @param array   $ports Number of ports in Service Template.
 * @param string  $protocol Service Template protocol: tcp, udp, sctp.
 * @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
@@ -58,7 +58,7 @@ class ServiceTemplates extends IPAM
 * 
 * @param integer $id Numerical ID of Service Template to update.
 * @param string  $name Name of Service Template to update.
-* @param integer $ports Number or ports in Service Template.
+* @param array   $ports Number of ports in Service Template.
 * @param string  $protocol Service protocol: tcp, udp, sctp.
 * @param array   $options Optional data to send.
 * @param array   $headers HTML request headers.
@@ -96,7 +96,7 @@ class ServiceTemplates extends IPAM
 *
 * @param integer $id Numerical ID of Service Template to update.
 * @param string  $name Name of Service Template to update.
-* @param integer $ports Number or ports in Service Template.
+* @param array   $ports Number of ports in Service Template.
 * @param string  $protocol Service Template protocol: tcp, udp, sctp.
 * @param array   $options Optional data to modify.
 * @param array   $headers HTML request headers.

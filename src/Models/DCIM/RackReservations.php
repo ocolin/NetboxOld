@@ -23,8 +23,8 @@ class RackReservations extends DCIM
 * Create a single Reservation.
 *
 * @param integer $rack  ID of Rack being reserved.
-* @param integer $units ID of unit in rack.
-* @param array   $user ID of user reserving rack.
+* @param array   $units ID of unit in rack.
+* @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
 * @param array   $options optionsl data to be sent.
 * @param array   $headers HTML request headers.

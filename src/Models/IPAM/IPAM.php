@@ -205,12 +205,4 @@ class IPAM
             headers: $headers
         );
     }
-
-
-
-    public static function destroySite( string $id ) : void
-    {
-        $o = new Site();
-        $o->deleteDetail( id: $id );
-    }
 }

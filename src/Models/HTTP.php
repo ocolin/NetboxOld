@@ -5,10 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models;
 
 use GuzzleHttp\Client;
+use \Psr\Http\Message\ResponseInterface;
 
 class HTTP
 {
-    private Client $cilent;
+    private Client $client;
+    private array $headers = [];
 
     private string $base_uri;
 
@@ -30,11 +32,11 @@ class HTTP
     )
     {
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
-        $this->headers = self::default_Headers();
-        $this->client = $client ?? new Client([
-            'base_uri'      => $this->base_uri,
-            'verify'        => $verify,
-            'http_errors'   => $errors,
+        $this->headers  = self::default_Headers();
+        $this->client   = $client ?? new Client([
+            'base_uri'    => $this->base_uri,
+            'verify'      => $verify,
+            'http_errors' => $errors,
         ]);
     }
 
@@ -60,7 +62,7 @@ class HTTP
                array $headers = []
     ) : array
     {
-        $uri = self::formtParams( $params, $uri );
+        $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
@@ -70,7 +72,7 @@ class HTTP
             ]
         );
 
-        return self::returnResults( $request );
+        return self::returnResults( request: $request );
     }
 
 
@@ -95,7 +97,7 @@ class HTTP
                array $headers = []
     ) : array
     {
-        $uri = self::formtParams( $params, $uri );
+        $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
             'PUT', $uri, [
@@ -104,7 +106,7 @@ class HTTP
             ]
         );
 
-        return self::returnResults( $request );
+        return self::returnResults( request: $request );
     }
 
 
@@ -129,7 +131,7 @@ class HTTP
                array $headers = []
     ) : array
     {
-        $uri = self::formtParams( $params, $uri );
+        $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
             'PATCH', $uri, [
@@ -138,7 +140,7 @@ class HTTP
             ]
         );
 
-        return self::returnResults( $request );
+        return self::returnResults( request: $request );
     }
 
 
@@ -162,14 +164,14 @@ class HTTP
          array $headers = []
     ) : array
     {
-        $uri = self::formtParams( $params, $uri );
+        $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
             'GET', $uri, [ 'headers' => $this->headers ]
         );
 
-        return self::returnResults( $request );
+        return self::returnResults( request: $request );
     }
 
 
@@ -195,7 +197,7 @@ class HTTP
             ]
         );
 
-        return self::returnResults( $request );
+        return self::returnResults( request: $request );
     }
 
 
@@ -208,7 +210,7 @@ class HTTP
  *  and their available parameters.
  *
  * @param string $uri
- * @param array $headers
+ * @param array  $headers
  * @return array
 */
 
@@ -219,7 +221,7 @@ class HTTP
             'OPTIONS', $uri, [ 'headers' => $this->headers ]
         );
 
-        return self::returnResults( $request );
+        return self::returnResults( request: $request );
     }
 
 
@@ -252,7 +254,7 @@ class HTTP
  * Format the Guzzle HTTP request response into an array
 */
 
-    private static function returnResults( $request ) : array
+    private static function returnResults( ResponseInterface $request ) : array
     {
         return [
             'status'  => $request->getStatusCode(),

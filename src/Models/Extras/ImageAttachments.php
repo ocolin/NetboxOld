@@ -72,6 +72,7 @@ class ImageAttachments extends Extras
 */
 
     public function putDetail(
+           int $id,
         string $content_type,
            int $object_id,
            int $image_height,
@@ -114,6 +115,7 @@ class ImageAttachments extends Extras
 */
 
     public function patchDetail(
+           int $id,
         string $content_type,
            int $object_id,
            int $image_height,

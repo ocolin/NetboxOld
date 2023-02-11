@@ -8,6 +8,9 @@ use Cruzio\Netbox\Models\HTTP;
 
 class ContentTypes
 {
+    protected string $uri = 'extras/';
+    protected HTTP $http;
+
     public function __construct( HTTP $http = null )
     {
         $this->uri = 'extras/content-types/';
