@@ -27,18 +27,19 @@ class IpAddresses extends IPAM
 * Create a single IP.
 *
 * @param string $address IP address. 
-* @param array  $data Optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $address,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['address'] = $address;
+        $options = $options ?? $this->options;
+        $options->address = $address;
 
         return $this->http->post(
               uri: $this->uri,
@@ -57,7 +58,7 @@ class IpAddresses extends IPAM
 * 
 * @param integer $id Numerical ID of IP to update.
 * @param string  $address Address of IP to update.
-* @param array   $data Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,12 +66,14 @@ class IpAddresses extends IPAM
     public function putDetail(
            int $id,
         string $address,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['address'] = $address;
+        $options = $options ?? $this->options;
+
+        $options->address = $address;
 
         return $this->http->put(
               uri: $this->uri,
@@ -89,20 +92,22 @@ class IpAddresses extends IPAM
 *
 * @param integer $id Numerical ID of IP to update.
 * @param string  $address Address of IP to update.
-* @param array   $data Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
-          int $id,
-       string $address,
-        array $options = [],
-        array $headers = []
+           int $id,
+        string $address,
+       Options $options = null,
+         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['address'] = $address;
+        $options = $options ?? $this->options;
+
+        $options->address = $address;
 
         return $this->http->put(
                 uri: $this->uri,

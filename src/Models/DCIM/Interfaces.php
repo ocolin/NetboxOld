@@ -28,7 +28,7 @@ class Interfaces extends DCIM
 * @param string  $name Name of interface.
 * @param integer $device ID of device. 
 * @param string  $type interface type.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class Interfaces extends DCIM
            int $device,
         string $name,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']   = $name;
-        $options['device'] = $device;
-        $options['type']   = $type;
+        $options = $options ?? $this->options;
+
+        $options->name   = $name;
+        $options->device = $device;
+        $options->type   = $type;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class Interfaces extends DCIM
 * @param string  $name Name of interface.
 * @param integer $device ID of device. 
 * @param string  $type interface type.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -74,14 +76,16 @@ class Interfaces extends DCIM
         string $name,
            int $device,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']   = $name;
-        $options['device'] = $device;
-        $options['type']   = $type;
+        $options = $options ?? $this->options;
+
+        $options->name   = $name;
+        $options->device = $device;
+        $options->type   = $type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -102,7 +106,7 @@ class Interfaces extends DCIM
 * @param string  $name Name of interface.
 * @param integer $deviceoo ID of device. 
 * @param string  $type interface type.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -112,14 +116,16 @@ class Interfaces extends DCIM
         string $name,
            int $device,
         string $type,
-        array $options = [],
+       Options $options = null,
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']   = $name;
-        $options['device'] = $device;
-        $options['type']   = $type;
+        $options = $options ?? $this->options;
+        
+        $options->name   = $name;
+        $options->device = $device;
+        $options->type   = $type;
 
 
         return $this->http->put(

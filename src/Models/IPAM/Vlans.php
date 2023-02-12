@@ -27,7 +27,7 @@ class Vlans extends IPAM
 *
 * @param string $name Name of RIR.
 * @param string $slug 
-* @param array  $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,13 +36,15 @@ class Vlans extends IPAM
            int $group,
            int $vid,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['group'] = $group;
-        $options['name']  = $name;
-        $options['vid']   = $vid;
+        $options = $options ?? $this->options;
+
+        $options->group = $group;
+        $options->name  = $name;
+        $options->vid   = $vid;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -62,7 +64,7 @@ class Vlans extends IPAM
 * @param integer $id Numerical ID of RIR to update.
 * @param string  $name Name of RIR to update.
 * @param string  $slug Slug of RIR to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -72,14 +74,16 @@ class Vlans extends IPAM
            int $group,
            int $vid,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['group'] = $group;
-        $options['name']  = $name;
-        $options['vid']   = $vid;
+        $options = $options ?? $this->options;
+
+        $options->group = $group;
+        $options->name  = $name;
+        $options->vid   = $vid;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -99,7 +103,7 @@ class Vlans extends IPAM
 * @param integer $id Numerical ID of RIR to update.
 * @param string  $name Name of RIR to update.
 * @param string  $slug Slug of RIR to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -109,14 +113,16 @@ class Vlans extends IPAM
            int $group,
            int $vid,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['group'] = $group;
-        $options['name']  = $name;
-        $options['vid']   = $vid;
+        $options = $options ?? $this->options;
+        
+        $options->group = $group;
+        $options->name  = $name;
+        $options->vid   = $vid;
 
         return $this->http->put(
                 uri: $this->uri,

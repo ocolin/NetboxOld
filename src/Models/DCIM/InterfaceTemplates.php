@@ -27,7 +27,7 @@ class InterfaceTemplates extends DCIM
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
 * @param string  $type port type.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,13 +36,15 @@ class InterfaceTemplates extends DCIM
            int $device_type,
         string $name,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -63,7 +65,7 @@ class InterfaceTemplates extends DCIM
 * @param string  $name Name of template.
 * @param integer $device_type ID of device type. 
 * @param string  $type Port type.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -73,14 +75,16 @@ class InterfaceTemplates extends DCIM
         string $name,
            int $device_type,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -101,7 +105,7 @@ class InterfaceTemplates extends DCIM
 * @param string  $name Name of template.
 * @param integer $device_typeoo ID of device type. 
 * @param string  $type Port type.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -111,14 +115,16 @@ class InterfaceTemplates extends DCIM
         string $name,
            int $device_type,
         string $type,
-        array $options = [],
+       Options $options = null,
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
+        $options = $options ?? $this->options;
+        
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
 
 
         return $this->http->put(

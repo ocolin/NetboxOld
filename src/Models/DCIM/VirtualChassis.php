@@ -25,27 +25,28 @@ class VirtualChassis extends DCIM
 /**
 * Create a single Virtual Chassis.
 *
-* @param string $name Name of Virtual Chassis.
-* @param string $slug 
-* @param array  $options optionsl data to be sent.
-* @param array $headers HTML request headers.
+* @param string  $name Name of Virtual Chassis.
+* @param string  $slug 
+* @param Options $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-public function postDetail(
-    string $name,
-     array $options = [],
-     array $headers = []
-) : array
-{
-    $options['name'] = $name;
+    public function postDetail(
+        string $name,
+       Options $options = null,
+         array $headers = []
+    ) : array
+    {
+        $options = $options ?? $this->options;
+        $options->name = $name;
 
-    return $this->http->post(
-            uri: $this->uri,
-           body: $options,
-        headers: $headers
-    );
-}
+        return $this->http->post(
+                uri: $this->uri,
+               body: $options,
+            headers: $headers
+        );
+    }
 
 
 
@@ -58,27 +59,29 @@ public function postDetail(
 * @param integer $id Numerical ID of Virtual Chassis to update.
 * @param string  $name Name of Virtual Chassis to update.
 * @param string  $slug Slug of Virtual Chassis to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
-public function putDetail(
-       int $id,
-    string $name,
-     array $options = [],
-     array $headers = []
-) : array
-{
-    $this->uri .= "{$id}/";
-    $options['name'] = $name;
+    public function putDetail(
+           int $id,
+        string $name,
+       Options $options = null,
+         array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $options = $options ?? $this->options;
 
-    return $this->http->put(
-            uri: $this->uri,
-           body: $options,
-        headers: $headers
-    );
-}
+        $options->name = $name;
+
+        return $this->http->put(
+                uri: $this->uri,
+               body: $options,
+            headers: $headers
+        );
+    }
 
 
 
@@ -91,7 +94,7 @@ public function putDetail(
 * @param integer $id Numerical ID of Virtual Chassis to update.
 * @param string  $name Name of Virtual Chassis to update.
 * @param string  $slug Slug of Virtual Chassis to update.
-* @param array   $options Optional data to modify.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -99,12 +102,14 @@ public function putDetail(
     public function patchDetail(
            int $id,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+    
+        $options->name = $name;
 
 
         return $this->http->put(

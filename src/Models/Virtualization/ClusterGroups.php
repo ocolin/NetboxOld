@@ -29,22 +29,24 @@ class ClusterGroups extends Virtualization
 /**
 * Create a single Cluster Group.
 *
-* @param string $name Name of Cluster Group.
-* @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array  $headers HTML request headers
+* @param string  $name Name of Cluster Group.
+* @param string  $slug 
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+        
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class ClusterGroups extends Virtualization
 * @param integer $id Numerical ID of Cluster Group to update.
 * @param string  $name Name of Cluster Group to update.
 * @param string  $slug Slug of Cluster Group to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -73,13 +75,15 @@ class ClusterGroups extends Virtualization
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -99,7 +103,7 @@ class ClusterGroups extends Virtualization
 * @param integer $id Numerical ID of Cluster Group to update.
 * @param string  $name Name of Cluster Group to update.
 * @param string  $slug Slug of Cluster Group to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -108,13 +112,15 @@ class ClusterGroups extends Virtualization
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
 
         return $this->http->put(

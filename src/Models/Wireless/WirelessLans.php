@@ -29,18 +29,19 @@ class WirelessLans extends Wireless
 * Create a single LAN.
 *
 * @param string $ssid Name of LAN to update.
-* @param array  $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $ssid,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['ssid'] = $ssid;
+        $options = $options ?? $this->options;
+        $options->ssid = $ssid;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -59,7 +60,7 @@ class WirelessLans extends Wireless
 * 
 * @param integer $id Numerical ID of LAN Group to update.
 * @param string  $ssid Name of LAN to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -67,12 +68,14 @@ class WirelessLans extends Wireless
     public function putDetail(
            int $id,
         string $ssid,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['ssid'] = $ssid;
+        $options = $options ?? $this->options;
+
+        $options->ssid = $ssid;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -91,7 +94,7 @@ class WirelessLans extends Wireless
 *
 * @param integer $id Numerical ID of LAN Group to update.
 * @param string  $ssid Name of LAN to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -99,12 +102,14 @@ class WirelessLans extends Wireless
     public function patchDetail(
            int $id,
         string $ssid,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['ssid'] = $ssid;
+        $options = $options ?? $this->options;
+
+        $options->ssid = $ssid;
 
         return $this->http->put(
                 uri: $this->uri,

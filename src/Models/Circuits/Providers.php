@@ -27,22 +27,24 @@ class Providers extends CircuitsCore
 /**
 * Create a single Provider.
 *
-* @param string $name Name of Provider.
-* @param string $slug Slug of Provider
-* @param array  $options optionsl data to be sent
-* @param array  $headers HTML request headers
+* @param string  $name Name of Provider.
+* @param string  $slug Slug of Provider
+* @param Options $options optionsl data to be sent
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -62,7 +64,7 @@ class Providers extends CircuitsCore
 * @param integer $id Numerical ID of Provider to update.
 * @param string  $name Name of Provider.
 * @param string  $slug Slug of Provider
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -71,13 +73,15 @@ class Providers extends CircuitsCore
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -97,7 +101,7 @@ class Providers extends CircuitsCore
 * @param integer $id Numerical ID of Provider to update.
 * @param string  $name Name of Provider.
 * @param string  $slug Slug of Provider
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -106,13 +110,15 @@ class Providers extends CircuitsCore
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,

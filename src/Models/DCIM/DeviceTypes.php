@@ -25,10 +25,10 @@ class DeviceTypes extends DCIM
 /**
 * Create a single DeviceType.
 *
-* @param string $model Name of DeviceType.
-* @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers.
+* @param string  $model Name of DeviceType.
+* @param string  $slug 
+* @param Options $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -36,10 +36,12 @@ class DeviceTypes extends DCIM
            int $manufacturer,
         string $model,
         string $slug,
-         array $options = [],
+        Options $options = null,
          array $headers = []
     ) : array
     {
+        $options = $options ?? $this->options;
+
         $options['model']        = $model;
         $options['slug']         = $slug;
         $options['manufacturer'] = $manufacturer;
@@ -62,21 +64,23 @@ class DeviceTypes extends DCIM
 * @param integer $id Numerical ID of DeviceType to update.
 * @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
-* @param array   $options Optional data to send.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
-           int $id,
-           int $manufacturer,
-        string $model,
-        string $slug,
-         array $options = [],
-         array $headers = []
+            int $id,
+            int $manufacturer,
+         string $model,
+         string $slug,
+        Options $options = null,
+          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
+        $options = $options ?? $this->options;
+
         $options['model']        = $model;
         $options['slug']         = $slug;
         $options['manufacturer'] = $manufacturer;
@@ -100,21 +104,23 @@ class DeviceTypes extends DCIM
 * @param integer $id Numerical ID of DeviceType to update.
 * @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
-* @param array   $options Optional data to modify.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
-           int $id,
-           int $manufacturer,
-        string $model,
-        string $slug,
-         array $options = [],
-         array $headers = []
+            int $id,
+            int $manufacturer,
+         string $model,
+         string $slug,
+        Options $options = null,
+          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
+        $options = $options ?? $this->options;
+
         $options['model']        = $model;
         $options['slug']         = $slug;
         $options['manufacturer'] = $manufacturer;

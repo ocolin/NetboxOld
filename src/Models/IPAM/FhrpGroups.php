@@ -29,27 +29,29 @@ class FhrpGroups extends IPAM
 * @param integer $group ID of group belongs to.
 * @param string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
 * @param integer $group_id ID of Group
-* @param array   $data optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
     
-        public function postDetail(
-            string $protocol,
-               int $group_id,
-             array $options = [],
-             array $headers = []
-        ) : array
-        {
-            $options['protocol'] = $protocol;
-            $options['group_id'] = $group_id;
-    
-            return $this->http->post(
-                    uri: $this->uri,
-                   body: $options,
-                headers: $headers
-            );
-        }
+    public function postDetail(
+         string $protocol,
+            int $group_id,
+        Options $options = null,
+          array $headers = []
+    ) : array
+    {
+        $options = $options ?? $this->options;
+
+        $options->protocol = $protocol;
+        $options->group_id = $group_id;
+
+        return $this->http->post(
+                uri: $this->uri,
+               body: $options,
+            headers: $headers
+        );
+    }
     
     
     
@@ -62,29 +64,31 @@ class FhrpGroups extends IPAM
 * @param integer $id Numerical ID of Fhrp Group to update.
 * @param string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
 * @param integer $group_id ID of Group
-* @param array   $data Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
     
-        public function putDetail(
-               int $id,
-            string $protocol,
-               int $group_id,
-             array $options = [],
-             array $headers = []
-        ) : array
-        {
-            $this->uri .= "{$id}/";
-            $options['protocol'] = $protocol;
-            $options['group_id'] = $group_id;
-    
-            return $this->http->put(
-                    uri: $this->uri,
-                   body: $options,
-                headers: $headers
-            );
-        }
+    public function putDetail(
+            int $id,
+         string $protocol,
+            int $group_id,
+        Options $options = null,
+          array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $options = $options ?? $this->options;
+
+        $options->protocol = $protocol;
+        $options->group_id = $group_id;
+
+        return $this->http->put(
+                uri: $this->uri,
+               body: $options,
+            headers: $headers
+        );
+    }
     
     
     
@@ -97,27 +101,29 @@ class FhrpGroups extends IPAM
 * @param integer $id Numerical ID of Fhrp Group to update.
 * @param string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
 * @param integer $group_id ID of Group
-* @param array   $data Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
     
-        public function patchDetail(
-               int $id,
-            string $protocol,
-               int $group_id,
-             array $options = [],
-             array $headers = []
-        ) : array
-        {
-            $this->uri .= "{$id}/";
-            $options['protocol'] = $protocol;
-            $options['group_id'] = $group_id;
-    
-            return $this->http->put(
-                    uri: $this->uri,
-                   body: $options,
-                headers: $headers
-            );
-        }
+    public function patchDetail(
+            int $id,
+         string $protocol,
+            int $group_id,
+        Options $options = null,
+          array $headers = []
+    ) : array
+    {
+        $this->uri .= "{$id}/";
+        $options = $options ?? $this->options;
+        
+        $options->protocol = $protocol;
+        $options->group_id = $group_id;
+
+        return $this->http->put(
+                uri: $this->uri,
+                body: $options,
+            headers: $headers
+        );
+    }
 }

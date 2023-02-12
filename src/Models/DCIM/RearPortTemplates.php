@@ -28,7 +28,7 @@ class RearPortTemplates extends DCIM
 * @param string  $name Name of Template.
 * @param integer $device ID of Device type the Template belongs to. 
 * @param string  $type Port connector type.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class RearPortTemplates extends DCIM
            int $device_type,
         string $name,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class RearPortTemplates extends DCIM
 * @param string  $name Name of Template.
 * @param integer $device ID of Device type the Template belongs to. 
 * @param string  $type Port connector type.
-* @param array   $options optional data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -74,14 +76,16 @@ class RearPortTemplates extends DCIM
         string $name,
         string $type,
            int $device_type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -102,7 +106,7 @@ class RearPortTemplates extends DCIM
 * @param string  $name Name of Template.
 * @param integer $device ID of Device type the Template belongs to.
 * @param string  $type Port connector type. 
-* @param array   $options optional data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -112,14 +116,16 @@ class RearPortTemplates extends DCIM
         string $name,
         string $type,
            int $device_type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
+        $options = $options ?? $this->options;
+        
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
 
         return $this->http->put(
                 uri: $this->uri,

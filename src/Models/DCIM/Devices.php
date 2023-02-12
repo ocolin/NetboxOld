@@ -29,8 +29,8 @@ class Devices extends DCIM
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
 * @param string  $face Rack face.
-* @param array   $options optionsl data to be sent
-* @param array   $headers HTML request headers
+* @param Options $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -44,19 +44,21 @@ class Devices extends DCIM
            int $vc_position,
         string $name,
         string $face,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']            = $name;
-        $options['device_type']     = $device_type;
-        $options['device_role']     = $device_role;
-        $options['tenant']          = $tenant;
-        $options['face']            = $face;
-        $options['site']            = $site;
-        $options['rack']            = $rack;
-        $options['virtual_chassis'] = $virtual_chassis;
-        $options['vc_position']     = $vc_position;
+        $options = $options ?? $this->options;
+
+        $options->name            = $name;
+        $options->device_type     = $device_type;
+        $options->device_role     = $device_role;
+        $options->tenant          = $tenant;
+        $options->face            = $face;
+        $options->site            = $site;
+        $options->rack            = $rack;
+        $options->virtual_chassis = $virtual_chassis;
+        $options->vc_position     = $vc_position;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -78,8 +80,8 @@ class Devices extends DCIM
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
 * @param string  $face Rack face.
-* @param array   $options Optional data to send.
-* @param array   $headers HTML request headers
+* @param Options $options optionsl data to be sent.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -94,20 +96,22 @@ class Devices extends DCIM
            int $vc_position,
         string $name,
         string $face,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']            = $name;
-        $options['device_type']     = $device_type;
-        $options['device_role']     = $device_role;
-        $options['tenant']          = $tenant;
-        $options['face']            = $face;
-        $options['site']            = $site;
-        $options['rack']            = $rack;
-        $options['virtual_chassis'] = $virtual_chassis;
-        $options['vc_position']     = $vc_position;
+        $options = $options ?? $this->options;
+
+        $options->name            = $name;
+        $options->device_type     = $device_type;
+        $options->device_role     = $device_role;
+        $options->tenant          = $tenant;
+        $options->face            = $face;
+        $options->site            = $site;
+        $options->rack            = $rack;
+        $options->virtual_chassis = $virtual_chassis;
+        $options->vc_position     = $vc_position;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -129,7 +133,7 @@ class Devices extends DCIM
 * @param integer $device_role ID or role that device plays.
 * @param string  $name Name of Device.
 * @param string  $face Rack face.
-* @param array   $options Optional data to modify.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -145,20 +149,22 @@ class Devices extends DCIM
            int $vc_position,
         string $name,
         string $face,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']            = $name;
-        $options['device_type']     = $device_type;
-        $options['device_role']     = $device_role;
-        $options['tenant']          = $tenant;
-        $options['face']            = $face;
-        $options['site']            = $site;
-        $options['rack']            = $rack;
-        $options['virtual_chassis'] = $virtual_chassis;
-        $options['vc_position']     = $vc_position;
+        $options = $options ?? $this->options;
+
+        $options->name            = $name;
+        $options->device_type     = $device_type;
+        $options->device_role     = $device_role;
+        $options->tenant          = $tenant;
+        $options->face            = $face;
+        $options->site            = $site;
+        $options->rack            = $rack;
+        $options->virtual_chassis = $virtual_chassis;
+        $options->vc_position     = $vc_position;
 
         return $this->http->put(
                 uri: $this->uri,

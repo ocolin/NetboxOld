@@ -28,7 +28,7 @@ class PowerOutletTemplates extends DCIM
 *
 * @param string  $name Name of Outlet.
 * @param integer $device ID of Device type the outlet belongs to. 
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,12 +36,14 @@ class PowerOutletTemplates extends DCIM
     public function postDetail(
            int $device_type,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -61,7 +63,7 @@ class PowerOutletTemplates extends DCIM
 * @param integer $id Numerical ID of Bay to update.
 * @param string  $name Name of Outlet.
 * @param integer $device ID of Device type the outlet belongs to. 
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,13 +72,15 @@ class PowerOutletTemplates extends DCIM
            int $id,
         string $name,
            int $device_type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -96,7 +100,7 @@ class PowerOutletTemplates extends DCIM
 * @param integer $id Numerical ID of Bay to update.
 * @param string  $name Name of Outlet.
 * @param integer $device ID of Device type the outlet belongs to. 
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -105,13 +109,15 @@ class PowerOutletTemplates extends DCIM
            int $id,
         string $name,
            int $device_type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
+        $options = $options ?? $this->options;
+        
+        $options->name        = $name;
+        $options->device_type = $device_type;
 
 
         return $this->http->put(

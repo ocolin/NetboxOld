@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Virtualization;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class Virtualization
+abstract class Virtualization
 {
     protected string $uri = 'virtualization/';
 

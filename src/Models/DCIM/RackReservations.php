@@ -30,7 +30,7 @@ class RackReservations extends DCIM
 * @param array   $units ID of unit in rack.
 * @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -40,14 +40,16 @@ class RackReservations extends DCIM
          array $units,
            int $user,
         string $description,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['rack']        = $rack;
-        $options['units']       = $units;
-        $options['user']        = $user;
-        $options['description'] = $description;
+        $options = $options ?? $this->options;
+
+        $options->rack        = $rack;
+        $options->units       = $units;
+        $options->user        = $user;
+        $options->description = $description;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -69,7 +71,7 @@ class RackReservations extends DCIM
 * @param array   $units ID of unit in rack.
 * @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -80,15 +82,17 @@ class RackReservations extends DCIM
           array $units,
             int $user,
          string $description,
-          array $options = [],
+       Options $options = null,
           array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['rack']        = $rack;
-        $options['units']       = $units;
-        $options['user']        = $user;
-        $options['description'] = $description;
+        $options = $options ?? $this->options;
+
+        $options->rack        = $rack;
+        $options->units       = $units;
+        $options->user        = $user;
+        $options->description = $description;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -110,7 +114,7 @@ class RackReservations extends DCIM
 * @param array   $units ID of unit in rack.
 * @param integer $user ID of user reserving rack.
 * @param string  $description Description or the reservation.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -121,15 +125,17 @@ class RackReservations extends DCIM
          array $units,
            int $user,
         string $description,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['rack']        = $rack;
-        $options['units']       = $units;
-        $options['user']        = $user;
-        $options['description'] = $description;
+        $options = $options ?? $this->options;
+        
+        $options->rack        = $rack;
+        $options->units       = $units;
+        $options->user        = $user;
+        $options->description = $description;
 
         return $this->http->put(
                 uri: $this->uri,

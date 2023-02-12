@@ -28,7 +28,7 @@ class IpRanges extends IPAM
 *
 * @param string $start_address First IP address of range. 
 * @param string $end_address Last IP address of range. 
-* @param array  $data Optional data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,12 +36,14 @@ class IpRanges extends IPAM
     public function postDetail(
         string $start_address,
         string $end_address,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['start_address'] = $start_address;
-        $options['end_address']   = $end_address;
+        $options = $options ?? $this->options;
+
+        $options->start_address = $start_address;
+        $options->end_address   = $end_address;
 
         return $this->http->post(
               uri: $this->uri,
@@ -61,7 +63,7 @@ class IpRanges extends IPAM
 * @param integer $id Numerical ID of Range to update.
 * @param string  $start_address First IP address of range. 
 * @param string  $end_address Last IP address of range. 
-* @param array   $data Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,13 +72,15 @@ class IpRanges extends IPAM
            int $id,
         string $start_address,
         string $end_address,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['start_address'] = $start_address;
-        $options['end_address']   = $end_address;
+        $options = $options ?? $this->options;
+
+        $options->start_address = $start_address;
+        $options->end_address   = $end_address;
 
         return $this->http->put(
               uri: $this->uri,
@@ -96,7 +100,7 @@ class IpRanges extends IPAM
 * @param integer $id Numerical ID of Range to update.
 * @param string  $start_address First IP address of range. 
 * @param string  $end_address Last IP address of range. 
-* @param array   $data Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -105,13 +109,15 @@ class IpRanges extends IPAM
            int $id,
         string $start_address,
         string $end_address,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['start_address'] = $start_address;
-        $options['end_address']   = $end_address;
+        $options = $options ?? $this->options;
+        
+        $options->start_address = $start_address;
+        $options->end_address   = $end_address;
 
         return $this->http->put(
                 uri: $this->uri,

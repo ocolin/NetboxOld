@@ -28,10 +28,10 @@ class WirelessLanGroups extends Wireless
 /**
 * Create a single LAN Group.
 *
-* @param string $name Name of LAN Group.
-* @param string $slug 
-* @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers.
+* @param string  $name Name of LAN Group.
+* @param string  $slug 
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -43,8 +43,10 @@ class WirelessLanGroups extends Wireless
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+        
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class WirelessLanGroups extends Wireless
 * @param integer $id Numerical ID of LAN Group to update.
 * @param string  $name Name of LAN Group to update.
 * @param string  $slug Slug of LAN Group to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -79,8 +81,10 @@ class WirelessLanGroups extends Wireless
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -100,7 +104,7 @@ class WirelessLanGroups extends Wireless
 * @param integer $id Numerical ID of LAN Group to update.
 * @param string  $name Name of LAN Group to update.
 * @param string  $slug Slug of LAN Group to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -115,8 +119,10 @@ class WirelessLanGroups extends Wireless
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
 
         return $this->http->put(

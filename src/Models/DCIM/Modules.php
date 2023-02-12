@@ -28,7 +28,7 @@ class Modules extends DCIM
 * @param integer $device ID of device Module belongs to.
 * @param integer $module_bay ID of bay Module belongs to.
 * @param integer $module_type ID of type of Module.
-* @param array  $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class Modules extends DCIM
            int $device,
            int $module_bay,
            int $module_type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['device']      = $device;
-        $options['module_bay']  = $module_bay;
-        $options['module_type'] = $module_type;
+        $options = $options ?? $this->options;
+
+        $options->device      = $device;
+        $options->module_bay  = $module_bay;
+        $options->module_type = $module_type;
         
 
         return $this->http->post(
@@ -65,7 +67,7 @@ class Modules extends DCIM
 * @param integer $device ID of device Module belongs to.
 * @param integer $module_bay ID of bay Module belongs to.
 * @param integer $module_type ID of type of Module.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -75,14 +77,16 @@ class Modules extends DCIM
            int $device,
            int $module_bay,
            int $module_type,
-          array $options = [],
+       Options $options = null,
           array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['device']      = $device;
-        $options['module_bay']  = $module_bay;
-        $options['module_type'] = $module_type;
+        $options = $options ?? $this->options;
+
+        $options->device      = $device;
+        $options->module_bay  = $module_bay;
+        $options->module_type = $module_type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -103,7 +107,7 @@ class Modules extends DCIM
 * @param integer $device ID of device Module belongs to.
 * @param integer $module_bay ID of bay Module belongs to.
 * @param integer $module_type ID of type of Module.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -113,14 +117,16 @@ class Modules extends DCIM
            int $device,
            int $module_bay,
            int $module_type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['device']      = $device;
-        $options['module_bay']  = $module_bay;
-        $options['module_type'] = $module_type;
+        $options = $options ?? $this->options;
+        
+        $options->device      = $device;
+        $options->module_bay  = $module_bay;
+        $options->module_type = $module_type;
 
 
         return $this->http->put(

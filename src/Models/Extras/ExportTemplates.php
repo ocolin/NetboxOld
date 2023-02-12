@@ -29,7 +29,7 @@ class ExportTemplates extends Extras
 * @param string $content_type Template content type.
 * @param string $name Name of Template.
 * @param string $template_code Code inside template.
-* @param array  $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -38,13 +38,15 @@ class ExportTemplates extends Extras
          array $content_types,
         string $name,
         string $template_code,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['content_types']  = $content_types;
-        $options['name']           = $name;
-        $options['template_code']  = $template_code;
+        $options = $options ?? $this->options;
+        
+        $options->content_types  = $content_types;
+        $options->name           = $name;
+        $options->template_code  = $template_code;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -65,7 +67,7 @@ class ExportTemplates extends Extras
 * @param string  $content_type Template content type.
 * @param string  $name Name of Template.
 * @param string  $template_code Code inside template.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -75,14 +77,16 @@ class ExportTemplates extends Extras
          array $content_types,
         string $name,
         string $template_code,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_types']  = $content_types;
-        $options['name']           = $name;
-        $options['template_code']  = $template_code;
+        $options = $options ?? $this->options;
+
+        $options->content_types  = $content_types;
+        $options->name           = $name;
+        $options->template_code  = $template_code;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -103,7 +107,7 @@ class ExportTemplates extends Extras
 * @param string  $content_type Template content type.
 * @param string  $name Name of Template.
 * @param string  $template_code Code inside template.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -113,14 +117,16 @@ class ExportTemplates extends Extras
          array $content_types,
         string $name,
         string $template_code,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_types']  = $content_types;
-        $options['name']           = $name;
-        $options['template_code']  = $template_code;
+        $options = $options ?? $this->options;
+
+        $options->content_types  = $content_types;
+        $options->name           = $name;
+        $options->template_code  = $template_code;
 
         return $this->http->put(
                 uri: $this->uri,

@@ -27,21 +27,22 @@ class Prefixes extends IPAM
 ---------------------------------------------------------------------------- */
 
 /**
- * Create a single prefix.
- *
- * @param string $prefix IP Subnet. ex prefix: '1.1.1.0/24'
- * @param array  $data optionsl data to be sent.
- * @param array  $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Create a single prefix.
+*
+* @param string $prefix IP Subnet. ex prefix: '1.1.1.0/24'
+* @param Options $options Optional data to send.
+* @param array  $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
     
     public function postDetail(
         string $prefix,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['prefix'] = $prefix;
+        $options = $options ?? $this->options;
+        $options->prefix = $prefix;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -58,22 +59,24 @@ class Prefixes extends IPAM
 /**
  * Update prefix
  *
- * @param string  $prefix IP Subnet. ex prefix: '1.1.1.0/24'
- * @param integer $id Numerical ID of prefix to update.
- * @param array   $data Data to send ibn request.
- * @param array   $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* @param string  $prefix IP Subnet. ex prefix: '1.1.1.0/24'
+* @param integer $id Numerical ID of prefix to update.
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
-       string $prefix,
-          int $id,
-        array $options = [],
-        array $headers = []
+        string $prefix,
+           int $id,
+       Options $options = null,
+         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['prefix'] = $prefix;
+        $options = $options ?? $this->options;
+
+        $options->prefix = $prefix;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -88,23 +91,25 @@ class Prefixes extends IPAM
 ---------------------------------------------------------------------------- */
 
 /**
- * Update prefix value(s).
- *
- * @param integer $id Numerical ID of prefix to update.
- * @param array   $data Optional data to modify.
- * @param array   $headers HTML request headers.
- * @return array Array of HTTP status, headers, and body from Netbox API.
+* Update prefix value(s).
+*
+* @param integer $id Numerical ID of prefix to update.
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
+* @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
-          int $id,
-       string $prefix,
-        array $options = [],
-        array $headers = []
+           int $id,
+        string $prefix,
+       Options $options = null,
+         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['prefix'] = $prefix;
+        $options = $options ?? $this->options;
+
+        $options->prefix = $prefix;
 
 
         return $this->http->put(

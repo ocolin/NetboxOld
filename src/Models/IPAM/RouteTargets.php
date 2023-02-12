@@ -26,19 +26,20 @@ class RouteTargets extends IPAM
 /**
 * Create a single RouteTarget.
 *
-* @param string $name Name of RouteTarget.
-* @param array  $options optionsl data to be sent.
-* @param array $headers HTML request headers.
+* @param string  $name Name of RouteTarget.
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+        $options->name = $name;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -57,7 +58,7 @@ class RouteTargets extends IPAM
 * 
 * @param integer $id Numerical ID of RouteTarget to update.
 * @param string  $name Name of RouteTarget to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,12 +66,14 @@ class RouteTargets extends IPAM
     public function putDetail(
            int $id,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -89,7 +92,7 @@ class RouteTargets extends IPAM
 *
 * @param integer $id Numerical ID of RouteTarget to update.
 * @param string  $name Name of RouteTarget to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -97,12 +100,14 @@ class RouteTargets extends IPAM
     public function patchDetail(
            int $id,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+        
+        $options->name = $name;
 
         return $this->http->put(
                 uri: $this->uri,

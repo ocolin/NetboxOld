@@ -27,7 +27,7 @@ class ModuleTypes extends DCIM
 *
 * @param integer $manufacturer ID of module manufacturer.
 * @param string  $model Model name of module.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -35,12 +35,14 @@ class ModuleTypes extends DCIM
     public function postDetail(
            int $manufacturer,
         string $model,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['manufacturer'] = $manufacturer;
-        $options['model']        = $model;
+        $options = $options ?? $this->options;
+
+        $options->manufacturer = $manufacturer;
+        $options->model        = $model;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -60,7 +62,7 @@ class ModuleTypes extends DCIM
 * @param integer $id Numerical ID of Platform to update.
 * @param integer $manufacturer ID of module manufacturer.
 * @param string  $model Model name of module.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -69,13 +71,15 @@ class ModuleTypes extends DCIM
            int $id,
            int $manufacturer,
         string $model,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['manufacturer'] = $manufacturer;
-        $options['model']        = $model;
+        $options = $options ?? $this->options;
+
+        $options->manufacturer = $manufacturer;
+        $options->model        = $model;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -95,7 +99,7 @@ class ModuleTypes extends DCIM
 * @param integer $id Numerical ID of Platform to update.
 * @param integer $manufacturer ID of module manufacturer.
 * @param string  $model Model name of module.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -104,13 +108,15 @@ class ModuleTypes extends DCIM
            int $id,
            int $manufacturer,
         string $model,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['manufacturer'] = $manufacturer;
-        $options['model']        = $model;
+        $options = $options ?? $this->options;
+        
+        $options->manufacturer = $manufacturer;
+        $options->model        = $model;
 
 
         return $this->http->put(

@@ -35,7 +35,7 @@ class CircuitTerminations extends CircuitsCore
 *
 * @param string  $term_side Terminal side: A or B.
 * @param integer $circuit ID of circuit.
-* @param array   $options optionsl data to be sent
+* @param Options $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -43,12 +43,14 @@ class CircuitTerminations extends CircuitsCore
     public function postDetail(
         string $term_side,
            int $circuit,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['term_side'] = $term_side;
-        $options['circuit']   = $circuit;
+        $options = $options ?? $this->options;
+
+        $options->term_side = $term_side;
+        $options->circuit   = $circuit;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -68,7 +70,7 @@ class CircuitTerminations extends CircuitsCore
 * @param integer $id Numerical ID of Consol Port to update.
 * @param string  $term_side Terminal side: A or B.
 * @param integer $circuit ID of circuit.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -77,13 +79,15 @@ class CircuitTerminations extends CircuitsCore
            int $id,
         string $term_side,
            int $circuit,
-          array $options = [],
-          array $headers = []
+       Options $options = null,
+         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['term_side'] = $term_side;
-        $options['circuit']   = $circuit;
+        $options = $options ?? $this->options;
+
+        $options->term_side = $term_side;
+        $options->circuit   = $circuit;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -103,7 +107,7 @@ class CircuitTerminations extends CircuitsCore
 * @param integer $id Numerical ID of Console Port to update.
 * @param string  $term_side Terminal side: A or B.
 * @param integer $circuit ID of circuit.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -112,13 +116,15 @@ class CircuitTerminations extends CircuitsCore
            int $id,
         string $term_side,
            int $circuit,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['term_side'] = $term_side;
-        $options['circuit']   = $circuit;
+        $options = $options ?? $this->options;
+        
+        $options->term_side = $term_side;
+        $options->circuit   = $circuit;
 
         return $this->http->put(
                 uri: $this->uri,

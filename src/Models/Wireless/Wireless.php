@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Wireless;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class Wireless
+abstract class Wireless
 {
     protected string $uri = 'wireless/';
 

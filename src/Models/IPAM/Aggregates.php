@@ -28,7 +28,7 @@ class Aggregates extends IPAM
 *
 * @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
 * @param integer $rir ID of RIR.
-* @param array   $data Optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,12 +36,14 @@ class Aggregates extends IPAM
     public function postDetail(
         string $prefix,
            int $rir,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['prefix'] = $prefix;
-        $options['rir']    = $rir;
+        $options = $options ?? $this->options;
+
+        $options->prefix = $prefix;
+        $options->rir    = $rir;
 
         return $this->http->post(
               uri: $this->uri,
@@ -61,7 +63,7 @@ class Aggregates extends IPAM
 * @param integer $id Numerical ID of Aggregate to update.
 * @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
 * @param integer $rir ID of RIR.
-* @param array   $data Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers Optional HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,13 +72,15 @@ class Aggregates extends IPAM
            int $id,
         string $prefix,
            int $rir,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['prefix'] = $prefix;
-        $options['rir']    = $rir;
+        $options = $options ?? $this->options;
+
+        $options->prefix = $prefix;
+        $options->rir    = $rir;
 
         return $this->http->put(
               uri: $this->uri,
@@ -96,7 +100,7 @@ class Aggregates extends IPAM
 * @param integer $id Numerical ID of Aggregate to update.
 * @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
 * @param integer $rir ID of RIR.
-* @param array   $data Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -105,13 +109,15 @@ class Aggregates extends IPAM
            int $id,
         string $prefix,
            int $rir,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['prefix'] = $prefix;
-        $options['rir']    = $rir;
+        $options = $options ?? $this->options;
+
+        $options->prefix = $prefix;
+        $options->rir    = $rir;
 
         return $this->http->put(
                 uri: $this->uri,

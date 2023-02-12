@@ -31,7 +31,7 @@ class ContactGroups extends Tenancy
 * @param string  $name Name of Region.
 * @param string  $slug 
 * @param integer $parent Parent group ID.
-* @param array   $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -40,13 +40,15 @@ class ContactGroups extends Tenancy
         string $name,
         string $slug,
           ?int $parent = null,
-         array $options    = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']   = $name;
-        $options['slug']   = $slug;
-        $options['parent'] = $parent;
+        $options = $options ?? $this->options;
+
+        $options->name   = $name;
+        $options->slug   = $slug;
+        $options->parent = $parent;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -67,7 +69,7 @@ class ContactGroups extends Tenancy
 * @param string  $name Name of Region to update.
 * @param string  $slug Slug of Region to update.
 * @param integer $parent Parent group ID.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -77,14 +79,16 @@ class ContactGroups extends Tenancy
         string $name,
         string $slug,
           ?int $parent = null,
-         array $options    = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']   = $name;
-        $options['slug']   = $slug;
-        $options['parent'] = $parent;
+        $options = $options ?? $this->options;
+
+        $options->name   = $name;
+        $options->slug   = $slug;
+        $options->parent = $parent;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -105,7 +109,7 @@ class ContactGroups extends Tenancy
 * @param string  $name Name of Region to update.
 * @param string  $slug Slug of Region to update.
 * @param integer $parent Parent group ID.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -115,14 +119,16 @@ class ContactGroups extends Tenancy
         string $name,
         string $slug,
           ?int $parent = null,
-         array $options    = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']   = $name;
-        $options['slug']   = $slug;
-        $options['parent'] = $parent;
+        $options = $options ?? $this->options;
+        
+        $options->name   = $name;
+        $options->slug   = $slug;
+        $options->parent = $parent;
 
         return $this->http->put(
                 uri: $this->uri,

@@ -28,7 +28,7 @@ class ServiceTemplates extends IPAM
 * @param string  $name Name of Service Template.
 * @param array   $ports Number of ports in Service Template.
 * @param string  $protocol Service Template protocol: tcp, udp, sctp.
-* @param array   $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class ServiceTemplates extends IPAM
         string $name,
          array $ports,
         string $protocol,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']     = $name;
-        $options['ports']    = $ports;
-        $options['protocol'] = $protocol;
+        $options = $options ?? $this->options;
+
+        $options->name     = $name;
+        $options->ports    = $ports;
+        $options->protocol = $protocol;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class ServiceTemplates extends IPAM
 * @param string  $name Name of Service Template to update.
 * @param array   $ports Number of ports in Service Template.
 * @param string  $protocol Service protocol: tcp, udp, sctp.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -74,14 +76,16 @@ class ServiceTemplates extends IPAM
         string $name,
          array $ports,
         string $protocol,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']     = $name;
-        $options['ports']    = $ports;
-        $options['protocol'] = $protocol;
+        $options = $options ?? $this->options;
+
+        $options->name     = $name;
+        $options->ports    = $ports;
+        $options->protocol = $protocol;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -102,7 +106,7 @@ class ServiceTemplates extends IPAM
 * @param string  $name Name of Service Template to update.
 * @param array   $ports Number of ports in Service Template.
 * @param string  $protocol Service Template protocol: tcp, udp, sctp.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -112,14 +116,16 @@ class ServiceTemplates extends IPAM
         string $name,
          array $ports,
         string $protocol,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']     = $name;
-        $options['ports']    = $ports;
-        $options['protocol'] = $protocol;
+        $options = $options ?? $this->options;
+        
+        $options->name     = $name;
+        $options->ports    = $ports;
+        $options->protocol = $protocol;
 
         return $this->http->put(
                 uri: $this->uri,

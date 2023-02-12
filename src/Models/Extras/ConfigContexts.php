@@ -5,11 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Extras;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Options\Extras\ConfigContexts AS Options;
 
 class ConfigContexts extends Extras
 {
+    protected Options $options;
+
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'config-contexts/';
     }
@@ -24,7 +28,7 @@ class ConfigContexts extends Extras
 *
 * @param string  $name Name of context.
 * @param array   $data Context data.
-* @param array   $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -32,12 +36,14 @@ class ConfigContexts extends Extras
     public function postDetail(
         string $name,
         array  $data,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['data'] = $data;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->data = $data;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -57,7 +63,7 @@ class ConfigContexts extends Extras
 * @param integer $id Numerical ID of Context to update.
 * @param string  $name Name of context.
 * @param array   $data Context data.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -66,13 +72,15 @@ class ConfigContexts extends Extras
            int $id,
         string $name,
          array $data,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['data'] = $options;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->data = $options;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -92,7 +100,7 @@ class ConfigContexts extends Extras
 * @param integer $id Numerical ID of Context to update.
 * @param string  $name Name of context.
 * @param array   $data Context data.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -101,13 +109,15 @@ class ConfigContexts extends Extras
            int $id,
         string $name,
          array $data,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['data'] = $data;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->data = $data;
 
         return $this->http->put(
                 uri: $this->uri,

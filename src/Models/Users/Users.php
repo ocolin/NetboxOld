@@ -9,12 +9,14 @@ use Cruzio\Netbox\Options\Users\Users AS Options;
 
 class Users extends UsersCore
 {
+    protected Options $options;
 
 /*
 ---------------------------------------------------------------------------- */
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'users/';
     }
@@ -26,22 +28,24 @@ class Users extends UsersCore
 /**
 * Create a single User.
 *
-* @param string $username Login username.
-* @param string $password Login password.
-* @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers.
+* @param string  $username Login username.
+* @param string  $password Login password.
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $username,
         string $password,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['username'] = $username;
-        $options['password'] = $password;
+        $options = $options ?? $this->options;
+
+        $options->username = $username;
+        $options->password = $password;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -61,7 +65,7 @@ class Users extends UsersCore
 * @param integer $id Numerical ID of User to update.
 * @param string  $username Login username.
 * @param string  $password Login password.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,13 +74,15 @@ class Users extends UsersCore
            int $id,
         string $username,
         string $password,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['username'] = $username;
-        $options['password'] = $password;
+        $options = $options ?? $this->options;
+
+        $options->username = $username;
+        $options->password = $password;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -96,7 +102,7 @@ class Users extends UsersCore
 * @param integer $id Numerical ID of User to update.
 * @param string  $username Login username.
 * @param string  $password Login password.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -105,13 +111,15 @@ class Users extends UsersCore
            int $id,
         string $username,
         string $password,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['username'] = $username;
-        $options['password'] = $password;
+        $options = $options ?? $this->options;
+        
+        $options->username = $username;
+        $options->password = $password;
 
         return $this->http->put(
                 uri: $this->uri,

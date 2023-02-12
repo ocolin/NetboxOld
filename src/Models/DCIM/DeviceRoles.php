@@ -25,22 +25,24 @@ class DeviceRoles extends DCIM
 /**
 * Create a single Device Role.
 *
-* @param string $name Name of Device Role.
-* @param string $slug 
-* @param array  $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param string  $name Name of Device Role.
+* @param string  $slug 
+* @param Options $options optionsl data to be sent.
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -60,7 +62,7 @@ class DeviceRoles extends DCIM
 * @param integer $id Numerical ID of Device Role to update.
 * @param string  $name Name of Device Role to update.
 * @param string  $slug Slug of Device Role to update.
-* @param array   $options Optional data to send.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -69,13 +71,15 @@ class DeviceRoles extends DCIM
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -95,7 +99,7 @@ class DeviceRoles extends DCIM
 * @param integer $id Numerical ID of Device Role to update.
 * @param string  $name Name of Device Role to update.
 * @param string  $slug Slug of Device Role to update.
-* @param array   $options Optional data to modify.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -104,13 +108,15 @@ class DeviceRoles extends DCIM
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                 uri: $this->uri,

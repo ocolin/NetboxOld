@@ -30,8 +30,8 @@ class ContactAssignments extends Tenancy
 * @param integer $contact
 * @param integer $role
 * @param string  $priority
-* @param array  $options optionsl data to be sent.
-* @param array $headers HTML request headers.
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -41,15 +41,17 @@ class ContactAssignments extends Tenancy
            int $contact,
            int $role,
         string $priority,
-         array $options    = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['content_type'] = $content_type;
-        $options['object_id']    = $object_id;
-        $options['contact']      = $contact;
-        $options['role']         = $role;
-        $options['priority']     = $priority;
+        $options = $options ?? $this->options;
+
+        $options->content_type = $content_type;
+        $options->object_id    = $object_id;
+        $options->contact      = $contact;
+        $options->role         = $role;
+        $options->priority     = $priority;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -72,7 +74,7 @@ class ContactAssignments extends Tenancy
 * @param integer $contact
 * @param integer $role
 * @param string  $priority
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -84,16 +86,18 @@ class ContactAssignments extends Tenancy
            int $contact,
            int $role,
         string $priority,
-         array $options    = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type'] = $content_type;
-        $options['object_id']    = $object_id;
-        $options['contact']      = $contact;
-        $options['role']         = $role;
-        $options['priority']     = $priority;
+        $options = $options ?? $this->options;
+
+        $options->content_type = $content_type;
+        $options->object_id    = $object_id;
+        $options->contact      = $contact;
+        $options->role         = $role;
+        $options->priority     = $priority;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -116,7 +120,7 @@ class ContactAssignments extends Tenancy
 * @param integer $contact
 * @param integer $role
 * @param string  $priority
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -128,16 +132,18 @@ class ContactAssignments extends Tenancy
            int $contact,
            int $role,
         string $priority,
-         array $options    = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type'] = $content_type;
-        $options['object_id']    = $object_id;
-        $options['contact']      = $contact;
-        $options['role']         = $role;
-        $options['priority']     = $priority;
+        $options = $options ?? $this->options;
+
+        $options->content_type = $content_type;
+        $options->object_id    = $object_id;
+        $options->contact      = $contact;
+        $options->role         = $role;
+        $options->priority     = $priority;
 
 
         return $this->http->put(

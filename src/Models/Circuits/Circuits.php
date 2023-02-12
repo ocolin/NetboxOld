@@ -28,7 +28,7 @@ class Circuits extends CircuitsCore
 * @param string  $cid Name of circuit ID.
 * @param integer $provider ID of circuit provider.
 * @param integer $type ID of circuit type.
-* @param array   $options optionsl data to be sent
+* @param Options $options optionsl data to be sent
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class Circuits extends CircuitsCore
         string $cid,
            int $provider,
            int $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['cid']      = $cid;
-        $options['provider'] = $provider;
-        $options['type']     = $type;
+        $options = $options ?? $this->options;
+
+        $options->cid      = $cid;
+        $options->provider = $provider;
+        $options->type     = $type;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class Circuits extends CircuitsCore
 * @param string  $cid Name of circuit ID.
 * @param integer $provider ID of circuit provider.
 * @param integer $type ID of circuit type.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -74,14 +76,16 @@ class Circuits extends CircuitsCore
         string $cid,
            int $provider,
            int $type,
-          array $options = [],
+       Options $options = null,
           array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['cid']      = $cid;
-        $options['provider'] = $provider;
-        $options['type']     = $type;
+        $options = $options ?? $this->options;
+
+        $options->cid      = $cid;
+        $options->provider = $provider;
+        $options->type     = $type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -102,7 +106,7 @@ class Circuits extends CircuitsCore
 * @param string  $cid Name of circuit ID.
 * @param integer $provider ID of circuit provider.
 * @param integer $type ID of circuit type.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to modify.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -112,14 +116,16 @@ class Circuits extends CircuitsCore
         string $cid,
            int $provider,
            int $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['cid']      = $cid;
-        $options['provider'] = $provider;
-        $options['type']     = $type;
+        $options = $options ?? $this->options;
+
+        $options->cid      = $cid;
+        $options->provider = $provider;
+        $options->type     = $type;
 
 
         return $this->http->put(

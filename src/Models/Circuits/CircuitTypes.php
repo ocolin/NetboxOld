@@ -25,10 +25,10 @@ class CircuitTypes extends CircuitsCore
 /**
 * Create a single Circuit Type.
 *
-* @param string $name Name of Circuit Type.
-* @param string $slug 
+* @param string   $name Name of Circuit Type.
+* @param string   $slug 
 * @param Options $options optionsl data to be sent
-* @param array $headers HTML request headers
+* @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 

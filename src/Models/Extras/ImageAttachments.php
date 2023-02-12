@@ -29,7 +29,7 @@ class ImageAttachments extends Extras
 * @param integer $object_id 
 * @param integer $image_height Hieght of image.
 * @param integer $image_width Width of image.
-* @param array   $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -40,15 +40,17 @@ class ImageAttachments extends Extras
            int $image_height,
            int $image_width,
         string $image,
-         array $options = [],
+       Options $options = null,
          array $headers = [ 'Content-type' => 'multipart/form-data' ]
     ) : array
     {
-        $options['content_type']  = $content_type;
-        $options['object_id']     = $object_id;
-        $options['image_height']  = $image_height;
-        $options['image_width']   = $image_width;
-        $options['image']         = $image;
+        $options = $options ?? $this->options;
+        
+        $options->content_type  = $content_type;
+        $options->object_id     = $object_id;
+        $options->image_height  = $image_height;
+        $options->image_width   = $image_width;
+        $options->image         = $image;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -70,7 +72,7 @@ class ImageAttachments extends Extras
 * @param integer $object_id 
 * @param integer $image_height Hieght of image.
 * @param integer $image_width Width of image.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -82,16 +84,18 @@ class ImageAttachments extends Extras
            int $image_height,
            int $image_width,
         string $image,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type']  = $content_type;
-        $options['object_id']     = $object_id;
-        $options['image_height']  = $image_height;
-        $options['image_width']   = $image_width;
-        $options['image']         = $image;
+        $options = $options ?? $this->options;
+
+        $options->content_type  = $content_type;
+        $options->object_id     = $object_id;
+        $options->image_height  = $image_height;
+        $options->image_width   = $image_width;
+        $options->image         = $image;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -113,7 +117,7 @@ class ImageAttachments extends Extras
 * @param integer $object_id 
 * @param integer $image_height Hieght of image.
 * @param integer $image_width Width of image.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -125,16 +129,18 @@ class ImageAttachments extends Extras
            int $image_height,
            int $image_width,
         string $image,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_type']  = $content_type;
-        $options['object_id']     = $object_id;
-        $options['image_height']  = $image_height;
-        $options['image_width']   = $image_width;
-        $options['image']         = $image;
+        $options = $options ?? $this->options;
+
+        $options->content_type  = $content_type;
+        $options->object_id     = $object_id;
+        $options->image_height  = $image_height;
+        $options->image_width   = $image_width;
+        $options->image         = $image;
 
         return $this->http->put(
                 uri: $this->uri,

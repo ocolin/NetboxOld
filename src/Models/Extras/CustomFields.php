@@ -28,7 +28,7 @@ class CustomFields extends Extras
 *
 * @param string $name Name of custom field.
 * @param array  $content_types Array of content types.
-* @param array  $options optional data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class CustomFields extends Extras
         string $name,
          array $content_types,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['content_types'] = $content_types;
-        $options['name']          = $name;
-        $options['type']          = $type;
+        $options = $options ?? $this->options;
+
+        $options->content_types = $content_types;
+        $options->name          = $name;
+        $options->type          = $type;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -63,7 +65,7 @@ class CustomFields extends Extras
 * @param integer $id Numerical ID of Custom Field to update.
 * @param string  $name Name of custom field.
 * @param array   $content_types Array of content types.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -73,14 +75,16 @@ class CustomFields extends Extras
         string $name,
          array $content_types,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_types'] = $content_types;
-        $options['name']          = $name;
-        $options['type']          = $type;
+        $options = $options ?? $this->options;
+
+        $options->content_types = $content_types;
+        $options->name          = $name;
+        $options->type          = $type;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -100,7 +104,7 @@ class CustomFields extends Extras
 * @param integer $id Numerical ID of Custom Field to update.
 * @param string  $name Name of custom field.
 * @param array   $content_types Array of content types.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -110,14 +114,16 @@ class CustomFields extends Extras
         string $name,
          array $content_types,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['content_types'] = $content_types;
-        $options['name']          = $name;
-        $options['type']          = $type;
+        $options = $options ?? $this->options;
+        
+        $options->content_types = $content_types;
+        $options->name          = $name;
+        $options->type          = $type;
 
         return $this->http->put(
                 uri: $this->uri,

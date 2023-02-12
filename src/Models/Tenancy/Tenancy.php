@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Tenancy;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class Tenancy
+abstract class Tenancy
 {
     protected string $uri = 'tenancy/';
 

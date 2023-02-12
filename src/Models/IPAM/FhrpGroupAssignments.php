@@ -29,7 +29,7 @@ class FhrpGroupAssignments extends IPAM
 * @param integer $group ID of group assignment belongs to.
 * @param string  $interface_type Type of interface.
 * @param integer $interface_id ID of interface.
-* @param array   $data optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -39,14 +39,16 @@ class FhrpGroupAssignments extends IPAM
         string $interface_type,
            int $interface_id,
            int $priority,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['group']          = $group;
-        $options['interface_type'] = $interface_type;
-        $options['interface_id']   = $interface_id;
-        $options['priority']       = $priority;
+        $options = $options ?? $this->options;
+        
+        $options->group          = $group;
+        $options->interface_type = $interface_type;
+        $options->interface_id   = $interface_id;
+        $options->priority       = $priority;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -67,7 +69,7 @@ class FhrpGroupAssignments extends IPAM
 * @param integer $group ID of group assignment belongs to.
 * @param string  $interface_type Type of interface.
 * @param integer $interface_id ID of interface.
-* @param array   $data Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -78,15 +80,17 @@ class FhrpGroupAssignments extends IPAM
         string $interface_type,
            int $interface_id,
            int $priority,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['group']          = $group;
-        $options['interface_type'] = $interface_type;
-        $options['interface_id']   = $interface_id;
-        $options['priority']       = $priority;
+        $options = $options ?? $this->options;
+
+        $options->group          = $group;
+        $options->interface_type = $interface_type;
+        $options->interface_id   = $interface_id;
+        $options->priority       = $priority;
 
         return $this->http->put(
                uri: $this->uri,
@@ -107,7 +111,7 @@ class FhrpGroupAssignments extends IPAM
 * @param integer $group ID of group assignment belongs to.
 * @param string  $interface_type Type of interface.
 * @param integer $interface_id ID of interface.
-* @param array   $data Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -118,15 +122,17 @@ class FhrpGroupAssignments extends IPAM
         string $interface_type,
            int $interface_id,
            int $priority,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['group']          = $group;
-        $options['interface_type'] = $interface_type;
-        $options['interface_id']   = $interface_id;
-        $options['priority']       = $priority;
+        $options = $options ?? $this->options;
+
+        $options->group          = $group;
+        $options->interface_type = $interface_type;
+        $options->interface_id   = $interface_id;
+        $options->priority       = $priority;
 
         return $this->http->put(
                 uri: $this->uri,

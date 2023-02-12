@@ -29,7 +29,7 @@ class FrontPortTemplates extends DCIM
 * @param integer $device_type ID of device type. 
 * @param integer $rear_port ID of rear port.
 * @param string  $type port type.
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -39,14 +39,16 @@ class FrontPortTemplates extends DCIM
            int $device_type,
            int $rear_port,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
-        $options['rear_port']   = $rear_port;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
+        $options->rear_port   = $rear_port;
 
 
         return $this->http->post(
@@ -69,7 +71,7 @@ class FrontPortTemplates extends DCIM
 * @param integer $device_type ID of device type. 
 * @param integer $rear_port ID of rear port.
 * @param string  $type Port type.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -80,15 +82,17 @@ class FrontPortTemplates extends DCIM
            int $device_type,
            int $rear_port,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
-        $options['rear_port']   = $rear_port;
+        $options = $options ?? $this->options;
+
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
+        $options->rear_port   = $rear_port;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -110,7 +114,7 @@ class FrontPortTemplates extends DCIM
 * @param integer $device_typeoo ID of device type. 
 * @param integer $rear_port ID of rear port.
 * @param string  $type Port type.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -121,15 +125,17 @@ class FrontPortTemplates extends DCIM
            int $device_type,
            int $rear_port,
         string $type,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']        = $name;
-        $options['device_type'] = $device_type;
-        $options['type']        = $type;
-        $options['rear_port']   = $rear_port;
+        $options = $options ?? $this->options;
+        
+        $options->name        = $name;
+        $options->device_type = $device_type;
+        $options->type        = $type;
+        $options->rear_port   = $rear_port;
 
 
         return $this->http->put(

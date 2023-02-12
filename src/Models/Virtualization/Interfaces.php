@@ -31,7 +31,7 @@ class Interfaces extends Virtualization
 *
 * @param string  $name Name of Virtual Machine.
 * @param integer $virtual_machine ID of virtual machine interface belongs to. 
-* @param array   $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -39,12 +39,14 @@ class Interfaces extends Virtualization
     public function postDetail(
         string $name,
            int $virtual_machine,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']            = $name;
-        $options['virtual_machine'] = $virtual_machine;
+        $options = $options ?? $this->options;
+        
+        $options->name            = $name;
+        $options->virtual_machine = $virtual_machine;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class Interfaces extends Virtualization
 * @param integer $id Numerical ID of Virtual Machine to update.
 * @param string  $name Name of Virtual Machine to update.
 * @param integer $virtual_machine ID of virtual machine interface belongs to. 
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -73,13 +75,15 @@ class Interfaces extends Virtualization
            int $id,
         string $name,
            int $virtual_machine,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']            = $name;
-        $options['virtual_machine'] = $virtual_machine;
+        $options = $options ?? $this->options;
+
+        $options->name            = $name;
+        $options->virtual_machine = $virtual_machine;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -99,7 +103,7 @@ class Interfaces extends Virtualization
 * @param integer $id Numerical ID of Virtual Machine to update.
 * @param string  $name Name of Virtual Machine to update.
 * @param integer $virtual_machine ID of virtual machine interface belongs to. 
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -108,13 +112,15 @@ class Interfaces extends Virtualization
            int $id,
         string $name,
            int $virtual_machine,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']            = $name;
-        $options['virtual_machine'] = $virtual_machine;
+        $options = $options ?? $this->options;
+
+        $options->name            = $name;
+        $options->virtual_machine = $virtual_machine;
 
 
         return $this->http->put(

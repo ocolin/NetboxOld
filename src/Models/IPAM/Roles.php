@@ -28,7 +28,7 @@ class Roles extends IPAM
 *
 * @param string $name Name of Role.
 * @param string $slug 
-* @param array  $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -36,12 +36,14 @@ class Roles extends IPAM
     public function postDetail(
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->post(
                uri: $this->uri,
@@ -61,7 +63,7 @@ class Roles extends IPAM
 * @param integer $id Numerical ID of Role to update.
 * @param string  $name Name of Role to update.
 * @param string  $slug Slug of Role to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,13 +72,15 @@ class Roles extends IPAM
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
+        $options->slug = $slug;
 
         return $this->http->put(
                uri: $this->uri,
@@ -96,7 +100,7 @@ class Roles extends IPAM
 * @param integer $id Numerical ID of Role to update.
 * @param string  $name Name of Role to update.
 * @param string  $slug Slug of Role to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -105,13 +109,15 @@ class Roles extends IPAM
            int $id,
         string $name,
         string $slug,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
-        $options['slug'] = $slug;
+        $options = $options ?? $this->options;
+        
+        $options->name = $name;
+        $options->slug = $slug;
 
 
         return $this->http->put(

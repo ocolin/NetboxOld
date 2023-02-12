@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class IPAM
+abstract class IPAM
 {
     protected HTTP $http;
 

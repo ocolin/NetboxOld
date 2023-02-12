@@ -32,7 +32,7 @@ class Clusters extends Virtualization
 * @param integer $type ID of Cluster Type.
 * @param integer $group ID of Cluster Group.
 * @param integer $site ID of Site.
-* @param array   $options optionsl data to be sent
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -42,14 +42,16 @@ class Clusters extends Virtualization
            int $type,
            int $group,
            int $site,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']  = $name;
-        $options['type']  = $type;
-        $options['group'] = $group;
-        $options['site']  = $site;
+        $options = $options ?? $this->options;
+
+        $options->name  = $name;
+        $options->type  = $type;
+        $options->group = $group;
+        $options->site  = $site;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -71,7 +73,7 @@ class Clusters extends Virtualization
 * @param integer $type ID of Cluster Type.
 * @param integer $group ID of Cluster Group.
 * @param integer $site ID of Site.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -82,15 +84,17 @@ class Clusters extends Virtualization
            int $type,
            int $group,
            int $site,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']  = $name;
-        $options['type']  = $type;
-        $options['group'] = $group;
-        $options['site']  = $site;
+        $options = $options ?? $this->options;
+
+        $options->name  = $name;
+        $options->type  = $type;
+        $options->group = $group;
+        $options->site  = $site;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -112,7 +116,7 @@ class Clusters extends Virtualization
 * @param integer $type ID of Cluster Type.
 * @param integer $group ID of Cluster Group.
 * @param integer $site ID of Site.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -123,15 +127,17 @@ class Clusters extends Virtualization
            int $type,
            int $group,
            int $site,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']  = $name;
-        $options['type']  = $type;
-        $options['group'] = $group;
-        $options['site']  = $site;
+        $options = $options ?? $this->options;
+        
+        $options->name  = $name;
+        $options->type  = $type;
+        $options->group = $group;
+        $options->site  = $site;
 
         return $this->http->put(
                 uri: $this->uri,

@@ -27,7 +27,7 @@ class InventoryItems extends DCIM
 *
 * @param string  $name Name of item.
 * @param integer $device ID of device. 
-* @param array   $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -35,12 +35,14 @@ class InventoryItems extends DCIM
     public function postDetail(
            int $device,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name']   = $name;
-        $options['device'] = $device;
+        $options = $options ?? $this->options;
+
+        $options->name   = $name;
+        $options->device = $device;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -60,7 +62,7 @@ class InventoryItems extends DCIM
 * @param integer $id Numerical ID of item to update.
 * @param string  $name Name of item.
 * @param integer $device ID of device. 
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -69,13 +71,15 @@ class InventoryItems extends DCIM
            int $id,
         string $name,
            int $device,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']   = $name;
-        $options['device'] = $device;
+        $options = $options ?? $this->options;
+
+        $options->name   = $name;
+        $options->device = $device;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -95,7 +99,7 @@ class InventoryItems extends DCIM
 * @param integer $id Numerical ID of item to update.
 * @param string  $name Name of item.
 * @param integer $deviceoo ID of device. 
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -104,13 +108,15 @@ class InventoryItems extends DCIM
            int $id,
         string $name,
            int $device,
-        array $options = [],
+       Options $options = null,
         array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']   = $name;
-        $options['device'] = $device;
+        $options = $options ?? $this->options;
+        
+        $options->name   = $name;
+        $options->device = $device;
 
         return $this->http->put(
                 uri: $this->uri,

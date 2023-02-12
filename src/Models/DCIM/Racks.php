@@ -28,7 +28,7 @@ class Racks extends DCIM
 * @param integer $site ID of the rack.
 * @param integer $location ID rack location.
 * @param string  $name name or the rack.
-* @param array  $options optionsl data to be sent.
+* @param Options $options optionsl data to be sent.
 * @param array $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,13 +37,15 @@ class Racks extends DCIM
            int $site,
            int $location,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['site']     = $site;
-        $options['location'] = $location;
-        $options['name']     = $name;
+        $options = $options ?? $this->options;
+
+        $options->site     = $site;
+        $options->location = $location;
+        $options->name     = $name;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -64,7 +66,7 @@ class Racks extends DCIM
 * @param integer $site ID of the rack.
 * @param integer $location ID rack location.
 * @param string  $name name or the rack.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -74,14 +76,16 @@ class Racks extends DCIM
             int $site,
             int $location,
          string $name,
-          array $options = [],
+        Options $options = null,
           array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['site']     = $site;
-        $options['location'] = $location;
-        $options['name']     = $name;
+        $options = $options ?? $this->options;
+
+        $options->site     = $site;
+        $options->location = $location;
+        $options->name     = $name;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -102,7 +106,7 @@ class Racks extends DCIM
 * @param integer $site ID of the rack.
 * @param integer $location ID rack location.
 * @param string  $name name or the rack.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -112,14 +116,16 @@ class Racks extends DCIM
            int $site,
            int $location,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['site']     = $site;
-        $options['location'] = $location;
-        $options['name']     = $name;
+        $options = $options ?? $this->options;
+        
+        $options->site     = $site;
+        $options->location = $location;
+        $options->name     = $name;
 
         return $this->http->put(
                 uri: $this->uri,
