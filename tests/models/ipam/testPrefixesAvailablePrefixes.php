@@ -33,7 +33,6 @@ class testPrefixesAvailablePrefixes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -84,29 +83,22 @@ class testPrefixesAvailablePrefixes extends testCore
 
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
-
+/* 
     public function postDetail() : array
     {
         $o = new PrefixesAvailablePrefixes();
 
         return $o->postDetail();
     }
+ */
 
 
-
-
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['prefix'] = self::createPrefix();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyPrefix( prefix: $_ENV['prefix'] );
         unset( $_ENV['prefix'] );

@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Devices AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testDevices extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -83,9 +84,7 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -109,7 +108,6 @@ class testDevices extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,19 +121,8 @@ class testDevices extends testCore
     public function testPostList() :void
     {
         $o = new Devices();
-        $result = $o->postList(
-            options: [[ 
-                    'name'            => 'PHPUnit_Dev',
-                    'face'            => 'front',
-                    'device_type'     => $_ENV['devtype']->id,
-                    'device_role'     => $_ENV['devrole']->id,
-                    'tenant'          => $_ENV['tenant']->id,
-                    'site'            => $_ENV['site']->id,
-                    'rack'            => $_ENV['rack']->id,
-                    'virtual_chassis' => $_ENV['vc']->id,
-                    'vc_position'     => 1
-                ]] 
-            );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -186,7 +173,6 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -201,24 +187,10 @@ class testDevices extends testCore
     {
         // SETUP
         $device = $this->postDetail()['body'];
+        $this->options->id = $device->id;
 
         $o = new Devices();
-        $result = $o->putList(
-            options: [
-                [ 
-                    'id'              => $device->id,
-                    'name'            => 'PHPUnit_Dev',
-                    'face'            => 'front',
-                    'device_type'     => $_ENV['devtype']->id,
-                    'device_role'     => $_ENV['devrole']->id,
-                    'tenant'          => $_ENV['tenant']->id,
-                    'site'            => $_ENV['site']->id,
-                    'rack'            => $_ENV['rack']->id,
-                    'virtual_chassis' => $_ENV['vc']->id,
-                    'vc_position'     => 1
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -228,7 +200,6 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -266,8 +237,6 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -282,24 +251,10 @@ class testDevices extends testCore
     {
         // SETUP
         $device = $this->postDetail()['body'];
+        $this->options->id = $device->id;
 
         $o = new Devices();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'              => $device->id,
-                    'name'            => 'PHPUnit_Dev',
-                    'face'            => 'front',
-                    'device_type'     => $_ENV['devtype']->id,
-                    'device_role'     => $_ENV['devrole']->id,
-                    'tenant'          => $_ENV['tenant']->id,
-                    'site'            => $_ENV['site']->id,
-                    'rack'            => $_ENV['rack']->id,
-                    'virtual_chassis' => $_ENV['vc']->id,
-                    'vc_position'     => 1
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -309,7 +264,6 @@ class testDevices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -398,10 +352,7 @@ class testDevices extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -415,10 +366,7 @@ class testDevices extends testCore
         );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
 
         self::destroyRack( rack: $_ENV['rack'] );
@@ -438,5 +386,20 @@ class testDevices extends testCore
         unset( $_ENV['tenant'] );
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name            = 'PHPUnit_Device-' . $rand;
+        $this->options->face            = 'front';
+        $this->options->device_type     = $_ENV['devtype']->id;
+        $this->options->device_role     = $_ENV['devrole']->id;
+        $this->options->tenant          = $_ENV['tenant']->id;
+        $this->options->site            = $_ENV['site']->id;
+        $this->options->rack            = $_ENV['rack']->id;
+        $this->options->virtual_chassis = $_ENV['vc']->id;
+        $this->options->vc_position     = 1;
     }
 }

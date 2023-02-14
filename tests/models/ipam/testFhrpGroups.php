@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\FhrpGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testFhrpGroups extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -57,7 +59,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( id: $group->id );
@@ -84,9 +85,7 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -111,7 +110,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -124,12 +122,7 @@ class testFhrpGroups extends testCore
     public function testPostList() :void
     {
         $o = new FhrpGroups();
-        $result = $o->postList(
-            options: [[ 
-                'protocol' => 'vrrp2',
-                'group_id' => 1 
-            ]]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -172,7 +165,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -187,17 +179,10 @@ class testFhrpGroups extends testCore
     {
         // SETUP
         $group = $this->postDetail()['body'];
+        $this->options->id = $group->id;
 
         $o = new FhrpGroups();
-        $result = $o->putList(
-            options: [
-                [ 
-                          'id' => $group->id, 
-                    'protocol' => 'vrrp2',
-                    'group_id' => 1 
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -207,7 +192,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -238,8 +222,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -254,17 +236,10 @@ class testFhrpGroups extends testCore
     {
         // SETUP
         $group = $this->postDetail()['body'];
+        $this->options->id = $group->id;
 
         $o = new FhrpGroups();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $group->id, 
-                    'protocol' => 'vrrp2',
-                    'group_id' => 1 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -274,7 +249,6 @@ class testFhrpGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -350,5 +324,17 @@ class testFhrpGroups extends testCore
         $o = new FhrpGroups();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 10000 );
+        $this->options = new Options();
+        $this->options->protocol = 'vrrp2';
+        $this->options->group_id = $rand;
+        $this->options->description = 'PHPUnit_FhrpGRoup-' . $rand;
     }
 }

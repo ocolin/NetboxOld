@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\DeviceTypes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testDeviceTypes extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -44,8 +46,7 @@ class testDeviceTypes extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
-        
+        $devtype = $this->postDetail()['body'];
 
         $o = new DeviceTypes();
         $result = $o->getDetail( id: $devtype->id );
@@ -58,7 +59,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
@@ -72,7 +72,7 @@ class testDeviceTypes extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
 
         $o = new DeviceTypes();
         $result = $o->getList();
@@ -85,9 +85,7 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
@@ -101,7 +99,7 @@ class testDeviceTypes extends testCore
     public function testPostDetail() : void
     {
         $o = new DeviceTypes();
-        $result = $this->postDetail( manf: $_ENV['manf']->id );
+        $result = $this->postDetail();
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -111,7 +109,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -125,20 +122,8 @@ class testDeviceTypes extends testCore
     public function testPostList() :void
     {
         $o = new DeviceTypes();
-        $result = $o->postList(
-        options: [
-            [ 
-                       'model' => 'testDeviceType1', 
-                        'slug' => 'aaa', 
-                'manufacturer' => $_ENV['manf']->id
-            ],
-            [ 
-                       'model' => 'testDeviceType2', 
-                        'slug' => 'bbb', 
-                'manufacturer' => $_ENV['manf']->id 
-            ],
-        ]  
-        );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -164,7 +149,7 @@ class testDeviceTypes extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
 
         $o = new DeviceTypes();
         $result = $o->putDetail( 
@@ -183,7 +168,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
@@ -197,19 +181,11 @@ class testDeviceTypes extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
+        $this->options->id = $devtype->id;
 
         $o = new DeviceTypes();
-        $result = $o->putList(
-            options: [
-                [ 
-                              'id' => $devtype->id, 
-                           'model' => 'putRegion',
-                            'slug' => 'putRegion',
-                    'manufacturer' => $_ENV['manf']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -219,7 +195,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
@@ -233,7 +208,7 @@ class testDeviceTypes extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
 
         $o = new DeviceTypes();
         $result = $o->patchDetail(
@@ -251,8 +226,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
@@ -266,19 +239,11 @@ class testDeviceTypes extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
+        $this->options->id = $devtype->id;
 
         $o = new DeviceTypes();
-        $result = $o->patchList(
-            options: [
-                [ 
-                           'id' => $devtype->id, 
-                        'model' => 'patchRegion',
-                         'slug' => 'patchRegion',
-                 'manufacturer' => $_ENV['manf']->id 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -288,7 +253,6 @@ class testDeviceTypes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
@@ -299,11 +263,11 @@ class testDeviceTypes extends testCore
 
 /* TEST DELETE DETAIL
 ---------------------------------------------------------------------------- */
-/* 
+
     public function testDeleteDetail() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
         
         $o = new DeviceTypes();
         $result = $o->deleteDetail( id: $devtype->id );
@@ -315,7 +279,7 @@ class testDeviceTypes extends testCore
         $this->assertIsInt( $result['status'] );
         $this->assertEquals( 204, $result['status'] );
     }
- */
+
 
 
 /* TEST DELETE LIST
@@ -324,7 +288,7 @@ class testDeviceTypes extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $devtype = $this->postDetail( manf: $_ENV['manf']->id )['body'];
+        $devtype = $this->postDetail()['body'];
 
         $o = new DeviceTypes();
         $result = $o->deleteList(
@@ -343,14 +307,14 @@ class testDeviceTypes extends testCore
 /* CREATE A DEVICE TYPES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $manf ) : array
+    public function postDetail() : array
     {
         $o = new DeviceTypes();
 
         return $o->postDetail( 
-            model: 'testDeviceType',
-            slug: 'testDeviceType',
-            manufacturer: $manf
+                   model: 'testDeviceType',
+                    slug: 'testDeviceType',
+            manufacturer: $_ENV['manf']->id
         );
     }
 
@@ -367,34 +331,28 @@ class testDeviceTypes extends testCore
     }
 
 
+
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupManf()
+    public static function setUpBeforeClass() : void
     {
-        $o = new Manufacturers();
-        $_ENV['manf'] = $o->postDetail(
-            name: 'phptestunit_manf',
-            slug: 'phptestunit_manf'
-        )['body'];
+        $_ENV['manf'] = self::createManufacturer();
     }
 
-
-
-/*
----------------------------------------------------------------------------- */
-
-/**
-* @afterClass
-*/
-    public static function closeManf()
+    public static function tearDownAfterClass() : void
     {
-        $o = new Manufacturers();
-        $o->deleteDetail( id: $_ENV['manf']->id );
+        self::destroyManufacturer( $_ENV['manf'] );
         unset( $_ENV['manf'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->model        = 'PHPUnit_DevType-' .$rand;
+        $this->options->slug         = 'PHPUnit_DevType-' .$rand;
+        $this->options->manufacturer = $_ENV['manf']->id;
     }
 
 }

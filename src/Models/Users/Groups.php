@@ -9,12 +9,13 @@ use Cruzio\Netbox\Options\Users\Groups AS Options;
 
 class Groups extends UsersCore
 {
-
+    protected Options $options;
 /*
 ---------------------------------------------------------------------------- */
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'groups/';
     }
@@ -26,19 +27,20 @@ class Groups extends UsersCore
 /**
 * Create a single Group.
 *
-* @param string $name Name of Group.
-* @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers.
+* @param string  $name Name of Group.
+* @param Options $options Optional data to send.
+* @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+        $options->name = $name;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -57,7 +59,7 @@ class Groups extends UsersCore
 * 
 * @param integer $id Numerical ID of Group to update.
 * @param string  $name Name of Group.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -65,12 +67,14 @@ class Groups extends UsersCore
     public function putDetail(
            int $id,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -89,7 +93,7 @@ class Groups extends UsersCore
 *
 * @param integer $id Numerical ID of Group to update.
 * @param string  $name Name of Group.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -97,12 +101,14 @@ class Groups extends UsersCore
     public function patchDetail(
            int $id,
         string $name,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name'] = $name;
+        $options = $options ?? $this->options;
+
+        $options->name = $name;
 
         return $this->http->put(
                 uri: $this->uri,

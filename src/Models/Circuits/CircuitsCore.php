@@ -5,8 +5,9 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
+use Cruzio\Netbox\Models\ModelsCore;
 
-abstract class CircuitsCore
+class CircuitsCore extends ModelsCore
 {
     protected HTTP $http;
 

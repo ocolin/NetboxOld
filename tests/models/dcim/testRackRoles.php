@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\RackRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRackRoles extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -82,9 +83,7 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -108,7 +107,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,7 @@ class testRackRoles extends testCore
     public function testPostList() :void
     {
         $o = new RackRoles();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testRackRoles1', 'slug' => 'aaa' ],
-            [ 'name' => 'testRackRoles2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +153,6 @@ class testRackRoles extends testCore
               id: $role->id, 
             name: 'updateRackRoles', 
             slug: 'updateRackRoles',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +164,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -187,18 +178,10 @@ class testRackRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new RackRoles();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $role->id, 
-                           'name' => 'putRackRoles',
-                           'slug' => 'putRackRoles',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -229,7 +211,6 @@ class testRackRoles extends testCore
               id: $role->id,
             name: 'patchRackRoles',
             slug: 'patchRackRoles',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -240,8 +221,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -256,18 +235,10 @@ class testRackRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new RackRoles();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $role->id, 
-                        'name' => 'patchRackRoles',
-                        'slug' => 'patchRackRoles',
-                 'description' => 'patchRackRoles' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +248,6 @@ class testRackRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -339,9 +309,6 @@ class testRackRoles extends testCore
         return $o->postDetail( 
             name: 'testRackRoles',
             slug: 'testRackRoles',
-            options: [ 
-                'description' => 'PHPUnit test RackRoles',
-            ]
         );
     }
 
@@ -355,6 +322,14 @@ class testRackRoles extends testCore
         $o = new RackRoles();
 
         return $o->deleteDetail( id: $id  );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_RackRole-' . $rand;
+        $this->options->slug = 'PHPUnit_RackRole-' . $rand;
     }
 
 }

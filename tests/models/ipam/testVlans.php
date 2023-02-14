@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Vlans AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testVlans extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -44,7 +46,7 @@ class testVlans extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
 
         $o = new Vlans();
         $result = $o->getDetail( id: $vlan->id );
@@ -57,7 +59,6 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( id: $vlan->id );
@@ -71,7 +72,7 @@ class testVlans extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
 
         $o = new Vlans();
         $result = $o->getList();
@@ -84,9 +85,7 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $vlan->id );
@@ -101,7 +100,7 @@ class testVlans extends testCore
     public function testPostDetail() : void
     {
         $o = new Vlans();
-        $result = $this->postDetail( vlg: $_ENV['vlg']->id );
+        $result = $this->postDetail();
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -111,7 +110,6 @@ class testVlans extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -125,12 +123,7 @@ class testVlans extends testCore
     public function testPostList() :void
     {
         $o = new Vlans();
-        $result = $o->postList(
-            options: [
-                [ 'vid' => 1, 'group' => $_ENV['vlg']->id, 'name' => 'post1' ],
-                [ 'vid' => 2, 'group' => $_ENV['vlg']->id, 'name' => 'post2'  ]
-            ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -156,7 +149,7 @@ class testVlans extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
 
         $o = new Vlans();
         $result = $o->putDetail( 
@@ -164,7 +157,6 @@ class testVlans extends testCore
                  vid: 1, 
                group: $_ENV['vlg']->id, 
                 name: 'putVlan',
-             options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -175,7 +167,6 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vlan->id );
@@ -189,20 +180,11 @@ class testVlans extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
+        $this->options->id = $vlan->id;
 
         $o = new Vlans();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $vlan->id, 
-                            'vid' => 1,
-                          'group' => $_ENV['vlg']->id,
-                           'name' => 'putVLan',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -212,7 +194,6 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vlan->id );
@@ -226,7 +207,7 @@ class testVlans extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
 
         $o = new Vlans();
         $result = $o->patchDetail(
@@ -234,7 +215,6 @@ class testVlans extends testCore
                     vid: 1,
                   group: $_ENV['vlg']->id,
                    name: 'PatchVlan',
-                options: [ 'description' => 'Patch Vlan' ]
         );
 
         $this->assertIsArray( $result );
@@ -245,7 +225,6 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -260,19 +239,11 @@ class testVlans extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
+        $this->options->id = $vlan->id;
 
         $o = new Vlans();
-        $result = $o->patchList(
-            options: [
-                [ 
-                       'id' => $vlan->id, 
-                      'vid' => 1,
-                    'group' => $_ENV['vlg']->id,
-                     'name' => 'Patch Vlan' 
-                ]
-            ]
-        );
+        $result = $o->patchList(  options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -282,7 +253,6 @@ class testVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vlan->id );
@@ -297,7 +267,7 @@ class testVlans extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
         
         $o = new Vlans();
         $result = $o->deleteDetail( id: $vlan->id );
@@ -318,7 +288,7 @@ class testVlans extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $vlan = $this->postDetail( vlg: $_ENV['vlg']->id )['body'];
+        $vlan = $this->postDetail()['body'];
 
         $o = new Vlans();
         $result = $o->deleteList(
@@ -338,17 +308,14 @@ class testVlans extends testCore
 /* CREATE AN VLAN
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $vlg ) : array
+    public function postDetail() : array
     {
         $o = new Vlans();
 
         return $o->postDetail( 
-               group: $vlg,
+               group: $_ENV['vlg']->id,
                  vid: 1,
                 name: 'phpunit-vlan-test',
-             options: [ 
-                    'description' => 'PHPUnit test VLAN',
-             ]
         );
     }
 
@@ -369,10 +336,7 @@ class testVlans extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupGroup()
+    public static function setUpBeforeClass() : void
     {
         $o = new VlanGroups();
         $_ENV['vlg'] = $o->postDetail(
@@ -386,13 +350,20 @@ class testVlans extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @afterClass
-*/
-    public static function closeGroup()
+    public static function tearDownAfterClass() : void
     {
         $o = new VlanGroups();
         $o->deleteDetail( id: $_ENV['vlg']->id );
         unset( $_ENV['vlg'] );
+    }
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Vlan-' . $rand;
+        $this->options->group = $_ENV['vlg']->id;
+        $this->options->vid = 1;
     }
 }

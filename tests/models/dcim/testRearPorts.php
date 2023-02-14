@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\RearPorts AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRearPorts extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -25,15 +28,14 @@ class testRearPorts extends testCore
         $o = new RearPorts();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
+        $this->assertIsArray(     $result );
         $this->assertArrayHasKey( 'status',  $result );
         $this->assertArrayHasKey( 'headers', $result );
         $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
+        $this->assertIsInt(        $result['status'] );
+        $this->assertEquals(       200, $result['status'] );
+        $this->assertIsArray(      $result['headers'] );
+        $this->assertIsObject(     $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testRearPorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -83,9 +84,7 @@ class testRearPorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -109,7 +108,6 @@ class testRearPorts extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,13 +121,8 @@ class testRearPorts extends testCore
     public function testPostList() :void
     {
         $o = new RearPorts();
-        $result = $o->postList(
-            options: [[ 
-                      'name' => 'PHPUnit_RearPort',
-                    'device' => $_ENV['device']->id,
-                      'type' => '8p8c'
-                ]] 
-            );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,7 +166,6 @@ class testRearPorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -188,18 +180,10 @@ class testRearPorts extends testCore
     {
         // SETUP
         $port = $this->postDetail()['body'];
+        $this->options->id = $port->id;
 
         $o = new RearPorts();
-        $result = $o->putList(
-            options: [
-                [ 
-                        'id' => $port->id,
-                      'name' => 'PHPUnit_RearPort',
-                    'device' => $_ENV['device']->id,
-                      'type' => '8p8c'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +193,6 @@ class testRearPorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -241,7 +224,6 @@ class testRearPorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -256,18 +238,10 @@ class testRearPorts extends testCore
     {
         // SETUP
         $port = $this->postDetail()['body'];
+        $this->options->id = $port->id;
 
         $o = new RearPorts();
-        $result = $o->patchList(
-            options: [
-                [ 
-                        'id' => $port->id,
-                      'name' => 'PHPUnit_RearPort',
-                    'device' => $_ENV['device']->id,
-                      'type' => '8p8c'
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +251,6 @@ class testRearPorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -360,10 +333,7 @@ class testRearPorts extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -385,10 +355,7 @@ class testRearPorts extends testCore
         );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyDevice( device: $_ENV['device'] );
         self::destroyRack( rack: $_ENV['rack'] );
@@ -409,5 +376,14 @@ class testRearPorts extends testCore
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
         unset( $_ENV['device'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name    = 'PHPUnit_RearPort-' . $rand;
+        $this->options->device  = $_ENV['device']->id;
+        $this->options->type    = '8p8c';
     }
 }

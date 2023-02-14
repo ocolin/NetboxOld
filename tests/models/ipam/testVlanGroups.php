@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\VlanGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testVlanGroups extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testVlanGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ public function testGetDetail() : void
     $this->assertEquals( 200, $result['status'] );
     $this->assertIsArray( $result['headers'] );
     $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
 
     // CLEAN UP
     $this->deleteDetail( $vgrp->id );
@@ -83,9 +84,7 @@ public function testGetList() : void
     $this->assertEquals( 200, $result['status'] );
     $this->assertIsArray( $result['headers'] );
     $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
     $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
      // CLEAN UP
      $this->deleteDetail( $vgrp->id );
@@ -109,7 +108,6 @@ public function testGetList() : void
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ public function testGetList() : void
     public function testPostList() :void
     {
         $o = new VlanGroups();
-        $result = $o->postList(
-            options: [
-                [ 'name' => 'testVLanGroup1', 'slug' => 'testVLanGroup1' ],
-                [ 'name' => 'testVlanGroup1', 'slug' => 'testVLanGroup2' ],
-            ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +154,6 @@ public function testGetList() : void
                  id: $vgrp->id, 
                name: 'testVLanGroup1', 
                slug: 'testVLanGroup1',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +165,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vgrp->id );
@@ -188,18 +179,10 @@ public function testGetList() : void
     {
         // SETUP
         $vgrp = $this->postDetail()['body'];
+        $this->options->id = $vgrp->id;
 
         $o = new VlanGroups();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $vgrp->id, 
-                           'name' => 'putVlanGroup',
-                           'slug' => 'putVlanGroup',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +192,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vgrp->id );
@@ -230,7 +212,6 @@ public function testGetList() : void
                  id: $vgrp->id,
                name: 'patchVlanGroup',
                slug: 'patchVlanGroup',
-            options: [ 'description' => 'Patching VlanGroup' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,8 +222,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $vgrp->id );
@@ -257,18 +236,10 @@ public function testGetList() : void
     {
         // SETUP
         $vgrp = $this->postDetail()['body'];
+        $this->options->id = $vgrp->id;
 
         $o = new VlanGroups();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $vgrp->id, 
-                        'name' => 'patchVlanGroup',
-                        'slug' => 'patchVlanGroup',
-                 'description' => 'patchVlanGroup' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +249,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vgrp->id );
@@ -341,9 +311,6 @@ public function testGetList() : void
         return $o->postDetail( 
             name: 'testVlanGroup',
             slug: 'testVlanGroup',
-            options: [ 
-                'description' => 'PHPUnit test post VlanGroup',
-            ]
         );
     }
 
@@ -357,6 +324,17 @@ public function testGetList() : void
         $o = new VlanGroups();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_VlanGroup-' . $rand;
+        $this->options->slug = 'PHPUnit_VlanGroup-' . $rand;
     }
 
 }

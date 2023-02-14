@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Circuits\CircuitTypes AS Options;
 
 class CircuitTypes extends CircuitsCore
 {
-    protected Options $options;
+    public Options $options;
 
     public function __construct( HTTP $http = null )
     {

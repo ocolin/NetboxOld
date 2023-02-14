@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Wireless;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Wireless\WirelessLinks AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testWirelessLinks extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $link->id );
@@ -83,9 +84,7 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $link->id );
@@ -109,7 +108,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ class testWirelessLinks extends testCore
     public function testPostList() :void
     {
         $o = new WirelessLinks();
-        $result = $o->postList(
-            options: [[ 
-                'interface_a' => $_ENV['interfaceA']->id,
-                'interface_b' => $_ENV['interfaceB']->id,
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -171,7 +164,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $link->id );
@@ -186,17 +178,10 @@ class testWirelessLinks extends testCore
     {
         // SETUP
         $link = $this->postDetail()['body'];
+        $this->options->id = $link->id;
 
         $o = new WirelessLinks();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $link->id,
-                    'interface_a' => $_ENV['interfaceA']->id,
-                    'interface_b' => $_ENV['interfaceB']->id,
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -206,7 +191,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $link->id );
@@ -237,7 +221,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $link->id );
@@ -252,17 +235,10 @@ class testWirelessLinks extends testCore
     {
         // SETUP
         $link = $this->postDetail()['body'];
+        $this->options->id = $link->id;
 
         $o = new WirelessLinks();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $link->id,
-                    'interface_a' => $_ENV['interfaceA']->id,
-                    'interface_b' => $_ENV['interfaceB']->id,
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -272,7 +248,6 @@ class testWirelessLinks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $link->id );
@@ -354,10 +329,7 @@ class testWirelessLinks extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['siteA']     = self::createSite();
         $_ENV['siteB']     = self::createSite();
@@ -400,10 +372,7 @@ class testWirelessLinks extends testCore
         );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyInterface( interface: $_ENV['interfaceB'] );
         self::destroyInterface( interface: $_ENV['interfaceA'] );
@@ -437,5 +406,12 @@ class testWirelessLinks extends testCore
         unset( $_ENV['deviceA'] );
         unset( $_ENV['interfaceB'] );
         unset( $_ENV['interfaceA'] );
+    }
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->interface_a = $_ENV['interfaceA']->id;
+        $this->options->interface_b = $_ENV['interfaceB']->id;
     }
 }

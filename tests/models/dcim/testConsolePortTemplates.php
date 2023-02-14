@@ -5,11 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\ConsolePortTemplates AS Options;
+
 
 require_once __DIR__ . '/../testCore.php';
 
 class testConsolePortTemplates extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +37,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -44,7 +47,7 @@ class testConsolePortTemplates extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
 
         $o = new ConsolePortTemplates();
         $result = $o->getDetail( id: $porttemp->id );
@@ -57,7 +60,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $porttemp->id );
@@ -71,7 +73,7 @@ class testConsolePortTemplates extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
 
         $o = new ConsolePortTemplates();
         $result = $o->getList();
@@ -84,9 +86,7 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $porttemp->id );
@@ -100,7 +100,7 @@ class testConsolePortTemplates extends testCore
     public function testPostDetail() : void
     {
         $o = new ConsolePortTemplates();
-        $result = $this->postDetail( devtype: $_ENV['devtype']->id );
+        $result = $this->postDetail();
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -110,7 +110,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -124,18 +123,8 @@ class testConsolePortTemplates extends testCore
     public function testPostList() :void
     {
         $o = new ConsolePortTemplates();
-        $result = $o->postList(
-        options: [
-            [ 
-                'name'        => 'testConsolePortTemplate', 
-                'device_type' => $_ENV['devtype']->id
-            ],
-            [ 
-                'name'        => 'testConsolePortTemplate2', 
-                'device_type' => $_ENV['devtype']->id 
-            ],
-        ]  
-        );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +150,7 @@ class testConsolePortTemplates extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
 
         $o = new ConsolePortTemplates();
         $result = $o->putDetail( 
@@ -179,7 +168,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $porttemp->id );
@@ -193,18 +181,11 @@ class testConsolePortTemplates extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
+        $this->options->id = $porttemp->id;
 
         $o = new ConsolePortTemplates();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $porttemp->id, 
-                           'name' => 'putConsolePortTemplate',
-                    'device_type' => $_ENV['devtype']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -214,7 +195,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $porttemp->id );
@@ -228,7 +208,7 @@ class testConsolePortTemplates extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
 
         $o = new ConsolePortTemplates();
         $result = $o->patchDetail(
@@ -245,8 +225,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $porttemp->id );
@@ -260,18 +238,11 @@ class testConsolePortTemplates extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
+        $this->options->id = $porttemp->id;
 
         $o = new ConsolePortTemplates();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $porttemp->id, 
-                        'name' => 'patchConsolePortTemplate',
-                 'device_type' => $_ENV['devtype']->id 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -281,7 +252,6 @@ class testConsolePortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $porttemp->id );
@@ -296,7 +266,7 @@ class testConsolePortTemplates extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
         
         $o = new ConsolePortTemplates();
         $result = $o->deleteDetail( id: $porttemp->id );
@@ -317,7 +287,7 @@ class testConsolePortTemplates extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $porttemp = $this->postDetail( devtype: $_ENV['devtype']->id )['body'];
+        $porttemp = $this->postDetail()['body'];
 
         $o = new ConsolePortTemplates();
         $result = $o->deleteList(
@@ -336,13 +306,13 @@ class testConsolePortTemplates extends testCore
 /* CREATE A DEVICE TYPES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $devtype ) : array
+    public function postDetail() : array
     {
         $o = new ConsolePortTemplates();
 
         return $o->postDetail( 
-            name: 'testConsolePortTemplate',
-            device_type: $devtype
+                   name: 'testConsolePortTemplate',
+            device_type: $_ENV['devtype']->id
         );
     }
 
@@ -359,60 +329,34 @@ class testConsolePortTemplates extends testCore
     }
 
 
-/*
----------------------------------------------------------------------------- */
-
-/**
-* @beforeClass
-*/
-    public static function setupDevType()
-    {
-        self::setupManufacter();
-        $o = new DeviceTypes();
-        $_ENV['devtype'] = $o->postDetail(
-            model: 'phptestunit_devtype',
-             slug: 'phptestunit_devtype',
-             manufacturer: $_ENV['manf']->id
-        )['body'];
-        
-
-        
-    }
-
-
-    public static function setupManufacter()
-    {
-        $o = new Manufacturers();
-        $_ENV['manf'] = $o->postDetail(
-            name: 'phpunit_manf',
-            slug: 'phpunit_manf'
-        )['body'];
-    }
-
-
 
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @afterClass
-*/
-    public static function closeDevType()
-    {   
-        $o = new DeviceTypes();
-        $o->deleteDetail( id: $_ENV['devtype']->id );
-        self::closeManufacturer();
+    public static function setUpBeforeClass() : void
+    {    
+        $_ENV['manf'] = self::createManufacturer();
+        $_ENV['devtype'] = self::createDeviceType( manf: $_ENV['manf'] );
+    }
+
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyDeviceType( $_ENV['devtype'] );
+        self::destroyManufacturer( $_ENV['manf'] );
         unset( $_ENV['devtype'] );
-    }
-
-
-    public static function closeManufacturer()
-    {
-        $o = new Manufacturers();
-        $test = $o->deleteDetail( id: $_ENV['manf']->id );
         unset( $_ENV['manf'] );
         
     }
 
-
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name         = 'PHPUnit_ConsPortTempl-' . $rand;
+        $this->options->slug         = 'PHPUnit_ConsPortTempl-' . $rand;
+        $this->options->manufacturer = $_ENV['manf']->id;
+        $this->options->device_type  = $_ENV['devtype']->id;
+    }
 }

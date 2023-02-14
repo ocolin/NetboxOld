@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Aggregates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testAggregates extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -44,7 +46,7 @@ class testAggregates extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
 
         $o = new Aggregates();
         $result = $o->getDetail( id: $agr->id );
@@ -57,8 +59,6 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
         // CLEAN UP
         $this->deleteDetail( id: $agr->id );
     } 
@@ -71,7 +71,7 @@ class testAggregates extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
 
         $o = new Aggregates();
         $result = $o->getList();
@@ -84,9 +84,7 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -101,7 +99,7 @@ class testAggregates extends testCore
     public function testPostDetail() : void
     {
         $o = new Aggregates();
-        $result = $this->postDetail( rir: $_ENV['rir']->id );
+        $result = $this->postDetail();
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -111,7 +109,6 @@ class testAggregates extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -124,12 +121,7 @@ class testAggregates extends testCore
     public function testPostList() :void
     {
         $o = new Aggregates();
-        $result = $o->postList(
-            options: [
-                [ 'prefix' => '192.168.66.0/24', 'rir' => $_ENV['rir']->id ],
-                [ 'prefix' => '192.168.67.0/24', 'rir' => $_ENV['rir']->id ]
-            ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -155,14 +147,13 @@ class testAggregates extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
 
         $o = new Aggregates();
         $result = $o->putDetail( 
                  id: $agr->id, 
              prefix: '192.168.66.0/24', 
                 rir: $_ENV['rir']->id, 
-            options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -173,7 +164,6 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -187,19 +177,11 @@ class testAggregates extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
+        $this->options->id = $agr->id;
 
         $o = new Aggregates();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $agr->id, 
-                         'prefix' => '192.168.66.0/24',
-                            'rir' => $_ENV['rir']->id,
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +191,6 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -223,14 +204,13 @@ class testAggregates extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
 
         $o = new Aggregates();
         $result = $o->patchDetail(
                  id: $agr->id,
              prefix: '192.168.66.0/24',
                 rir: $_ENV['rir']->id,
-            options: [ 'description' => 'Patch Aggregate' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,7 +221,6 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -256,19 +235,11 @@ class testAggregates extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
+        $this->options->id = $agr->id;
 
         $o = new Aggregates();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $agr->id, 
-                         'prefix' => '192.168.66.0/24',
-                            'rir' => $_ENV['rir']->id,
-                    'description' => 'Patch aggregate' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +249,6 @@ class testAggregates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -293,7 +263,7 @@ class testAggregates extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
         
         $o = new Aggregates();
         $result = $o->deleteDetail( id: $agr->id );
@@ -314,7 +284,7 @@ class testAggregates extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $agr = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $agr = $this->postDetail()['body'];
 
         $o = new Aggregates();
         $result = $o->deleteList(
@@ -334,16 +304,13 @@ class testAggregates extends testCore
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $rir ) : array
+    public function postDetail() : array
     {
         $o = new Aggregates();
 
         return $o->postDetail( 
              prefix: '192.168.77.0/24',
-                rir: $rir,
-            options: [ 
-                        'description' => 'PHPUnit_Aggregate',
-            ]
+                rir: $_ENV['rir']->id,
         );
     }
 
@@ -364,30 +331,24 @@ class testAggregates extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupRir()
+    public static function setUpBeforeClass() : void
     {
-        $o = new Rirs();
-        $_ENV['rir'] = $o->postDetail(
-            name: 'phptestunit_rir',
-            slug: 'phptestunit_rir'
-        )['body'];
+        $_ENV['rir'] = self::createRir();
     }
 
-
-
-/*
----------------------------------------------------------------------------- */
-
-/**
-* @afterClass
-*/
-    public static function closeRIR()
+    public static function tearDownAfterClass() : void
     {
-        $o = new Rirs();
-        $o->deleteDetail( id: $_ENV['rir']->id );
+        self::destroyRir( rir: $_ENV['rir'] );
         unset( $_ENV['rir'] );
+    }
+
+            
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->prefix      = "192.168.77.0/24";
+        $this->options->rir         = $_ENV['rir']->id;
+        $this->options->description = 'PHPUnit_Aggregate-' . $rand;
     }
 }

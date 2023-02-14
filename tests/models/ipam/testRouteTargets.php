@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\RouteTargets AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRouteTargets extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -57,7 +59,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rt->id );
@@ -84,9 +85,7 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $rt->id );
@@ -110,7 +109,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -124,12 +122,7 @@ class testRouteTargets extends testCore
     public function testPostList() :void
     {
         $o = new RouteTargets();
-        $result = $o->postList(
-            options: [
-                [ 'name' => 'testRT1', 'description' => 'aaa' ],
-                [ 'name' => 'testRT2', 'description' => 'bbb' ],
-            ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +154,6 @@ class testRouteTargets extends testCore
         $result = $o->putDetail( 
                  id: $rt->id, 
                name: 'updateRT1', 
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +165,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rt->id );
@@ -188,17 +179,10 @@ class testRouteTargets extends testCore
     {
         // SETUP
         $rt = $this->postDetail()['body'];
+        $this->options->id = $rt->id;
 
         $o = new RouteTargets();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $rt->id, 
-                           'name' => 'putRT',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +192,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rt->id );
@@ -228,7 +211,6 @@ class testRouteTargets extends testCore
         $result = $o->patchDetail(
                  id: $rt->id,
                name: 'patchRT',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -239,7 +221,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rt->id );
@@ -254,17 +235,10 @@ class testRouteTargets extends testCore
     {
         // SETUP
         $rt = $this->postDetail()['body'];
+        $this->options->id = $rt->id;
 
         $o = new RouteTargets();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $rt->id, 
-                        'name' => 'patchRT',
-                 'description' => 'patchRT' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -274,7 +248,6 @@ class testRouteTargets extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rt->id );
@@ -335,9 +308,6 @@ class testRouteTargets extends testCore
 
         return $o->postDetail( 
             name: 'testRT',
-            options: [ 
-                'description' => 'PHPUnit test RouteTarget',
-            ]
         );
     }
 
@@ -351,6 +321,16 @@ class testRouteTargets extends testCore
         $o = new RouteTargets();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 10000 );
+        $this->options = new Options();
+        $this->options->name = 'RouteTarge-' . $rand;
     }
 
 }

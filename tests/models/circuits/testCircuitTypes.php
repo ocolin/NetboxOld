@@ -11,9 +11,16 @@ require_once __DIR__ . '/../testCore.php';
 
 class testCircuitTypes extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
+        $this->options = new Options();
+        $this->options->name        = 'PHPUnit_CType';
+        $this->options->slug        = 'PHPUnit_CType';
+        $this->options->description = 'PHPUnit_CType';
+
     }
 
 /* TEST OPTIONS
@@ -118,12 +125,9 @@ class testCircuitTypes extends testCore
 
     public function testPostList() :void
     {
-        $options = new Options();
-        $options->name = 'PHPUnit_CType1';
-        $options->slug = 'PHPUnit_CType1';
-
         $o = new CircuitTypes();
-        $type = $o->postList( options: [ $options ] );
+
+        $type = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $type );
         $this->assertArrayHasKey( 'status',  $type );
@@ -150,15 +154,13 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
-        $options = new Options();
-        $options->description = 'PHPUnit_CType';
 
         $o = new CircuitTypes();
         $type = $o->putDetail( 
                  id: $term->id, 
                name: 'PHPUnit_CType', 
                slug: 'PHPUnit_CType',
-            options: $options
+            options: $this->options
         );
         
         
@@ -184,15 +186,11 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
-        $options = new Options();
-        $options->description = 'PHPUnit_CType';
-        $options->id = $term->id;
-        $options->name = 'PHPUnit_CType';
-        $options->slug = 'PHPUnit_CType';
+        $this->options->id = $term->id;
 
         $o = new CircuitTypes();
         $type = $o->putList(
-            options: [ $options ]
+            options: [ $this->options ]
         );
         
         $this->assertIsArray( $type );
@@ -217,15 +215,13 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
-        $options = new Options();
-        $options->description = 'PHPUnit_CType';
 
         $o = new CircuitTypes();
         $type = $o->patchDetail(
                  id: $term->id,
                name: 'PHPUnit_CType',
                slug: 'PHPUnit_CType',
-            options: $options
+            options: $this->options
         );
 
         $this->assertIsArray( $type );
@@ -250,15 +246,11 @@ class testCircuitTypes extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
-        $options = new Options();
-        $options->description = 'PHPUnit_CType';
-        $options->id = $term->id;
-        $options->name = 'PHPUnit_CType';
-        $options->slug = 'PHPUnit_CType';
+        $this->options->id = $term->id;
 
         $o = new CircuitTypes();
         $type = $o->patchList(
-            options: [ $options ]
+            options: [ $this->options ]
         );
 
         $this->assertIsArray( $type );
@@ -326,13 +318,11 @@ class testCircuitTypes extends testCore
     public function postDetail() : array
     {
         $o = new CircuitTypes();
-        $options = new Options();
-        $options->description = 'PHPUnit_CType';
 
         return $o->postDetail( 
-            name: 'PHPUnit_CType',
-            slug: 'PHPUnit_CType',
-            options: $options
+               name: 'PHPUnit_CType',
+               slug: 'PHPUnit_CType',
+            options: $this->options
         );
     }
 
@@ -348,4 +338,11 @@ class testCircuitTypes extends testCore
         return $o->deleteDetail( id: $id  );
     }
 
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_CType';
+        $this->options->slug = 'PHPUnit_CType';
+    }
 }

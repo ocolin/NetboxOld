@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Virtualization;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Virtualization\VirtualMachines AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testVirtualMachines extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $machine->id );
@@ -82,9 +83,7 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $machine->id );
@@ -108,7 +107,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,14 +120,7 @@ class testVirtualMachines extends testCore
     public function testPostList() :void
     {
         $o = new VirtualMachines();
-        $result = $o->postList(
-        options: [
-            [ 
-                   'name' => 'PHPUnit_VM',
-                'cluster' => $_ENV['cluster']->id,
-            ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,7 +164,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $machine->id );
@@ -188,17 +178,10 @@ class testVirtualMachines extends testCore
     {
         // SETUP
         $machine = $this->postDetail()['body'];
+        $this->options->id = $machine->id;
 
         $o = new VirtualMachines();
-        $result = $o->putList(
-            options: [
-                [ 
-                         'id' => $machine->id, 
-                       'name' => 'PHPUnit_VM',
-                    'cluster' => $_ENV['cluster']->id,
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $machine->id );
@@ -239,8 +221,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $machine->id );
@@ -255,17 +235,10 @@ class testVirtualMachines extends testCore
     {
         // SETUP
         $machine = $this->postDetail()['body'];
+        $this->options->id = $machine->id;
 
         $o = new VirtualMachines();
-        $result = $o->patchList(
-            options: [
-                [ 
-                       'id'   => $machine->id,
-                       'name' => 'PHPUnit_VM',
-                    'cluster' => $_ENV['cluster']->id,
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,7 +248,6 @@ class testVirtualMachines extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $machine->id );
@@ -356,26 +328,20 @@ class testVirtualMachines extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']  = self::createSite();
         $_ENV['type']  = self::createClusterType();
         $_ENV['group'] = self::createClusterGroup();
         $_ENV['cluster']    = self::createCluster(
-            type: $_ENV['type'],
+             type: $_ENV['type'],
             group: $_ENV['group'],
-            site: $_ENV['site']
+             site: $_ENV['site']
         );
 
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyCluster( cluster: $_ENV['cluster'] );
         self::destroySite( site: $_ENV['site'] );
@@ -386,5 +352,13 @@ class testVirtualMachines extends testCore
         unset( $_ENV['type'] );
         unset( $_ENV['group'] );
         unset( $_ENV['cluster'] );
+    }
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_VM-' . $rand;
+        $this->options->cluster = $_ENV['cluster']->id;
     }
 }

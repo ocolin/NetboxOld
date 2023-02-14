@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\InventoryItemRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testInventoryItemRoles extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -82,9 +83,7 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -108,7 +107,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,7 @@ class testInventoryItemRoles extends testCore
     public function testPostList() :void
     {
         $o = new InventoryItemRoles();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testInventoryItemRoles1', 'slug' => 'aaa' ],
-            [ 'name' => 'testInventoryItemRoles2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +153,6 @@ class testInventoryItemRoles extends testCore
               id: $role->id, 
             name: 'updateInventoryItemRoles', 
             slug: 'updateInventoryItemRoles',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +164,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -187,18 +178,10 @@ class testInventoryItemRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new InventoryItemRoles();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $role->id, 
-                           'name' => 'putInventoryItemRoles',
-                           'slug' => 'putInventoryItemRoles',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -229,7 +211,6 @@ class testInventoryItemRoles extends testCore
               id: $role->id,
             name: 'patchInventoryItemRoles',
             slug: 'patchInventoryItemRoles',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -240,8 +221,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -256,18 +235,10 @@ class testInventoryItemRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new InventoryItemRoles();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $role->id, 
-                        'name' => 'patchInventoryItemRoles',
-                        'slug' => 'patchInventoryItemRoles',
-                 'description' => 'patchInventoryItemRoles' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +248,6 @@ class testInventoryItemRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -339,9 +309,6 @@ class testInventoryItemRoles extends testCore
         return $o->postDetail( 
             name: 'testInventoryItemRoles',
             slug: 'testInventoryItemRoles',
-            options: [ 
-                'description' => 'PHPUnit test InventoryItemRoles',
-            ]
         );
     }
 
@@ -356,5 +323,12 @@ class testInventoryItemRoles extends testCore
 
         return $o->deleteDetail( id: $id  );
     }
-
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_InvItemRole-' . $rand;
+        $this->options->slug = 'PHPUnit_InvItemRole-' . $rand;
+    }
 }

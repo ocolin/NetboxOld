@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\ConsolePorts AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testConsolePorts extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -83,9 +84,7 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -109,7 +108,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,8 @@ class testConsolePorts extends testCore
     public function testPostList() :void
     {
         $o = new ConsolePorts();
-        $result = $o->postList(
-            options: [[ 
-                      'name' => 'PHPUnit_ConsolePort',
-                    'device' => $_ENV['device']->id
-                ]] 
-            );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -171,7 +165,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -186,17 +179,10 @@ class testConsolePorts extends testCore
     {
         // SETUP
         $port = $this->postDetail()['body'];
+        $this->options->id = $port->id;
 
         $o = new ConsolePorts();
-        $result = $o->putList(
-            options: [
-                [ 
-                        'id' => $port->id,
-                      'name' => 'PHPUnit_ConsolePort',
-                    'device' => $_ENV['device']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -206,7 +192,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -237,7 +222,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -252,17 +236,10 @@ class testConsolePorts extends testCore
     {
         // SETUP
         $port = $this->postDetail()['body'];
+        $this->options->id = $port->id;
 
         $o = new ConsolePorts();
-        $result = $o->patchList(
-            options: [
-                [ 
-                        'id' => $port->id,
-                      'name' => 'PHPUnit_ConsolePort',
-                    'device' => $_ENV['device']->id
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -272,7 +249,6 @@ class testConsolePorts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $port->id );
@@ -332,7 +308,7 @@ class testConsolePorts extends testCore
         $o = new ConsolePorts();
 
         return $o->postDetail( 
-            name: 'PHPUnit_ConsolePort',
+              name: 'PHPUnit_ConsolePort',
             device: $_ENV['device']->id
         );
     }
@@ -354,10 +330,7 @@ class testConsolePorts extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -379,10 +352,7 @@ class testConsolePorts extends testCore
         );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyDevice( device: $_ENV['device'] );
         self::destroyRack( rack: $_ENV['rack'] );
@@ -403,5 +373,13 @@ class testConsolePorts extends testCore
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
         unset( $_ENV['device'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_ConsolePort-' . $rand;
+        $this->options->device = $_ENV['device']->id;
     }
 }

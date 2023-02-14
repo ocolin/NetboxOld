@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Modules AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testModules extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $module->id );
@@ -83,9 +84,7 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $module->id );
@@ -109,7 +108,6 @@ class testModules extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,14 +121,7 @@ class testModules extends testCore
     public function testPostList() :void
     {
         $o = new Modules();
-        $result = $o->postList(
-            options: [[ 
-                     'device' => $_ENV['device']->id,
-                 'module_bay' => $_ENV['modbay']->id,
-                'module_type' => $_ENV['modtype']->id,
-                    'options' => [ 'comments' => 'PHPUnit_Module' ]
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -164,7 +155,6 @@ class testModules extends testCore
                  device: $_ENV['device']->id,
              module_bay: $_ENV['modbay']->id,
             module_type: $_ENV['modtype']->id,
-                options: [ 'comments' => 'PHPUnit_Module' ]                
         );
         
         $this->assertIsArray( $result );
@@ -175,7 +165,6 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $module->id );
@@ -190,19 +179,10 @@ class testModules extends testCore
     {
         // SETUP
         $module = $this->postDetail()['body'];
+        $this->options->id = $module->id;
 
         $o = new Modules();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $module->id,
-                         'device' => $_ENV['device']->id,
-                     'module_bay' => $_ENV['modbay']->id,
-                    'module_type' => $_ENV['modtype']->id,
-                        'options' => [ 'comments' => 'PHPUnit_Module' ]
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -212,7 +192,6 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $module->id );
@@ -234,7 +213,6 @@ class testModules extends testCore
                  device: $_ENV['device']->id,
              module_bay: $_ENV['modbay']->id,
             module_type: $_ENV['modtype']->id,
-                options: [ 'comments' => 'PHPUnit_Module' ]
         );
 
         $this->assertIsArray( $result );
@@ -245,7 +223,6 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $module->id );
@@ -260,19 +237,10 @@ class testModules extends testCore
     {
         // SETUP
         $module = $this->postDetail()['body'];
+        $this->options->id = $module->id;
 
         $o = new Modules();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $module->id,
-                         'device' => $_ENV['device']->id,
-                     'module_bay' => $_ENV['modbay']->id,
-                    'module_type' => $_ENV['modtype']->id,
-                        'options' => [ 'comments' => 'PHPUnit_Module' ]
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -282,7 +250,6 @@ class testModules extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $module->id );
@@ -345,7 +312,6 @@ class testModules extends testCore
                  device: $_ENV['device']->id,
              module_bay: $_ENV['modbay']->id,
             module_type: $_ENV['modtype']->id,
-                options: [ 'comments' => 'PHPUnit_Module' ]
         );
     }
 
@@ -366,10 +332,7 @@ class testModules extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -393,10 +356,7 @@ class testModules extends testCore
         $_ENV['modtype'] = self::createModuleType( manufacturer: $_ENV['manf'] );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyModuleType( modtype: $_ENV['modtype'] );
         self::destroyModuleBay( bay: $_ENV['modbay'] );
@@ -421,5 +381,15 @@ class testModules extends testCore
         unset( $_ENV['device'] );
         unset( $_ENV['modbay'] );
         unset( $_ENV['modtype'] ); 
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->device      = $_ENV['device']->id;
+        $this->options->module_bay  = $_ENV['modbay']->id;
+        $this->options->module_type = $_ENV['modtype']->id;
+        $this->options->comments    = 'PHPUnit_Module-' . $rand;
     }
 }

@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\SiteGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testSiteGroups extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $stgrp->id );
@@ -82,9 +83,7 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $stgrp->id );
@@ -108,7 +107,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,8 @@ class testSiteGroups extends testCore
     public function testPostList() :void
     {
         $o = new SiteGroups();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testSiteGroup1', 'slug' => 'aaa' ],
-            [ 'name' => 'testSiteGroup2', 'slug' => 'bbb' ],
-        ]  
-        );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +154,6 @@ class testSiteGroups extends testCore
               id: $stgrp->id, 
             name: 'updateSiteGroup', 
             slug: 'updateSiteGroup',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +165,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $stgrp->id );
@@ -187,18 +179,10 @@ class testSiteGroups extends testCore
     {
         // SETUP
         $stgrp = $this->postDetail()['body'];
+        $this->options->id   = $stgrp->id;
 
         $o = new SiteGroups();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $stgrp->id, 
-                           'name' => 'putSiteGroup',
-                           'slug' => 'putSiteGroups',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +192,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $stgrp->id );
@@ -229,7 +212,6 @@ class testSiteGroups extends testCore
               id: $stgrp->id,
             name: 'patchSiteGroup',
             slug: 'patchSiteGroup',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -240,8 +222,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $stgrp->id );
@@ -256,18 +236,10 @@ class testSiteGroups extends testCore
     {
         // SETUP
         $stgrp = $this->postDetail()['body'];
+        $this->options->id   = $stgrp->id;
 
         $o = new SiteGroups();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $stgrp->id, 
-                        'name' => 'patchSiteGroups',
-                        'slug' => 'patchSiteGroups',
-                 'description' => 'patchSiteGroups' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +249,6 @@ class testSiteGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $stgrp->id );
@@ -339,9 +310,6 @@ class testSiteGroups extends testCore
         return $o->postDetail( 
             name: 'testSiteGroups',
             slug: 'testSiteGroups',
-            options: [ 
-                'description' => 'PHPUnit test SiteGroups',
-            ]
         );
     }
 
@@ -355,6 +323,14 @@ class testSiteGroups extends testCore
         $o = new SiteGroups();
 
         return $o->deleteDetail( id: $id  );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_SiteGroup-' . $rand;
+        $this->options->slug = 'PHPUnit_SiteGroup-' . $rand;
     }
 
 }

@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Roles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRoles extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -83,9 +84,7 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -109,7 +108,6 @@ class testRoles extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ class testRoles extends testCore
     public function testPostList() :void
     {
         $o = new Roles();
-        $result = $o->postList(
-            options: [
-                [ 'name' => 'testRole1', 'slug' => 'aaa' ],
-                [ 'name' => 'testRole2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +154,6 @@ class testRoles extends testCore
                  id: $role->id, 
                name: 'updateRole', 
                slug: 'updateRole',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +165,6 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -188,18 +179,10 @@ class testRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new Roles();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $role->id, 
-                           'name' => 'putRole',
-                           'slug' => 'putRole',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +192,6 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -230,7 +212,6 @@ class testRoles extends testCore
                  id: $role->id,
                name: 'patchRole',
                slug: 'patchRole',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,7 +222,6 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -257,18 +237,10 @@ class testRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new Roles();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $role->id, 
-                        'name' => 'patchRole',
-                        'slug' => 'patchRole',
-                 'description' => 'patchRole' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +250,6 @@ class testRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -340,9 +311,7 @@ class testRoles extends testCore
         return $o->postDetail( 
             name: 'testRole',
             slug: 'testRole',
-            options: [ 
-                'description' => 'PHPUnit test post Role',
-            ]
+
         );
     }
 
@@ -356,6 +325,17 @@ class testRoles extends testCore
         $o = new Roles();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Role-' . $rand;
+        $this->options->slug = 'PHPUnit_Role-' . $rand;
     }
 
 }

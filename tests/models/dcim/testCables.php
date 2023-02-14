@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Cables AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testCables extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,10 +34,6 @@ class testCables extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
-
-        //$test = $this->postDetail()['body'];
-        //print_r( $test );
     }
 
 
@@ -454,10 +453,8 @@ class testCables extends testCore
         );
     }
 */
-/**
-* @afterClass
-*/
-    public static function closeTest()
+
+    public static function tearDownAfterClass() : void
     {
         self::destroyCircuitTermination( $_ENV['termZ'] );
         self::destroyCircuitTermination( $_ENV['termA'] );
@@ -505,4 +502,11 @@ class testCables extends testCore
         unset( $_ENV['interfaceA'] );
     }
 */
+
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+    }
 }

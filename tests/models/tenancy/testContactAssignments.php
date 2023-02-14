@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Tenancy;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Tenancy\ContactAssignments AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testContactAssignments extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -362,20 +365,14 @@ class testContactAssignments extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['crole']   = self::createContactRole();
         $_ENV['cgroup']  = self::createContactGroup();
         $_ENV['contact'] = self::createContact( group: $_ENV['cgroup'] );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyContact( contact: $_ENV['contact'] );
         self::destroyContactGroup( group: $_ENV['cgroup'] );
@@ -384,6 +381,17 @@ class testContactAssignments extends testCore
         unset( $_ENV['contact'] );
         unset( $_ENV['cgroup'] );
         unset( $_ENV['crole'] );
+    }
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->content_type = 'Tenancy.Contacts';
+        $this->options->object_id = 0;
+        $this->options->contact   = $_ENV['contact']->id;
+        $this->options->role      = $_ENV['crole']->id;
+        $this->options->priority  = 'primary';
     }
 
 }

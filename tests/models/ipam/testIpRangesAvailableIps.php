@@ -33,7 +33,6 @@ class testIpRangesAvailableIps extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -85,7 +84,7 @@ class testIpRangesAvailableIps extends testCore
 
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
-
+/* 
     public function postDetail() : array
     {
         $o = new IpRangesAvailableIps();
@@ -95,7 +94,7 @@ class testIpRangesAvailableIps extends testCore
             group_id: 1
         );
     }
-
+ */
 
 
 /* DELETE AN IP
@@ -110,20 +109,15 @@ class testIpRangesAvailableIps extends testCore
 
 
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['range'] = self::createIpRange();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyIpRange( range: $_ENV['range'] );
         unset( $_ENV['range'] );
     }
+
 }

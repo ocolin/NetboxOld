@@ -5,6 +5,11 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models;
 
 use Symfony\Component\Dotenv\Dotenv;
+use Cruzio\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
+use Cruzio\Netbox\Options\DCIM\Interfaces AS IntOptions;
+use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
+
+#Circuits\CircuitTerminations
 
 require_once( __DIR__ . '/../../vendor/autoload.php' );
 
@@ -12,9 +17,10 @@ class testCore extends \PHPUnit\Framework\TestCase
 {
     public function __construct()
     {
+        parent::__construct();
         $dotenv = new Dotenv();
         $dotenv->load( __DIR__ . '/../.env' );
-        parent::__construct();
+        
     }
 
 
@@ -44,7 +50,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createContact( object $group ) : object
     {
-        $o = new Users\Contacts();
+        $o = new Tenancy\Contacts();
         return $o->postDetail(
               name: 'PHPUnit_Contact',
              group: $group->id
@@ -53,7 +59,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function destroyContact( object $contact ) :void
     {
-        $o = new Users\Contacts();
+        $o = new Tenancy\Contacts();
         $o->deleteDetail( id: $contact->id );
     }
 
@@ -209,10 +215,11 @@ class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createManufacturer() : object
     {
+        $rand = rand( 1, 100000 );
         $o = new DCIM\Manufacturers();
         return $o->postDetail(
-            name: 'PHPUnit_Manufacturer',
-            slug: 'PHPUnit_Manufacturer'
+            name: 'PHPUnit_Manufacturer-' . $rand,
+            slug: 'PHPUnit_Manufacturer-' . $rand
         )['body'];
     }
 
@@ -231,12 +238,15 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $manf
     ) : object
     {
+        $obj = new DevtOptions();
+        $obj->subdevice_role = 'parent';
+
         $o = new DCIM\DeviceTypes();
         return $o->postDetail(
             manufacturer: $manf->id,
                    model: 'PHPUnit_DeviceType',
                     slug: 'PHPUnit_DeviceType',
-                 options: [ 'subdevice_role' => 'parent' ]
+                 options: $obj
         )['body'];
     }
 
@@ -265,7 +275,7 @@ class testCore extends \PHPUnit\Framework\TestCase
     public static function destroyTenant( object $tenant ) :void
     {
         $o = new Tenancy\Tenants();
-        $o->deleteDetail( id: $tenant->id );
+        $test = $o->deleteDetail( id: $tenant->id );
     }
 
 
@@ -317,6 +327,24 @@ class testCore extends \PHPUnit\Framework\TestCase
         $o->deleteDetail( id: $rack->id );
     }
 
+
+/* RIR
+---------------------------------------------------------------------------- */
+
+    public static function createRir() : object
+    {
+        $o = new IPAM\Rirs();
+        return $o->postDetail(
+            name: 'phptestunit_rir',
+            slug: 'phptestunit_rir'
+        )['body'];
+    }
+
+    public static function destroyRir( object $rir ) : void
+    {
+        $o = new IPAM\Rirs();
+        $o->deleteDetail( id: $rir->id );
+    }
 
 
 
@@ -440,13 +468,14 @@ class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 0,100000 );
         $o = new DCIM\Interfaces();
+        $obj = new IntOptions();
+        $obj->rf_role = 'station';
+
         return $o->postDetail(
               name: 'PHPUnit_Interface-' . $rand,
               type: 'ieee802.11ac',
             device: $device->id,
-            options: [ 
-                'rf_role' => 'station',
-            ]
+            options: $obj
         )['body'];
     }
 
@@ -486,11 +515,13 @@ class testCore extends \PHPUnit\Framework\TestCase
         string $term = 'A'
     )
     {
+        $obj = new CTOptions();
+        $obj->site = $site->id;
         $o = new Circuits\CircuitTerminations();
         return $o->postDetail(
             circuit: $circuit->id,
             term_side: $term,
-            options: [ 'site' => $site->id ]
+            options: $obj
         )['body'];
     }
 

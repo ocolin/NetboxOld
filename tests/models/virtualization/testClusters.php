@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Virtualization;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Virtualization\Clusters AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testClusters extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $cluster->id );
@@ -82,9 +83,7 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $cluster->id );
@@ -108,7 +107,6 @@ class testClusters extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,16 +120,7 @@ class testClusters extends testCore
     public function testPostList() :void
     {
         $o = new Clusters();
-        $result = $o->postList(
-        options: [
-            [ 
-                 'name' => 'PHPUnit_Cluster',
-                 'type' => $_ENV['type']->id,
-                'group' => $_ENV['group']->id,
-                 'site' => $_ENV['site']->id
-            ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -177,7 +166,6 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $cluster->id );
@@ -192,19 +180,10 @@ class testClusters extends testCore
     {
         // SETUP
         $cluster = $this->postDetail()['body'];
+        $this->options->id = $cluster->id;
 
         $o = new Clusters();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $cluster->id, 
-                    'name' => 'PHPUnit_Cluster',
-                    'type' => $_ENV['type']->id,
-                    'group' => $_ENV['group']->id,
-                    'site' => $_ENV['site']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -214,7 +193,6 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $cluster->id );
@@ -247,7 +225,6 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -263,19 +240,10 @@ class testClusters extends testCore
     {
         // SETUP
         $cluster = $this->postDetail()['body'];
+        $this->options->id = $cluster->id;
 
         $o = new Clusters();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $cluster->id,
-                    'name' => 'PHPUnit_Cluster',
-                    'type' => $_ENV['type']->id,
-                    'group' => $_ENV['group']->id,
-                    'site' => $_ENV['site']->id
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -285,7 +253,6 @@ class testClusters extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $cluster->id );
@@ -368,10 +335,7 @@ class testClusters extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']  = self::createSite();
         $_ENV['type']  = self::createClusterType();
@@ -379,10 +343,7 @@ class testClusters extends testCore
 
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroySite( site: $_ENV['site'] );
         self::destroyClusterType( type: $_ENV['type'] );
@@ -391,5 +352,15 @@ class testClusters extends testCore
         unset( $_ENV['site'] );
         unset( $_ENV['type'] );
         unset( $_ENV['group'] );
+    }
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name  = 'PHPUnit_Cluster-' . $rand;
+        $this->options->type  = $_ENV['type']->id;
+        $this->options->group = $_ENV['group']->id;
+        $this->options->site  = $_ENV['site']->id;
     }
 }

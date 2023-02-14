@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Services AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testServices extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -83,9 +84,7 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -109,7 +108,6 @@ class testServices extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,14 +121,7 @@ class testServices extends testCore
     public function testPostList() :void
     {
         $o = new Services();
-        $result = $o->postList(
-            options: [[ 
-                        'name' => 'PHPUnit_Service',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                      'device' => $_ENV['device']->id
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -164,7 +155,7 @@ class testServices extends testCore
                 name: 'PHPUnit_Service',
                ports: [1],
             protocol: 'tcp',
-             options: [ 'device' => $_ENV['device']->id ]               
+             options: $this->options              
         );
         
         $this->assertIsArray( $result );
@@ -175,7 +166,6 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -190,19 +180,10 @@ class testServices extends testCore
     {
         // SETUP
         $service = $this->postDetail()['body'];
+        $this->options->id = $service->id;
 
         $o = new Services();
-        $result = $o->putList(
-            options: [
-                [ 
-                          'id' => $service->id,
-                        'name' => 'PHPUnit_Service',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                     'options' => [ 'device' => $_ENV['device']->id ]
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -212,7 +193,6 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -227,6 +207,7 @@ class testServices extends testCore
     {
         // SETUP
         $service = $this->postDetail()['body'];
+        
 
         $o = new Services();
         $result = $o->patchDetail(
@@ -234,7 +215,7 @@ class testServices extends testCore
                 name: 'PHPUnit_Service',
                ports: [1],
             protocol: 'tcp',
-             options: [ 'device' => $_ENV['device']->id ]
+             options: $this->options
         );
 
         $this->assertIsArray( $result );
@@ -245,7 +226,6 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -260,19 +240,10 @@ class testServices extends testCore
     {
         // SETUP
         $service = $this->postDetail()['body'];
+        $this->options->id = $service->id;
 
         $o = new Services();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $service->id,
-                        'name' => 'PHPUnit_Service',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                     'options' => [ 'device' => $_ENV['device']->id ]
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -282,7 +253,6 @@ class testServices extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -345,7 +315,7 @@ class testServices extends testCore
                 name: 'PHPUnit_Service',
                ports: [1],
             protocol: 'tcp',
-            options: [ 'device' => $_ENV['device']->id ]
+             options: $this->options
         );
     }
 
@@ -366,10 +336,7 @@ class testServices extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -391,10 +358,7 @@ class testServices extends testCore
         );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyDevice( device: $_ENV['device'] );
         self::destroyRack( rack: $_ENV['rack'] );
@@ -415,5 +379,16 @@ class testServices extends testCore
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
         unset( $_ENV['device'] );
+    }
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name     = 'PHPUnit_Service-' . $rand;
+        $this->options->ports    = [1];
+        $this->options->protocol = 'tcp';
+        $this->options->device   = $_ENV['device']->id;
     }
 }

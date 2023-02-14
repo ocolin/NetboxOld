@@ -129,7 +129,8 @@ function clearRacks()
 
     foreach( $rack->results as $rack )
     {
-        $o->deleteDetail( id: $rack->id) ;
+        $a = new DCIM\Racks();
+        $a->deleteDetail( id: $rack->id) ;
     }
 }
 
@@ -173,7 +174,8 @@ function clearDeviceType()
 
     foreach( $dts->results as $dt )
     {
-        $o->deleteDetail( id: $dt->id );
+        $a = new DCIM\DeviceTypes();
+        $test = $a->deleteDetail( id: $dt->id );
     }
 }
 

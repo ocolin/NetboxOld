@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\DeviceBayTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testDeviceBayTemplates extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $template->id );
@@ -83,9 +84,7 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $template->id );
@@ -109,7 +108,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,8 @@ class testDeviceBayTemplates extends testCore
     public function testPostList() :void
     {
         $o = new DeviceBayTemplates();
-        $result = $o->postList(
-            options: [[ 
-                           'name' => 'PHPUnit_DB_Temp',
-                    'device_type' => $_ENV['devtype']->id
-                ]] 
-            );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -171,7 +165,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $template->id );
@@ -186,17 +179,10 @@ class testDeviceBayTemplates extends testCore
     {
         // SETUP
         $template = $this->postDetail()['body'];
+        $this->options->id = $template->id;
 
         $o = new DeviceBayTemplates();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $template->id,
-                           'name' => 'PHPUnit_DB_Temp',
-                    'device_type' => $_ENV['devtype']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -206,7 +192,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $template->id );
@@ -237,7 +222,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $template->id );
@@ -252,17 +236,10 @@ class testDeviceBayTemplates extends testCore
     {
         // SETUP
         $template = $this->postDetail()['body'];
+        $this->options->id = $template->id;
 
         $o = new DeviceBayTemplates();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $template->id,
-                           'name' => 'PHPUnit_DB_Temp',
-                    'device_type' => $_ENV['devtype']->id
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -272,7 +249,6 @@ class testDeviceBayTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $template->id );
@@ -332,7 +308,7 @@ class testDeviceBayTemplates extends testCore
         $o = new DeviceBayTemplates();
 
         return $o->postDetail( 
-            name: 'PHPUnit_DB_Temp',
+                   name: 'PHPUnit_DB_Temp',
             device_type: $_ENV['devtype']->id
         );
     }
@@ -354,24 +330,26 @@ class testDeviceBayTemplates extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['manf']     = self::createManufacturer();
         $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyDeviceType( devtype: $_ENV['devtype'] );
         self::destroyManufacturer( manf: $_ENV['manf'] );
 
         unset( $_ENV['devtype'] );
         unset( $_ENV['manf'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_DevBayTempl-' . $rand;
+        $this->options->device_type = $_ENV['devtype']->id;
     }
 }

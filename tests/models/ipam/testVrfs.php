@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Vrfs AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testVrfs extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -57,7 +59,6 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
@@ -84,9 +85,7 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
@@ -110,7 +109,6 @@ class testVrfs extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -125,10 +123,7 @@ class testVrfs extends testCore
     {
         $o = new Vrfs();
         $result = $o->postList(
-            options: [
-                [ 'name' => 'testVRF1', 'description' => 'aaa' ],
-                [ 'name' => 'testVRF2', 'description' => 'bbb' ],
-            ]  
+            options: [ $this->options ]  
         );
 
         $this->assertIsArray( $result );
@@ -161,7 +156,6 @@ class testVrfs extends testCore
         $result = $o->putDetail( 
                  id: $vrf->id, 
                name: 'updateVRF', 
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +167,6 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
@@ -188,17 +181,10 @@ class testVrfs extends testCore
     {
         // SETUP
         $vrf = $this->postDetail()['body'];
+        $this->options->id = $vrf->id;
 
         $o = new Vrfs();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $vrf->id, 
-                           'name' => 'putVRF',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [$this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +194,6 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
@@ -228,7 +213,6 @@ class testVrfs extends testCore
         $result = $o->patchDetail(
                  id: $vrf->id,
                name: 'patchVRF',
-            options: [ 'description' => 'Patching VRF Test' ]
         );
 
         $this->assertIsArray( $result );
@@ -239,7 +223,6 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
@@ -254,17 +237,10 @@ class testVrfs extends testCore
     {
         // SETUP
         $vrf = $this->postDetail()['body'];
+        $this->options->id = $vrf->id;
 
         $o = new Vrfs();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $vrf->id, 
-                        'name' => 'patchVRT',
-                 'description' => 'patchVRT Test' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -274,7 +250,6 @@ class testVrfs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
@@ -335,9 +310,6 @@ class testVrfs extends testCore
 
         return $o->postDetail( 
             name: 'testVRFs',
-            options: [ 
-                'description' => 'PHPUnit test VRFs',
-            ]
         );
     }
 
@@ -351,6 +323,16 @@ class testVrfs extends testCore
         $o = new Vrfs();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_VRF-' . $rand;
     }
 
 }

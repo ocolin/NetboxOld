@@ -42,9 +42,9 @@ class DeviceTypes extends DCIM
     {
         $options = $options ?? $this->options;
 
-        $options['model']        = $model;
-        $options['slug']         = $slug;
-        $options['manufacturer'] = $manufacturer;
+        $options->model        = $model;
+        $options->slug         = $slug;
+        $options->manufacturer = $manufacturer;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -81,9 +81,9 @@ class DeviceTypes extends DCIM
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options['model']        = $model;
-        $options['slug']         = $slug;
-        $options['manufacturer'] = $manufacturer;
+        $options->model        = $model;
+        $options->slug         = $slug;
+        $options->manufacturer = $manufacturer;
         
 
         return $this->http->put(
@@ -121,9 +121,9 @@ class DeviceTypes extends DCIM
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options['model']        = $model;
-        $options['slug']         = $slug;
-        $options['manufacturer'] = $manufacturer;
+        $options->model        = $model;
+        $options->slug         = $slug;
+        $options->manufacturer = $manufacturer;
 
 
         return $this->http->put(

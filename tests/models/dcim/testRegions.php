@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Regions AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRegions extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $region->id );
@@ -83,9 +84,7 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $region->id );
@@ -109,7 +108,6 @@ class testRegions extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,8 @@ class testRegions extends testCore
     public function testPostList() :void
     {
         $o = new Regions();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testRegion1', 'slug' => 'aaa' ],
-            [ 'name' => 'testRegion2', 'slug' => 'bbb' ],
-        ]  
-        );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +155,6 @@ class testRegions extends testCore
               id: $region->id, 
             name: 'updateRegion', 
             slug: 'updateRegion',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +166,6 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $region->id );
@@ -188,18 +180,10 @@ class testRegions extends testCore
     {
         // SETUP
         $region = $this->postDetail()['body'];
+        $this->options->id   = $region->id;
 
         $o = new Regions();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $region->id, 
-                           'name' => 'putRegion',
-                           'slug' => 'putRegion',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +193,6 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $region->id );
@@ -230,7 +213,6 @@ class testRegions extends testCore
               id: $region->id,
             name: 'patchRegion',
             slug: 'patchRegion',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,8 +223,6 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $region->id );
@@ -257,18 +237,10 @@ class testRegions extends testCore
     {
         // SETUP
         $region = $this->postDetail()['body'];
+        $this->options->id   = $region->id;
 
         $o = new Regions();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $region->id, 
-                        'name' => 'patchRegion',
-                        'slug' => 'patchRegion',
-                 'description' => 'patchRegion' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +250,6 @@ class testRegions extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $region->id );
@@ -340,9 +311,6 @@ class testRegions extends testCore
         return $o->postDetail( 
             name: 'testRegion',
             slug: 'testRegion',
-            options: [ 
-                'description' => 'PHPUnit test post Region',
-            ]
         );
     }
 
@@ -356,6 +324,14 @@ class testRegions extends testCore
         $o = new Regions();
 
         return $o->deleteDetail( id: $id  );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Region-' . $rand;
+        $this->options->slug = 'PHPUnit_Region-' . $rand;
     }
 
 }

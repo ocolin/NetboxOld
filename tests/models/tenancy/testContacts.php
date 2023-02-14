@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Tenancy;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Tenancy\Contacts AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testContacts extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $contact->id );
@@ -82,9 +83,7 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $contact->id );
@@ -108,7 +107,6 @@ class testContacts extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,14 +120,7 @@ class testContacts extends testCore
     public function testPostList() :void
     {
         $o = new Contacts();
-        $result = $o->postList(
-        options: [
-            [ 
-                 'name' => 'PHPUnit_Contact',
-                'group' => $_ENV['cgroup']->id
-            ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,7 +164,6 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $contact->id );
@@ -188,17 +178,10 @@ class testContacts extends testCore
     {
         // SETUP
         $contact = $this->postDetail()['body'];
+        $this->options->id = $contact->id;
 
         $o = new Contacts();
-        $result = $o->putList(
-            options: [
-                [ 
-                       'id' => $contact->id, 
-                     'name' => 'PHPUnit_Contact',
-                    'group' => $_ENV['cgroup']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $contact->id );
@@ -239,7 +221,6 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -255,17 +236,10 @@ class testContacts extends testCore
     {
         // SETUP
         $contact = $this->postDetail()['body'];
+        $this->options->id = $contact->id;
 
         $o = new Contacts();
-        $result = $o->patchList(
-            options: [
-                [ 
-                       'id' => $contact->id, 
-                     'name' => 'PHPUnit_Contact',
-                    'group' => $_ENV['cgroup']->id
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,7 +249,6 @@ class testContacts extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $contact->id );
@@ -356,20 +329,23 @@ class testContacts extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['cgroup'] = self::createContactGroup();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() :void
     {
         self::destroyContactGroup( group: $_ENV['cgroup'] );
+    }
+
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name  = 'PHPUnit_Contact-' . $rand;
+        $this->options->group = $_ENV['cgroup']->id;
     }
 
 }

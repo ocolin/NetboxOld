@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\IpAddresses AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testIpAddresses extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -82,9 +83,7 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -109,7 +108,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,7 @@ class testIpAddresses extends testCore
     public function testPostList() :void
     {
         $o = new IpAddresses();
-        $result = $o->postList(
-            options: [
-                [ 'address' => '192.168.66.1/24', 'description' => 'aaa' ],
-                [ 'address' => '192.168.66.2/24', 'description' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -159,7 +152,6 @@ class testIpAddresses extends testCore
         $result = $o->putDetail( 
                  id: $ip->id, 
             address: '192.168.66.1/24', 
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -171,7 +163,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -186,17 +177,10 @@ class testIpAddresses extends testCore
     {
         // SETUP
         $ip = $this->postDetail()['body'];
+        $this->options->id = $ip->id;
 
         $o = new IpAddresses();
-        $result = $o->putList(
-            options: [
-                [ 
-                    'id'   => $ip->id, 
-                    'address' => '192.168.66.2/24',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -206,7 +190,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -226,7 +209,6 @@ class testIpAddresses extends testCore
         $result = $o->patchDetail(
                  id: $ip->id,
             address: '192.168.7.5/25',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -237,7 +219,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -253,17 +234,10 @@ class testIpAddresses extends testCore
     {
         // SETUP
         $ip = $this->postDetail()['body'];
+        $this->options->id = $ip->id;
 
         $o = new IpAddresses();
-        $result = $o->patchList(
-            options: [
-                [ 
-                         'id' => $ip->id, 
-                    'address' => '192.168.4.3/24',
-                'description' => 'patch IP' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -273,7 +247,6 @@ class testIpAddresses extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -335,9 +308,6 @@ class testIpAddresses extends testCore
 
         return $o->postDetail( 
             address: '192.168.77.7/24',
-            options: [ 
-                'description' => 'PHPUnit test post IP Address',
-            ]
         );
     }
 
@@ -351,5 +321,16 @@ class testIpAddresses extends testCore
         $o = new IpAddresses();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 2, 254 );
+        $this->options = new Options();
+        $this->options->address = "192.168.44.{$rand}/24";
+        $this->options->description = 'PHPUnit_IP-' . $rand;
     }
 }

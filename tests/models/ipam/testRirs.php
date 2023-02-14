@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Rirs AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRirs extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testRirs extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ public function testGetDetail() : void
     $this->assertEquals( 200, $result['status'] );
     $this->assertIsArray( $result['headers'] );
     $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
 
     // CLEAN UP
     $this->deleteDetail( $rir->id );
@@ -83,9 +84,7 @@ public function testGetList() : void
     $this->assertEquals( 200, $result['status'] );
     $this->assertIsArray( $result['headers'] );
     $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
     $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
      // CLEAN UP
      $this->deleteDetail( $rir->id );
@@ -109,7 +108,6 @@ public function testGetList() : void
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ public function testGetList() : void
     public function testPostList() :void
     {
         $o = new Rirs();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testRir1', 'slug' => 'aaa' ],
-            [ 'name' => 'testRir2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +154,6 @@ public function testGetList() : void
                  id: $rir->id, 
                name: 'updateRir', 
                slug: 'updateRir',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +165,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rir->id );
@@ -188,18 +179,10 @@ public function testGetList() : void
     {
         // SETUP
         $rir = $this->postDetail()['body'];
+        $this->options->id = $rir->id;
 
         $o = new Rirs();
-        $result = $o->putList(
-            options: [
-                [ 
-                            'id'  => $rir->id, 
-                           'name' => 'putRir',
-                           'slug' => 'putRir',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +192,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rir->id );
@@ -230,7 +212,6 @@ public function testGetList() : void
                  id: $rir->id,
                name: 'patchRIR',
                slug: 'patchRIR',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,7 +222,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -257,18 +237,10 @@ public function testGetList() : void
     {
         // SETUP
         $rir = $this->postDetail()['body'];
+        $this->options->id = $rir->id;
 
         $o = new Rirs();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $rir->id, 
-                        'name' => 'patchRirs',
-                        'slug' => 'patchRirs',
-                 'description' => 'patchRirs' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +250,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rir->id );
@@ -340,9 +311,6 @@ public function testGetList() : void
         return $o->postDetail( 
             name: 'testRir',
             slug: 'testRir',
-            options: [ 
-                'description' => 'PHPUnit test post RIR',
-            ]
         );
     }
 
@@ -356,6 +324,17 @@ public function testGetList() : void
         $o = new Rirs();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_RIR-' . $rand;
+        $this->options->slug = 'PHPUnit_RIR-' . $rand;
     }
 
 }

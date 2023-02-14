@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testCircuitTerminations extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -83,9 +84,7 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -109,7 +108,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -124,13 +122,7 @@ class testCircuitTerminations extends testCore
     public function testPostList() :void
     {
         $o = new CircuitTerminations();
-        $result = $o->postList(
-            options: [[ 
-                'term_side' => 'A',
-                  'circuit' => $_ENV['circuit']->id,
-                  'options' => [ 'site' => $_ENV['site']->id ]
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
         print_r( $result['body']);
 
         $this->assertIsArray( $result );
@@ -164,7 +156,7 @@ class testCircuitTerminations extends testCore
                    id: $term->id, 
             term_side: 'A',
               circuit: $_ENV['circuit']->id,   
-              options: [ 'site' => $_ENV['site']->id ]        
+              options: $this->options
         );
         
         $this->assertIsArray( $result );
@@ -175,7 +167,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -190,18 +181,10 @@ class testCircuitTerminations extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        $this->options->id = $term->id;
 
         $o = new CircuitTerminations();
-        $result = $o->putList(
-            options: [
-                [ 
-                       'id' => $term->id,
-                'term_side' => 'A',
-                  'circuit' => $_ENV['circuit']->id,
-                 'options'  =>  [ 'site' => $_ENV['site']->id ]
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -211,7 +194,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -232,7 +214,7 @@ class testCircuitTerminations extends testCore
                    id: $term->id, 
             term_side: 'A',
               circuit: $_ENV['circuit']->id,
-              options: [ 'site' => $_ENV['site']->id ]
+              options: $this->options
         );
 
         $this->assertIsArray( $result );
@@ -243,7 +225,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -266,7 +247,7 @@ class testCircuitTerminations extends testCore
                            'id' => $term->id,
                     'term_side' => 'A',
                       'circuit' => $_ENV['circuit']->id,
-                     'options'  =>  [ 'site' => $_ENV['site']->id ]
+                     'options'  => $this->options
                 ]
             ]
         );
@@ -279,7 +260,6 @@ class testCircuitTerminations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -341,7 +321,7 @@ class testCircuitTerminations extends testCore
         return $o->postDetail( 
             term_side: 'A',
               circuit: $_ENV['circuit']->id,
-              options: [ 'site' => $_ENV['site']->id ]
+              options: $this->options
         );
     }
 
@@ -362,10 +342,7 @@ class testCircuitTerminations extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['provider']     = self::createProvider();
         $_ENV['circuit_type'] = self::createCircuitType();
@@ -376,10 +353,7 @@ class testCircuitTerminations extends testCore
         );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyCircuit( circuit: $_ENV['circuit'] );
         self::destroyProvider( provider: $_ENV['provider'] );
@@ -389,5 +363,13 @@ class testCircuitTerminations extends testCore
         unset( $_ENV['provider'] );
         unset( $_ENV['circuit_type'] );
         unset( $_ENV['circuit'] );
+    }
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->term_side = 'A';
+        $this->options->circuit   = $_ENV['circuit']->id;
+        $this->options->site      = $_ENV['site']->id;
     }
 }

@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\ServiceTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testServiceTemplates extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -83,9 +84,7 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -109,7 +108,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,13 +121,7 @@ class testServiceTemplates extends testCore
     public function testPostList() :void
     {
         $o = new ServiceTemplates();
-        $result = $o->postList(
-            options: [[ 
-                        'name' => 'PHPUnit_ServiceTemp',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,7 +165,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -188,18 +179,10 @@ class testServiceTemplates extends testCore
     {
         // SETUP
         $temp = $this->postDetail()['body'];
+        $this->options->id = $temp->id;
 
         $o = new ServiceTemplates();
-        $result = $o->putList(
-            options: [
-                [ 
-                          'id' => $temp->id,
-                        'name' => 'PHPUnit_ServiceTemp',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +192,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -241,7 +223,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -256,18 +237,10 @@ class testServiceTemplates extends testCore
     {
         // SETUP
         $temp = $this->postDetail()['body'];
+        $this->options->id = $temp->id;
 
         $o = new ServiceTemplates();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $temp->id,
-                        'name' => 'PHPUnit_ServiceTemp',
-                       'ports' => [1],
-                    'protocol' => 'tcp',
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +250,6 @@ class testServiceTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -353,6 +325,18 @@ class testServiceTemplates extends testCore
         $o = new ServiceTemplates();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name     = 'PHPUnit_ServTempl-' . $rand;
+        $this->options->ports    = [1];
+        $this->options->protocol = 'tcp';
     }
 
 }

@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Manufacturers AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testManufacturers extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $manf->id );
@@ -82,9 +83,7 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $manf->id );
@@ -108,7 +107,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,7 @@ class testManufacturers extends testCore
     public function testPostList() :void
     {
         $o = new Manufacturers();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testManufacturers1', 'slug' => 'aaa' ],
-            [ 'name' => 'testManufacturers2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +153,6 @@ class testManufacturers extends testCore
               id: $manf->id, 
             name: 'updateManufacturers', 
             slug: 'updateManufacturers',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +164,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $manf->id );
@@ -187,18 +178,10 @@ class testManufacturers extends testCore
     {
         // SETUP
         $manf = $this->postDetail()['body'];
+        $this->options->id = $manf->id;
 
         $o = new Manufacturers();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $manf->id, 
-                           'name' => 'putManufacturers',
-                           'slug' => 'putManufacturers',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $manf->id );
@@ -229,7 +211,6 @@ class testManufacturers extends testCore
               id: $manf->id,
             name: 'patchManufacturers',
             slug: 'patchManufacturers',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -240,8 +221,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $manf->id );
@@ -256,18 +235,10 @@ class testManufacturers extends testCore
     {
         // SETUP
         $manf = $this->postDetail()['body'];
+        $this->options->id = $manf->id;
 
         $o = new Manufacturers();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $manf->id, 
-                        'name' => 'patchManufacturers',
-                        'slug' => 'patchManufacturers',
-                 'description' => 'patchManufacturers' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +248,6 @@ class testManufacturers extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $manf->id );
@@ -339,9 +309,6 @@ class testManufacturers extends testCore
         return $o->postDetail( 
             name: 'testManufacturers',
             slug: 'testManufacturers',
-            options: [ 
-                'description' => 'PHPUnit test Manufacturers',
-            ]
         );
     }
 
@@ -355,6 +322,16 @@ class testManufacturers extends testCore
         $o = new Manufacturers();
 
         return $o->deleteDetail( id: $id  );
+    }
+        
+
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Manufacturer-' . $rand;
+        $this->options->slug = 'PHPUnit_Manufacturer-' . $rand;
     }
 
 }

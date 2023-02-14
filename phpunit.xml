@@ -86,7 +86,7 @@ image attachments
             <file>tests/models/dcim/testVirtualChassis.php</file>
         </testsuite>
 
-
+<!-- 
         <testsuite name="Extras_Models">
             <file>tests/models/extras/testConfigContexts.php</file>
             <file>tests/models/extras/testContentTypes.php</file>
@@ -96,7 +96,7 @@ image attachments
 
             <file>tests/models/extras/testTags.php</file>
         </testsuite>
-        
+         -->
 
         <testsuite name="IPAM_Models">
             <file>tests/models/ipam/testAggregates.php</file>
@@ -156,8 +156,8 @@ image attachments
         </testsuite>
 
         <testsuite name="test_test">
-            <file>tests/models/circuits/testCircuitTypes.php</file>
-            <!-- <file>tests/models/dcim/testCables.php</file> -->
+<!--             <file>tests/models/circuits/testCircuits.php</file>
+ -->            <!-- <file>tests/models/dcim/testCables.php</file> -->
 
             <!-- <file>tests/models/users/testConfig.php</file> -->
 

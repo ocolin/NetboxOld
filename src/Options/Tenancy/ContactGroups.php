@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Options\Tenancy;
 #[\AllowDynamicProperties]
 class ContactGroups
 {
-    public int    $parent;
+    public ?int   $parent;
     
     public string $name;
     public string $slug;

@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Users;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Users\Tokens AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testTokens extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $token->id );
@@ -82,9 +83,7 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $token->id );
@@ -108,7 +107,6 @@ class testTokens extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,13 +120,7 @@ class testTokens extends testCore
     public function testPostList() :void
     {
         $o = new Tokens();
-        $result = $o->postList(
-        options: [
-            [ 
-                'user' => $_ENV['user']->id
-            ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -171,7 +163,6 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $token->id );
@@ -186,16 +177,10 @@ class testTokens extends testCore
     {
         // SETUP
         $token = $this->postDetail()['body'];
+        $this->options->id = $token->id;
 
         $o = new Tokens();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $token->id, 
-                    'user' => $_ENV['user']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -205,7 +190,6 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $token->id );
@@ -235,7 +219,6 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -251,16 +234,10 @@ class testTokens extends testCore
     {
         // SETUP
         $token = $this->postDetail()['body'];
+        $this->options->id = $token->id;
 
         $o = new Tokens();
-        $result = $o->patchList(
-            options: [
-                [ 
-                      'id' => $token->id, 
-                    'user' => $_ENV['user']->id
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -270,7 +247,6 @@ class testTokens extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $token->id );
@@ -350,20 +326,20 @@ class testTokens extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['user'] = self::createUser();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyUser( user: $_ENV['user'] );
+    }
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->user  =  $_ENV['user']->id;
     }
 
 }

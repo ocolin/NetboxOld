@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\RackReservations AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRackReservations extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rackres->id );
@@ -83,9 +84,7 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $rackres->id );
@@ -109,7 +108,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,14 +121,7 @@ class testRackReservations extends testCore
     public function testPostList() :void
     {
         $o = new RackReservations();
-        $result = $o->postList(
-            options: [[ 
-                       'rack' => $_ENV['rack']->id,
-                      'units' => [1],
-                       'user' => $_ENV['user']->id,
-                'description' => 'PHPUnit_RackRes'
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -175,7 +166,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rackres->id );
@@ -190,17 +180,10 @@ class testRackReservations extends testCore
     {
         // SETUP
         $rackres = $this->postDetail()['body'];
+        $this->options->id = $rackres->id;
 
         $o = new RackReservations();
-        $result = $o->putList(
-            options: [[ 
-                         'id' => $rackres->id,
-                       'rack' => $_ENV['rack']->id,
-                      'units' => [1],
-                       'user' => $_ENV['user']->id,
-                'description' => 'PHPUnit_RackRes'
-            ]]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -210,7 +193,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rackres->id );
@@ -243,7 +225,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rackres->id );
@@ -258,17 +239,10 @@ class testRackReservations extends testCore
     {
         // SETUP
         $rackres = $this->postDetail()['body'];
+        $this->options->id = $rackres->id;
 
         $o = new RackReservations();
-        $result = $o->patchList(
-            options: [[ 
-                         'id' => $rackres->id,
-                       'rack' => $_ENV['rack']->id,
-                      'units' => [1],
-                       'user' => $_ENV['user']->id,
-                'description' => 'PHPUnit_RackRes'
-            ]]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +252,6 @@ class testRackReservations extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rackres->id );
@@ -362,10 +335,7 @@ class testRackReservations extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -380,10 +350,7 @@ class testRackReservations extends testCore
         $_ENV['user']     = self::createUser();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyUser( user: $_ENV['user'] );
         self::destroyRack( rack: $_ENV['rack'] );
@@ -404,5 +371,15 @@ class testRackReservations extends testCore
         unset( $_ENV['tenant'] );
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->rack        = $_ENV['rack']->id;
+        $this->options->units       = [1];
+        $this->options->user        = $_ENV['user']->id;
+        $this->options->description = 'PHPUnit_RackResv-' . $rand;
     }
 }

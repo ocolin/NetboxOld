@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Virtualization;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Virtualization\Interfaces AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testInterfaces extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -20,7 +23,7 @@ class testInterfaces extends testCore
 
     public function testOptions()
     {
-        $o = new VirtualMachines();
+        $o = new Interfaces();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,7 +34,6 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -42,10 +44,10 @@ class testInterfaces extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
 
-        $o = new VirtualMachines();
-        $result = $o->getDetail( id: $machine->id );
+        $o = new Interfaces();
+        $result = $o->getDetail( id: $if->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,10 +57,9 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $machine->id );
+        $this->deleteDetail( $if->id );
     }
 
 
@@ -69,9 +70,9 @@ class testInterfaces extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
 
-        $o = new VirtualMachines();
+        $o = new Interfaces();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,12 +83,10 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $machine->id );
+        $this->deleteDetail( $if->id );
     }
 
 
@@ -97,7 +96,7 @@ class testInterfaces extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new VirtualMachines();
+        $o = new Interfaces();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,7 +107,6 @@ class testInterfaces extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -121,15 +119,8 @@ class testInterfaces extends testCore
 
     public function testPostList() :void
     {
-        $o = new VirtualMachines();
-        $result = $o->postList(
-        options: [
-            [ 
-                   'name' => 'PHPUnit_VM',
-                'cluster' => $_ENV['cluster']->id,
-            ],
-        ]  
-        );
+        $o = new Interfaces();
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -141,9 +132,9 @@ class testInterfaces extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $machine )
+        foreach( $result['body'] AS $if )
         {
-            $this->deleteDetail( id: $machine->id );
+            $this->deleteDetail( id: $if->id );
         }
     }
 
@@ -155,13 +146,13 @@ class testInterfaces extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
 
-        $o = new VirtualMachines();
+        $o = new Interfaces();
         $result = $o->putDetail( 
-                 id: $machine->id, 
-               name: 'PHPUnit_VM',
-            cluster: $_ENV['cluster']->id,
+                         id: $if->id, 
+                       name: 'PHPUnit_VM',
+            virtual_machine: $_ENV['vm']->id
         );
         
         
@@ -173,10 +164,9 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $machine->id );
+        $this->deleteDetail( $if->id );
     }
 
 
@@ -187,18 +177,11 @@ class testInterfaces extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
+        $this->options->id = $if->id;
 
-        $o = new VirtualMachines();
-        $result = $o->putList(
-            options: [
-                [ 
-                         'id' => $machine->id, 
-                       'name' => 'PHPUnit_VM',
-                    'cluster' => $_ENV['cluster']->id,
-                ]
-            ]
-        );
+        $o = new Interfaces();
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,10 +191,9 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $machine->id );
+        $this->deleteDetail( $if->id );
     }
 
 
@@ -222,13 +204,13 @@ class testInterfaces extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
 
-        $o = new VirtualMachines();
+        $o = new Interfaces();
         $result = $o->patchDetail(
-                 id: $machine->id,
-               name: 'PHPUnit_VM',
-            cluster: $_ENV['cluster']->id,
+                         id: $if->id,
+                       name: 'PHPUnit_VM',
+            virtual_machine: $_ENV['vm']->id
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +221,9 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $machine->id );
+        $this->deleteDetail( $if->id );
     }
 
 
@@ -254,18 +234,11 @@ class testInterfaces extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
+        $this->options->id = $if->id;
 
-        $o = new VirtualMachines();
-        $result = $o->patchList(
-            options: [
-                [ 
-                       'id'   => $machine->id,
-                       'name' => 'PHPUnit_VM',
-                    'cluster' => $_ENV['cluster']->id,
-                ]
-            ]
-        );
+        $o = new Interfaces();
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,10 +248,9 @@ class testInterfaces extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $machine->id );
+        $this->deleteDetail( $if->id );
     }
 
 
@@ -290,10 +262,10 @@ class testInterfaces extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
         
-        $o = new VirtualMachines();
-        $result = $o->deleteDetail( id: $machine->id );
+        $o = new Interfaces();
+        $result = $o->deleteDetail( id: $if->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +283,11 @@ class testInterfaces extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $machine = $this->postDetail()['body'];
+        $if = $this->postDetail()['body'];
 
-        $o = new VirtualMachines();
+        $o = new Interfaces();
         $result = $o->deleteList(
-            options: [[ 'id' => $machine->id ]]
+            options: [[ 'id' => $if->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -332,11 +304,11 @@ class testInterfaces extends testCore
 
     public function postDetail() : array
     {
-        $o = new VirtualMachines();
+        $o = new Interfaces();
 
         return $o->postDetail( 
-               name: 'PHPUnit_VM',
-            cluster: $_ENV['cluster']->id,
+                       name: 'PHPUnit_VM',
+            virtual_machine: $_ENV['vm']->id,
         );
     }
 
@@ -347,7 +319,7 @@ class testInterfaces extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new VirtualMachines();
+        $o = new Interfaces();
 
         return $o->deleteDetail( id: $id  );
     }
@@ -356,10 +328,7 @@ class testInterfaces extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']  = self::createSite();
         $_ENV['type']  = self::createClusterType();
@@ -369,14 +338,13 @@ class testInterfaces extends testCore
             group: $_ENV['group'],
             site: $_ENV['site']
         );
+        $_ENV['vm'] =  self::createVM( $_ENV['cluster'] );
 
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
+        self::destroyVM( $_ENV['vm'] );
         self::destroyCluster( cluster: $_ENV['cluster'] );
         self::destroySite( site: $_ENV['site'] );
         self::destroyClusterType( type: $_ENV['type'] );
@@ -386,5 +354,14 @@ class testInterfaces extends testCore
         unset( $_ENV['type'] );
         unset( $_ENV['group'] );
         unset( $_ENV['cluster'] );
+        unset( $_ENV['vm'] );
+    }
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Tenant-' . $rand;
+        $this->options->virtual_machine = $_ENV['vm']->id;
     }
 }

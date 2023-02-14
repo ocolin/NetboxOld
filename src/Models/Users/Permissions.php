@@ -43,8 +43,10 @@ class Premissions extends UsersCore
          array $headers = []
     ) : array
     {
-        $options['name']         = $name;
-        $options['object_types'] = $object_types;
+        $options = $options ?? $this->options;
+
+        $options->name         = $name;
+        $options->object_types = $object_types;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -78,8 +80,10 @@ class Premissions extends UsersCore
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']         = $name;
-        $options['object_types'] = $object_types;
+        $options = $options ?? $this->options;
+
+        $options->name         = $name;
+        $options->object_types = $object_types;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -113,8 +117,10 @@ class Premissions extends UsersCore
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['name']         = $name;
-        $options['object_types'] = $object_types;
+        $options = $options ?? $this->options;
+        
+        $options->name         = $name;
+        $options->object_types = $object_types;
 
         return $this->http->put(
                 uri: $this->uri,

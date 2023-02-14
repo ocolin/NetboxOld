@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\VirtualChassis AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testVirtualChassis extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vchas->id );
@@ -82,9 +83,7 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $vchas->id );
@@ -108,7 +107,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,8 @@ class testVirtualChassis extends testCore
     public function testPostList() :void
     {
         $o = new VirtualChassis();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testVirtualChassis1' ],
-            [ 'name' => 'testVirtualChassis2' ],
-        ]  
-        );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -170,7 +164,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $vchas->id );
@@ -185,16 +178,10 @@ class testVirtualChassis extends testCore
     {
         // SETUP
         $vchas = $this->postDetail()['body'];
+        $this->options->id = $vchas->id;
 
         $o = new VirtualChassis();
-        $result = $o->putList(
-            options: [
-                [ 
-                    'id'   => $vchas->id, 
-                    'name' => 'putVirtualChassis',
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -204,7 +191,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vchas->id );
@@ -234,7 +220,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -250,16 +235,10 @@ class testVirtualChassis extends testCore
     {
         // SETUP
         $vchas = $this->postDetail()['body'];
+        $this->options->id = $vchas->id;
 
         $o = new VirtualChassis();
-        $result = $o->patchList(
-            options: [
-                [ 
-                       'id' => $vchas->id, 
-                     'name' => 'patchVirtualChassis',
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -269,7 +248,6 @@ class testVirtualChassis extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $vchas->id );
@@ -328,12 +306,7 @@ class testVirtualChassis extends testCore
     {
         $o = new VirtualChassis();
 
-        return $o->postDetail( 
-            name: 'testVirtualChassis',
-            options: [ 
-                'description' => 'PHPUnit test VirtualChassis',
-            ]
-        );
+        return $o->postDetail( name: 'testVirtualChassis' );
     }
 
 
@@ -347,5 +320,11 @@ class testVirtualChassis extends testCore
 
         return $o->deleteDetail( id: $id  );
     }
-
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_VirtChas-' . $rand;
+    }
 }

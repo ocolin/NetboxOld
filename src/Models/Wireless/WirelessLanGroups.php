@@ -39,7 +39,7 @@ class WirelessLanGroups extends Wireless
         string $name,
         string $slug,
           ?int $parent,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
@@ -76,7 +76,7 @@ class WirelessLanGroups extends Wireless
         string $name,
         string $slug,
           ?int $parent,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
@@ -114,7 +114,7 @@ class WirelessLanGroups extends Wireless
         string $name,
         string $slug,
           ?int $parent,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {

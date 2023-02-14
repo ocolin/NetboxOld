@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\FrontPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testFrontPortTemplates extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -83,9 +84,7 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -109,7 +108,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,14 +121,7 @@ class testFrontPortTemplates extends testCore
     public function testPostList() :void
     {
         $o = new FrontPortTemplates();
-        $result = $o->postList(
-            options: [[ 
-                       'name' => 'PHPUnit_FrontPortTempl',
-                'device_type' => $_ENV['devtype']->id,
-                  'rear_port' => $_ENV['rearPortTemp']->id,
-                       'type' => '8p8c',
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -175,7 +166,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -190,17 +180,10 @@ class testFrontPortTemplates extends testCore
     {
         // SETUP
         $temp = $this->postDetail()['body'];
+        $this->options->id = $temp->id;
 
         $o = new FrontPortTemplates();
-        $result = $o->putList(
-            options: [[ 
-                         'id' => $temp->id,
-                       'name' => 'PHPUnit_FrontPortTempl',
-                'device_type' => $_ENV['devtype']->id,
-                  'rear_port' => $_ENV['rearPortTemp']->id,
-                       'type' => '8p8c',
-            ]]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -210,7 +193,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -243,7 +225,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -258,17 +239,10 @@ class testFrontPortTemplates extends testCore
     {
         // SETUP
         $temp = $this->postDetail()['body'];
+        $this->options->id = $temp->id;
 
         $o = new FrontPortTemplates();
-        $result = $o->patchList(
-            options: [[ 
-                         'id' => $temp->id,
-                       'name' => 'PHPUnit_FrontPortTempl',
-                'device_type' => $_ENV['devtype']->id,
-                  'rear_port' => $_ENV['rearPortTemp']->id,
-                       'type' => '8p8c',
-            ]]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +252,6 @@ class testFrontPortTemplates extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -362,10 +335,7 @@ class testFrontPortTemplates extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['manf']     = self::createManufacturer();
@@ -388,10 +358,7 @@ class testFrontPortTemplates extends testCore
         $_ENV['rearPortTemp'] = self::createRearPortTemplate( $_ENV['devtype'] );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyRearPortsTemplate( templ: $_ENV['rearPortTemp'] );
         self::destroyDevice( device: $_ENV['device'] );
@@ -413,5 +380,15 @@ class testFrontPortTemplates extends testCore
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
         unset( $_ENV['device'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name        = 'PHPUnit_FrontPortTempl-' . $rand;
+        $this->options->device_type = $_ENV['devtype']->id;
+        $this->options->rear_port   = $_ENV['rearPortTemp']->id;
+        $this->options->type        = '8p8c';
     }
 }

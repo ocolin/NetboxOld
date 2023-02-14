@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Tenancy;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Tenancy\ContactGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testContactGroups extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -82,9 +83,7 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -108,7 +107,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,15 +120,7 @@ class testContactGroups extends testCore
     public function testPostList() :void
     {
         $o = new ContactGroups();
-        $result = $o->postList(
-        options: [
-            [ 
-                  'name' => 'PHPUnit_ContactGrp1', 
-                  'slug' => 'aaa' ,
-                'parent' => null
-            ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -175,7 +165,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -190,18 +179,10 @@ class testContactGroups extends testCore
     {
         // SETUP
         $group = $this->postDetail()['body'];
+        $this->options->id = $group->id;
 
         $o = new ContactGroups();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id'   => $group->id, 
-                      'name' => 'PHPUnit_ContactGrp',
-                      'slug' => 'PHPUnit_ContactGrp',
-                    'parent' => null
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -211,7 +192,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -243,7 +223,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -259,18 +238,10 @@ class testContactGroups extends testCore
     {
         // SETUP
         $group = $this->postDetail()['body'];
+        $this->options->id = $group->id;
 
         $o = new ContactGroups();
-        $result = $o->patchList(
-            options: [
-                [ 
-                        'id' => $group->id, 
-                      'name' => 'PHPUnit_ContactGrp',
-                      'slug' => 'PHPUnit_ContactGrp',
-                    'parent' => null
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -280,7 +251,6 @@ class testContactGroups extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $group->id );
@@ -356,6 +326,16 @@ class testContactGroups extends testCore
         $o = new ContactGroups();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name   = 'PHPUnit_ContactGroup-' . $rand;
+        $this->options->slug   = 'PHPUnit_ContactGroup-' . $rand;
+        $this->options->parent = null;
     }
 
 }

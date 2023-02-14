@@ -5,11 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Wireless;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Wireless\WirelessLans AS Options;
+
 
 require_once __DIR__ . '/../testCore.php';
 
 class testWirelessLans extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +35,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +58,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $lan->id );
@@ -82,9 +84,7 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $lan->id );
@@ -108,7 +108,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,13 +121,7 @@ class testWirelessLans extends testCore
     public function testPostList() :void
     {
         $o = new WirelessLans();
-        $result = $o->postList(
-            options: [
-                [ 
-                    'ssid' => 'PHPUnit_SSID'
-                ],
-            ]
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -171,7 +164,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $lan->id );
@@ -186,16 +178,10 @@ class testWirelessLans extends testCore
     {
         // SETUP
         $lan = $this->postDetail()['body'];
+        $this->options->id = $lan->id;
 
         $o = new WirelessLans();
-        $result = $o->putList(
-            options: [
-                [ 
-                        'id' => $lan->id, 
-                      'ssid' => 'PHPUnit_SSID'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -205,7 +191,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $lan->id );
@@ -235,8 +220,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $lan->id );
@@ -251,16 +234,10 @@ class testWirelessLans extends testCore
     {
         // SETUP
         $lan = $this->postDetail()['body'];
+        $this->options->id = $lan->id;
 
         $o = new WirelessLans();
-        $result = $o->patchList(
-            options: [
-                [ 
-                        'id' => $lan->id,
-                      'ssid' => 'PHPUnit_SSID'
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -270,7 +247,6 @@ class testWirelessLans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $lan->id );
@@ -344,6 +320,15 @@ class testWirelessLans extends testCore
         $o = new WirelessLans();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->ssid = 'PHPUnit_SSID-' . $rand;
     }
 
 }

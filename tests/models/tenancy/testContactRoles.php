@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Tenancy;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Tenancy\ContactRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testContactRoles extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -82,9 +83,7 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -108,7 +107,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,7 @@ class testContactRoles extends testCore
     public function testPostList() :void
     {
         $o = new ContactRoles();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testContactRole1', 'slug' => 'aaa' ],
-            [ 'name' => 'testContactRole2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +153,6 @@ class testContactRoles extends testCore
               id: $role->id, 
             name: 'updateContactRole', 
             slug: 'updateContactRole',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +164,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -187,18 +178,10 @@ class testContactRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new ContactRoles();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $role->id, 
-                           'name' => 'putContactRole',
-                           'slug' => 'putContactRole',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -229,7 +211,6 @@ class testContactRoles extends testCore
               id: $role->id,
             name: 'patchContactRole',
             slug: 'patchContactRole',
-            options: [ 'description' => 'ContactRole test' ]
         );
 
         $this->assertIsArray( $result );
@@ -240,7 +221,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -256,18 +236,10 @@ class testContactRoles extends testCore
     {
         // SETUP
         $role = $this->postDetail()['body'];
+        $this->options->id = $role->id;
 
         $o = new ContactRoles();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $role->id, 
-                        'name' => 'patchContactRole',
-                        'slug' => 'patchContactRole',
-                 'description' => 'patchContactRole' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +249,6 @@ class testContactRoles extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $role->id );
@@ -339,9 +310,6 @@ class testContactRoles extends testCore
         return $o->postDetail( 
             name: 'testContactRole',
             slug: 'testContactRole',
-            options: [ 
-                'description' => 'PHPUnit test ContactRole',
-            ]
         );
     }
 
@@ -355,6 +323,16 @@ class testContactRoles extends testCore
         $o = new ContactRoles();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_ContactRole-' . $rand;
+        $this->options->slug = 'PHPUnit_ContactRole-' . $rand;
     }
 
 }

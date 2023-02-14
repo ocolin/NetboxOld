@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\IpRanges AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testIpRanges extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +57,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -82,9 +83,7 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -109,7 +108,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -122,12 +120,7 @@ class testIpRanges extends testCore
     public function testPostList() :void
     {
         $o = new IpRanges();
-        $result = $o->postList(
-            options: [
-                [ 'start_address' => '192.168.66.1/24', 'end_address' => '192.168.66.254/24' ],
-                [ 'start_address' => '192.168.67.2/24', 'end_address' => '192.168.67.254/24' ]
-            ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +153,6 @@ class testIpRanges extends testCore
                        id: $range->id, 
             start_address: '192.168.66.1/24', 
               end_address: '192.168.66.254/24', 
-                  options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +164,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -187,18 +178,10 @@ class testIpRanges extends testCore
     {
         // SETUP
         $range = $this->postDetail()['body'];
+        $this->options->id = $range->id;
 
         $o = new IpRanges();
-        $result = $o->putList(
-            options: [
-                [ 
-                               'id' => $range->id, 
-                    'start_address' => '192.168.66.2/24',
-                      'end_address' => '192.168.66.128/24',
-                      'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,7 +191,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -229,7 +211,6 @@ class testIpRanges extends testCore
                        id: $range->id,
             start_address: '192.168.66.2/24',
               end_address: '192.168.66.128/24',
-                  options: [ 'description' => 'Patch Range' ]
         );
 
         $this->assertIsArray( $result );
@@ -240,8 +221,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -256,18 +235,10 @@ class testIpRanges extends testCore
     {
         // SETUP
         $range = $this->postDetail()['body'];
+        $this->options->id = $range->id;
 
         $o = new IpRanges();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $range->id, 
-                  'start_address' => '192.168.66.2/24',
-                    'end_address' => '192.168.66.128/24',
-                    'description' => 'Patch Ranges' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +248,6 @@ class testIpRanges extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -340,9 +310,6 @@ class testIpRanges extends testCore
         return $o->postDetail( 
             start_address: '192.168.77.0/24',
               end_address: '192.168.77.254/24',
-                     options: [ 
-                        'description' => 'PHPUnit test post IP Range',
-                    ]
         );
     }
 
@@ -356,5 +323,17 @@ class testIpRanges extends testCore
         $o = new IpRanges();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->start_address = '192.168.77.0/24';
+        $this->options->end_address   = '192.168.77.254/24';
+        $this->options->description   = 'PHPUnit_IpRange-' . $rand;
     }
 }

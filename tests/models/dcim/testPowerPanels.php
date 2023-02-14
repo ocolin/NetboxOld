@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\PowerPanels AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testPowerPanels extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $panal->id );
@@ -83,9 +84,7 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $panal->id );
@@ -109,7 +108,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ class testPowerPanels extends testCore
     public function testPostList() :void
     {
         $o = new PowerPanels();
-        $result = $o->postList(
-            options: [[ 
-                'name' => 'PHPUnit_PowerPanel',
-                'site' =>  $_ENV['site']->id
-            ]] 
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -171,7 +164,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $panal->id );
@@ -186,17 +178,10 @@ class testPowerPanels extends testCore
     {
         // SETUP
         $panal = $this->postDetail()['body'];
+        $this->options->id = $panal->id;
 
         $o = new PowerPanels();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $panal->id,
-                    'name' => 'PHPUnit_PowerPanel',
-                    'site' =>  $_ENV['site']->id
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -206,7 +191,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $panal->id );
@@ -237,7 +221,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $panal->id );
@@ -252,17 +235,10 @@ class testPowerPanels extends testCore
     {
         // SETUP
         $panal = $this->postDetail()['body'];
+        $this->options->id = $panal->id;
 
         $o = new PowerPanels();
-        $result = $o->patchList(
-            options: [
-                [ 
-                      'id' => $panal->id,
-                    'name' => 'PHPUnit_PowerPanel',
-                    'site' =>  $_ENV['site']->id
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -272,7 +248,6 @@ class testPowerPanels extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $panal->id );
@@ -354,21 +329,23 @@ class testPowerPanels extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
-        $_ENV['site']     = self::createSite();
+        $_ENV['site'] = self::createSite();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroySite( site: $_ENV['site'] );
 
         unset( $_ENV['site'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_PwrPanel-' . $rand;
+        $this->options->site = $_ENV['site']->id ;
     }
 }

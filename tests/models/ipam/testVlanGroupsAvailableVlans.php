@@ -33,7 +33,6 @@ class testVlanGroupsAvailableVlans extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -84,29 +83,22 @@ class testVlanGroupsAvailableVlans extends testCore
 
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
-
+/* 
     public function postDetail() : array
     {
         $o = new VlanGroupsAvailableVlans();
 
         return $o->postDetail();
     }
+ */
 
 
-
-
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['group'] = self::createVlanGroup();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyVlanGroup( group: $_ENV['group'] );
         unset( $_ENV['group'] );

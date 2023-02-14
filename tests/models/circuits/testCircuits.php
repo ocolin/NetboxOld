@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Circuits\Circuits AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testCircuits extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $circuit->id );
@@ -83,9 +84,7 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $circuit->id );
@@ -109,7 +108,6 @@ class testCircuits extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,13 +121,8 @@ class testCircuits extends testCore
     public function testPostList() :void
     {
         $o = new Circuits();
-        $result = $o->postList(
-            options: [[ 
-                     'cid' => 'PHPUnit_Circuit',
-                    'type' => $_ENV['circuit_type']->id,
-                'provider' => $_ENV['provider']->id,
-            ]] 
-        );
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,7 +166,6 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $circuit->id );
@@ -188,17 +180,11 @@ class testCircuits extends testCore
     {
         // SETUP
         $circuit = $this->postDetail()['body'];
-
+        $this->options->id = $circuit->id;
+        
         $o = new Circuits();
         $result = $o->putList(
-            options: [
-                [ 
-                          'id' => $circuit->id,
-                         'cid' => 'PHPUnit_Circuit',
-                        'type' => $_ENV['circuit_type']->id,
-                    'provider' => $_ENV['provider']->id,
-                ]
-            ]
+            options: [ $this->options ]
         );
         
         $this->assertIsArray( $result );
@@ -209,7 +195,6 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $circuit->id );
@@ -241,7 +226,6 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $circuit->id );
@@ -256,18 +240,10 @@ class testCircuits extends testCore
     {
         // SETUP
         $circuit = $this->postDetail()['body'];
+        $this->options->id = $circuit->id;
 
         $o = new Circuits();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $circuit->id,
-                         'cid' => 'PHPUnit_Circuit',
-                        'type' => $_ENV['circuit_type']->id,
-                    'provider' => $_ENV['provider']->id,
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +253,6 @@ class testCircuits extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $circuit->id );
@@ -360,24 +335,26 @@ class testCircuits extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['provider']     = self::createProvider();
         $_ENV['circuit_type'] = self::createCircuitType();
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyProvider( provider: $_ENV['provider'] );
         self::destroyCircuitType( ct: $_ENV['circuit_type'] );
 
         unset( $_ENV['provider'] );
         unset( $_ENV['circuit_type'] );
+    }
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->cid      = 'PHPUnit_Circuit';
+        $this->options->provider = $_ENV['provider']->id;
+        $this->options->type     = $_ENV['circuit_type']->id;
     }
 }

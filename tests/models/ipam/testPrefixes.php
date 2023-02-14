@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Prefixes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testPrefixes extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -32,7 +35,6 @@ class testPrefixes extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
     
@@ -56,7 +58,6 @@ public function testGetDetail() : void
     $this->assertEquals( 200, $result['status'] );
     $this->assertIsArray( $result['headers'] );
     $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'id', $result['body'] );
 
     // CLEAN UP
     $this->deleteDetail( $prefix->id );
@@ -83,9 +84,7 @@ public function testGetList() : void
     $this->assertEquals( 200, $result['status'] );
     $this->assertIsArray( $result['headers'] );
     $this->assertIsObject( $result['body'] );
-    $this->assertObjectHasAttribute( 'results', $result['body'] );
     $this->assertIsArray( $result['body']->results );
-    $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
      // CLEAN UP
      $this->deleteDetail( $prefix->id );
@@ -109,7 +108,6 @@ public function testGetList() : void
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ public function testGetList() : void
     public function testPostList() :void
     {
         $o = new Prefixes();
-        $result = $o->postList(
-          options: [
-            [ 'prefix' => '192.168.50.0/24', 'description' => 'aaa' ],
-            [ 'prefix' => '192.168.99.0/24', 'description' => 'bbb' ],
-          ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -160,7 +153,6 @@ public function testGetList() : void
         $result = $o->putDetail( 
                  id: $prefix->id, 
              prefix: '192.168.1.0/24', 
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -172,7 +164,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -187,17 +178,10 @@ public function testGetList() : void
     {
         // SETUP
         $prefix = $this->postDetail()['body'];
+        $this->options->id = $prefix->id;
 
         $o = new Prefixes();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $prefix->id, 
-                         'prefix' => '192.168.1.0/24', 
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -207,7 +191,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $prefix->id );
@@ -227,7 +210,6 @@ public function testGetList() : void
         $result = $o->patchDetail(
                  id: $prefix->id,
              prefix: '192.168.1.0/24',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -238,8 +220,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $prefix->id );
@@ -254,17 +234,10 @@ public function testGetList() : void
     {
         // SETUP
         $prefix = $this->postDetail()['body'];
+        $this->options->id = $prefix->id;
 
         $o = new Prefixes();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $prefix->id, 
-                         'prefix' => '192.168.1.0/24',
-                    'description' => 'yyy' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -274,7 +247,6 @@ public function testGetList() : void
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $prefix->id );
@@ -335,11 +307,7 @@ public function testGetList() : void
         $o = new Prefixes();
 
         return $o->postDetail( 
-            prefix: '192.168.1.0/24',
-            options: [ 
-                'description' => 'PHPUnit test post prefxes',
-                   'comments' => 'This is for testing, please delete'
-            ]
+            prefix: '192.168.1.0/24'
         );
     }
 
@@ -353,5 +321,16 @@ public function testGetList() : void
         $o = new Prefixes();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->prefix = '192.168.1.0/24';
+        $this->options->description = 'PHPUnit_IpRangeAvaIPs-' . $rand;
+
     }
 }

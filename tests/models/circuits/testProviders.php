@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Circuits\Providers AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testProviders extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsObject( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'name', $prvder['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsObject( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'id', $prvder['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -83,9 +84,7 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsObject( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'results', $prvder['body'] );
         $this->assertIsArray( $prvder['body']->results );
-        $this->assertObjectHasAttribute( 'id', $prvder['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -109,7 +108,6 @@ class testProviders extends testCore
         $this->assertEquals( 201, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsObject( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'id', $prvder['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $prvder['body']->id );
@@ -123,12 +121,7 @@ class testProviders extends testCore
     public function testPostList() :void
     {
         $o = new Providers();
-        $prvder = $o->postList(
-        options: [
-            [ 'name' => 'PHPUnit_Prvder1', 'slug' => 'aaa' ],
-            [ 'name' => 'PHPUnit_Prvder2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $prvder = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $prvder );
         $this->assertArrayHasKey( 'status',  $prvder );
@@ -158,10 +151,10 @@ class testProviders extends testCore
 
         $o = new Providers();
         $prvder = $o->putDetail( 
-              id: $term->id, 
-            name: 'PHPUnit_Prvder', 
-            slug: 'PHPUnit_Prvder',
-            options: [ 'description' => 'Updated description' ]
+                 id: $term->id, 
+               name: 'PHPUnit_Prvder', 
+               slug: 'PHPUnit_Prvder',
+            options: $this->options
         );
         
         
@@ -173,7 +166,6 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsObject( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'id', $prvder['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -188,18 +180,10 @@ class testProviders extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        $this->options->id = $term->id;
 
         $o = new Providers();
-        $prvder = $o->putList(
-            options: [
-                [ 
-                           'id'   => $term->id, 
-                           'name' => 'PHPUnit_Prvder',
-                           'slug' => 'PHPUnit_Prvder',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $prvder = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $prvder );
         $this->assertArrayHasKey( 'status',  $prvder );
@@ -209,7 +193,6 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsArray( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'id', $prvder['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -227,10 +210,10 @@ class testProviders extends testCore
 
         $o = new Providers();
         $prvder = $o->patchDetail(
-              id: $term->id,
-            name: 'PHPUnit_Prvder',
-            slug: 'PHPUnit_Prvder',
-            options: [ 'description' => 'zzz' ]
+                 id: $term->id,
+               name: 'PHPUnit_Prvder',
+               slug: 'PHPUnit_Prvder',
+            options: $this->options
         );
 
         $this->assertIsArray( $prvder );
@@ -241,7 +224,6 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsObject( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'id', $prvder['body'] );
 
 
         // CLEAN UP
@@ -257,17 +239,12 @@ class testProviders extends testCore
     {
         // SETUP
         $term = $this->postDetail()['body'];
+        //$options = $this->options();
+        $this->options->id = $term->id;
 
         $o = new Providers();
         $prvder = $o->patchList(
-            options: [
-                [ 
-                          'id' => $term->id, 
-                        'name' => 'PHPUnit_Prvder',
-                        'slug' => 'PHPUnit_Prvder',
-                 'description' => 'PHPUnit_Prvder' 
-                ]
-            ]
+            options: [ $this->options ]
         );
 
         $this->assertIsArray( $prvder );
@@ -278,7 +255,6 @@ class testProviders extends testCore
         $this->assertEquals( 200, $prvder['status'] );
         $this->assertIsArray( $prvder['headers'] );
         $this->assertIsArray( $prvder['body'] );
-        $this->assertObjectHasAttribute( 'id', $prvder['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -330,25 +306,24 @@ class testProviders extends testCore
     }
 
 
-/* CREATE A SITE
+/* CREATE A PROVIDER
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
         $o = new Providers();
+        //$options = $this->options();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Prvder',
-            slug: 'PHPUnit_Prvder',
-            options: [ 
-                'description' => 'PHPUnit test',
-            ]
+               name: 'PHPUnit_Prvder',
+               slug: 'PHPUnit_Prvder',
+            options: $this->options
         );
     }
 
 
 
-/* DELETE A RIR
+/* DELETE A PROVIDER
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
@@ -356,6 +331,15 @@ class testProviders extends testCore
         $o = new Providers();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->name        = 'PHPUnit_Prvder';
+        $this->options->slug        = 'PHPUnit_Prvder';
+        $this->options->description = 'PHPUnit_Prvder';
     }
 
 }

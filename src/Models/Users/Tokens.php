@@ -9,12 +9,14 @@ use Cruzio\Netbox\Options\Users\Tokens AS Options;
 
 class Tokens extends UsersCore
 {
+    protected Options $options;
 
 /*
 ---------------------------------------------------------------------------- */
 
     public function __construct( HTTP $http = null )
     {
+        $this->options = new Options();
         parent::__construct( http: $http );
         $this->uri .= 'tokens/';
     }
@@ -28,18 +30,20 @@ class Tokens extends UsersCore
 * Create a single Token.
 *
 * @param integer $user ID of user with token.
-* @param array   $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
            int $user,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
-        $options['user'] = $user;
+        $options = $options ?? $this->options;
+
+        $options->user = $user;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -58,7 +62,7 @@ class Tokens extends UsersCore
 * 
 * @param integer $id Numerical ID of Group to update.
 * @param integer $user ID of user with token.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -66,12 +70,14 @@ class Tokens extends UsersCore
     public function putDetail(
            int $id,
            int $user,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['user'] = $user;
+        $options = $options ?? $this->options;
+
+        $options->user = $user;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -90,7 +96,7 @@ class Tokens extends UsersCore
 *
 * @param integer $id Numerical ID of Group to update.
 * @param integer $user ID of user with token.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -98,12 +104,14 @@ class Tokens extends UsersCore
     public function patchDetail(
            int $id,
            int $user,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['user'] = $user;
+        $options = $options ?? $this->options;
+        
+        $options->user = $user;
 
         return $this->http->put(
                 uri: $this->uri,

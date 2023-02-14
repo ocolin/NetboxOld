@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Platforms AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testPlatforms extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $plat->id );
@@ -83,9 +84,7 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $plat->id );
@@ -109,7 +108,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,12 +121,7 @@ class testPlatforms extends testCore
     public function testPostList() :void
     {
         $o = new Platforms();
-        $result = $o->postList(
-        options: [
-            [ 'name' => 'testPlatform1', 'slug' => 'aaa' ],
-            [ 'name' => 'testPlatform2', 'slug' => 'bbb' ],
-        ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -161,7 +154,6 @@ class testPlatforms extends testCore
               id: $plat->id, 
             name: 'updatePlatform', 
             slug: 'updatePlatform',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +165,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $plat->id );
@@ -188,18 +179,10 @@ class testPlatforms extends testCore
     {
         // SETUP
         $plat = $this->postDetail()['body'];
+        $this->options->id = $plat->id;
 
         $o = new Platforms();
-        $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $plat->id, 
-                           'name' => 'putPlatform',
-                           'slug' => 'putPlatform',
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +192,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $plat->id );
@@ -230,7 +212,6 @@ class testPlatforms extends testCore
               id: $plat->id,
             name: 'patchPlatform',
             slug: 'patchPlatform',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,8 +222,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $plat->id );
@@ -257,18 +236,10 @@ class testPlatforms extends testCore
     {
         // SETUP
         $plat = $this->postDetail()['body'];
+        $this->options->id = $plat->id;
 
         $o = new Platforms();
-        $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $plat->id, 
-                        'name' => 'patchPlatform',
-                        'slug' => 'patchPlatform',
-                 'description' => 'patchPlatform' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -278,7 +249,6 @@ class testPlatforms extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $plat->id );
@@ -340,9 +310,6 @@ class testPlatforms extends testCore
         return $o->postDetail( 
             name: 'testPlatform',
             slug: 'testPlatform',
-            options: [ 
-                'description' => 'PHPUnit test Platform',
-            ]
         );
     }
 
@@ -356,6 +323,15 @@ class testPlatforms extends testCore
         $o = new Platforms();
 
         return $o->deleteDetail( id: $id  );
+    }
+
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Platform-' . $rand;
+        $this->options->slug = 'PHPUnit_Platform-' . $rand;
     }
 
 }

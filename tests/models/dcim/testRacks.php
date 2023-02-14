@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Racks AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testRacks extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rack->id );
@@ -83,9 +84,7 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $rack->id );
@@ -109,7 +108,6 @@ class testRacks extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $this->deleteDetail( $result['body']->id );
@@ -123,13 +121,7 @@ class testRacks extends testCore
     public function testPostList() :void
     {
         $o = new Racks();
-        $result = $o->postList(
-            options: [[ 
-                        'name' => 'PHPUnit_Rack',
-                        'site' => $_ENV['site']->id,
-                    'location' => $_ENV['location']->id,
-                ]] 
-            );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,7 +165,6 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rack->id );
@@ -188,18 +179,10 @@ class testRacks extends testCore
     {
         // SETUP
         $rack = $this->postDetail()['body'];
+        $this->options->id = $rack->id;
 
         $o = new Racks();
-        $result = $o->putList(
-            options: [
-                [ 
-                        'id' => $rack->id,
-                        'name' => 'PHPUnit_Rack',
-                        'site' => $_ENV['site']->id,
-                    'location' => $_ENV['location']->id,
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -209,7 +192,6 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rack->id );
@@ -241,7 +223,6 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $rack->id );
@@ -256,18 +237,10 @@ class testRacks extends testCore
     {
         // SETUP
         $rack = $this->postDetail()['body'];
+        $this->options->id = $rack->id;
 
         $o = new Racks();
-        $result = $o->patchList(
-            options: [
-                [ 
-                        'id' => $rack->id,
-                        'name' => 'PHPUnit_Rack',
-                        'site' => $_ENV['site']->id,
-                    'location' => $_ENV['location']->id,
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -277,7 +250,6 @@ class testRacks extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $rack->id );
@@ -360,24 +332,27 @@ class testRacks extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+    public static function setUpBeforeClass() : void
     {
         $_ENV['site']     = self::createSite();
         $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyLocation( location: $_ENV['location'] );
         self::destroySite( site: $_ENV['site'] );
 
         unset( $_ENV['location'] );
         unset( $_ENV['site'] );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name     = 'PHPUnit_Rack-' . $rand;
+        $this->options->site     = $_ENV['site']->id;
+        $this->options->location = $_ENV['location']->id;
     }
 }

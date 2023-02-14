@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Sites AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testSites extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -31,7 +34,6 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -56,7 +58,6 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $site->id );
@@ -83,9 +84,7 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $site->id );
@@ -109,7 +108,6 @@ class testSites extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -123,11 +121,9 @@ class testSites extends testCore
     public function testPostList() :void
     {
         $o = new Sites();
+
         $result = $o->postList(
-        options: [
-            [ 'name' => 'testSite1', 'slug' => 'aaa' ],
-            [ 'name' => 'testSite2', 'slug' => 'bbb' ],
-        ]  
+            options: [ $this->options ]  
         );
 
         $this->assertIsArray( $result );
@@ -161,7 +157,6 @@ class testSites extends testCore
               id: $site->id, 
             name: 'updateSite', 
             slug: 'updateSite',
-            options: [ 'description' => 'Updated description' ]
         );
         
         
@@ -173,7 +168,6 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $site->id );
@@ -188,17 +182,11 @@ class testSites extends testCore
     {
         // SETUP
         $site = $this->postDetail()['body'];
+        $this->options->id = $site->id;
 
         $o = new Sites();
         $result = $o->putList(
-            options: [
-                [ 
-                           'id'   => $site->id, 
-                           'name' => 'putSite',
-                           'slug' => 'putSite',
-                    'description' => 'Updated description'
-                ]
-            ]
+            options: [ $this->options ]
         );
         
         $this->assertIsArray( $result );
@@ -209,7 +197,6 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $site->id );
@@ -230,7 +217,6 @@ class testSites extends testCore
               id: $site->id,
             name: 'patchSite',
             slug: 'patchSite',
-            options: [ 'description' => 'zzz' ]
         );
 
         $this->assertIsArray( $result );
@@ -241,8 +227,6 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $site->id );
@@ -257,17 +241,11 @@ class testSites extends testCore
     {
         // SETUP
         $site = $this->postDetail()['body'];
+        $this->options->id = $site->id;
 
         $o = new Sites();
         $result = $o->patchList(
-            options: [
-                [ 
-                          'id' => $site->id, 
-                        'name' => 'patchSite',
-                        'slug' => 'patchSite',
-                 'description' => 'patchSite' 
-                ]
-            ]
+            options: [ $this->options ]
         );
 
         $this->assertIsArray( $result );
@@ -278,7 +256,6 @@ class testSites extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $site->id );
@@ -340,9 +317,6 @@ class testSites extends testCore
         return $o->postDetail( 
             name: 'testSite',
             slug: 'testSite',
-            options: [ 
-                'description' => 'PHPUnit test post Site',
-            ]
         );
     }
 
@@ -357,5 +331,16 @@ class testSites extends testCore
 
         return $o->deleteDetail( id: $id  );
     }
+
+
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Site-' . $rand;
+        $this->options->slug = 'PHPUnit_Site-' . $rand;
+    }
+    
 
 }

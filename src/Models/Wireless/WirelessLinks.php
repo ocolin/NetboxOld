@@ -29,7 +29,7 @@ class WirelessLinks extends Wireless
 * Create a single Link.
 *
 * @param string $ssid Name of link to update.
-* @param array  $options optionsl data to be sent.
+* @param Options $options Optional data to send.
 * @param array  $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -37,7 +37,7 @@ class WirelessLinks extends Wireless
     public function postDetail(
            int $interface_a,
            int $interface_b,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
@@ -61,7 +61,7 @@ class WirelessLinks extends Wireless
 * 
 * @param integer $id Numerical ID of link to update.
 * @param string  $ssid Name of link to update.
-* @param array   $options Optional data to send.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -70,7 +70,7 @@ class WirelessLinks extends Wireless
            int $id,
            int $interface_a,
            int $interface_b,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {
@@ -95,7 +95,7 @@ class WirelessLinks extends Wireless
 *
 * @param integer $id Numerical ID of link to update.
 * @param string  $ssid Name of link to update.
-* @param array   $options Optional data to modify.
+* @param Options $options Optional data to send.
 * @param array   $headers HTML request headers.
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
@@ -104,7 +104,7 @@ class WirelessLinks extends Wireless
            int $id,
            int $interface_a,
            int $interface_b,
-         array $options = [],
+       Options $options = null,
          array $headers = []
     ) : array
     {

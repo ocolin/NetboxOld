@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Options\Wireless;
 #[\AllowDynamicProperties]
 class WirelessLanGroups
 {
-    public int    $parent;
+    public ?int   $parent;
 
     public string $name;
     public string $slug;

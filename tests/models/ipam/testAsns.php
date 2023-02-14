@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Asns AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testAsns extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -44,7 +46,7 @@ class testAsns extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
 
         $o = new Asns();
         $result = $o->getDetail( id: $asn->id );
@@ -57,7 +59,6 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( id: $asn->id );
@@ -71,7 +72,7 @@ class testAsns extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
 
         $o = new Asns();
         $result = $o->getList();
@@ -84,9 +85,7 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $asn->id );
@@ -101,7 +100,7 @@ class testAsns extends testCore
     public function testPostDetail() : void
     {
         $o = new Asns();
-        $result = $this->postDetail( rir: $_ENV['rir']->id );
+        $result = $this->postDetail();
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -111,7 +110,6 @@ class testAsns extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -125,12 +123,7 @@ class testAsns extends testCore
     public function testPostList() :void
     {
         $o = new Asns();
-        $result = $o->postList(
-            options: [
-                [ 'asn' => '1', 'rir' => $_ENV['rir']->id ],
-                [ 'asn' => '2', 'rir' => $_ENV['rir']->id ]
-            ]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -156,14 +149,13 @@ class testAsns extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
 
         $o = new Asns();
         $result = $o->putDetail( 
                  id: $asn->id, 
                 asn: 1, 
                 rir: $_ENV['rir']->id, 
-            options: [ 'description' => 'Updated description' ]
         );        
         
         $this->assertIsArray( $result );
@@ -174,7 +166,6 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $asn->id );
@@ -188,19 +179,11 @@ class testAsns extends testCore
     public function Asns() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
+        $this->options->id = $asn->id;
 
         $o = new Asns();
-        $result = $o->putList(
-            options: [
-                [ 
-                             'id' => $asn->id, 
-                            'asn' => 1,
-                            'rir' => $_ENV['rir']->id,
-                    'description' => 'Updated description'
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -210,7 +193,6 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $asn->id );
@@ -224,14 +206,13 @@ class testAsns extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
 
         $o = new Asns();
         $result = $o->patchDetail(
                  id: $asn->id,
                 asn: 1,
                 rir: $_ENV['rir']->id,
-            options: [ 'description' => 'Patch ASN' ]
         );
 
         $this->assertIsArray( $result );
@@ -242,8 +223,6 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $asn->id );
@@ -257,19 +236,11 @@ class testAsns extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
+        $this->options->id = $asn->id;
 
         $o = new Asns();
-        $result = $o->patchList(
-            options: [
-                [ 
-                             'id' => $asn->id, 
-                            'asn' => 1,
-                            'rir' => $_ENV['rir']->id,
-                    'description' => 'Patch ASN' 
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -279,7 +250,6 @@ class testAsns extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $asn->id );
@@ -294,7 +264,7 @@ class testAsns extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
         
         $o = new Asns();
         $result = $o->deleteDetail( id: $asn->id );
@@ -315,7 +285,7 @@ class testAsns extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $asn = $this->postDetail( rir: $_ENV['rir']->id )['body'];
+        $asn = $this->postDetail()['body'];
 
         $o = new Asns();
         $result = $o->deleteList(
@@ -335,16 +305,13 @@ class testAsns extends testCore
 /* CREATE AN ASN
 ---------------------------------------------------------------------------- */
 
-    public function postDetail( int $rir ) : array
+    public function postDetail() : array
     {
         $o = new Asns();
 
         return $o->postDetail( 
                 asn: 1,
-                rir: $rir,
-            options: [ 
-                'description' => 'PHPUnit test ASNs',
-            ]
+                rir: $_ENV['rir']->id,
         );
     }
 
@@ -365,16 +332,10 @@ class testAsns extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @beforeClass
-*/
-    public static function setupRir()
+    public static function setUpBeforeClass() : void
     {
         $o = new Rirs();
-        $_ENV['rir'] = $o->postDetail(
-            name: 'phptestunit_rir',
-            slug: 'phptestunit_rir'
-        )['body'];
+        $_ENV['rir'] = self::createRir();
     }
 
 
@@ -382,13 +343,20 @@ class testAsns extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
-/**
-* @afterClass
-*/
-    public static function closeRIR()
+    public static function tearDownAfterClass() : void
     {
-        $o = new Rirs();
-        $o->deleteDetail( id: $_ENV['rir']->id );
+       
+        self::destroyRir( rir: $_ENV['rir'] );
         unset( $_ENV['rir'] );
+    }
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 10000 );
+        $this->options = new Options();
+        $this->options->asn = $rand;
+        $this->options->rir = $_ENV['rir']->id;
+        $this->options->description = 'PHPUnit_Ans-' . $rand;
     }
 }

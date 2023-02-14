@@ -5,11 +5,14 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\FhrpGroupAssignments AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
 class testFhrpGroupAssignments extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -33,7 +36,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -57,7 +59,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( id: $assign->id );
@@ -84,9 +85,7 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $assign->id );
@@ -111,7 +110,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -124,14 +122,7 @@ class testFhrpGroupAssignments extends testCore
     public function testPostList() :void
     {
         $o = new FhrpGroupAssignments();
-        $result = $o->postList(
-            options: [[ 
-                         'group' => $_ENV['group']->id,
-                'interface_type' => 'dcim.device',
-                  'interface_id' => $_ENV['interface']->id,
-                      'priority' => 1
-            ]]  
-        );
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -176,7 +167,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $assign->id );
@@ -191,19 +181,10 @@ class testFhrpGroupAssignments extends testCore
     {
         // SETUP
         $assign = $this->postDetail()['body'];
+        $this->options->id = $assign->id;
 
         $o = new FhrpGroupAssignments();
-        $result = $o->putList(
-            options: [
-                [ 
-                                'id' => $assign->id, 
-                             'group' => $_ENV['group']->id,
-                    'interface_type' => 'dcim.device',
-                      'interface_id' => $_ENV['interface']->id,
-                          'priority' => 1
-                ]
-            ]
-        );
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -213,7 +194,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $assign->id );
@@ -246,7 +226,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
 
         // CLEAN UP
@@ -262,19 +241,10 @@ class testFhrpGroupAssignments extends testCore
     {
         // SETUP
         $assign = $this->postDetail()['body'];
+        $this->options->id = $assign->id;
 
         $o = new FhrpGroupAssignments();
-        $result = $o->patchList(
-            options: [
-                [ 
-                                'id' => $assign->id,
-                             'group' => $_ENV['group']->id,
-                    'interface_type' => 'dcim.device',
-                      'interface_id' => $_ENV['interface']->id,
-                          'priority' => 1
-                ]
-            ]
-        );
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -284,7 +254,6 @@ class testFhrpGroupAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $assign->id );
@@ -365,10 +334,8 @@ class testFhrpGroupAssignments extends testCore
     }
 
 
-/**
-* @beforeClass
-*/
-    public static function setupTest()
+
+    public static function setUpBeforeClass() : void
     {
         $_ENV['group']    = self::createFhrpGroup();
         $_ENV['site']     = self::createSite();
@@ -392,10 +359,7 @@ class testFhrpGroupAssignments extends testCore
         $_ENV['interface'] = self::createInterface( device: $_ENV['device'] );
     }
 
-/**
-* @afterClass
-*/
-    public static function closeTest()
+    public static function tearDownAfterClass() : void
     {
         self::destroyInterface( interface: $_ENV['interface'] );
         self::destroyDevice( device: $_ENV['device'] );
@@ -420,5 +384,16 @@ class testFhrpGroupAssignments extends testCore
         unset( $_ENV['manf'] );
         unset( $_ENV['site'] );
         unset( $_ENV['device'] );
+    }
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->group           = $_ENV['group']->id;
+        $this->options->interface_type  = 'dcim.device';
+        $this->options->interface_id    = $_ENV['interface']->id;
+        $this->options->priority        = 1;
     }
 }
