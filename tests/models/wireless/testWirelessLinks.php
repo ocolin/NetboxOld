@@ -12,6 +12,22 @@ require_once __DIR__ . '/../testCore.php';
 class testWirelessLinks extends testCore
 {
     public Options $options;
+    public static $interfaceA;
+    public static $interfaceB;
+    public static $deviceA;
+    public static $deviceB;
+    public static $rackA;
+    public static $rackB;
+    public static $vcA;
+    public static $vcB;
+    public static $locationA;
+    public static $locationB;
+    public static $siteA;
+    public static $siteB;
+    public static $devtype;
+    public static $manf;
+    public static $tenant;
+    public static $devrole;
 
     public function __construct()
     {
@@ -152,8 +168,8 @@ class testWirelessLinks extends testCore
         $o = new WirelessLinks();
         $result = $o->putDetail( 
                      id: $link->id, 
-            interface_a: $_ENV['interfaceA']->id,
-            interface_b: $_ENV['interfaceB']->id,               
+            interface_a: self::$interfaceA->id,
+            interface_b: self::$interfaceB->id,               
         );
         
         $this->assertIsArray( $result );
@@ -209,8 +225,8 @@ class testWirelessLinks extends testCore
         $o = new WirelessLinks();
         $result = $o->patchDetail(
                      id: $link->id, 
-            interface_a: $_ENV['interfaceA']->id,
-            interface_b: $_ENV['interfaceB']->id,
+            interface_a: self::$interfaceA->id,
+            interface_b: self::$interfaceB->id,
         );
 
         $this->assertIsArray( $result );
@@ -307,8 +323,8 @@ class testWirelessLinks extends testCore
         $o = new WirelessLinks();
 
         return $o->postDetail( 
-            interface_a: $_ENV['interfaceA']->id,
-            interface_b: $_ENV['interfaceB']->id,
+            interface_a: self::$interfaceA->id,
+            interface_b: self::$interfaceB->id,
         );
     }
 
@@ -331,87 +347,71 @@ class testWirelessLinks extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['siteA']     = self::createSite();
-        $_ENV['siteB']     = self::createSite();
-        $_ENV['manf']      = self::createManufacturer();
-        $_ENV['tenant']    = self::createTenant();
-        $_ENV['devtype']   = self::createDeviceType( manf: $_ENV['manf'] );
-        $_ENV['locationA'] = self::createLocation( site: $_ENV['siteA'] );
-        $_ENV['locationB'] = self::createLocation( site: $_ENV['siteB'] );
-        $_ENV['devrole']   = self::createDeviceRole();
-        $_ENV['vcA']       = self::createVirtualChassis();
-        $_ENV['vcB']       = self::createVirtualChassis();
-        $_ENV['rackA']     = self::createRack( 
-            site: $_ENV['siteA'], location: $_ENV['locationA'] 
+        self::$siteA     = self::createSite();
+        self::$siteB     = self::createSite();
+        self::$manf      = self::createManufacturer();
+        self::$tenant    = self::createTenant();
+        self::$devtype   = self::createDeviceType( manf: self::$manf );
+        self::$locationA = self::createLocation( site: self::$siteA );
+        self::$locationB = self::createLocation( site: self::$siteB );
+        self::$devrole   = self::createDeviceRole();
+        self::$vcA       = self::createVirtualChassis();
+        self::$vcB       = self::createVirtualChassis();
+        self::$rackA     = self::createRack( 
+            site: self::$siteA, location: self::$locationA 
         );
-        $_ENV['rackB']     = self::createRack( 
-            site: $_ENV['siteB'], location: $_ENV['locationB'] 
+        self::$rackB     = self::createRack( 
+            site: self::$siteB, location: self::$locationB 
         );
-        $_ENV['deviceA']   = self::createDevice(
-                       site: $_ENV['siteA'],
-                     tenant: $_ENV['tenant'],
-                 devicetype: $_ENV['devtype'],
-                 devicerole: $_ENV['devrole'],
-            virtual_chassis: $_ENV['vcA'],
-                       rack: $_ENV['rackA']
+        self::$deviceA   = self::createDevice(
+                       site: self::$siteA,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vcA,
+                       rack: self::$rackA
         );
 
-        $_ENV['deviceB']   = self::createDevice(
-                       site: $_ENV['siteB'],
-                     tenant: $_ENV['tenant'],
-                 devicetype: $_ENV['devtype'],
-                 devicerole: $_ENV['devrole'],
-            virtual_chassis: $_ENV['vcB'],
-                       rack: $_ENV['rackB']
+        self::$deviceB   = self::createDevice(
+                       site: self::$siteB,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vcB,
+                       rack: self::$rackB
         );
-        $_ENV['interfaceA'] = self::createInterface(
-            device: $_ENV['deviceA']
+        self::$interfaceA = self::createInterface(
+            device: self::$deviceA
         );
-        $_ENV['interfaceB'] = self::createInterface(
-            device: $_ENV['deviceB']
+        self::$interfaceB = self::createInterface(
+            device: self::$deviceB
         );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyInterface( interface: $_ENV['interfaceB'] );
-        self::destroyInterface( interface: $_ENV['interfaceA'] );
-        self::destroyDevice( device: $_ENV['deviceB'] );
-        self::destroyDevice( device: $_ENV['deviceA'] );
-        self::destroyRack( rack: $_ENV['rackB'] );
-        self::destroyRack( rack: $_ENV['rackA'] );
-        self::destroyVirtualChassis( chassis: $_ENV['vcB'] );
-        self::destroyVirtualChassis( chassis: $_ENV['vcA'] );
-        self::destroyDeviceRole( devrole: $_ENV['devrole'] );
-        self::destroyLocation( location: $_ENV['locationB'] );
-        self::destroyLocation( location: $_ENV['locationA'] );
-        self::destroyDeviceType( devtype: $_ENV['devtype'] );
-        self::destroyTenant( tenant: $_ENV['tenant'] );
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-        self::destroySite( site: $_ENV['siteB'] );
-        self::destroySite( site: $_ENV['siteA'] );
-
-        unset( $_ENV['rackA'] );
-        unset( $_ENV['rackB'] );
-        unset( $_ENV['vcB'] );
-        unset( $_ENV['vcA'] );
-        unset( $_ENV['locationA'] );
-        unset( $_ENV['locationB'] );
-        unset( $_ENV['devtype'] );
-        unset( $_ENV['tenant'] );
-        unset( $_ENV['manf'] );
-        unset( $_ENV['siteA'] );
-        unset( $_ENV['siteB'] );
-        unset( $_ENV['deviceB'] );
-        unset( $_ENV['deviceA'] );
-        unset( $_ENV['interfaceB'] );
-        unset( $_ENV['interfaceA'] );
+        self::destroyInterface( interface: self::$interfaceB );
+        self::destroyInterface( interface: self::$interfaceA );
+        self::destroyDevice( device: self::$deviceB );
+        self::destroyDevice( device: self::$deviceA );
+        self::destroyRack( rack: self::$rackB );
+        self::destroyRack( rack: self::$rackA );
+        self::destroyVirtualChassis( chassis: self::$vcB );
+        self::destroyVirtualChassis( chassis: self::$vcA );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyLocation( location: self::$locationB );
+        self::destroyLocation( location: self::$locationA );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyTenant( tenant: self::$tenant );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$siteB );
+        self::destroySite( site: self::$siteA );
     }
 
     public function setUp() : void
     {
         $this->options = new Options();
-        $this->options->interface_a = $_ENV['interfaceA']->id;
-        $this->options->interface_b = $_ENV['interfaceB']->id;
+        $this->options->interface_a = self::$interfaceA->id;
+        $this->options->interface_b = self::$interfaceB->id;
     }
 }

@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testProviderNetworks extends testCore
 {
     public Options $options;
+    public static $provider;
 
     public function __construct()
     {
@@ -154,7 +155,7 @@ class testProviderNetworks extends testCore
         $result = $o->putDetail( 
                   id: $network->id, 
                 name: 'PHPUnit_ProvNet',
-            provider: $_ENV['provider']->id,              
+            provider: self::$provider->id,              
         );
         
         $this->assertIsArray( $result );
@@ -211,7 +212,7 @@ class testProviderNetworks extends testCore
         $result = $o->patchDetail(
                   id: $network->id, 
                 name: 'PHPUnit_ProvNet',
-            provider: $_ENV['provider']->id,
+            provider: self::$provider->id,
         );
 
         $this->assertIsArray( $result );
@@ -309,7 +310,7 @@ class testProviderNetworks extends testCore
 
         return $o->postDetail( 
                 name: 'PHPUnit_ProvNet',
-            provider: $_ENV['provider']->id,
+            provider: self::$provider->id,
         );
     }
 
@@ -333,15 +334,13 @@ class testProviderNetworks extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['provider'] = self::createProvider();
+        self::$provider = self::createProvider();
     }
 
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyProvider( provider: $_ENV['provider'] );
-
-        unset( $_ENV['provider'] );
+        self::destroyProvider( provider: self::$provider );
     }
 
 
@@ -349,6 +348,6 @@ class testProviderNetworks extends testCore
     {
         $this->options = new Options();
         $this->options->name     = 'PHPUnit_ProvNet';
-        $this->options->provider = $_ENV['provider']->id;
+        $this->options->provider = self::$provider->id;
     }
 }

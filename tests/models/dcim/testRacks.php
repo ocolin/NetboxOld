@@ -12,6 +12,8 @@ require_once __DIR__ . '/../testCore.php';
 class testRacks extends testCore
 {
     public Options $options;
+    public static $site;
+    public static $location;
 
     public function __construct()
     {
@@ -153,8 +155,8 @@ class testRacks extends testCore
         $result = $o->putDetail( 
                   id: $rack->id,
                 name: 'PHPUnit_Rack',
-                site: $_ENV['site']->id,
-            location: $_ENV['location']->id,                
+                site: self::$site->id,
+            location: self::$location->id,                
         );
         
         $this->assertIsArray( $result );
@@ -211,8 +213,8 @@ class testRacks extends testCore
         $result = $o->patchDetail(
                   id: $rack->id,
                 name: 'PHPUnit_Rack',
-                site: $_ENV['site']->id,
-            location: $_ENV['location']->id,
+                site: self::$site->id,
+            location: self::$location->id,
         );
 
         $this->assertIsArray( $result );
@@ -310,8 +312,8 @@ class testRacks extends testCore
 
         return $o->postDetail( 
                 name: 'PHPUnit_Rack',
-                site: $_ENV['site']->id,
-            location: $_ENV['location']->id,
+                site: self::$site->id,
+            location: self::$location->id,
         );
     }
 
@@ -334,17 +336,14 @@ class testRacks extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site']     = self::createSite();
-        $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
+        self::$site     = self::createSite();
+        self::$location = self::createLocation( site: self::$site );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyLocation( location: $_ENV['location'] );
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['location'] );
-        unset( $_ENV['site'] );
+        self::destroyLocation( location: self::$location );
+        self::destroySite( site: self::$site );
     }
         
     public function setUp() : void
@@ -352,7 +351,7 @@ class testRacks extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name     = 'PHPUnit_Rack-' . $rand;
-        $this->options->site     = $_ENV['site']->id;
-        $this->options->location = $_ENV['location']->id;
+        $this->options->site     = self::$site->id;
+        $this->options->location = self::$location->id;
     }
 }

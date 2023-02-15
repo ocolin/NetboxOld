@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testAsns extends testCore
 {
     public Options $options;
+    public static $rir;
 
     public function __construct()
     {
@@ -155,7 +156,7 @@ class testAsns extends testCore
         $result = $o->putDetail( 
                  id: $asn->id, 
                 asn: 1, 
-                rir: $_ENV['rir']->id, 
+                rir: self::$rir->id, 
         );        
         
         $this->assertIsArray( $result );
@@ -212,7 +213,7 @@ class testAsns extends testCore
         $result = $o->patchDetail(
                  id: $asn->id,
                 asn: 1,
-                rir: $_ENV['rir']->id,
+                rir: self::$rir->id,
         );
 
         $this->assertIsArray( $result );
@@ -311,7 +312,7 @@ class testAsns extends testCore
 
         return $o->postDetail( 
                 asn: 1,
-                rir: $_ENV['rir']->id,
+                rir: self::$rir->id,
         );
     }
 
@@ -335,7 +336,7 @@ class testAsns extends testCore
     public static function setUpBeforeClass() : void
     {
         $o = new Rirs();
-        $_ENV['rir'] = self::createRir();
+        self::$rir = self::createRir();
     }
 
 
@@ -345,9 +346,7 @@ class testAsns extends testCore
 
     public static function tearDownAfterClass() : void
     {
-       
-        self::destroyRir( rir: $_ENV['rir'] );
-        unset( $_ENV['rir'] );
+        self::destroyRir( rir: self::$rir );
     }
 
                 
@@ -356,7 +355,7 @@ class testAsns extends testCore
         $rand = rand( 1, 10000 );
         $this->options = new Options();
         $this->options->asn = $rand;
-        $this->options->rir = $_ENV['rir']->id;
+        $this->options->rir = self::$rir->id;
         $this->options->description = 'PHPUnit_Ans-' . $rand;
     }
 }

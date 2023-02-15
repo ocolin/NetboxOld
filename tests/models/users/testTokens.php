@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testTokens extends testCore
 {
     public Options $options;
+    public static $user;
 
     public function __construct()
     {
@@ -151,7 +152,7 @@ class testTokens extends testCore
         $o = new Tokens();
         $result = $o->putDetail( 
               id: $token->id, 
-            user: $_ENV['user']->id
+            user: self::$user->id
         );
         
         
@@ -208,7 +209,7 @@ class testTokens extends testCore
         $o = new Tokens();
         $result = $o->patchDetail(
               id: $token->id,
-            user: $_ENV['user']->id
+            user: self::$user->id
         );
 
         $this->assertIsArray( $result );
@@ -306,7 +307,7 @@ class testTokens extends testCore
         $o = new Tokens();
 
         return $o->postDetail( 
-            user: $_ENV['user']->id
+            user: self::$user->id
         );
     }
 
@@ -328,18 +329,18 @@ class testTokens extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['user'] = self::createUser();
+        self::$user = self::createUser();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyUser( user: $_ENV['user'] );
+        self::destroyUser( user: self::$user );
     }
 
     public function setUp() : void
     {
         $this->options = new Options();
-        $this->options->user  =  $_ENV['user']->id;
+        $this->options->user  =  self::$user->id;
     }
 
 }

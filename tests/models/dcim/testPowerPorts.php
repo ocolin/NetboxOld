@@ -12,6 +12,15 @@ require_once __DIR__ . '/../testCore.php';
 class testPowerPorts extends testCore
 {
     public Options $options;
+    public static $vc;
+    public static $rack;
+    public static $devrole;
+    public static $location;
+    public static $devtype;
+    public static $manf;
+    public static $site;
+    public static $tenant;
+    public static $device;
 
     public function __construct()
     {
@@ -153,7 +162,7 @@ class testPowerPorts extends testCore
         $result = $o->putDetail( 
                    id: $port->id, 
                  name: 'PHPUnit_PowerPort',
-               device: $_ENV['device']->id,         
+               device: self::$device->id,         
         );
         
         $this->assertIsArray( $result );
@@ -210,7 +219,7 @@ class testPowerPorts extends testCore
         $result = $o->patchDetail(
                    id: $port->id, 
                  name: 'PHPUnit_PowerPort',
-               device: $_ENV['device']->id,
+               device: self::$device->id,
         );
 
         $this->assertIsArray( $result );
@@ -308,7 +317,7 @@ class testPowerPorts extends testCore
 
         return $o->postDetail( 
                  name: 'PHPUnit_PowerPort',
-               device: $_ENV['device']->id,
+               device: self::$device->id,
         );
     }
 
@@ -331,47 +340,37 @@ class testPowerPorts extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site']     = self::createSite();
-        $_ENV['manf']     = self::createManufacturer();
-        $_ENV['tenant']   = self::createTenant();
-        $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
-        $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
-        $_ENV['devrole']  = self::createDeviceRole();
-        $_ENV['vc']       = self::createVirtualChassis();
-        $_ENV['rack']     = self::createRack( 
-            site: $_ENV['site'], location: $_ENV['location'] 
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer();
+        self::$tenant   = self::createTenant();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$location = self::createLocation( site: self::$site );
+        self::$devrole  = self::createDeviceRole();
+        self::$vc       = self::createVirtualChassis();
+        self::$rack     = self::createRack( 
+            site: self::$site, location: self::$location 
         );
-        $_ENV['device']   = self::createDevice(
-                       site: $_ENV['site'],
-                     tenant: $_ENV['tenant'],
-                 devicetype: $_ENV['devtype'],
-                 devicerole: $_ENV['devrole'],
-            virtual_chassis: $_ENV['vc'],
-                       rack: $_ENV['rack']
+        self::$device   = self::createDevice(
+                       site: self::$site,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vc,
+                       rack: self::$rack
         );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyDevice( device: $_ENV['device'] );
-        self::destroyRack( rack: $_ENV['rack'] );
-        self::destroyVirtualChassis( chassis: $_ENV['vc'] );
-        self::destroyDeviceRole( devrole: $_ENV['devrole'] );
-        self::destroyLocation( location: $_ENV['location'] );
-        self::destroyDeviceType( devtype: $_ENV['devtype'] );
-        self::destroyTenant( tenant: $_ENV['tenant'] );
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['rack'] );
-        unset( $_ENV['vc'] );
-        unset( $_ENV['devrole'] );
-        unset( $_ENV['location'] );
-        unset( $_ENV['devtype'] );
-        unset( $_ENV['tenant'] );
-        unset( $_ENV['manf'] );
-        unset( $_ENV['site'] );
-        unset( $_ENV['device'] );
+        self::destroyDevice( device: self::$device );
+        self::destroyRack( rack: self::$rack );
+        self::destroyVirtualChassis( chassis: self::$vc );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyLocation( location: self::$location );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyTenant( tenant: self::$tenant );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
     }
         
     public function setUp() : void
@@ -379,6 +378,6 @@ class testPowerPorts extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name   = 'PHPUnit_PowerPort-' . $rand;
-        $this->options->device = $_ENV['device']->id;
+        $this->options->device = self::$device->id;
     }
 }

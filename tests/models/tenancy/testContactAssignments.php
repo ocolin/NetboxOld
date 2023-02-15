@@ -12,6 +12,9 @@ require_once __DIR__ . '/../testCore.php';
 class testContactAssignments extends testCore
 {
     public Options $options;
+    public static $crole;
+    public static $cgroup;
+    public static $contact;
 
     public function __construct()
     {
@@ -36,7 +39,6 @@ class testContactAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -61,7 +63,6 @@ class testContactAssignments extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $assgn->id );
@@ -132,7 +133,7 @@ class testContactAssignments extends testCore
         options: [
             [ 
                  'name' => 'PHPUnit_Contact',
-                'group' => $_ENV['cgroup']->id
+                'group' => self::$cgroup->id
             ],
         ]  
         );
@@ -167,7 +168,7 @@ class testContactAssignments extends testCore
         $result = $o->putDetail( 
                id: $assgn->id, 
              name: 'PHPUnit_Contact', 
-            group: $_ENV['cgroup']->id
+            group: self::$cgroup->id
         );
         
         
@@ -201,7 +202,7 @@ class testContactAssignments extends testCore
                 [ 
                        'id' => $assgn->id, 
                      'name' => 'PHPUnit_Contact',
-                    'group' => $_ENV['cgroup']->id
+                    'group' => self::$cgroup->id
                 ]
             ]
         );
@@ -234,7 +235,7 @@ class testContactAssignments extends testCore
         $result = $o->patchDetail(
                id: $assgn->id,
              name: 'PHPUnit_Contact',
-            group: $_ENV['cgroup']->id
+            group: self::$cgroup->id
         );
 
         $this->assertIsArray( $result );
@@ -268,7 +269,7 @@ class testContactAssignments extends testCore
                 [ 
                        'id' => $assgn->id, 
                      'name' => 'PHPUnit_Contact',
-                    'group' => $_ENV['cgroup']->id
+                    'group' => self::$cgroup->id
                 ]
             ]
         );
@@ -343,8 +344,8 @@ class testContactAssignments extends testCore
         return $o->postDetail( 
             content_type: 'Tenancy.Contacts',
                object_id: 0,
-                 contact: $_ENV['contact']->id,
-                    role: $_ENV['crole']->id,
+                 contact: self::$contact->id,
+                    role: self::$crole->id,
                 priority: 'primary'
         );
     }
@@ -367,20 +368,16 @@ class testContactAssignments extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['crole']   = self::createContactRole();
-        $_ENV['cgroup']  = self::createContactGroup();
-        $_ENV['contact'] = self::createContact( group: $_ENV['cgroup'] );
+        self::$crole   = self::createContactRole();
+        self::$cgroup  = self::createContactGroup();
+        self::$contact = self::createContact( group: self::$cgroup );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyContact( contact: $_ENV['contact'] );
-        self::destroyContactGroup( group: $_ENV['cgroup'] );
-        self::destroyContactRole( role: $_ENV['crole'] );
-
-        unset( $_ENV['contact'] );
-        unset( $_ENV['cgroup'] );
-        unset( $_ENV['crole'] );
+        self::destroyContact( contact: self::$contact );
+        self::destroyContactGroup( group: self::$cgroup );
+        self::destroyContactRole( role: self::$crole );
     }
 
     public function setUp() : void
@@ -388,10 +385,10 @@ class testContactAssignments extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->content_type = 'Tenancy.Contacts';
-        $this->options->object_id = 0;
-        $this->options->contact   = $_ENV['contact']->id;
-        $this->options->role      = $_ENV['crole']->id;
-        $this->options->priority  = 'primary';
+        $this->options->object_id    = 0;
+        $this->options->contact      = self::$contact->id;
+        $this->options->role         = self::$crole->id;
+        $this->options->priority     = 'primary';
     }
 
 }

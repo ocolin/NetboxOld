@@ -12,6 +12,17 @@ require_once __DIR__ . '/../testCore.php';
 class testFhrpGroupAssignments extends testCore
 {
     public Options $options;
+    public static $site;
+    public static $group;
+    public static $interface;
+    public static $manf;
+    public static $device;
+    public static $rack;
+    public static $vc;
+    public static $tenant;
+    public static $devrole;
+    public static $location;
+    public static $devtype;
 
     public function __construct()
     {
@@ -153,9 +164,9 @@ class testFhrpGroupAssignments extends testCore
         $o = new FhrpGroupAssignments();
         $result = $o->putDetail( 
                         id: $assign->id,
-                     group: $_ENV['group']->id,
+                     group: self::$group->id,
             interface_type: 'dcim.device',
-              interface_id: $_ENV['interface']->id,
+              interface_id: self::$interface->id,
                   priority: 1
         );        
         
@@ -212,9 +223,9 @@ class testFhrpGroupAssignments extends testCore
         $o = new FhrpGroupAssignments();
         $result = $o->patchDetail(
                         id: $assign->id,
-                     group: $_ENV['group']->id,
+                     group: self::$group->id,
             interface_type: 'dcim.device',
-              interface_id: $_ENV['interface']->id,
+              interface_id: self::$interface->id,
                   priority: 1
         );
 
@@ -314,9 +325,9 @@ class testFhrpGroupAssignments extends testCore
         $o = new FhrpGroupAssignments();
 
         return $o->postDetail( 
-            group: $_ENV['group']->id,
+            group: self::$group->id,
             interface_type: 'dcim.device',
-            interface_id: $_ENV['interface']->id,
+            interface_id: self::$interface->id,
             priority: 1
         );
     }
@@ -337,53 +348,41 @@ class testFhrpGroupAssignments extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['group']    = self::createFhrpGroup();
-        $_ENV['site']     = self::createSite();
-        $_ENV['manf']     = self::createManufacturer();
-        $_ENV['tenant']   = self::createTenant();
-        $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
-        $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
-        $_ENV['devrole']  = self::createDeviceRole();
-        $_ENV['vc']       = self::createVirtualChassis();
-        $_ENV['rack']     = self::createRack( 
-            site: $_ENV['site'], location: $_ENV['location'] 
+        self::$group    = self::createFhrpGroup();
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer();
+        self::$tenant   = self::createTenant();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$location = self::createLocation( site: self::$site );
+        self::$devrole  = self::createDeviceRole();
+        self::$vc       = self::createVirtualChassis();
+        self::$rack     = self::createRack( 
+            site: self::$site, location: self::$location 
         );
-        $_ENV['device']   = self::createDevice(
-                       site: $_ENV['site'],
-                     tenant: $_ENV['tenant'],
-                 devicetype: $_ENV['devtype'],
-                 devicerole: $_ENV['devrole'],
-            virtual_chassis: $_ENV['vc'],
-                       rack: $_ENV['rack']
+        self::$device   = self::createDevice(
+                       site: self::$site,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vc,
+                       rack: self::$rack
         );
-        $_ENV['interface'] = self::createInterface( device: $_ENV['device'] );
+        self::$interface = self::createInterface( device: self::$device );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyInterface( interface: $_ENV['interface'] );
-        self::destroyDevice( device: $_ENV['device'] );
-        self::destroyRack( rack: $_ENV['rack'] );
-        self::destroyVirtualChassis( chassis: $_ENV['vc'] );
-        self::destroyDeviceRole( devrole: $_ENV['devrole'] );
-        self::destroyLocation( location: $_ENV['location'] );
-        self::destroyDeviceType( devtype: $_ENV['devtype'] );
-        self::destroyTenant( tenant: $_ENV['tenant'] );
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-        self::destroySite( site: $_ENV['site'] );
-        self::destroyFhrpGroup( group: $_ENV['group'] );
-
-        unset( $_ENV['group'] );
-        unset( $_ENV['interface'] );
-        unset( $_ENV['rack'] );
-        unset( $_ENV['vc'] );
-        unset( $_ENV['devrole'] );
-        unset( $_ENV['location'] );
-        unset( $_ENV['devtype'] );
-        unset( $_ENV['tenant'] );
-        unset( $_ENV['manf'] );
-        unset( $_ENV['site'] );
-        unset( $_ENV['device'] );
+        self::destroyInterface( interface: self::$interface );
+        self::destroyDevice( device: self::$device );
+        self::destroyRack( rack: self::$rack );
+        self::destroyVirtualChassis( chassis: self::$vc );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyLocation( location: self::$location );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyTenant( tenant: self::$tenant );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
+        self::destroyFhrpGroup( group: self::$group );
     }
 
                 
@@ -391,9 +390,9 @@ class testFhrpGroupAssignments extends testCore
     {
         $rand = rand( 1, 100000 );
         $this->options = new Options();
-        $this->options->group           = $_ENV['group']->id;
+        $this->options->group           = self::$group->id;
         $this->options->interface_type  = 'dcim.device';
-        $this->options->interface_id    = $_ENV['interface']->id;
+        $this->options->interface_id    = self::$interface->id;
         $this->options->priority        = 1;
     }
 }

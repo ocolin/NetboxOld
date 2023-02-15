@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testModuleTypes extends testCore
 {
     public Options $options;
+    public static $manf;
 
     public function __construct()
     {
@@ -153,7 +154,7 @@ class testModuleTypes extends testCore
         $result = $o->putDetail( 
                       id: $module->id, 
                    model: 'PHPUnit_ModType',
-            manufacturer: $_ENV['manf']->id                
+            manufacturer: self::$manf->id                
         );
         
         $this->assertIsArray( $result );
@@ -210,7 +211,7 @@ class testModuleTypes extends testCore
         $result = $o->patchDetail(
                       id: $module->id, 
                    model: 'PHPUnit_ModType',
-            manufacturer: $_ENV['manf']->id
+            manufacturer: self::$manf->id
         );
 
         $this->assertIsArray( $result );
@@ -308,7 +309,7 @@ class testModuleTypes extends testCore
 
         return $o->postDetail( 
                    model: 'PHPUnit_ModType',
-            manufacturer: $_ENV['manf']->id
+            manufacturer: self::$manf->id
         );
     }
 
@@ -331,13 +332,12 @@ class testModuleTypes extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['manf'] = self::createManufacturer();
+        self::$manf = self::createManufacturer();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-        unset( $_ENV['manf'] );
+        self::destroyManufacturer( manf: self::$manf );
     }
         
     public function setUp() : void
@@ -345,6 +345,6 @@ class testModuleTypes extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->model = 'PHPUnit_ModelType-' . $rand;
-        $this->options->manufacturer = $_ENV['manf']->id;
+        $this->options->manufacturer = self::$manf->id;
     }
 }

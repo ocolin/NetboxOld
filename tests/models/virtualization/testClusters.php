@@ -12,6 +12,9 @@ require_once __DIR__ . '/../testCore.php';
 class testClusters extends testCore
 {
     public Options $options;
+    public static $site;
+    public static $type;
+    public static $group;
 
     public function __construct()
     {
@@ -152,9 +155,9 @@ class testClusters extends testCore
         $result = $o->putDetail( 
                id: $cluster->id, 
              name: 'PHPUnit_Cluster',
-             type: $_ENV['type']->id,
-            group: $_ENV['group']->id,
-             site: $_ENV['site']->id
+             type: self::$type->id,
+            group: self::$group->id,
+             site: self::$site->id
         );
         
         
@@ -212,9 +215,9 @@ class testClusters extends testCore
         $result = $o->patchDetail(
                id: $cluster->id,
              name: 'PHPUnit_Cluster',
-             type: $_ENV['type']->id,
-            group: $_ENV['group']->id,
-             site: $_ENV['site']->id
+             type: self::$type->id,
+            group: self::$group->id,
+             site: self::$site->id
         );
 
         $this->assertIsArray( $result );
@@ -313,9 +316,9 @@ class testClusters extends testCore
 
         return $o->postDetail( 
              name: 'PHPUnit_Cluster',
-             type: $_ENV['type']->id,
-            group: $_ENV['group']->id,
-             site: $_ENV['site']->id
+             type: self::$type->id,
+            group: self::$group->id,
+             site: self::$site->id
         );
     }
 
@@ -337,21 +340,17 @@ class testClusters extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site']  = self::createSite();
-        $_ENV['type']  = self::createClusterType();
-        $_ENV['group'] = self::createClusterGroup();
+        self::$site  = self::createSite();
+        self::$type  = self::createClusterType();
+        self::$group = self::createClusterGroup();
 
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroySite( site: $_ENV['site'] );
-        self::destroyClusterType( type: $_ENV['type'] );
-        self::destroyClusterGroup( group: $_ENV['group'] );
-
-        unset( $_ENV['site'] );
-        unset( $_ENV['type'] );
-        unset( $_ENV['group'] );
+        self::destroySite( site: self::$site );
+        self::destroyClusterType( type: self::$type );
+        self::destroyClusterGroup( group: self::$group );
     }
 
     public function setUp() : void
@@ -359,8 +358,8 @@ class testClusters extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name  = 'PHPUnit_Cluster-' . $rand;
-        $this->options->type  = $_ENV['type']->id;
-        $this->options->group = $_ENV['group']->id;
-        $this->options->site  = $_ENV['site']->id;
+        $this->options->type  = self::$type->id;
+        $this->options->group = self::$group->id;
+        $this->options->site  = self::$site->id;
     }
 }

@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testAggregates extends testCore
 {
     public Options $options;
+    public static $rir;
 
     public function __construct()
     {
@@ -153,7 +154,7 @@ class testAggregates extends testCore
         $result = $o->putDetail( 
                  id: $agr->id, 
              prefix: '192.168.66.0/24', 
-                rir: $_ENV['rir']->id, 
+                rir: self::$rir->id, 
         );        
         
         $this->assertIsArray( $result );
@@ -210,7 +211,7 @@ class testAggregates extends testCore
         $result = $o->patchDetail(
                  id: $agr->id,
              prefix: '192.168.66.0/24',
-                rir: $_ENV['rir']->id,
+                rir: self::$rir->id,
         );
 
         $this->assertIsArray( $result );
@@ -310,7 +311,7 @@ class testAggregates extends testCore
 
         return $o->postDetail( 
              prefix: '192.168.77.0/24',
-                rir: $_ENV['rir']->id,
+                rir: self::$rir->id,
         );
     }
 
@@ -333,13 +334,12 @@ class testAggregates extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['rir'] = self::createRir();
+        self::$rir = self::createRir();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyRir( rir: $_ENV['rir'] );
-        unset( $_ENV['rir'] );
+        self::destroyRir( rir: self::$rir );
     }
 
             
@@ -348,7 +348,7 @@ class testAggregates extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->prefix      = "192.168.77.0/24";
-        $this->options->rir         = $_ENV['rir']->id;
+        $this->options->rir         = self::$rir->id;
         $this->options->description = 'PHPUnit_Aggregate-' . $rand;
     }
 }

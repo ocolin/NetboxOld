@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testVlans extends testCore
 {
     public Options $options;
+    public static $vlg;
 
     public function __construct()
     {
@@ -155,7 +156,7 @@ class testVlans extends testCore
         $result = $o->putDetail( 
                   id: $vlan->id, 
                  vid: 1, 
-               group: $_ENV['vlg']->id, 
+               group: self::$vlg->id, 
                 name: 'putVlan',
         );        
         
@@ -213,7 +214,7 @@ class testVlans extends testCore
         $result = $o->patchDetail(
                      id: $vlan->id,
                     vid: 1,
-                  group: $_ENV['vlg']->id,
+                  group: self::$vlg->id,
                    name: 'PatchVlan',
         );
 
@@ -313,7 +314,7 @@ class testVlans extends testCore
         $o = new Vlans();
 
         return $o->postDetail( 
-               group: $_ENV['vlg']->id,
+               group: self::$vlg->id,
                  vid: 1,
                 name: 'phpunit-vlan-test',
         );
@@ -339,7 +340,7 @@ class testVlans extends testCore
     public static function setUpBeforeClass() : void
     {
         $o = new VlanGroups();
-        $_ENV['vlg'] = $o->postDetail(
+        self::$vlg = $o->postDetail(
             name: 'phptestunit_vlan_group',
             slug: 'phptestunit_vlan_group'
         )['body'];
@@ -353,8 +354,7 @@ class testVlans extends testCore
     public static function tearDownAfterClass() : void
     {
         $o = new VlanGroups();
-        $o->deleteDetail( id: $_ENV['vlg']->id );
-        unset( $_ENV['vlg'] );
+        $o->deleteDetail( id: self::$vlg->id );
     }
 
                 
@@ -363,7 +363,7 @@ class testVlans extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name = 'PHPUnit_Vlan-' . $rand;
-        $this->options->group = $_ENV['vlg']->id;
+        $this->options->group = self::$vlg->id;
         $this->options->vid = 1;
     }
 }

@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testLocations extends testCore
 {
     public Options $options;
+    public static $site;
 
     public function __construct()
     {
@@ -156,7 +157,7 @@ class testLocations extends testCore
                  id: $loc->id, 
                name: 'putLocation', 
                slug: 'putLocation',
-               site: $_ENV['site']->id, 
+               site: self::$site->id, 
         );        
         
         $this->assertIsArray( $result );
@@ -214,7 +215,7 @@ class testLocations extends testCore
                  id: $loc->id,
                name: 'patchLocationTest',
                slug: 'patchLocationTest',
-               site: $_ENV['site']->id,
+               site: self::$site->id,
         );
 
         $this->assertIsArray( $result );
@@ -314,7 +315,7 @@ class testLocations extends testCore
         return $o->postDetail( 
                name: 'phpunit_location',
                slug: 'phpunit_location',
-               site: $_ENV['site']->id,
+               site: self::$site->id,
         );
     }
 
@@ -337,13 +338,12 @@ class testLocations extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site'] = self::createSite();
+        self::$site = self::createSite();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroySite( $_ENV['site'] );
-        unset( $_ENV['site'] );
+        self::destroySite( self::$site );
     }
         
     public function setUp() : void
@@ -353,6 +353,6 @@ class testLocations extends testCore
         $this->options->name        = 'PHPUnit_Location-' . $rand;
         $this->options->slug        = 'PHPUnit_Location-' . $rand;
         $this->options->description = 'PHPUnit_Location-' . $rand;
-        $this->options->site        = $_ENV['site']->id;
+        $this->options->site        = self::$site->id;
     }
 }

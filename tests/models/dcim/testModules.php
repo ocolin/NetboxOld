@@ -12,6 +12,17 @@ require_once __DIR__ . '/../testCore.php';
 class testModules extends testCore
 {
     public Options $options;
+    public static $vc;
+    public static $rack;
+    public static $devrole;
+    public static $location;
+    public static $devtype;
+    public static $manf;
+    public static $site;
+    public static $tenant;
+    public static $device;
+    public static $modbay;
+    public static $modtype;
 
     public function __construct()
     {
@@ -152,9 +163,9 @@ class testModules extends testCore
         $o = new Modules();
         $result = $o->putDetail( 
                      id: $module->id, 
-                 device: $_ENV['device']->id,
-             module_bay: $_ENV['modbay']->id,
-            module_type: $_ENV['modtype']->id,
+                 device: self::$device->id,
+             module_bay: self::$modbay->id,
+            module_type: self::$modtype->id,
         );
         
         $this->assertIsArray( $result );
@@ -210,9 +221,9 @@ class testModules extends testCore
         $o = new Modules();
         $result = $o->patchDetail(
                      id: $module->id, 
-                 device: $_ENV['device']->id,
-             module_bay: $_ENV['modbay']->id,
-            module_type: $_ENV['modtype']->id,
+                 device: self::$device->id,
+             module_bay: self::$modbay->id,
+            module_type: self::$modtype->id,
         );
 
         $this->assertIsArray( $result );
@@ -309,9 +320,9 @@ class testModules extends testCore
         $o = new Modules();
 
         return $o->postDetail( 
-                 device: $_ENV['device']->id,
-             module_bay: $_ENV['modbay']->id,
-            module_type: $_ENV['modtype']->id,
+                 device: self::$device->id,
+             module_bay: self::$modbay->id,
+            module_type: self::$modtype->id,
         );
     }
 
@@ -334,62 +345,50 @@ class testModules extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site']     = self::createSite();
-        $_ENV['manf']     = self::createManufacturer();
-        $_ENV['tenant']   = self::createTenant();
-        $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
-        $_ENV['location'] = self::createLocation( site: $_ENV['site'] );
-        $_ENV['devrole']  = self::createDeviceRole();
-        $_ENV['vc']       = self::createVirtualChassis();
-        $_ENV['rack']     = self::createRack( 
-            site: $_ENV['site'], location: $_ENV['location'] 
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer();
+        self::$tenant   = self::createTenant();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$location = self::createLocation( site: self::$site );
+        self::$devrole  = self::createDeviceRole();
+        self::$vc       = self::createVirtualChassis();
+        self::$rack     = self::createRack( 
+            site: self::$site, location: self::$location 
         );
-        $_ENV['device']   = self::createDevice(
-                       site: $_ENV['site'],
-                     tenant: $_ENV['tenant'],
-                 devicetype: $_ENV['devtype'],
-                 devicerole: $_ENV['devrole'],
-            virtual_chassis: $_ENV['vc'],
-                       rack: $_ENV['rack']
+        self::$device   = self::createDevice(
+                       site: self::$site,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vc,
+                       rack: self::$rack
         );
-        $_ENV['modbay'] = self::createModuleBay( device: $_ENV['device'] );
-        $_ENV['modtype'] = self::createModuleType( manufacturer: $_ENV['manf'] );
+        self::$modbay = self::createModuleBay( device: self::$device );
+        self::$modtype = self::createModuleType( manufacturer: self::$manf );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyModuleType( modtype: $_ENV['modtype'] );
-        self::destroyModuleBay( bay: $_ENV['modbay'] );
-        self::destroyDevice( device: $_ENV['device'] );
-        self::destroyRack( rack: $_ENV['rack'] );
-        self::destroyVirtualChassis( chassis: $_ENV['vc'] );
-        self::destroyDeviceRole( devrole: $_ENV['devrole'] );
-        self::destroyLocation( location: $_ENV['location'] );
-        self::destroyDeviceType( devtype: $_ENV['devtype'] ); 
-        self::destroyTenant( tenant: $_ENV['tenant'] );
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['rack'] );
-        unset( $_ENV['vc'] );
-        unset( $_ENV['devrole'] );
-        unset( $_ENV['location'] );
-        unset( $_ENV['devtype'] );
-        unset( $_ENV['tenant'] );
-        unset( $_ENV['manf'] );
-        unset( $_ENV['site'] );
-        unset( $_ENV['device'] );
-        unset( $_ENV['modbay'] );
-        unset( $_ENV['modtype'] ); 
+        self::destroyModuleType( modtype: self::$modtype );
+        self::destroyModuleBay( bay: self::$modbay );
+        self::destroyDevice( device: self::$device );
+        self::destroyRack( rack: self::$rack );
+        self::destroyVirtualChassis( chassis: self::$vc );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyLocation( location: self::$location );
+        self::destroyDeviceType( devtype: self::$devtype ); 
+        self::destroyTenant( tenant: self::$tenant );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
     }
         
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );
         $this->options = new Options();
-        $this->options->device      = $_ENV['device']->id;
-        $this->options->module_bay  = $_ENV['modbay']->id;
-        $this->options->module_type = $_ENV['modtype']->id;
+        $this->options->device      = self::$device->id;
+        $this->options->module_bay  = self::$modbay->id;
+        $this->options->module_type = self::$modtype->id;
         $this->options->comments    = 'PHPUnit_Module-' . $rand;
     }
 }

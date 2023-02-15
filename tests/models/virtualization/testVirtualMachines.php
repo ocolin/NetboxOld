@@ -12,6 +12,10 @@ require_once __DIR__ . '/../testCore.php';
 class testVirtualMachines extends testCore
 {
     public Options $options;
+    public static $site;
+    public static $type;
+    public static $group;
+    public static $cluster;
 
     public function __construct()
     {
@@ -152,7 +156,7 @@ class testVirtualMachines extends testCore
         $result = $o->putDetail( 
                  id: $machine->id, 
                name: 'PHPUnit_VM',
-            cluster: $_ENV['cluster']->id,
+            cluster: self::$cluster->id,
         );
         
         
@@ -210,7 +214,7 @@ class testVirtualMachines extends testCore
         $result = $o->patchDetail(
                  id: $machine->id,
                name: 'PHPUnit_VM',
-            cluster: $_ENV['cluster']->id,
+            cluster: self::$cluster->id,
         );
 
         $this->assertIsArray( $result );
@@ -308,7 +312,7 @@ class testVirtualMachines extends testCore
 
         return $o->postDetail( 
                name: 'PHPUnit_VM',
-            cluster: $_ENV['cluster']->id,
+            cluster: self::$cluster->id,
         );
     }
 
@@ -330,28 +334,23 @@ class testVirtualMachines extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site']  = self::createSite();
-        $_ENV['type']  = self::createClusterType();
-        $_ENV['group'] = self::createClusterGroup();
-        $_ENV['cluster']    = self::createCluster(
-             type: $_ENV['type'],
-            group: $_ENV['group'],
-             site: $_ENV['site']
+        self::$site  = self::createSite();
+        self::$type  = self::createClusterType();
+        self::$group = self::createClusterGroup();
+        self::$cluster    = self::createCluster(
+             type: self::$type,
+            group: self::$group,
+             site: self::$site
         );
 
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyCluster( cluster: $_ENV['cluster'] );
-        self::destroySite( site: $_ENV['site'] );
-        self::destroyClusterType( type: $_ENV['type'] );
-        self::destroyClusterGroup( group: $_ENV['group'] );
-
-        unset( $_ENV['site'] );
-        unset( $_ENV['type'] );
-        unset( $_ENV['group'] );
-        unset( $_ENV['cluster'] );
+        self::destroyCluster( cluster: self::$cluster );
+        self::destroySite( site: self::$site );
+        self::destroyClusterType( type: self::$type );
+        self::destroyClusterGroup( group: self::$group );
     }
 
     public function setUp() : void
@@ -359,6 +358,6 @@ class testVirtualMachines extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name = 'PHPUnit_VM-' . $rand;
-        $this->options->cluster = $_ENV['cluster']->id;
+        $this->options->cluster = self::$cluster->id;
     }
 }

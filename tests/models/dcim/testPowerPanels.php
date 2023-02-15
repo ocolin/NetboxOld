@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testPowerPanels extends testCore
 {
     public Options $options;
+    public static $site;
 
     public function __construct()
     {
@@ -153,7 +154,7 @@ class testPowerPanels extends testCore
         $result = $o->putDetail( 
               id: $panal->id, 
             name: 'PHPUnit_PowerPanel',
-            site: $_ENV['site']->id               
+            site: self::$site->id               
         );
         
         $this->assertIsArray( $result );
@@ -210,7 +211,7 @@ class testPowerPanels extends testCore
         $result = $o->patchDetail(
               id: $panal->id, 
             name: 'PHPUnit_PowerPanel',
-            site: $_ENV['site']->id
+            site: self::$site->id
         );
 
         $this->assertIsArray( $result );
@@ -308,7 +309,7 @@ class testPowerPanels extends testCore
 
         return $o->postDetail( 
             name: 'PHPUnit_PowerPanel',
-            site: $_ENV['site']->id
+            site: self::$site->id
         );
     }
 
@@ -331,14 +332,12 @@ class testPowerPanels extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site'] = self::createSite();
+        self::$site = self::createSite();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['site'] );
+        self::destroySite( site: self::$site );
     }
         
     public function setUp() : void
@@ -346,6 +345,6 @@ class testPowerPanels extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name = 'PHPUnit_PwrPanel-' . $rand;
-        $this->options->site = $_ENV['site']->id ;
+        $this->options->site = self::$site->id ;
     }
 }

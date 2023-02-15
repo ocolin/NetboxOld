@@ -12,6 +12,10 @@ require_once __DIR__ . '/../testCore.php';
 class testCircuitTerminations extends testCore
 {
     public Options $options;
+    public static $circuit_type;
+    public static $provider;
+    public static $site;
+    public static $circuit;
 
     public function __construct()
     {
@@ -155,7 +159,7 @@ class testCircuitTerminations extends testCore
         $result = $o->putDetail( 
                    id: $term->id, 
             term_side: 'A',
-              circuit: $_ENV['circuit']->id,   
+              circuit: self::$circuit->id,   
               options: $this->options
         );
         
@@ -213,7 +217,7 @@ class testCircuitTerminations extends testCore
         $result = $o->patchDetail(
                    id: $term->id, 
             term_side: 'A',
-              circuit: $_ENV['circuit']->id,
+              circuit: self::$circuit->id,
               options: $this->options
         );
 
@@ -246,7 +250,7 @@ class testCircuitTerminations extends testCore
                 [ 
                            'id' => $term->id,
                     'term_side' => 'A',
-                      'circuit' => $_ENV['circuit']->id,
+                      'circuit' => self::$circuit->id,
                      'options'  => $this->options
                 ]
             ]
@@ -320,7 +324,7 @@ class testCircuitTerminations extends testCore
 
         return $o->postDetail( 
             term_side: 'A',
-              circuit: $_ENV['circuit']->id,
+              circuit: self::$circuit->id,
               options: $this->options
         );
     }
@@ -344,32 +348,28 @@ class testCircuitTerminations extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['provider']     = self::createProvider();
-        $_ENV['circuit_type'] = self::createCircuitType();
-        $_ENV['site']         = self::createSite();
-        $_ENV['circuit']      = self::createCircuit(
-                provider: $_ENV['provider'],
-            circuit_type: $_ENV['circuit_type']
+        self::$provider     = self::createProvider();
+        self::$circuit_type = self::createCircuitType();
+        self::$site         = self::createSite();
+        self::$circuit      = self::createCircuit(
+                provider: self::$provider,
+            circuit_type: self::$circuit_type
         );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyCircuit( circuit: $_ENV['circuit'] );
-        self::destroyProvider( provider: $_ENV['provider'] );
-        self::destroyCircuitType( ct: $_ENV['circuit_type'] );
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['provider'] );
-        unset( $_ENV['circuit_type'] );
-        unset( $_ENV['circuit'] );
+        self::destroyCircuit( circuit: self::$circuit );
+        self::destroyProvider( provider: self::$provider );
+        self::destroyCircuitType( ct: self::$circuit_type );
+        self::destroySite( site: self::$site );
     }
 
     public function setUp() : void
     {
         $this->options = new Options();
         $this->options->term_side = 'A';
-        $this->options->circuit   = $_ENV['circuit']->id;
-        $this->options->site      = $_ENV['site']->id;
+        $this->options->circuit   = self::$circuit->id;
+        $this->options->site      = self::$site->id;
     }
 }

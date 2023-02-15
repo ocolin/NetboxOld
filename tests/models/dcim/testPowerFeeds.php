@@ -12,6 +12,8 @@ require_once __DIR__ . '/../testCore.php';
 class testPowerFeeds extends testCore
 {
     public Options $options;
+    public static $site;
+    public static $panel;
 
     public function __construct()
     {
@@ -153,7 +155,7 @@ class testPowerFeeds extends testCore
         $result = $o->putDetail( 
                      id: $feed->id, 
                    name: 'PHPUnit_PowerFeed',
-            power_panel: $_ENV['panel']->id              
+            power_panel: self::$panel->id              
         );
         
         $this->assertIsArray( $result );
@@ -210,7 +212,7 @@ class testPowerFeeds extends testCore
         $result = $o->patchDetail(
                      id: $feed->id, 
                    name: 'PHPUnit_PowerFeed',
-            power_panel: $_ENV['panel']->id
+            power_panel: self::$panel->id
         );
 
         $this->assertIsArray( $result );
@@ -308,7 +310,7 @@ class testPowerFeeds extends testCore
 
         return $o->postDetail( 
                    name: 'PHPUnit_PowerFeed',
-            power_panel: $_ENV['panel']->id
+            power_panel: self::$panel->id
         );
     }
 
@@ -331,18 +333,15 @@ class testPowerFeeds extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['site']  = self::createSite();
-        $_ENV['panel'] = self::createPowerPanel( site: $_ENV['site'] );
+        self::$site  = self::createSite();
+        self::$panel = self::createPowerPanel( site: self::$site );
 
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyPowerPanel( panel: $_ENV['panel'] );
-        self::destroySite( site: $_ENV['site'] );
-
-        unset( $_ENV['site'] );
-        unset( $_ENV['panel'] );
+        self::destroyPowerPanel( panel: self::$panel );
+        self::destroySite( site: self::$site );
     }
 
         
@@ -351,6 +350,6 @@ class testPowerFeeds extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name        = 'PHPUnit_PwrFeed-' . $rand;
-        $this->options->power_panel = $_ENV['panel']->id;
+        $this->options->power_panel = self::$panel->id;
     }
 }

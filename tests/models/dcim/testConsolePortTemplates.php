@@ -13,6 +13,8 @@ require_once __DIR__ . '/../testCore.php';
 class testConsolePortTemplates extends testCore
 {
     public Options $options;
+    public static $devtype;
+    public static $manf;
 
     public function __construct()
     {
@@ -156,7 +158,7 @@ class testConsolePortTemplates extends testCore
         $result = $o->putDetail( 
                      id: $porttemp->id, 
                    name: 'updateConsolePortTemplate', 
-            device_type: $_ENV['devtype']->id
+            device_type: self::$devtype->id
         );
         
         
@@ -214,7 +216,7 @@ class testConsolePortTemplates extends testCore
         $result = $o->patchDetail(
                      id: $porttemp->id,
                    name: 'patchConsolePortTemplate',
-            device_type: $_ENV['devtype']->id
+            device_type: self::$devtype->id
         );
 
         $this->assertIsArray( $result );
@@ -312,7 +314,7 @@ class testConsolePortTemplates extends testCore
 
         return $o->postDetail( 
                    name: 'testConsolePortTemplate',
-            device_type: $_ENV['devtype']->id
+            device_type: self::$devtype->id
         );
     }
 
@@ -335,18 +337,15 @@ class testConsolePortTemplates extends testCore
 
     public static function setUpBeforeClass() : void
     {    
-        $_ENV['manf'] = self::createManufacturer();
-        $_ENV['devtype'] = self::createDeviceType( manf: $_ENV['manf'] );
+        self::$manf = self::createManufacturer();
+        self::$devtype = self::createDeviceType( manf: self::$manf );
     }
 
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyDeviceType( $_ENV['devtype'] );
-        self::destroyManufacturer( $_ENV['manf'] );
-        unset( $_ENV['devtype'] );
-        unset( $_ENV['manf'] );
-        
+        self::destroyDeviceType( self::$devtype );
+        self::destroyManufacturer( self::$manf );
     }
 
     
@@ -356,7 +355,7 @@ class testConsolePortTemplates extends testCore
         $this->options = new Options();
         $this->options->name         = 'PHPUnit_ConsPortTempl-' . $rand;
         $this->options->slug         = 'PHPUnit_ConsPortTempl-' . $rand;
-        $this->options->manufacturer = $_ENV['manf']->id;
-        $this->options->device_type  = $_ENV['devtype']->id;
+        $this->options->manufacturer = self::$manf->id;
+        $this->options->device_type  = self::$devtype->id;
     }
 }

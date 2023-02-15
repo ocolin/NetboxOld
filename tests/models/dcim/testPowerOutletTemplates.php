@@ -12,6 +12,8 @@ require_once __DIR__ . '/../testCore.php';
 class testPowerOutletTemplates extends testCore
 {
     public Options $options;
+    public static $devtype;
+    public static $manf;
 
     public function __construct()
     {
@@ -153,7 +155,7 @@ class testPowerOutletTemplates extends testCore
         $result = $o->putDetail( 
                      id: $temp->id, 
                    name: 'PHPUnit_PwrOutletTempl',
-            device_type: $_ENV['devtype']->id               
+            device_type: self::$devtype->id               
         );
         
         $this->assertIsArray( $result );
@@ -210,7 +212,7 @@ class testPowerOutletTemplates extends testCore
         $result = $o->patchDetail(
                      id: $temp->id, 
                    name: 'PHPUnit_PwrOutletTempl',
-            device_type: $_ENV['devtype']->id
+            device_type: self::$devtype->id
         );
 
         $this->assertIsArray( $result );
@@ -308,7 +310,7 @@ class testPowerOutletTemplates extends testCore
 
         return $o->postDetail( 
                    name: 'PHPUnit_PwrOutletTempl',
-            device_type: $_ENV['devtype']->id
+            device_type: self::$devtype->id
         );
     }
 
@@ -331,16 +333,14 @@ class testPowerOutletTemplates extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['manf']     = self::createManufacturer();
-        $_ENV['devtype']  = self::createDeviceType( manf: $_ENV['manf'] );
+        self::$manf     = self::createManufacturer();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyDeviceType( devtype: $_ENV['devtype'] );
-        self::destroyManufacturer( manf: $_ENV['manf'] );
-
-        unset( $_ENV['devtype'] );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyManufacturer( manf: self::$manf );
     }
         
     public function setUp() : void
@@ -348,6 +348,6 @@ class testPowerOutletTemplates extends testCore
         $rand = rand( 1, 100000 );
         $this->options = new Options();
         $this->options->name        = 'PHPUnit_PwrOutletTemp-' . $rand;
-        $this->options->device_type = $_ENV['devtype']->id;
+        $this->options->device_type = self::$devtype->id;
     }
 }

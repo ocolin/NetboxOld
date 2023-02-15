@@ -12,6 +12,7 @@ require_once __DIR__ . '/../testCore.php';
 class testDeviceTypes extends testCore
 {
     public Options $options;
+    public static $manf;
 
     public function __construct()
     {
@@ -156,7 +157,7 @@ class testDeviceTypes extends testCore
                       id: $devtype->id, 
                    model: 'updateDeviceType', 
                     slug: 'updateDeviceType',
-            manufacturer: $_ENV['manf']->id
+            manufacturer: self::$manf->id
         );
         
         
@@ -215,7 +216,7 @@ class testDeviceTypes extends testCore
                       id: $devtype->id,
                    model: 'patchDeviceType',
                     slug: 'patchDeviceType',
-            manufacturer: $_ENV['manf']->id
+            manufacturer: self::$manf->id
         );
 
         $this->assertIsArray( $result );
@@ -314,7 +315,7 @@ class testDeviceTypes extends testCore
         return $o->postDetail( 
                    model: 'testDeviceType',
                     slug: 'testDeviceType',
-            manufacturer: $_ENV['manf']->id
+            manufacturer: self::$manf->id
         );
     }
 
@@ -337,13 +338,12 @@ class testDeviceTypes extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['manf'] = self::createManufacturer();
+        self::$manf = self::createManufacturer();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyManufacturer( $_ENV['manf'] );
-        unset( $_ENV['manf'] );
+        self::destroyManufacturer( self::$manf );
     }
         
     public function setUp() : void
@@ -352,7 +352,7 @@ class testDeviceTypes extends testCore
         $this->options = new Options();
         $this->options->model        = 'PHPUnit_DevType-' .$rand;
         $this->options->slug         = 'PHPUnit_DevType-' .$rand;
-        $this->options->manufacturer = $_ENV['manf']->id;
+        $this->options->manufacturer = self::$manf->id;
     }
 
 }

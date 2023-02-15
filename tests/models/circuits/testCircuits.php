@@ -12,6 +12,8 @@ require_once __DIR__ . '/../testCore.php';
 class testCircuits extends testCore
 {
     public Options $options;
+    public static $provider;
+    public static $circuit_type;
 
     public function __construct()
     {
@@ -154,8 +156,8 @@ class testCircuits extends testCore
         $result = $o->putDetail( 
                   id: $circuit->id, 
                  cid: 'PHPUnit_Circuit',
-                type: $_ENV['circuit_type']->id,
-            provider: $_ENV['provider']->id,            
+                type: self::$circuit_type->id,
+            provider: self::$provider->id,            
         );
         
         $this->assertIsArray( $result );
@@ -214,8 +216,8 @@ class testCircuits extends testCore
         $result = $o->patchDetail(
                   id: $circuit->id, 
                  cid: 'PHPUnit_Circuit',
-                type: $_ENV['circuit_type']->id,
-            provider: $_ENV['provider']->id,
+                type: self::$circuit_type->id,
+            provider: self::$provider->id,
         );
 
         $this->assertIsArray( $result );
@@ -313,8 +315,8 @@ class testCircuits extends testCore
 
         return $o->postDetail( 
                  cid: 'PHPUnit_Circuit',
-                type: $_ENV['circuit_type']->id,
-            provider: $_ENV['provider']->id,
+                type: self::$circuit_type->id,
+            provider: self::$provider->id,
         );
     }
 
@@ -337,24 +339,21 @@ class testCircuits extends testCore
 
     public static function setUpBeforeClass() : void
     {
-        $_ENV['provider']     = self::createProvider();
-        $_ENV['circuit_type'] = self::createCircuitType();
+        self::$provider     = self::createProvider();
+        self::$circuit_type = self::createCircuitType();
     }
 
     public static function tearDownAfterClass() : void
     {
-        self::destroyProvider( provider: $_ENV['provider'] );
-        self::destroyCircuitType( ct: $_ENV['circuit_type'] );
-
-        unset( $_ENV['provider'] );
-        unset( $_ENV['circuit_type'] );
+        self::destroyProvider( provider: self::$provider );
+        self::destroyCircuitType( ct: self::$circuit_type );
     }
 
     public function setUp() : void
     {
         $this->options = new Options();
         $this->options->cid      = 'PHPUnit_Circuit';
-        $this->options->provider = $_ENV['provider']->id;
-        $this->options->type     = $_ENV['circuit_type']->id;
+        $this->options->provider = self::$provider->id;
+        $this->options->type     = self::$circuit_type->id;
     }
 }
