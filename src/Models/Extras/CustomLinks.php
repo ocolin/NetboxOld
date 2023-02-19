@@ -36,7 +36,7 @@ class CustomLinks extends Extras
 */
 
     public function postDetail(
-         array $content_types,
+        string $content_type,
         string $name,
         string $link_text,
         string $link_url,
@@ -46,7 +46,7 @@ class CustomLinks extends Extras
     {
         $options = $options ?? $this->options;
 
-        $options->content_types = $content_types;
+        $options->content_type = $content_type;
         $options->name          = $name;
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;
@@ -78,7 +78,7 @@ class CustomLinks extends Extras
 
     public function putDetail(
            int $id,
-         array $content_types,
+        string $content_type,
         string $name,
         string $link_text,
         string $link_url,
@@ -89,7 +89,7 @@ class CustomLinks extends Extras
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options->content_types = $content_types;
+        $options->content_type = $content_type;
         $options->name          = $name;
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;
@@ -121,7 +121,7 @@ class CustomLinks extends Extras
 
     public function patchDetail(
            int $id,
-         array $content_types,
+        string $content_type,
         string $name,
         string $link_text,
         string $link_url,
@@ -132,7 +132,7 @@ class CustomLinks extends Extras
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
         
-        $options->content_types = $content_types;
+        $options->content_type = $content_type;
         $options->name          = $name;
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;

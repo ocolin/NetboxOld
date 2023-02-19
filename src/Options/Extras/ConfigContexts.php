@@ -11,10 +11,10 @@ class ConfigContexts
 
     public string $name;
     public string $description;
-    public string $data;
 
     public bool   $is_active;
 
+    public array  $data;
     public array  $tags;
     public array  $regions;
     public array  $site_groups;

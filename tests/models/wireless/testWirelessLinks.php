@@ -113,7 +113,7 @@ class testWirelessLinks extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new WirelessLinks();
+        //$o = new WirelessLinks();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );

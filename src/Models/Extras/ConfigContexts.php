@@ -80,7 +80,7 @@ class ConfigContexts extends Extras
         $options = $options ?? $this->options;
 
         $options->name = $name;
-        $options->data = $options;
+        $options->data = $data;
 
         return $this->http->put(
                 uri: $this->uri,

@@ -35,7 +35,7 @@ class ExportTemplates extends Extras
 */
 
     public function postDetail(
-         array $content_types,
+        string $content_type,
         string $name,
         string $template_code,
        Options $options = null,
@@ -44,7 +44,7 @@ class ExportTemplates extends Extras
     {
         $options = $options ?? $this->options;
         
-        $options->content_types  = $content_types;
+        $options->content_type  = $content_type;
         $options->name           = $name;
         $options->template_code  = $template_code;
 
@@ -74,7 +74,7 @@ class ExportTemplates extends Extras
 
     public function putDetail(
            int $id,
-         array $content_types,
+        string $content_type,
         string $name,
         string $template_code,
        Options $options = null,
@@ -84,7 +84,7 @@ class ExportTemplates extends Extras
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options->content_types  = $content_types;
+        $options->content_type  = $content_type;
         $options->name           = $name;
         $options->template_code  = $template_code;
 
@@ -114,7 +114,7 @@ class ExportTemplates extends Extras
 
     public function patchDetail(
            int $id,
-         array $content_types,
+        string $content_type,
         string $name,
         string $template_code,
        Options $options = null,
@@ -124,7 +124,7 @@ class ExportTemplates extends Extras
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options->content_types  = $content_types;
+        $options->content_type  = $content_type;
         $options->name           = $name;
         $options->template_code  = $template_code;
 

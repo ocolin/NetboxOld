@@ -41,8 +41,9 @@ class WirelessLinks extends Wireless
          array $headers = []
     ) : array
     {
-        $options['interface_a'] = $interface_a;
-        $options['interface_b'] = $interface_b;
+        $options = $options ?? $this->options;
+        $options->interface_a = $interface_a;
+        $options->interface_b = $interface_b;
 
         return $this->http->post(
                 uri: $this->uri,
@@ -75,8 +76,9 @@ class WirelessLinks extends Wireless
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['interface_a'] = $interface_a;
-        $options['interface_b'] = $interface_b;
+        $options = $options ?? $this->options;
+        $options->interface_a = $interface_a;
+        $options->interface_b = $interface_b;
 
         return $this->http->put(
                 uri: $this->uri,
@@ -109,8 +111,9 @@ class WirelessLinks extends Wireless
     ) : array
     {
         $this->uri .= "{$id}/";
-        $options['interface_a'] = $interface_a;
-        $options['interface_b'] = $interface_b;
+        $options = $options ?? $this->options;
+        $options->interface_a = $interface_a;
+        $options->interface_b = $interface_b;
         
         return $this->http->put(
                 uri: $this->uri,

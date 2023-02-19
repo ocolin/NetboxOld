@@ -14,5 +14,6 @@ class ServiceTemplates
     public string $protocol;
 
     public array  $tags;
+    public array  $ports;
     public array  $custom_fields;
 }

@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Options\Extras;
 
 #[\AllowDynamicProperties]
-class WebHooks
+class Webhooks
 {
     public string $name;
     public string $payload_url;

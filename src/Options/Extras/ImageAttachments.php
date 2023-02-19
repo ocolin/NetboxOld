@@ -13,4 +13,5 @@ class ImageAttachments
 
     public string $content_type;
     public string $name;
+    public string $image;
 }
