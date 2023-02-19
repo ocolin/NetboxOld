@@ -9,7 +9,7 @@ class CustomLinks
 {
     public int    $weight;
 
-    public string $content_type;
+    public array  $content_types;
     public string $name;
     public string $link_text;
     public string $link_url;

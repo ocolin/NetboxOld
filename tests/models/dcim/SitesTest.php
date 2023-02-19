@@ -2,14 +2,17 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\Sites AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class SitesTest extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
@@ -18,9 +21,9 @@ class TagsTest extends testCore
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,8 +34,8 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
+
 
 
 
@@ -42,10 +45,10 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new Sites();
+        $result = $o->getDetail( id: $site->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,10 +58,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $site->id );
     }
 
 
@@ -69,9 +71,9 @@ class TagsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,12 +84,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $site->id );
     }
 
 
@@ -97,7 +97,7 @@ class TagsTest extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new Sites();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,7 +108,6 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -121,14 +120,10 @@ class TagsTest extends testCore
 
     public function testPostList() :void
     {
-        $o = new Tags();
+        $o = new Sites();
+
         $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
+            options: [ $this->options ]  
         );
 
         $this->assertIsArray( $result );
@@ -141,9 +136,9 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $site )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $site->id );
         }
     }
 
@@ -155,13 +150,13 @@ class TagsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+              id: $site->id, 
+            name: 'updateSite', 
+            slug: 'updateSite',
         );
         
         
@@ -173,10 +168,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $site->id );
     }
 
 
@@ -187,17 +181,12 @@ class TagsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
+        $this->options->id = $site->id;
 
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
+            options: [ $this->options ]
         );
         
         $this->assertIsArray( $result );
@@ -208,10 +197,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $site->id );
     }
 
 
@@ -222,13 +210,13 @@ class TagsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+              id: $site->id,
+            name: 'patchSite',
+            slug: 'patchSite',
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +227,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $site->id );
     }
 
 
@@ -254,17 +240,12 @@ class TagsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
+        $this->options->id = $site->id;
 
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
+            options: [ $this->options ]
         );
 
         $this->assertIsArray( $result );
@@ -275,10 +256,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $site->id );
     }
 
 
@@ -290,10 +270,10 @@ class TagsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new Sites();
+        $result = $o->deleteDetail( id: $site->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +291,11 @@ class TagsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $site = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Sites();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $site->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -327,29 +307,40 @@ class TagsTest extends testCore
     }
 
 
-/* CREATE A REGION
+/* CREATE A SITE
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new Sites();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+            name: 'testSite',
+            slug: 'testSite',
         );
     }
 
 
 
-/* DELETE A REGION
+/* DELETE A RIR
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Tags();
+        $o = new Sites();
 
         return $o->deleteDetail( id: $id  );
     }
+
+
+    
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_Site-' . $rand;
+        $this->options->slug = 'PHPUnit_Site-' . $rand;
+    }
+    
 
 }

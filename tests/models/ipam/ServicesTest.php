@@ -1,26 +1,40 @@
-<?php
+<?php 
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\Services AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class ServicesTest extends testCore
 {
+    public Options $options;
+    public static $site;
+    public static $manf;
+    public static $device;
+    public static $rack;
+    public static $vc;
+    public static $tenant;
+    public static $devrole;
+    public static $location;
+    public static $devtype;
+
     public function __construct()
     {
         parent::__construct();
     }
 
+
+
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new Services();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,9 +45,7 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
-
 
 
 /* TEST GET DETAIL
@@ -42,10 +54,10 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new Services();
+        $result = $o->getDetail( id: $service->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,12 +67,11 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $service->id );
     }
-
+ 
 
 
 /* TEST GET LIST
@@ -69,9 +80,9 @@ class TagsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Services();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,12 +93,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $service->id );
     }
 
 
@@ -97,7 +106,7 @@ class TagsTest extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new Services();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,10 +117,9 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result['body']->id );
     }
 
 
@@ -121,15 +129,8 @@ class TagsTest extends testCore
 
     public function testPostList() :void
     {
-        $o = new Tags();
-        $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
-        );
+        $o = new Services();
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -141,9 +142,9 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $service )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $service->id );
         }
     }
 
@@ -155,15 +156,16 @@ class TagsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Services();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                  id: $service->id, 
+                name: 'PHPUnit_Service',
+               ports: [1],
+            protocol: 'tcp',
+             options: $this->options              
         );
-        
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,10 +175,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $service->id );
     }
 
 
@@ -187,18 +188,11 @@ class TagsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
+        $this->options->id = $service->id;
 
-        $o = new Tags();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new Services();
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,10 +202,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $service->id );
     }
 
 
@@ -222,13 +215,16 @@ class TagsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
+        
 
-        $o = new Tags();
+        $o = new Services();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                  id: $service->id, 
+                name: 'PHPUnit_Service',
+               ports: [1],
+            protocol: 'tcp',
+             options: $this->options
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +235,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $service->id );
     }
 
 
@@ -254,18 +248,11 @@ class TagsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
+        $this->options->id = $service->id;
 
-        $o = new Tags();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new Services();
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,12 +262,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $service->id );
     }
-
 
 
 
@@ -290,10 +275,10 @@ class TagsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new Services();
+        $result = $o->deleteDetail( id: $service->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +296,11 @@ class TagsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $service = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Services();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $service->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -327,29 +312,82 @@ class TagsTest extends testCore
     }
 
 
-/* CREATE A REGION
+
+/* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new Services();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                name: 'PHPUnit_Service',
+               ports: [1],
+            protocol: 'tcp',
+             options: $this->options
         );
     }
 
 
 
-/* DELETE A REGION
+/* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Tags();
+        $o = new Services();
 
         return $o->deleteDetail( id: $id  );
     }
 
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer();
+        self::$tenant   = self::createTenant();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$location = self::createLocation( site: self::$site );
+        self::$devrole  = self::createDeviceRole();
+        self::$vc       = self::createVirtualChassis();
+        self::$rack     = self::createRack( 
+            site: self::$site, location: self::$location 
+        );
+        self::$device   = self::createDevice(
+                       site: self::$site,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vc,
+                       rack: self::$rack
+        );
+    }
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyDevice( device: self::$device );
+        self::destroyRack( rack: self::$rack );
+        self::destroyVirtualChassis( chassis: self::$vc );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyLocation( location: self::$location );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyTenant( tenant: self::$tenant );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
+    }
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name     = 'PHPUnit_Service-' . $rand;
+        $this->options->ports    = [1];
+        $this->options->protocol = 'tcp';
+        $this->options->device   = self::$device->id;
+    }
 }

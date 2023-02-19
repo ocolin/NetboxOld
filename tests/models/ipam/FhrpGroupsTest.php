@@ -2,25 +2,30 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\IPAM\FhrpGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class FhrpGroupsTest extends testCore
 {
+    public Options $options;
+
     public function __construct()
     {
         parent::__construct();
     }
 
+
+
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new FhrpGroups();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,7 +36,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -42,10 +46,10 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new FhrpGroups();
+        $result = $o->getDetail( id: $group->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,11 +59,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
-    }
+        $this->deleteDetail( id: $group->id );
+    } 
 
 
 
@@ -69,9 +72,9 @@ class TagsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new FhrpGroups();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,13 +85,12 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $group->id );
     }
+
 
 
 
@@ -97,7 +99,7 @@ class TagsTest extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new FhrpGroups();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,12 +110,10 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
     }
-
 
 
 /* TEST POST LIST
@@ -121,15 +121,8 @@ class TagsTest extends testCore
 
     public function testPostList() :void
     {
-        $o = new Tags();
-        $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
-        );
+        $o = new FhrpGroups();
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -141,9 +134,9 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $group )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $group->id );
         }
     }
 
@@ -155,15 +148,14 @@ class TagsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new FhrpGroups();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
-        );
-        
+                  id: $group->id, 
+            protocol: 'vrrp2',
+            group_id: 1
+        );        
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,10 +165,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -187,18 +178,11 @@ class TagsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
+        $this->options->id = $group->id;
 
-        $o = new Tags();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new FhrpGroups();
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,10 +192,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -222,13 +205,13 @@ class TagsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new FhrpGroups();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                      id: $group->id,
+                protocol: 'vrrp2',
+                group_id: 1
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +222,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -254,18 +235,11 @@ class TagsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
+        $this->options->id = $group->id;
 
-        $o = new Tags();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new FhrpGroups();
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,10 +249,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $group->id );
     }
 
 
@@ -290,10 +263,10 @@ class TagsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new FhrpGroups();
+        $result = $o->deleteDetail( id: $group->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +284,11 @@ class TagsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $group = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new FhrpGroups();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $group->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -327,29 +300,41 @@ class TagsTest extends testCore
     }
 
 
-/* CREATE A REGION
+
+/* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new FhrpGroups();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+            protocol: 'vrrp2',
+            group_id: 1
         );
     }
 
 
 
-/* DELETE A REGION
+/* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Tags();
+        $o = new FhrpGroups();
 
         return $o->deleteDetail( id: $id  );
     }
 
+
+
+                
+    public function setUp() : void
+    {
+        $rand = rand( 1, 10000 );
+        $this->options = new Options();
+        $this->options->protocol = 'vrrp2';
+        $this->options->group_id = $rand;
+        $this->options->description = 'PHPUnit_FhrpGRoup-' . $rand;
+    }
 }

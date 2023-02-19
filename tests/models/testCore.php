@@ -9,18 +9,13 @@ use Cruzio\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
 use Cruzio\Netbox\Options\DCIM\Interfaces AS IntOptions;
 use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
 
-#Circuits\CircuitTerminations
-
-require_once( __DIR__ . '/../../vendor/autoload.php' );
-
 class testCore extends \PHPUnit\Framework\TestCase
 {
     public function __construct()
     {
         parent::__construct();
         $dotenv = new Dotenv();
-        $dotenv->load( __DIR__ . '/../.env' );
-        
+        $dotenv->load( __DIR__ . '/../../src/.env.dev' );
     }
 
 
@@ -514,7 +509,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $circuit, 
         object $site,
         string $term = 'A'
-    )
+    ) : object
     {
         $obj = new CTOptions();
         $obj->site = $site->id;
@@ -537,7 +532,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* REAR PORT
 ---------------------------------------------------------------------------- */
 
-    public static function createRearPort( object $device )
+    public static function createRearPort( object $device ) : object
     {
         $o = new DCIM\RearPorts();
         return $o->postDetail(
@@ -557,7 +552,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* REAR PORT TEMPLATE
 ---------------------------------------------------------------------------- */
 
-    public static function createRearPortTemplate( object $device_type )
+    public static function createRearPortTemplate( object $device_type ) : object
     {
         $o = new DCIM\RearPortTemplates();
         return $o->postDetail(
@@ -567,7 +562,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         )['body'];
     }
 
-    public static function destroyRearPortsTemplate( object $templ )
+    public static function destroyRearPortsTemplate( object $templ ) : void
     {
         $o = new DCIM\RearPortTemplates();
         $o->deleteDetail( id: $templ->id );
@@ -578,7 +573,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* CLUSTER TYPE
 ---------------------------------------------------------------------------- */
 
-    public static function createClusterType()
+    public static function createClusterType() : object
     {
         $o = new Virtualization\ClusterTypes();
         return $o->postDetail(
@@ -587,7 +582,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         )['body'];
     }
 
-    public static function destroyClusterType( object $type )
+    public static function destroyClusterType( object $type ) : void
     {
         $o = new Virtualization\ClusterTypes();
         $o->deleteDetail( id: $type->id );
@@ -598,7 +593,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* CLUSTER GROUP
 ---------------------------------------------------------------------------- */
 
-    public static function createClusterGroup()
+    public static function createClusterGroup() : object
     {
         $o = new Virtualization\ClusterGroups();
         return $o->postDetail(
@@ -622,7 +617,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         object $type,
         object $group,
         object $site
-    )
+    ) : object
     {
         $o = new Virtualization\Clusters();
         return $o->postDetail(
@@ -644,7 +639,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* VIRTUAL MACHINE
 ---------------------------------------------------------------------------- */
 
-    public static function createVM( object $cluster )
+    public static function createVM( object $cluster ) : object
     {
         $o = new Virtualization\VirtualMachines();
         return $o->postDetail(
@@ -653,7 +648,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         )['body'];
     }
 
-    public static function destroyVM( object $vm )
+    public static function destroyVM( object $vm ) : void
     {
         $o = new Virtualization\VirtualMachines();
         $o->deleteDetail( id: $vm->id );
@@ -664,7 +659,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* FHRP GROUP
 ---------------------------------------------------------------------------- */
 
-    public static function createFhrpGroup()
+    public static function createFhrpGroup() : object
     {
         $o = new IPAM\FhrpGroups();
         return $o->postDetail(
@@ -673,7 +668,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         )['body'];
     }
 
-    public static function destroyFhrpGroup( object $group )
+    public static function destroyFhrpGroup( object $group ) : void
     {
         $o = new IPAM\FhrpGroups();
         $o->deleteDetail( id: $group->id );
@@ -683,7 +678,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* IP RANGE
 ---------------------------------------------------------------------------- */
 
-    public static function createIpRange()
+    public static function createIpRange() : object
     {
         $o = new IPAM\IpRanges();
         return $o->postDetail(
@@ -692,7 +687,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         )['body'];
     }
 
-    public static function destroyIpRange( object $range )
+    public static function destroyIpRange( object $range ) : void
     {
         $o = new IPAM\IpRanges();
         $o->deleteDetail( id: $range->id );
@@ -703,13 +698,13 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* IP ADDRESS
 ---------------------------------------------------------------------------- */
 
-    public static function createIpAddress()
+    public static function createIpAddress() : object
     {
         $o = new IPAM\IpAddresses();
         return $o->postDetail( address: '192.168.55.55/24')['body'];
     }
 
-    public static function destroyIpAddress( object $ip )
+    public static function destroyIpAddress( object $ip ) : void
     {
         $o = new IPAM\IpAddresses();
         $o->deleteDetail( id: $ip->id );
@@ -720,13 +715,13 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* PREFIX
 ---------------------------------------------------------------------------- */
 
-    public static function createPrefix()
+    public static function createPrefix() : object
     {
         $o = new IPAM\Prefixes();
         return $o->postDetail( prefix: '192.168.55.0/25' )['body'];
     }
 
-    public static function destroyPrefix( object $prefix )
+    public static function destroyPrefix( object $prefix ) : void
     {
         $o = new IPAM\Prefixes();
         $o->deleteDetail( id: $prefix->id );
@@ -736,7 +731,7 @@ class testCore extends \PHPUnit\Framework\TestCase
 /* VLAN GROUP
 ---------------------------------------------------------------------------- */
 
-    public static function createVlanGroup()
+    public static function createVlanGroup() : object
     {
         $o = new IPAM\VlanGroups();
         return $o->postDetail(
@@ -745,7 +740,7 @@ class testCore extends \PHPUnit\Framework\TestCase
         )['body'];
     }
 
-    public static function destroyVlanGroup( object $group )
+    public static function destroyVlanGroup( object $group ) : void
     {
         $o = new IPAM\VlanGroups();
         $o->deleteDetail( id: $group->id );

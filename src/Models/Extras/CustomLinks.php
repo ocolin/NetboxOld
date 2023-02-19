@@ -26,7 +26,7 @@ class CustomLinks extends Extras_Core
 /**
 * Create a single Custom Link.
 *
-* @param string $content_type Link content type.
+* @param array  $content_types Link content type.
 * @param string $name Name of custom link.
 * @param string $link_text Text of HTTP link.
 * @param string $link_url HTTP link.
@@ -36,7 +36,7 @@ class CustomLinks extends Extras_Core
 */
 
     public function postDetail(
-        string $content_type,
+         array $content_types,
         string $name,
         string $link_text,
         string $link_url,
@@ -46,7 +46,7 @@ class CustomLinks extends Extras_Core
     {
         $options = $options ?? $this->options;
 
-        $options->content_type = $content_type;
+        $options->content_types = $content_types;
         $options->name          = $name;
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;
@@ -67,7 +67,7 @@ class CustomLinks extends Extras_Core
 * Update Custom Link
 * 
 * @param integer $id Numerical ID of User to update.
-* @param string  $content_type Link content type.
+* @param array   $content_types Link content type.
 * @param string  $name Name of custom link.
 * @param string  $link_text Text of HTTP link.
 * @param string  $link_url HTTP link.
@@ -78,7 +78,7 @@ class CustomLinks extends Extras_Core
 
     public function putDetail(
            int $id,
-        string $content_type,
+         array $content_types,
         string $name,
         string $link_text,
         string $link_url,
@@ -89,7 +89,7 @@ class CustomLinks extends Extras_Core
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options->content_type = $content_type;
+        $options->content_types = $content_types;
         $options->name          = $name;
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;
@@ -110,7 +110,7 @@ class CustomLinks extends Extras_Core
 * Update Custom Link value(s).
 *
 * @param integer $id Numerical ID of User to update.
-* @param string  $content_type Link content type.
+* @param array   $content_types Link content type.
 * @param string  $name Name of custom link.
 * @param string  $link_text Text of HTTP link.
 * @param string  $link_url HTTP link.
@@ -121,7 +121,7 @@ class CustomLinks extends Extras_Core
 
     public function patchDetail(
            int $id,
-        string $content_type,
+         array $content_types,
         string $name,
         string $link_text,
         string $link_url,
@@ -132,7 +132,7 @@ class CustomLinks extends Extras_Core
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
         
-        $options->content_type = $content_type;
+        $options->content_types = $content_types;
         $options->name          = $name;
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;

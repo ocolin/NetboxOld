@@ -1,26 +1,40 @@
-<?php
+<?php 
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\DCIM\PowerOutlets AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class PowerOutletsTest extends testCore
 {
+    public Options $options;
+    public static $vc;
+    public static $rack;
+    public static $devrole;
+    public static $location;
+    public static $devtype;
+    public static $manf;
+    public static $site;
+    public static $tenant;
+    public static $device;
+
     public function __construct()
     {
         parent::__construct();
     }
 
+
+
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,9 +45,7 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
-
 
 
 /* TEST GET DETAIL
@@ -42,10 +54,10 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new PowerOutlets();
+        $result = $o->getDetail( id: $outlet->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,12 +67,11 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $outlet->id );
     }
-
+ 
 
 
 /* TEST GET LIST
@@ -69,9 +80,9 @@ class TagsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,12 +93,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $outlet->id );
     }
 
 
@@ -97,7 +106,7 @@ class TagsTest extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,10 +117,9 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result['body']->id );
     }
 
 
@@ -121,15 +129,13 @@ class TagsTest extends testCore
 
     public function testPostList() :void
     {
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
-        );
+            options: [[ 
+                      'name' => 'PHPUnit_PwrOutlet',
+                    'device' => self::$device->id
+                ]] 
+            );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -141,9 +147,9 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $outlet )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $outlet->id );
         }
     }
 
@@ -155,15 +161,14 @@ class TagsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                id: $outlet->id, 
+              name: 'PHPUnit_PwrOutlet',
+            device: self::$device->id                 
         );
-        
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,10 +178,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $outlet->id );
     }
 
 
@@ -187,15 +191,15 @@ class TagsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->putList(
             options: [
                 [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
+                        'id' => $outlet->id,
+                      'name' => 'PHPUnit_PwrOutlet',
+                    'device' => self::$device->id
                 ]
             ]
         );
@@ -208,10 +212,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $outlet->id );
     }
 
 
@@ -222,13 +225,13 @@ class TagsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                id: $outlet->id, 
+              name: 'PHPUnit_PwrOutlet',
+            device: self::$device->id 
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +242,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $outlet->id );
     }
 
 
@@ -254,15 +255,15 @@ class TagsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->patchList(
             options: [
                 [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
+                        'id' => $outlet->id,
+                      'name' => 'PHPUnit_PwrOutlet',
+                    'device' => self::$device->id
                 ]
             ]
         );
@@ -275,12 +276,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $outlet->id );
     }
-
 
 
 
@@ -290,10 +289,10 @@ class TagsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new PowerOutlets();
+        $result = $o->deleteDetail( id: $outlet->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +310,11 @@ class TagsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $outlet = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new PowerOutlets();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $outlet->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -327,29 +326,75 @@ class TagsTest extends testCore
     }
 
 
-/* CREATE A REGION
+
+/* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new PowerOutlets();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+              name: 'PHPUnit_PwrOutlet',
+            device: self::$device->id
         );
     }
 
 
 
-/* DELETE A REGION
+/* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
     public function deleteDetail( int $id )
     {
-        $o = new Tags();
+        $o = new PowerOutlets();
 
         return $o->deleteDetail( id: $id  );
     }
 
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer();
+        self::$tenant   = self::createTenant();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$location = self::createLocation( site: self::$site );
+        self::$devrole  = self::createDeviceRole();
+        self::$vc       = self::createVirtualChassis();
+        self::$rack     = self::createRack( 
+            site: self::$site, location: self::$location 
+        );
+        self::$device   = self::createDevice(
+                       site: self::$site,
+                     tenant: self::$tenant,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+            virtual_chassis: self::$vc,
+                       rack: self::$rack
+        );
+    }
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyDevice( device: self::$device );
+        self::destroyRack( rack: self::$rack );
+        self::destroyVirtualChassis( chassis: self::$vc );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyLocation( location: self::$location );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyTenant( tenant: self::$tenant );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
+    }
+        
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+    }
 }

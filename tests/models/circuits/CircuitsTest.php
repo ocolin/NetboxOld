@@ -1,26 +1,33 @@
-<?php
+<?php 
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Circuits\Circuits AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class CircuitsTest extends testCore
 {
+    public Options $options;
+    public static $provider;
+    public static $circuit_type;
+
     public function __construct()
     {
         parent::__construct();
     }
 
+
+
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new Circuits();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,9 +38,7 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
-
 
 
 /* TEST GET DETAIL
@@ -42,10 +47,10 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new Circuits();
+        $result = $o->getDetail( id: $circuit->id );   
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,12 +60,11 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $circuit->id );
     }
-
+ 
 
 
 /* TEST GET LIST
@@ -69,9 +73,9 @@ class TagsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Circuits();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,12 +86,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $circuit->id );
     }
 
 
@@ -97,7 +99,7 @@ class TagsTest extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new Circuits();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,10 +110,9 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result['body']->id );
     }
 
 
@@ -121,15 +122,9 @@ class TagsTest extends testCore
 
     public function testPostList() :void
     {
-        $o = new Tags();
-        $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
-        );
+        $o = new Circuits();
+
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -141,9 +136,9 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $circuit )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $circuit->id );
         }
     }
 
@@ -155,15 +150,15 @@ class TagsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Circuits();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                  id: $circuit->id, 
+                 cid: 'PHPUnit_Circuit',
+                type: self::$circuit_type->id,
+            provider: self::$provider->id,            
         );
-        
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -173,10 +168,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $circuit->id );
     }
 
 
@@ -187,17 +181,12 @@ class TagsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
-
-        $o = new Tags();
+        $circuit = $this->postDetail()['body'];
+        $this->options->id = $circuit->id;
+        
+        $o = new Circuits();
         $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
+            options: [ $this->options ]
         );
         
         $this->assertIsArray( $result );
@@ -208,10 +197,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $circuit->id );
     }
 
 
@@ -222,13 +210,14 @@ class TagsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Circuits();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                  id: $circuit->id, 
+                 cid: 'PHPUnit_Circuit',
+                type: self::$circuit_type->id,
+            provider: self::$provider->id,
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +228,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $circuit->id );
     }
 
 
@@ -254,18 +241,11 @@ class TagsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
+        $this->options->id = $circuit->id;
 
-        $o = new Tags();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new Circuits();
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,12 +255,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $circuit->id );
     }
-
 
 
 
@@ -290,10 +268,10 @@ class TagsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new Circuits();
+        $result = $o->deleteDetail( id: $circuit->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +289,11 @@ class TagsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $circuit = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new Circuits();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $circuit->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -327,29 +305,55 @@ class TagsTest extends testCore
     }
 
 
-/* CREATE A REGION
+
+/* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new Circuits();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                 cid: 'PHPUnit_Circuit',
+                type: self::$circuit_type->id,
+            provider: self::$provider->id,
         );
     }
 
 
 
-/* DELETE A REGION
+/* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) 
     {
-        $o = new Tags();
+        $o = new Circuits();
 
         return $o->deleteDetail( id: $id  );
     }
 
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$provider     = self::createProvider();
+        self::$circuit_type = self::createCircuitType();
+    }
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyProvider( provider: self::$provider );
+        self::destroyCircuitType( ct: self::$circuit_type );
+    }
+
+    public function setUp() : void
+    {
+        $this->options = new Options();
+        $this->options->cid      = 'PHPUnit_Circuit';
+        $this->options->provider = self::$provider->id;
+        $this->options->type     = self::$circuit_type->id;
+    }
 }

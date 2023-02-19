@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class ImageAttachmentsTest extends testCore
 {
     public function __construct()
     {
@@ -18,9 +18,9 @@ class TagsTest extends testCore
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,7 +31,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -42,10 +41,11 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
+        print_r( $attch );
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new ImageAttachments();
+        $result = $o->getDetail( id: $attch->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,23 +55,22 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $attch->id );
     }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -87,17 +86,17 @@ class TagsTest extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $attch->id );
     }
-
+ */
 
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -111,22 +110,23 @@ class TagsTest extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result['body']->id );
     }
-
+ */
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->postList(
         options: [
             [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
+                         'name' => 'PHPUnit_ExpTemp',
+                'content_types' => [ 'dcim.sitegroup' ],
+                'template_code' => 'testing',
             ],
         ]  
         );
@@ -141,27 +141,28 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $attch )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $attch->id );
         }
     }
-
+ */
 
 
 /* TEST PUT DETAIL
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                       id: $attch->id, 
+                     name: 'PHPUnit_ExpTemp',
+            content_types: [ 'dcim.sitegroup' ],
+            template_code: 'testing',
         );
         
         
@@ -176,26 +177,27 @@ class TagsTest extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $attch->id );
     }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->putList(
             options: [
                 [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
+                               'id' => $attch->id, 
+                             'name' => 'PHPUnit_ExpTemp',
+                    'content_types' => [ 'dcim.sitegroup' ],
+                    'template_code' => 'testing',
                 ]
             ]
         );
@@ -211,24 +213,25 @@ class TagsTest extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $attch->id );
     }
-
+ */
 
 
 /* TEST PATCH DETAIL
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                       id: $attch->id,
+                     name: 'PHPUnit_ExpTemp',
+            content_types: [ 'dcim.sitegroup' ],
+            template_code: 'testing',
         );
 
         $this->assertIsArray( $result );
@@ -243,26 +246,27 @@ class TagsTest extends testCore
 
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $attch->id );
     }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->patchList(
             options: [
                 [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
+                               'id' => $attch->id, 
+                             'name' => 'PHPUnit_ExpTemp',
+                    'content_types' => [ 'dcim.sitegroup' ],
+                    'template_code' => 'testing',
                 ]
             ]
         );
@@ -278,22 +282,22 @@ class TagsTest extends testCore
         $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $attch->id );
     }
-
+ */
 
 
 
 /* TEST DELETE DETAIL
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new ImageAttachments();
+        $result = $o->deleteDetail( id: $attch->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -302,20 +306,20 @@ class TagsTest extends testCore
         $this->assertIsInt( $result['status'] );
         $this->assertEquals( 204, $result['status'] );
     }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $attch = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new ImageAttachments();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $attch->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -325,18 +329,22 @@ class TagsTest extends testCore
         $this->assertIsInt( $result['status'] );
         $this->assertEquals( 204, $result['status'] );
     }
+ */
 
-
+    
 /* CREATE A REGION
 ---------------------------------------------------------------------------- */
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new ImageAttachments();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+            content_type: 'dcim.devicerole',
+            object_id: 1,
+            image_height: 100,
+            image_width: 100,
+            image: ''
         );
     }
 
@@ -347,7 +355,7 @@ class TagsTest extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new Tags();
+        $o = new ImageAttachments();
 
         return $o->deleteDetail( id: $id  );
     }

@@ -2,14 +2,21 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\Netbox\Models\Virtualization;
 
 use Cruzio\Netbox\Models\testCore;
+use Cruzio\Netbox\Options\Virtualization\VirtualMachines AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+class VirtualMachinesTest extends testCore
 {
+    public Options $options;
+    public static $site;
+    public static $type;
+    public static $group;
+    public static $cluster;
+
     public function __construct()
     {
         parent::__construct();
@@ -18,9 +25,9 @@ class TagsTest extends testCore
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
-    public function testOptions()
+    public function testOptions() : void
     {
-        $o = new Tags();
+        $o = new VirtualMachines();
         $result = $o->options();
 
         $this->assertIsArray( $result );
@@ -31,7 +38,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -42,10 +48,10 @@ class TagsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
 
-        $o = new Tags();
-        $result = $o->getDetail( id: $tag->id );
+        $o = new VirtualMachines();
+        $result = $o->getDetail( id: $machine->id );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -55,10 +61,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $machine->id );
     }
 
 
@@ -69,9 +74,9 @@ class TagsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new VirtualMachines();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
@@ -82,12 +87,10 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $machine->id );
     }
 
 
@@ -97,7 +100,7 @@ class TagsTest extends testCore
 
     public function testPostDetail() : void
     {
-        $o = new Tags();
+        $o = new VirtualMachines();
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
@@ -108,7 +111,6 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -121,15 +123,8 @@ class TagsTest extends testCore
 
     public function testPostList() :void
     {
-        $o = new Tags();
-        $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
-        );
+        $o = new VirtualMachines();
+        $result = $o->postList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -141,9 +136,9 @@ class TagsTest extends testCore
         $this->assertIsArray( $result['body'] );
 
         //CLEAN UP
-        foreach( $result['body'] AS $tag )
+        foreach( $result['body'] AS $machine )
         {
-            $this->deleteDetail( id: $tag->id );
+            $this->deleteDetail( id: $machine->id );
         }
     }
 
@@ -155,13 +150,13 @@ class TagsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new VirtualMachines();
         $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                 id: $machine->id, 
+               name: 'PHPUnit_VM',
+            cluster: self::$cluster->id,
         );
         
         
@@ -173,10 +168,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $machine->id );
     }
 
 
@@ -187,18 +181,11 @@ class TagsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
+        $this->options->id = $machine->id;
 
-        $o = new Tags();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new VirtualMachines();
+        $result = $o->putList( options: [ $this->options ] );
         
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -208,10 +195,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $machine->id );
     }
 
 
@@ -222,13 +208,13 @@ class TagsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new VirtualMachines();
         $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+                 id: $machine->id,
+               name: 'PHPUnit_VM',
+            cluster: self::$cluster->id,
         );
 
         $this->assertIsArray( $result );
@@ -239,11 +225,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $machine->id );
     }
 
 
@@ -254,18 +238,11 @@ class TagsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
+        $this->options->id = $machine->id;
 
-        $o = new Tags();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
+        $o = new VirtualMachines();
+        $result = $o->patchList( options: [ $this->options ] );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -275,10 +252,9 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
-        $this->deleteDetail( $tag->id );
+        $this->deleteDetail( $machine->id );
     }
 
 
@@ -290,10 +266,10 @@ class TagsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
         
-        $o = new Tags();
-        $result = $o->deleteDetail( id: $tag->id );
+        $o = new VirtualMachines();
+        $result = $o->deleteDetail( id: $machine->id );
 
         $this->assertIsArray( $result );
         $this->assertArrayHasKey( 'status',  $result );
@@ -311,11 +287,11 @@ class TagsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $tag = $this->postDetail()['body'];
+        $machine = $this->postDetail()['body'];
 
-        $o = new Tags();
+        $o = new VirtualMachines();
         $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
+            options: [[ 'id' => $machine->id ]]
         );
 
         $this->assertIsArray( $result );
@@ -332,11 +308,11 @@ class TagsTest extends testCore
 
     public function postDetail() : array
     {
-        $o = new Tags();
+        $o = new VirtualMachines();
 
         return $o->postDetail( 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
+               name: 'PHPUnit_VM',
+            cluster: self::$cluster->id,
         );
     }
 
@@ -347,9 +323,41 @@ class TagsTest extends testCore
 
     public function deleteDetail( int $id )
     {
-        $o = new Tags();
+        $o = new VirtualMachines();
 
         return $o->deleteDetail( id: $id  );
     }
 
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site  = self::createSite();
+        self::$type  = self::createClusterType();
+        self::$group = self::createClusterGroup();
+        self::$cluster    = self::createCluster(
+             type: self::$type,
+            group: self::$group,
+             site: self::$site
+        );
+
+    }
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyCluster( cluster: self::$cluster );
+        self::destroySite( site: self::$site );
+        self::destroyClusterType( type: self::$type );
+        self::destroyClusterGroup( group: self::$group );
+    }
+
+    public function setUp() : void
+    {
+        $rand = rand( 1, 100000 );
+        $this->options = new Options();
+        $this->options->name = 'PHPUnit_VM-' . $rand;
+        $this->options->cluster = self::$cluster->id;
+    }
 }

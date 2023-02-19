@@ -9,7 +9,7 @@ class ExportTemplates
 {
     public int    $weight;
 
-    public string $content_type;
+    public array  $content_types;
     public string $name;
     public string $description;
     public string $template_code;

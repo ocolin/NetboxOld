@@ -4,7 +4,13 @@ declare( strict_types = 1 );
 
 namespace Cruzio\Netbox\Models;
 
+require_once( __DIR__ . '/../../vendor/autoload.php' );
+require_once( __DIR__ . '/../mode.php' );
+
 use Cruzio\Netbox\Models\HTTP;
+use Symfony\Component\Dotenv\Dotenv;
+
+use function Amp\Promise\wait;
 
 abstract class Models_Core
 {
@@ -15,7 +21,12 @@ abstract class Models_Core
     public function __construct( HTTP $http = null )
     {
         $this->http = $http ?? new HTTP();
+        //$env_file = ( MODE === 'PRODUCTION') ? '.env.prod' : '.env.dev';
+        //$dotenv = new Dotenv();
+        //$dotenv->load( __DIR__ . '/'. $env_file );
     }
+
+
 
     public static function autoOptions( $class, array $optionsArray )
     {

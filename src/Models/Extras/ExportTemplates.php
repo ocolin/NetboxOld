@@ -26,7 +26,7 @@ class ExportTemplates extends Extras_Core
 /**
 * Create a single Template.
 *
-* @param string $content_type Template content type.
+* @param array  $content_types Template content type.
 * @param string $name Name of Template.
 * @param string $template_code Code inside template.
 * @param Options $options Optional data to send.
@@ -35,7 +35,7 @@ class ExportTemplates extends Extras_Core
 */
 
     public function postDetail(
-        string $content_type,
+         array $content_types,
         string $name,
         string $template_code,
        Options $options = null,
@@ -44,7 +44,7 @@ class ExportTemplates extends Extras_Core
     {
         $options = $options ?? $this->options;
         
-        $options->content_type  = $content_type;
+        $options->content_types  = $content_types;
         $options->name           = $name;
         $options->template_code  = $template_code;
 
@@ -64,7 +64,7 @@ class ExportTemplates extends Extras_Core
 * Update Template Link
 * 
 * @param integer $id Numerical ID of Template to update.
-* @param string  $content_type Template content type.
+* @param array   $content_types Template content type.
 * @param string  $name Name of Template.
 * @param string  $template_code Code inside template.
 * @param Options $options Optional data to send.
@@ -74,7 +74,7 @@ class ExportTemplates extends Extras_Core
 
     public function putDetail(
            int $id,
-        string $content_type,
+         array $content_types,
         string $name,
         string $template_code,
        Options $options = null,
@@ -84,7 +84,7 @@ class ExportTemplates extends Extras_Core
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options->content_type  = $content_type;
+        $options->content_types  = $content_types;
         $options->name           = $name;
         $options->template_code  = $template_code;
 
@@ -104,7 +104,7 @@ class ExportTemplates extends Extras_Core
 * Update Template value(s).
 *
 * @param integer $id Numerical ID of Template to update.
-* @param string  $content_type Template content type.
+* @param array   $content_types Template content type.
 * @param string  $name Name of Template.
 * @param string  $template_code Code inside template.
 * @param Options $options Optional data to send.
@@ -114,7 +114,7 @@ class ExportTemplates extends Extras_Core
 
     public function patchDetail(
            int $id,
-        string $content_type,
+         array $content_types,
         string $name,
         string $template_code,
        Options $options = null,
@@ -124,7 +124,7 @@ class ExportTemplates extends Extras_Core
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
 
-        $options->content_type  = $content_type;
+        $options->content_types  = $content_types;
         $options->name           = $name;
         $options->template_code  = $template_code;
 
