@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\DeviceBays AS Options;
 
-class DeviceBays extends DCIM
+class DeviceBays extends DCIM_Core
 {
     protected Options $options;
     

@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\PowerFeeds AS Options;
 
-class PowerFeeds extends DCIM
+class PowerFeeds extends DCIM_Core
 {
     protected Options $options;
     

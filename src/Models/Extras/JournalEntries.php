@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Extras;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Extras\JournalEntries AS Options;
 
-class JournalEntries extends Extras
+class JournalEntries extends Extras_Core
 {
     protected Options $options;
 

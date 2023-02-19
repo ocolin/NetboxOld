@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Circuits\ProviderNetworks AS Options;
 
-class ProviderNetworks extends CircuitsCore
+class ProviderNetworks extends Circuits_Core
 {
     protected Options $options;
     

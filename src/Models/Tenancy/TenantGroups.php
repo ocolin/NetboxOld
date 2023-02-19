@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Tenancy;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Tenancy\TenantGroups AS Options;
 
-class TenantGroups extends Tenancy
+class TenantGroups extends Tenancy_Core
 {
     protected Options $options;
     

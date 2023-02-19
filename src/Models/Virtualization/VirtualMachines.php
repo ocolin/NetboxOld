@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Virtualization;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Virtualization\VirtualMachines AS Options;
 
-class VirtualMachines extends Virtualization
+class VirtualMachines extends Virtualization_Core
 {
     protected Options $options;
 

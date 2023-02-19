@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Extras;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class ReportsRun extends Extras
+class ReportsRun extends Extras_Core
 {
     public function __construct( int $id, HTTP $http = null )
     {

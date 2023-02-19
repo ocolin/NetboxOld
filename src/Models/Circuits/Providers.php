@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Circuits\Providers AS Options;
 
 
-class Providers extends CircuitsCore
+class Providers extends Circuits_Core
 {
     protected Options $options;
     

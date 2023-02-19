@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class VlanGroupsAvailableVlans extends IPAM
+class VlanGroupsAvailableVlans extends IPAM_Core
 {
     public function __construct( HTTP $http = null )
     {

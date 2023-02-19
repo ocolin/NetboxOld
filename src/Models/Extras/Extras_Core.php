@@ -5,19 +5,16 @@ declare( strict_types = 1 );
 namespace Cruzio\Netbox\Models\Extras;
 
 use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\Webhooks AS Options;
+use Cruzio\Netbox\Models\Models_Core;
 
-class Webhooks extends Extras_Core
+abstract class Extras_Core extends Models_Core
 {
-    protected Options $options;
 
     public function __construct( HTTP $http = null )
     {
-        $this->options = new Options();
+        $this->uri = 'extras/';
+        $this->http = $http ?? new HTTP();
         parent::__construct( http: $http );
-        $this->uri .= 'webhooks/';
     }
-
-
 
 }

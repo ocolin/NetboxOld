@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class PowerPortsTrace extends DCIM
+class PowerPortsTrace extends DCIM_Core
 {
     public function __construct( int $id, HTTP $http = null )
     {

@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Virtualization;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Virtualization\ClusterGroups AS Options;
 
-class ClusterGroups extends Virtualization
+class ClusterGroups extends Virtualization_Core
 {
     protected Options $options;
 

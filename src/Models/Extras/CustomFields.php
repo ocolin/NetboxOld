@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Extras;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Extras\CustomFields AS Options;
 
-class CustomFields extends Extras
+class CustomFields extends Extras_Core
 {
     protected Options $options;
     

@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Extras;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Extras\CustomLinks AS Options;
 
-class CustomLinks extends Extras
+class CustomLinks extends Extras_Core
 {
     protected Options $options;
     

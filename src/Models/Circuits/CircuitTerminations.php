@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS Options;
 
-class CircuitTerminations extends CircuitsCore
+class CircuitTerminations extends Circuits_Core
 {
     protected Options $options;
 

@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\Cables AS Options;
 
-class Cables extends DCIM
+class Cables extends DCIM_Core
 {
     protected Options $options;
     

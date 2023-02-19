@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\InventoryItemRoles AS Options;
 
-class InventoryItemRoles extends DCIM
+class InventoryItemRoles extends DCIM_Core
 {
     protected Options $options;
     

@@ -2,23 +2,38 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Tenancy;
+namespace Cruzio\Netbox\Models;
 
 use Cruzio\Netbox\Models\HTTP;
 
-abstract class Tenancy
+abstract class Models_Core
 {
-    protected string $uri = 'tenancy/';
-
     protected HTTP $http;
+
+    protected string $uri = '';
 
     public function __construct( HTTP $http = null )
     {
         $this->http = $http ?? new HTTP();
     }
 
+    public static function autoOptions( $class, array $optionsArray )
+    {
+        $class = str_replace( 'Models', 'Options', $class );
+        $options = new $class();
+        foreach( $optionsArray as $key => $value )
+        {
+            if( property_exists( $options, $key )) {
+                $options->$key = $value;
+            }
+        }
+        print_r( $options );
 
-/* OPTIONS METHOD
+        return $options;
+    }
+
+
+    /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
 /**
@@ -161,7 +176,7 @@ abstract class Tenancy
 *
 * @param array $options An array of object arrays. Each sub array MUST have a 
 *  name and slug key. 
-* @param array $headers HTML request headers.
+* @param array $headers HTML request headers
 * @return array Array of HTTP status, headers, and body from Netbox API.
 */
 
@@ -178,7 +193,7 @@ abstract class Tenancy
     }
 
 
-/* GET METHOD DETAIL
+ /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
 /**
@@ -191,7 +206,7 @@ abstract class Tenancy
 */
 
     public function getDetail( 
-           int $id, 
+          int $id, 
         array $params  = [], 
         array $headers = [] 
     ) : array

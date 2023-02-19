@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Extras;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Extras\ImageAttachments AS Options;
 
-class ImageAttachments extends Extras
+class ImageAttachments extends Extras_Core
 {
     protected Options $options;
 

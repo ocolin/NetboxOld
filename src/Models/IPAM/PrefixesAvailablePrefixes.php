@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class PrefixesAvailablePrefixes extends IPAM
+class PrefixesAvailablePrefixes extends IPAM_Core
 {
     public function __construct( HTTP $http = null )
     {

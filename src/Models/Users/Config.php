@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Users;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class Config extends UsersCore
+class Config extends Users_Core
 {
 
 /*

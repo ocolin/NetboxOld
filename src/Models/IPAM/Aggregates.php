@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\Aggregates AS Options;
 
-class Aggregates extends IPAM
+class Aggregates extends IPAM_Core
 {
     protected Options $options;
 

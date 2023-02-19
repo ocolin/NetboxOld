@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\FrontPorts AS Options;
 
-class FrontPorts extends DCIM
+class FrontPorts extends DCIM_Core
 {
     protected Options $options;
     

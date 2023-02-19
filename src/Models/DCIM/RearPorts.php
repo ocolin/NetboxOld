@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\RearPorts AS Options;
 
-class RearPorts extends DCIM
+class RearPorts extends DCIM_Core
 {
     protected Options $options;
     

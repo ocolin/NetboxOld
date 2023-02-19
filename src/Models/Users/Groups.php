@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Users;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Users\Groups AS Options;
 
-class Groups extends UsersCore
+class Groups extends Users_Core
 {
     protected Options $options;
 /*

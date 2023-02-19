@@ -266,6 +266,7 @@ class testCore extends \PHPUnit\Framework\TestCase
     public static function createTenant() : object
     {
         $o = new Tenancy\Tenants();
+
         return $o->postDetail(
             name: 'PHPUnit_Tenant',
             slug: 'PHPUnit_Tenant'

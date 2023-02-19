@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\RackReservations AS Options;
 
-class RackReservations extends DCIM
+class RackReservations extends DCIM_Core
 {
     protected Options $options;
     

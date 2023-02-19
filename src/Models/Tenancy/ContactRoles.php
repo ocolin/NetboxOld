@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Tenancy;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Tenancy\ContactRoles AS Options;
 
-class ContactRoles extends Tenancy
+class ContactRoles extends Tenancy_Core
 {
     protected Options $options;
     

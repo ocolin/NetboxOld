@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\PowerPanels AS Options;
 
-class PowerPanels extends DCIM
+class PowerPanels extends DCIM_Core
 {
     protected Options $options;
     

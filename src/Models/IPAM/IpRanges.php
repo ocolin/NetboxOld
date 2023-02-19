@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\IpRanges AS Options;
 
-class IpRanges extends IPAM
+class IpRanges extends IPAM_Core
 {
     protected Options $options;
 

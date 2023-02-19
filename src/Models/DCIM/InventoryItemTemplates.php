@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\InventoryItemTemplates AS Options;
 
-class InventoryItemTemplates extends DCIM
+class InventoryItemTemplates extends DCIM_Core
 {
     protected Options $options;
     

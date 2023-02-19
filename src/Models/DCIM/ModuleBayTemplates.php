@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\ModuleBayTemplates AS Options;
 
-class ModuleBayTemplates extends DCIM
+class ModuleBayTemplates extends DCIM_Core
 {
     protected Options $options;
     

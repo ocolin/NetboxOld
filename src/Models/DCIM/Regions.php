@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\Regions AS Options;
 
-class Regions extends DCIM
+class Regions extends DCIM_Core
 {
     protected Options $options;
     

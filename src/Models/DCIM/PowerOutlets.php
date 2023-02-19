@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\PowerOutlets AS Options;
 
-class PowerOutlets extends DCIM
+class PowerOutlets extends DCIM_Core
 {
     protected Options $options;
     

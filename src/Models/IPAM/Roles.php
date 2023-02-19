@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\Roles AS Options;
 
-class Roles extends IPAM
+class Roles extends IPAM_Core
 {
     protected Options $options;
 

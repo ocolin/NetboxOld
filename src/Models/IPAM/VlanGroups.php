@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\VlanGroups AS Options;
 
-class VlanGroups extends IPAM
+class VlanGroups extends IPAM_Core
 {
     protected Options $options;
 

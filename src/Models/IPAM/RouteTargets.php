@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\RouteTargets AS Options;
 
-class RouteTargets extends IPAM
+class RouteTargets extends IPAM_Core
 {
     protected Options $options;
 

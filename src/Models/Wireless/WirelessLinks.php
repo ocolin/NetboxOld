@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Wireless;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Wireless\WirelessLinks AS Options;
 
-class WirelessLinks extends Wireless
+class WirelessLinks extends Wireless_Core
 {
     protected Options $options;
 

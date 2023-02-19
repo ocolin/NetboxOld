@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\Manufacturers AS Options;
 
-class Manufacturers extends DCIM
+class Manufacturers extends DCIM_Core
 {
     protected Options $options;
     

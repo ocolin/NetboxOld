@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\RackRoles AS Options;
 
-class RackRoles extends DCIM
+class RackRoles extends DCIM_Core
 {
     protected Options $options;
     

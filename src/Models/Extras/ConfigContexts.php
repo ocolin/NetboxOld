@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Extras;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Extras\ConfigContexts AS Options;
 
-class ConfigContexts extends Extras
+class ConfigContexts extends Extras_Core
 {
     protected Options $options;
 

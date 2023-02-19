@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Extras;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class JobResuts extends Extras
+class JobResuts extends Extras_Core
 {
     public function __construct( HTTP $http = null )
     {

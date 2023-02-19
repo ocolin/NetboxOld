@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class IpRangesAvailableIps extends IPAM
+class IpRangesAvailableIps extends IPAM_Core
 {
     
     public function __construct( HTTP $http = null )

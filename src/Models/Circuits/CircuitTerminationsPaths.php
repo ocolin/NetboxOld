@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\Circuits;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class CircuitTerminationPaths extends CircuitsCore
+class CircuitTerminationPaths extends Circuits_Core
 {
     public function __construct( int $id, HTTP $http = null )
     {

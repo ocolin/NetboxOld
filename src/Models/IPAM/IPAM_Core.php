@@ -2,24 +2,23 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\Netbox\Models\IPAM;
 
 use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Models\ModelsCore;
+use Cruzio\Netbox\Models\Models_Core;
 
-class CircuitsCore extends ModelsCore
+abstract class IPAM_Core extends Models_Core
 {
-    protected HTTP $http;
-
-    protected string $uri = 'circuits/';
 
     public function __construct( HTTP $http = null )
     {
+        $this->uri = 'ipam/';
         $this->http = $http ?? new HTTP();
+        parent::__construct( http: $http );
     }
 
 
-
+    
 /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
@@ -80,7 +79,6 @@ class CircuitsCore extends ModelsCore
     }
 
 
-    
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -156,7 +154,6 @@ class CircuitsCore extends ModelsCore
     }
 
 
-
 /* POST METHOD LIST
 ---------------------------------------------------------------------------- */
 
@@ -180,7 +177,6 @@ class CircuitsCore extends ModelsCore
             headers: $headers
         );
     }
-
 
 
  /* GET METHOD DETAIL

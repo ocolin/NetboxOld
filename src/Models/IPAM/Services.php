@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\Services AS Options;
 
-class Services extends IPAM
+class Services extends IPAM_Core
 {
     protected Options $options;
 

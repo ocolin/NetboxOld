@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\DeviceRoles AS Options;
 
-class DeviceRoles extends DCIM
+class DeviceRoles extends DCIM_Core
 {
     protected Options $options;
     

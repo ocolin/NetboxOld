@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Virtualization;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Virtualization\Interfaces AS Options;
 
-class Interfaces extends Virtualization
+class Interfaces extends Virtualization_Core
 {
     protected Options $options;
 

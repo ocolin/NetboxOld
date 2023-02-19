@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\SiteGroups AS Options;
 
-class SiteGroups extends DCIM
+class SiteGroups extends DCIM_Core
 {
     protected Options $options;
     

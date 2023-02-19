@@ -6,7 +6,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 
 use Cruzio\Netbox\Models\HTTP;
 
-class RacksElevation extends DCIM
+class RacksElevation extends DCIM_Core
 {
     public function __construct( int $id, HTTP $http = null )
     {

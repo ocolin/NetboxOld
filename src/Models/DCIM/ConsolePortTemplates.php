@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\ConsolePortTemplates AS Options;
 
-class ConsolePortTemplates extends DCIM
+class ConsolePortTemplates extends DCIM_Core
 {
     protected Options $options;
     

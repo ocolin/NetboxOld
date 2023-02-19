@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\Vrfs AS Options;
 
-class Vrfs extends IPAM
+class Vrfs extends IPAM_Core
 {
     protected Options $options;
 

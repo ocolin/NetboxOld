@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\FhrpGroupAssignments AS Options;
 
-class FhrpGroupAssignments extends IPAM
+class FhrpGroupAssignments extends IPAM_Core
 {
     protected Options $options;
 

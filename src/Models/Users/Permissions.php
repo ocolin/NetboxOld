@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\Users;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\Users\Permissions AS Options;
 
-class Premissions extends UsersCore
+class Premissions extends Users_Core
 {
     protected Options $options;
 

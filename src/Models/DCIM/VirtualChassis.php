@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\DCIM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\DCIM\VirtualChassis AS Options;
 
-class VirtualChassis extends DCIM
+class VirtualChassis extends DCIM_Core
 {
     protected Options $options;
     

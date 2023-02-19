@@ -7,7 +7,7 @@ namespace Cruzio\Netbox\Models\IPAM;
 use Cruzio\Netbox\Models\HTTP;
 use Cruzio\Netbox\Options\IPAM\Rirs AS Options;
 
-class Rirs extends IPAM
+class Rirs extends IPAM_Core
 {
     protected Options $options;
 
