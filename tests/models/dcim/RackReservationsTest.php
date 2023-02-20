@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\RackReservations AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RackReservationsTest extends testCore
+final class RackReservationsTest extends testCore
 {
     public Options $options;
     public static $vc;

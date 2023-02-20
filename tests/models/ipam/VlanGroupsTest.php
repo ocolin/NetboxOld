@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\VlanGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class VlanGroupsTest extends testCore
+final class VlanGroupsTest extends testCore
 {
     public Options $options;
 

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\PowerPorts AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PowerPortsTest extends testCore
+final class PowerPortsTest extends testCore
 {
     public Options $options;
     public static $vc;

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Services AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ServicesTest extends testCore
+final class ServicesTest extends testCore
 {
     public Options $options;
     public static $site;

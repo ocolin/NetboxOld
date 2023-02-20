@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Devices AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class DevicesTest extends testCore
+final class DevicesTest extends testCore
 {
     public Options $options;
     public static $vc;

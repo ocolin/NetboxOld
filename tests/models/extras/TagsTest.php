@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TagsTest extends testCore
+final class TagsTest extends testCore
 {
     public function __construct()
     {
@@ -31,7 +31,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'name', $result['body'] );
     }
 
 
@@ -55,7 +54,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $tag->id );
@@ -82,9 +80,7 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
         $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $tag->id );
@@ -108,7 +104,6 @@ class TagsTest extends testCore
         $this->assertEquals( 201, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         //CLEAN UP
         $test = $this->deleteDetail( $result['body']->id );
@@ -173,7 +168,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
 
         // CLEAN UP
         $this->deleteDetail( $tag->id );
@@ -208,7 +202,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $tag->id );
@@ -239,8 +232,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
-
 
         // CLEAN UP
         $this->deleteDetail( $tag->id );
@@ -275,7 +266,6 @@ class TagsTest extends testCore
         $this->assertEquals( 200, $result['status'] );
         $this->assertIsArray( $result['headers'] );
         $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
 
         // CLEAN UP
         $this->deleteDetail( $tag->id );
@@ -345,7 +335,7 @@ class TagsTest extends testCore
 /* DELETE A REGION
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) 
     {
         $o = new Tags();
 

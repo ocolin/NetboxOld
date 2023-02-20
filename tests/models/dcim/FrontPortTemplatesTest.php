@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\FrontPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class FrontPortTemplatesTest extends testCore
+final class FrontPortTemplatesTest extends testCore
 {
     public Options $options;
     public static $vc;

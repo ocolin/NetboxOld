@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\FhrpGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class FhrpGroupsTest extends testCore
+final class FhrpGroupsTest extends testCore
 {
     public Options $options;
 

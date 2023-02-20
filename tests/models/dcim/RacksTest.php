@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Racks AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RacksTest extends testCore
+final class RacksTest extends testCore
 {
     public Options $options;
     public static $site;

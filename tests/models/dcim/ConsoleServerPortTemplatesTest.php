@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\ConsoleServerPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ConsoleServerPortTemplatesTest extends testCore
+final class ConsoleServerPortTemplatesTest extends testCore
 {
     public Options $options;
     public static $devtype;

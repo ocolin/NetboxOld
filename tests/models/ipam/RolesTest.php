@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Roles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RolesTest extends testCore
+final class RolesTest extends testCore
 {
     public Options $options;
 

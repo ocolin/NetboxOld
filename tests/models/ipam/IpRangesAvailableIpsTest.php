@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class IpRangesAvailableIpsTest extends testCore
+final class IpRangesAvailableIpsTest extends testCore
 {
     public function __construct()
     {

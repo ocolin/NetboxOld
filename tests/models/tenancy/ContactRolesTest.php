@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Tenancy\ContactRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ContactRolesTest extends testCore
+final class ContactRolesTest extends testCore
 {
     public Options $options;
 

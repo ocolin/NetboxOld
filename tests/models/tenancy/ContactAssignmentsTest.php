@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Tenancy\ContactAssignments AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ContactAssignmentsTest extends testCore
+final class ContactAssignmentsTest extends testCore
 {
     public Options $options;
     public static $crole;

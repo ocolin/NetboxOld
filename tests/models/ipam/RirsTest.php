@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Rirs AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RirsTest extends testCore
+final class RirsTest extends testCore
 {
     public Options $options;
 

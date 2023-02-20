@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Vrfs AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class VrfsTest extends testCore
+final class VrfsTest extends testCore
 {
     public Options $options;
 

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Vlans AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class VlansTest extends testCore
+final class VlansTest extends testCore
 {
     public Options $options;
     public static $vlg;

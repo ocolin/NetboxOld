@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Asns AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class AsnsTest extends testCore
+final class AsnsTest extends testCore
 {
     public Options $options;
     public static $rir;

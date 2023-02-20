@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\IpRanges AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class IpRangesTest extends testCore
+final class IpRangesTest extends testCore
 {
     public Options $options;
 

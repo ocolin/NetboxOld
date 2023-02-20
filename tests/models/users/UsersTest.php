@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Users\Users AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class UsersTest extends testCore
+final class UsersTest extends testCore
 {
     public Options $options;
 

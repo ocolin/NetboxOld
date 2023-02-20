@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class VlanGroupsAvailableVlansTest extends testCore
+final class VlanGroupsAvailableVlansTest extends testCore
 {
     public function __construct()
     {

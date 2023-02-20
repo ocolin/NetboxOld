@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\PowerOutletTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PowerOutletTemplatesTest extends testCore
+final class PowerOutletTemplatesTest extends testCore
 {
     public Options $options;
     public static $devtype;

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Manufacturers AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ManufacturersTest extends testCore
+final class ManufacturersTest extends testCore
 {
     public Options $options;
 

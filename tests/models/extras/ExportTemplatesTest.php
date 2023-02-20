@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ExportTemplatesTest extends testCore
+final class ExportTemplatesTest extends testCore
 {
     public function __construct()
     {

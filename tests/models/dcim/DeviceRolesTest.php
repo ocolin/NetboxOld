@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\DeviceRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class DeviceRolesTest extends testCore
+final class DeviceRolesTest extends testCore
 {
     public Options $options;
 

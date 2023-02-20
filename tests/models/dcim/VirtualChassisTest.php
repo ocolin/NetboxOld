@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\VirtualChassis AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class VirtualChassisTest extends testCore
+final class VirtualChassisTest extends testCore
 {
     public Options $options;
 

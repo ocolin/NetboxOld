@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\InventoryItemRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class InventoryItemRolesTest extends testCore
+final class InventoryItemRolesTest extends testCore
 {
     public Options $options;
 

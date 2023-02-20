@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class CircuitTerminationsTest extends testCore
+final class CircuitTerminationsTest extends testCore
 {
     public Options $options;
     public static $circuit_type;

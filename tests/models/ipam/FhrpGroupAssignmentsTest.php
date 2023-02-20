@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\FhrpGroupAssignments AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class FhrpGroupAssignmentsTest extends testCore
+final class FhrpGroupAssignmentsTest extends testCore
 {
     public Options $options;
     public static $site;

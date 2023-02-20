@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\PowerPanels AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PowerPanelsTest extends testCore
+final class PowerPanelsTest extends testCore
 {
     public Options $options;
     public static $site;

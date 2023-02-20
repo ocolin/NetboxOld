@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Platforms AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PlatformsTest extends testCore
+final class PlatformsTest extends testCore
 {
     public Options $options;
 

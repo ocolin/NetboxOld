@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Users\Tokens AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TokensTest extends testCore
+final class TokensTest extends testCore
 {
     public Options $options;
     public static $user;

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Users\Groups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class GroupsTest extends testCore
+final class GroupsTest extends testCore
 {
     public Options $options;
 

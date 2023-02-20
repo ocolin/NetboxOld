@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Locations AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class LocationsTest extends testCore
+final class LocationsTest extends testCore
 {
     public Options $options;
     public static $site;

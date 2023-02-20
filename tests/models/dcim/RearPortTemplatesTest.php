@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\RearPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RearPortTemplatesTest extends testCore
+final class RearPortTemplatesTest extends testCore
 {
     public Options $options;
     public static $manf;

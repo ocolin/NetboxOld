@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
 use Cruzio\Netbox\Options\DCIM\Interfaces AS IntOptions;
 use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
 
-class testCore extends \PHPUnit\Framework\TestCase
+abstract class testCore extends \PHPUnit\Framework\TestCase
 {
     public function __construct()
     {

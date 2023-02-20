@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Circuits\Providers AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ProvidersTest extends testCore
+final class ProvidersTest extends testCore
 {
     public Options $options;
 

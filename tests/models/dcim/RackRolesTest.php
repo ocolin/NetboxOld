@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\RackRoles AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RackRolesTest extends testCore
+final class RackRolesTest extends testCore
 {
     public Options $options;
 

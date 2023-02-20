@@ -10,7 +10,7 @@ use Cruzio\Netbox\Options\DCIM\ModuleBays AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ModuleBaysTest extends testCore
+final class ModuleBaysTest extends testCore
 {
     public Options $options;
     public static $vc;

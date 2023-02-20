@@ -10,7 +10,7 @@ use Cruzio\Netbox\Options\Wireless\WirelessLans AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class WirelessLansTest extends testCore
+final class WirelessLansTest extends testCore
 {
     public Options $options;
 

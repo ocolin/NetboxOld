@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Prefixes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PrefixesTest extends testCore
+final class PrefixesTest extends testCore
 {
     public Options $options;
 

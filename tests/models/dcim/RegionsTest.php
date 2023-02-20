@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Regions AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class RegionsTest extends testCore
+final class RegionsTest extends testCore
 {
     public Options $options;
 

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Cables AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class CablesTest extends testCore
+final class CablesTest extends testCore
 {
     public Options $options;
 

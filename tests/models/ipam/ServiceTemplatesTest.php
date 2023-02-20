@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\ServiceTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ServiceTemplatesTest extends testCore
+final class ServiceTemplatesTest extends testCore
 {
     public Options $options;
 

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\ConsolePorts AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ConsolePortsTest extends testCore
+final class ConsolePortsTest extends testCore
 {
     public Options $options;
     public static $vc;

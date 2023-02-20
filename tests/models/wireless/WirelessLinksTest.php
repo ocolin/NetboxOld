@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Wireless\WirelessLinks AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class WirelessLinksTest extends testCore
+final class WirelessLinksTest extends testCore
 {
     public Options $options;
     public static $interfaceA;

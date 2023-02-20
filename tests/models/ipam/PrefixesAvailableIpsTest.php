@@ -8,7 +8,7 @@ use Cruzio\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PrefixesAvailableIpsTest extends testCore
+final class PrefixesAvailableIpsTest extends testCore
 {
     public function __construct()
     {

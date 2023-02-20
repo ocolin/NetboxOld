@@ -9,7 +9,7 @@ use Cruzio\Netbox\Models\testCore;
 require_once __DIR__ . '/../testCore.php';
 use Cruzio\Netbox\Options\DCIM\ModuleBayTemplates AS Options;
 
-class ModuleBayTemplatesTest extends testCore
+final class ModuleBayTemplatesTest extends testCore
 {
     public Options $options;
     public static $devtype;

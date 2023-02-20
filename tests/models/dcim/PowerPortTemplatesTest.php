@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\PowerPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PowerPortTemplatesTest extends testCore
+final class PowerPortTemplatesTest extends testCore
 {
     public Options $options;
     public static $devtype;

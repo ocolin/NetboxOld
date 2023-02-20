@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\IpAddresses AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class IpAddressesTest extends testCore
+final class IpAddressesTest extends testCore
 {
     public Options $options;
 

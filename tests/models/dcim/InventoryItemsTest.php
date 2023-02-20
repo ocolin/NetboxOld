@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\InventoryItems AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class InventoryItemsTest extends testCore
+final class InventoryItemsTest extends testCore
 {
     public Options $options;
     public static $vc;

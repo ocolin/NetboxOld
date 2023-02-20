@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\InterfaceTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class InterfaceTemplatesTest extends testCore
+final class InterfaceTemplatesTest extends testCore
 {
     public Options $options;
     public static $devtype;

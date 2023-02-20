@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\IPAM\Aggregates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class AggregatesTest extends testCore
+final class AggregatesTest extends testCore
 {
     public Options $options;
     public static $rir;

@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Wireless\WirelessLanGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class WirelessLanGroupsTest extends testCore
+final class WirelessLanGroupsTest extends testCore
 {
     public Options $options;
 

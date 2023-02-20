@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Modules AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ModulesTest extends testCore
+final class ModulesTest extends testCore
 {
     public Options $options;
     public static $vc;

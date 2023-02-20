@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\Interfaces AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class InterfacesTest extends testCore
+final class InterfacesTest extends testCore
 {
     public Options $options;
     public static $vc;

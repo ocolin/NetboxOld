@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Virtualization\VirtualMachines AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class VirtualMachinesTest extends testCore
+final class VirtualMachinesTest extends testCore
 {
     public Options $options;
     public static $site;

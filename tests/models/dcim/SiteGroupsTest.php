@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\SiteGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class SiteGroupsTest extends testCore
+final class SiteGroupsTest extends testCore
 {
     public Options $options;
 

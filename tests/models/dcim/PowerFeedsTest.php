@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\DCIM\PowerFeeds AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class PowerFeedsTest extends testCore
+final class PowerFeedsTest extends testCore
 {
     public Options $options;
     public static $site;

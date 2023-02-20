@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Tenancy\TenantGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class TenantGroupsTest extends testCore
+final class TenantGroupsTest extends testCore
 {
     public Options $options;
 

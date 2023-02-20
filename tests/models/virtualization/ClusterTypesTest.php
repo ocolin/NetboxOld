@@ -9,7 +9,7 @@ use Cruzio\Netbox\Options\Virtualization\ClusterTypes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 
-class ClusterTypesTest extends testCore
+final class ClusterTypesTest extends testCore
 {
     public Options $options;
 
