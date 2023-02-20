@@ -4,8 +4,11 @@ declare( strict_types = 1 );
 
 namespace Cruzio\Netbox\Models;
 
+require_once( __DIR__ . '/../mode.php' );
+
 use GuzzleHttp\Client;
 use \Psr\Http\Message\ResponseInterface;
+use Symfony\Component\Dotenv\Dotenv;
 
 class HTTP
 {
@@ -31,6 +34,11 @@ class HTTP
           bool $errors   = false
     )
     {
+        $env_file = strcmp( MODE, 'PRODUCTION' ) ? '.env.prod' : '.env.dev';
+        $dotenv = new Dotenv();
+        $dotenv->load( __DIR__ . '/../' . $env_file );
+        
+
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
         $this->headers  = self::default_Headers();
         $this->client   = $client ?? new Client([

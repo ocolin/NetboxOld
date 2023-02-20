@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 
 namespace Cruzio\Netbox\Models;
 
-use Symfony\Component\Dotenv\Dotenv;
 use Cruzio\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
 use Cruzio\Netbox\Options\DCIM\Interfaces AS IntOptions;
 use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
@@ -14,8 +13,6 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public function __construct()
     {
         parent::__construct();
-        $dotenv = new Dotenv();
-        $dotenv->load( __DIR__ . '/../../src/.env.dev' );
     }
 
 

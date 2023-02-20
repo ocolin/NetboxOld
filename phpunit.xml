@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpunit
-    bootstrap="vendor/autoloadTest.php"
+    bootstrap="vendor/autoload.php"
     colors="true"
     stopOnFailure="true"
     convertDeprecationsToExceptions="true"
@@ -29,9 +29,9 @@ PrefixesAvailablePrefixes POST
 image attachments
 -->
 
-        <testsuite name="Circuits_Models">
+        <testsuite name="Circuit_Models">
             <directory>tests/models/circuits</directory>
-        </suite>
+        </testsuite>
 
 
         <testsuite name="DCIM_Models">
@@ -56,7 +56,7 @@ image attachments
 
         <testsuite name="Users_Models">
             <directory>tests/models/users</directory>
-        </suite>
+        </testsuite>
 
 
         <testsuite name="Virtualization_Models">
