@@ -2,11 +2,11 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models;
+namespace Cruzio\lib\Netbox\Models;
 
-use Cruzio\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
-use Cruzio\Netbox\Options\DCIM\Interfaces AS IntOptions;
-use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
+use Cruzio\lib\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
+use Cruzio\lib\Netbox\Options\DCIM\Interfaces AS IntOptions;
+use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
 
 abstract class testCore extends \PHPUnit\Framework\TestCase
 {

@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Wireless;
+namespace Cruzio\lib\Netbox\Models\Wireless;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Wireless\WirelessLinks AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Wireless\WirelessLinks AS Options;
 
 class WirelessLinks extends Wireless_Core
 {
@@ -28,10 +28,11 @@ class WirelessLinks extends Wireless_Core
 /**
 * Create a single Link.
 *
-* @param string $ssid Name of link to update.
-* @param Options $options Optional data to send.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $interface_a
+* @param  integer $interface_b
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,11 +61,12 @@ class WirelessLinks extends Wireless_Core
 /**
 * Update link
 * 
-* @param integer $id Numerical ID of link to update.
-* @param string  $ssid Name of link to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of link to update.
+* @param  integer $interface_a
+* @param  integer $interface_b
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -95,11 +97,12 @@ class WirelessLinks extends Wireless_Core
 /**
 * Update Link value(s).
 *
-* @param integer $id Numerical ID of link to update.
-* @param string  $ssid Name of link to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of link to update.
+* @param  integer $interface_a
+* @param  integer $interface_b
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -115,7 +118,7 @@ class WirelessLinks extends Wireless_Core
         $options->interface_a = $interface_a;
         $options->interface_b = $interface_b;
         
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

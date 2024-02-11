@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\IPAM\Roles AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\IPAM\Roles AS Options;
 
 class Roles extends IPAM_Core
 {
@@ -26,11 +26,11 @@ class Roles extends IPAM_Core
 /**
 * Create a single Role.
 *
-* @param string $name Name of Role.
-* @param string $slug 
-* @param Options $options Optional data to send.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string $name Name of Role.
+* @param  string $slug 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class Roles extends IPAM_Core
 /**
 * Update Role
 * 
-* @param integer $id Numerical ID of Role to update.
-* @param string  $name Name of Role to update.
-* @param string  $slug Slug of Role to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Role to update.
+* @param  string  $name Name of Role to update.
+* @param  string  $slug Slug of Role to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class Roles extends IPAM_Core
 /**
 * Update Role value(s).
 *
-* @param integer $id Numerical ID of Role to update.
-* @param string  $name Name of Role to update.
-* @param string  $slug Slug of Role to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Role to update.
+* @param  string  $name Name of Role to update.
+* @param  string  $slug Slug of Role to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -119,8 +119,7 @@ class Roles extends IPAM_Core
         $options->name = $name;
         $options->slug = $slug;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

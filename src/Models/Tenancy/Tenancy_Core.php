@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Tenancy;
+namespace Cruzio\lib\Netbox\Models\Tenancy;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Models\Models_Core;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Models_Core;
 
 abstract class Tenancy_Core extends Models_Core
 {

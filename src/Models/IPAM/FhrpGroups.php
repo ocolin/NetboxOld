@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\IPAM\FhrpGroups AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\IPAM\FhrpGroups AS Options;
 
 class FhrpGroups extends IPAM_Core
 {
@@ -26,12 +26,11 @@ class FhrpGroups extends IPAM_Core
 /**
 * Create a single Fhrp Group.
 *
-* @param integer $group ID of group belongs to.
-* @param string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
-* @param integer $group_id ID of Group
-* @param Options $options Optional data to send.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
+* @param  integer $group_id ID of Group
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
     
     public function postDetail(
@@ -61,12 +60,12 @@ class FhrpGroups extends IPAM_Core
 /**
 * Update Fhrp Group
 * 
-* @param integer $id Numerical ID of Fhrp Group to update.
-* @param string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
-* @param integer $group_id ID of Group
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Fhrp Group to update.
+* @param  string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
+* @param  integer $group_id ID of Group
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
     
     public function putDetail(
@@ -98,12 +97,12 @@ class FhrpGroups extends IPAM_Core
 /**
 * Update Fhrp Group value(s).
 *
-* @param integer $id Numerical ID of Fhrp Group to update.
-* @param string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
-* @param integer $group_id ID of Group
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Fhrp Group to update.
+* @param  string  $protocol Protocol of group: vrrp2, vrrp3, carp, clusterxl, hsrp, glbp, other.
+* @param  integer $group_id ID of Group
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
     
     public function patchDetail(
@@ -120,7 +119,7 @@ class FhrpGroups extends IPAM_Core
         $options->protocol = $protocol;
         $options->group_id = $group_id;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                 body: $options,
             headers: $headers

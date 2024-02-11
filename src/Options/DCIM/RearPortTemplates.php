@@ -2,12 +2,12 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class RearPortTemplates
 {
-    public int    $device_type;
+    public ?int   $device_type;
     public int    $positions;
 
     public string $name;

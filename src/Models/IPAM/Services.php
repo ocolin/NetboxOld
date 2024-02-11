@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\IPAM\Services AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\IPAM\Services AS Options;
 
 class Services extends IPAM_Core
 {
@@ -26,12 +26,12 @@ class Services extends IPAM_Core
 /**
 * Create a single Service.
 *
-* @param string  $name Name of Service.
-* @param array   $ports Number of ports in Service 
-* @param string  $protocol Service protocol: tcp, udp, sctp
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Service.
+* @param  array<string>   $ports Number of ports in Service 
+* @param  string  $protocol Service protocol: tcp, udp, sctp
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -63,13 +63,13 @@ class Services extends IPAM_Core
 /**
 * Update Service
 * 
-* @param integer $id Numerical ID of Service to update.
-* @param string  $name Name of Service to update.
-* @param array   $ports Number of ports in Service.
-* @param string  $protocol Service protocol: tcp, udp, sctp.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Service to update.
+* @param  string  $name Name of Service to update.
+* @param  array<string, string>   $ports Number of ports in Service.
+* @param  string  $protocol Service protocol: tcp, udp, sctp.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -103,13 +103,13 @@ class Services extends IPAM_Core
 /**
 * Update Service value(s).
 *
-* @param integer $id Numerical ID of Service to update.
-* @param string  $name Name of Service to update.
-* @param array   $ports Number of ports in Service.
-* @param string  $protocol Service protocol: tcp, udp, sctp
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Service to update.
+* @param  string  $name Name of Service to update.
+* @param  array<string, string> $ports Number of ports in Service.
+* @param  string  $protocol Service protocol: tcp, udp, sctp
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -128,7 +128,7 @@ class Services extends IPAM_Core
         $options->ports    = $ports;
         $options->protocol = $protocol;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

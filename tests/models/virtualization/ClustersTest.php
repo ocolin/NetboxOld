@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Virtualization;
+namespace Cruzio\lib\Netbox\Models\Virtualization;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\Virtualization\Clusters AS Options;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\Virtualization\Clusters AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 

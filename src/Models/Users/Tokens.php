@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Users;
+namespace Cruzio\lib\Netbox\Models\Users;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Users\Tokens AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Users\Tokens AS Options;
 
 class Tokens extends Users_Core
 {
@@ -29,10 +29,10 @@ class Tokens extends Users_Core
 /**
 * Create a single Token.
 *
-* @param integer $user ID of user with token.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $user ID of user with token.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,11 +60,11 @@ class Tokens extends Users_Core
 /**
 * Update Group.
 * 
-* @param integer $id Numerical ID of Group to update.
-* @param integer $user ID of user with token.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Group to update.
+* @param  integer $user ID of user with token.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -94,11 +94,11 @@ class Tokens extends Users_Core
 /**
 * Update Group value(s).
 *
-* @param integer $id Numerical ID of Group to update.
-* @param integer $user ID of user with token.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Group to update.
+* @param  integer $user ID of user with token.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -113,7 +113,7 @@ class Tokens extends Users_Core
         
         $options->user = $user;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

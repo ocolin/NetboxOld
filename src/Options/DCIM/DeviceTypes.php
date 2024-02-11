@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class DeviceTypes
@@ -12,7 +12,16 @@ class DeviceTypes
 
     public bool   $is_full_depth;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 
     public string $model;

@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class ModuleTypes
@@ -13,6 +13,15 @@ class ModuleTypes
     public string $part_number;
     public string $comments;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

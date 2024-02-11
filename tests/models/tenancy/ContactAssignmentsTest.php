@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Tenancy;
+namespace Cruzio\lib\Netbox\Models\Tenancy;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\Tenancy\ContactAssignments AS Options;
+use Cruzio\Nlib\etbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\Tenancy\ContactAssignments AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 

@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\IPAM;
+namespace Cruzio\lib\Netbox\Options\IPAM;
 
 #[\AllowDynamicProperties]
 class Services
@@ -14,8 +14,27 @@ class Services
     public string $description;
     public string $protocol;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $ports;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $ipaddresses;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

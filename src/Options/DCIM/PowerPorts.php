@@ -2,15 +2,15 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class PowerPorts
 {
     public int    $device;
-    public int    $module;
-    public int    $maximum_draw;
-    public int    $allocated_draw;
+    public ?int   $module;
+    public ?int   $maximum_draw;
+    public ?int   $allocated_draw;
 
     public string $name;
     public string $label;
@@ -20,6 +20,15 @@ class PowerPorts
     public bool   $mark_connected;
     public object $cable;
 
+    /**
+     * @var array<string>
+     */
+    
     public array $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array $custom_fields;
 }

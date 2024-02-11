@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\Interfaces AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\Interfaces AS Options;
 
 class Interfaces extends DCIM_Core
 {
@@ -25,12 +25,12 @@ class Interfaces extends DCIM_Core
 /**
 * Create a single interface.
 *
-* @param string  $name Name of interface.
-* @param integer $device ID of device. 
-* @param string  $type interface type.
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of interface.
+* @param  integer $device ID of device. 
+* @param  string  $type interface type.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -62,13 +62,13 @@ class Interfaces extends DCIM_Core
 /**
 * Update interface
 * 
-* @param integer $id Numerical ID of interface to update.
-* @param string  $name Name of interface.
-* @param integer $device ID of device. 
-* @param string  $type interface type.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of interface to update.
+* @param  string  $name Name of interface.
+* @param  integer $device ID of device. 
+* @param  string  $type interface type.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -102,13 +102,13 @@ class Interfaces extends DCIM_Core
 /**
 * Update interface value(s).
 *
-* @param integer $id Numerical ID of interface to update.
-* @param string  $name Name of interface.
-* @param integer $deviceoo ID of device. 
-* @param string  $type interface type.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of interface to update.
+* @param  string  $name Name of interface.
+* @param  integer $device ID of device. 
+* @param  string  $type interface type.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -128,7 +128,7 @@ class Interfaces extends DCIM_Core
         $options->type   = $type;
 
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

@@ -2,9 +2,9 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\HTTP;
 
 class ReportsRun extends Extras_Core
 {

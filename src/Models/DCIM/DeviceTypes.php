@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\DeviceTypes AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\DeviceTypes AS Options;
 
 class DeviceTypes extends DCIM_Core
 {
@@ -25,11 +25,11 @@ class DeviceTypes extends DCIM_Core
 /**
 * Create a single DeviceType.
 *
-* @param string  $model Name of DeviceType.
-* @param string  $slug 
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $model Name of DeviceType.
+* @param  string  $slug 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -61,12 +61,12 @@ class DeviceTypes extends DCIM_Core
 /**
 * Update DeviceType
 * 
-* @param integer $id Numerical ID of DeviceType to update.
-* @param string  $model Name of DeviceType to update.
-* @param string  $slug Slug of DeviceType to update.
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of DeviceType to update.
+* @param  string  $model Name of DeviceType to update.
+* @param  string  $slug Slug of DeviceType to update.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -105,8 +105,8 @@ class DeviceTypes extends DCIM_Core
 * @param string  $model Name of DeviceType to update.
 * @param string  $slug Slug of DeviceType to update.
 * @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -126,7 +126,7 @@ class DeviceTypes extends DCIM_Core
         $options->manufacturer = $manufacturer;
 
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

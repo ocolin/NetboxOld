@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\IPAM\IpRanges AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\IPAM\IpRanges AS Options;
 
 class IpRanges extends IPAM_Core
 {
@@ -26,11 +26,11 @@ class IpRanges extends IPAM_Core
 /**
 * Create a single Range.
 *
-* @param string $start_address First IP address of range. 
-* @param string $end_address Last IP address of range. 
-* @param Options $options Optional data to send.
-* @param array  $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string $start_address First IP address of range. 
+* @param  string $end_address Last IP address of range. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class IpRanges extends IPAM_Core
 /**
 * Update Range
 * 
-* @param integer $id Numerical ID of Range to update.
-* @param string  $start_address First IP address of range. 
-* @param string  $end_address Last IP address of range. 
-* @param Options $options Optional data to send.
-* @param array   $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Range to update.
+* @param  string  $start_address First IP address of range. 
+* @param  string  $end_address Last IP address of range. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class IpRanges extends IPAM_Core
 /**
 * Update Range value(s).
 *
-* @param integer $id Numerical ID of Range to update.
-* @param string  $start_address First IP address of range. 
-* @param string  $end_address Last IP address of range. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Range to update.
+* @param  string  $start_address First IP address of range. 
+* @param  string  $end_address Last IP address of range. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -119,7 +119,7 @@ class IpRanges extends IPAM_Core
         $options->start_address = $start_address;
         $options->end_address   = $end_address;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

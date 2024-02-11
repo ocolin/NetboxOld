@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Wireless;
+namespace Cruzio\lib\Netbox\Models\Wireless;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Wireless\WirelessLanGroups AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Wireless\WirelessLanGroups AS Options;
 
 class WirelessLanGroups extends Wireless_Core
 {
@@ -28,11 +28,11 @@ class WirelessLanGroups extends Wireless_Core
 /**
 * Create a single LAN Group.
 *
-* @param string  $name Name of LAN Group.
-* @param string  $slug 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of LAN Group.
+* @param  string  $slug 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -63,12 +63,12 @@ class WirelessLanGroups extends Wireless_Core
 /**
 * Update LAN Group
 * 
-* @param integer $id Numerical ID of LAN Group to update.
-* @param string  $name Name of LAN Group to update.
-* @param string  $slug Slug of LAN Group to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of LAN Group to update.
+* @param  string  $name Name of LAN Group to update.
+* @param  string  $slug Slug of LAN Group to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -101,12 +101,12 @@ class WirelessLanGroups extends Wireless_Core
 /**
 * Update LAN Group value(s).
 *
-* @param integer $id Numerical ID of LAN Group to update.
-* @param string  $name Name of LAN Group to update.
-* @param string  $slug Slug of LAN Group to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of LAN Group to update.
+* @param  string  $name Name of LAN Group to update.
+* @param  string  $slug Slug of LAN Group to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -125,7 +125,7 @@ class WirelessLanGroups extends Wireless_Core
         $options->slug = $slug;
 
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

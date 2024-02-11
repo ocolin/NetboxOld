@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\IPAM;
+namespace Cruzio\lib\Netbox\Options\IPAM;
 
 #[\AllowDynamicProperties]
 class Vrfs
@@ -17,8 +17,27 @@ class Vrfs
 
     public bool   $enforce_unique;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $import_targets;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $export_targets;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

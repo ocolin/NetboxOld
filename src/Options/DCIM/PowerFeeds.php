@@ -2,13 +2,13 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class PowerFeeds
 {
     public int    $power_panel;
-    public int    $rack;
+    public ?int    $rack;
     public int    $voltage;
     public int    $amperage;
     public int    $max_utilization;
@@ -24,6 +24,15 @@ class PowerFeeds
 
     public object $cable;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

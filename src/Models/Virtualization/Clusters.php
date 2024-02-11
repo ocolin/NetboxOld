@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Virtualization;
+namespace Cruzio\lib\Netbox\Models\Virtualization;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Virtualization\Clusters AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Virtualization\Clusters AS Options;
 
 class Clusters extends Virtualization_Core
 {
@@ -28,13 +28,13 @@ class Clusters extends Virtualization_Core
 /**
 * Create a single Cluster.
 *
-* @param string  $name Name of Cluster.
-* @param integer $type ID of Cluster Type.
-* @param integer $group ID of Cluster Group.
-* @param integer $site ID of Site.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Cluster.
+* @param  integer $type ID of Cluster Type.
+* @param  integer $group ID of Cluster Group.
+* @param  integer $site ID of Site.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -68,14 +68,14 @@ class Clusters extends Virtualization_Core
 /**
 * Update Cluster 
 * 
-* @param integer $id Numerical ID of Cluster to update.
-* @param string  $name Name of Cluster.
-* @param integer $type ID of Cluster Type.
-* @param integer $group ID of Cluster Group.
-* @param integer $site ID of Site.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Cluster to update.
+* @param  string  $name Name of Cluster.
+* @param  integer $type ID of Cluster Type.
+* @param  integer $group ID of Cluster Group.
+* @param  integer $site ID of Site.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -111,14 +111,14 @@ class Clusters extends Virtualization_Core
 /**
 * Update Cluster value(s).
 *
-* @param integer $id Numerical ID of Cluster to update.
-* @param string  $name Name of Cluster.
-* @param integer $type ID of Cluster Type.
-* @param integer $group ID of Cluster Group.
-* @param integer $site ID of Site.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Cluster to update.
+* @param  string  $name Name of Cluster.
+* @param  integer $type ID of Cluster Type.
+* @param  integer $group ID of Cluster Group.
+* @param  integer $site ID of Site.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -139,7 +139,7 @@ class Clusters extends Virtualization_Core
         $options->group = $group;
         $options->site  = $site;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

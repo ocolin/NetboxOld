@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Virtualization;
+namespace Cruzio\lib\Netbox\Options\Virtualization;
 
 #[\AllowDynamicProperties]
 class Clusters
@@ -15,6 +15,15 @@ class Clusters
     public string $name;
     public string $comments;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

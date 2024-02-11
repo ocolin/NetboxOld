@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\IPAM;
+namespace Cruzio\lib\Netbox\Options\IPAM;
 
 #[\AllowDynamicProperties]
 class Vlans
@@ -17,6 +17,15 @@ class Vlans
     public string $status;
     public string $description;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

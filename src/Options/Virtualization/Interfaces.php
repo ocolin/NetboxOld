@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Virtualization;
+namespace Cruzio\lib\Netbox\Options\Virtualization;
 
 #[\AllowDynamicProperties]
 class Interfaces
@@ -21,7 +21,21 @@ class Interfaces
 
     public bool   $enabled;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tagged_vlans;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

@@ -2,15 +2,15 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class Sites
 {
     public ?int   $parent;
-    public int    $region;
-    public int    $group;
-    public int    $tenant;
+    public ?int   $region;
+    public ?int   $group;
+    public ?int   $tenant;
 
     public string $name;
     public string $slug;
@@ -22,10 +22,24 @@ class Sites
     public string $shipping_address;
     public string $comments;
 
-    public float  $latitude;
-    public float  $longitude;
+    public ?float $latitude;
+    public ?float $longitude;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $asns;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

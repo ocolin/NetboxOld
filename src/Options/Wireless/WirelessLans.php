@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Wireless;
+namespace Cruzio\lib\Netbox\Options\Wireless;
 
 #[\AllowDynamicProperties]
 class WirelessLans
@@ -16,6 +16,15 @@ class WirelessLans
     public string $auth_cipher;
     public string $auth_psk;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

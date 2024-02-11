@@ -1,8 +1,7 @@
-#!/opt/homebrew/opt/php@8.1/bin/php
 <?php
 
 declare( strict_types = 1 );
-namespace Cruzio\Netbox\Models;
+namespace Cruzio\lib\Netbox\Models;
 use Symfony\Component\Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
@@ -12,6 +11,10 @@ $dotenv->load( __DIR__ . '/.env' );
 
 
 clearAll();
+
+/**
+ * @return void
+ */
 
 function clearAll()
 {
@@ -43,6 +46,10 @@ function clearAll()
     clearSites();
 }
 
+/**
+ * @return void
+ */
+
 function clearDevices()
 {
     $o = new DCIM\Devices();
@@ -53,6 +60,10 @@ function clearDevices()
         $o->deleteDetail( id: $device->id) ;
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearIpRanges()
 {
@@ -65,6 +76,10 @@ function clearIpRanges()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearIpAddresses()
 {
     $o = new IPAM\IpAddresses();
@@ -76,6 +91,10 @@ function clearIpAddresses()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearClusterTypes()
 {
     $o = new Virtualization\ClusterTypes();
@@ -86,6 +105,10 @@ function clearClusterTypes()
         $o->deleteDetail( id: $type->id) ;
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearClusterGroups()
 {
@@ -99,6 +122,10 @@ function clearClusterGroups()
 }
 
 
+/**
+ * @return void
+ */
+
 function clearClusters()
 {
     $o = new Virtualization\Clusters();
@@ -111,6 +138,10 @@ function clearClusters()
 }
 
 
+/**
+ * @return void
+ */
+
 function clearRackRoles()
 {
     $o = new DCIM\RackRoles();
@@ -121,6 +152,10 @@ function clearRackRoles()
         $o->deleteDetail( id: $role->id);
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearRacks()
 {
@@ -134,6 +169,10 @@ function clearRacks()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearVirtualChassis()
 {
     $o = new DCIM\VirtualChassis();
@@ -144,6 +183,10 @@ function clearVirtualChassis()
         $o->deleteDetail( id: $chas->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearDeviceRole()
 {
@@ -156,6 +199,10 @@ function clearDeviceRole()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearLocation()
 {
     $o = new DCIM\Locations();
@@ -166,6 +213,10 @@ function clearLocation()
         $o->deleteDetail( id: $loc->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearDeviceType()
 {
@@ -179,6 +230,10 @@ function clearDeviceType()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearTenants()
 {
     $o = new Tenancy\Tenants();
@@ -189,6 +244,10 @@ function clearTenants()
         $o->deleteDetail( id: $tenant->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearManufacturers()
 {
@@ -201,6 +260,10 @@ function clearManufacturers()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearPlatforms()
 {
     $o = new DCIM\Platforms();
@@ -211,6 +274,10 @@ function clearPlatforms()
        $test = $o->deleteDetail( id: $platform->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearSites()
 {
@@ -224,6 +291,10 @@ function clearSites()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearModuleBays()
 {
     $o = new DCIM\ModuleBays();
@@ -234,6 +305,10 @@ function clearModuleBays()
         $o->deleteDetail( id: $bay->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearProviders()
 {
@@ -246,6 +321,10 @@ function clearProviders()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearProviderNetworks()
 {
     $o = new Circuits\ProviderNetworks();
@@ -256,6 +335,10 @@ function clearProviderNetworks()
         $test = $o->deleteDetail( id: $prov->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearCircuitType()
 {
@@ -268,6 +351,10 @@ function clearCircuitType()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearCircuit()
 {
     $o = new Circuits\Circuits();
@@ -278,6 +365,10 @@ function clearCircuit()
         $o->deleteDetail( id: $ct->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearContactGroup()
 {
@@ -290,6 +381,10 @@ function clearContactGroup()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearContact()
 {
     $o = new Tenancy\Contacts();
@@ -300,6 +395,10 @@ function clearContact()
         $o->deleteDetail( id: $contact->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearCotactRole()
 {
@@ -312,6 +411,10 @@ function clearCotactRole()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearCustomLinks()
 {
     $o = new Extras\CustomLinks();
@@ -323,6 +426,10 @@ function clearCustomLinks()
     }
 }
 
+/**
+ * @return void
+ */
+
 function clearExportTemplates()
 {
     $o = new Extras\ExportTemplates();
@@ -333,6 +440,10 @@ function clearExportTemplates()
         $o->deleteDetail( id: $temp->id );
     }
 }
+
+/**
+ * @return void
+ */
 
 function clearTags()
 {
@@ -346,6 +457,10 @@ function clearTags()
 }
 
 
+/**
+ * @return void
+ */
+
 function clearWirelessLanGroups()
 {
     $o = new Wireless\WirelessLanGroups();
@@ -356,6 +471,3 @@ function clearWirelessLanGroups()
         $o->deleteDetail( id: $group->id );
     }
 }
-
-
-

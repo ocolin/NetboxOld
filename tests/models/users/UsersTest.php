@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Users;
+namespace Cruzio\lib\Netbox\Models\Users;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\Users\Users AS Options;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\Users\Users AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 

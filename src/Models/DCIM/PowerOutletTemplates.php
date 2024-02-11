@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\PowerOutletTemplates AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\PowerOutletTemplates AS Options;
 
 class PowerOutletTemplates extends DCIM_Core
 {
@@ -26,11 +26,11 @@ class PowerOutletTemplates extends DCIM_Core
 /**
 * Create a single Outlet.
 *
-* @param string  $name Name of Outlet.
-* @param integer $device ID of Device type the outlet belongs to. 
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Outlet.
+* @param  integer $device_type ID of Device type the outlet belongs to. 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class PowerOutletTemplates extends DCIM_Core
 /**
 * Update Bay
 * 
-* @param integer $id Numerical ID of Bay to update.
-* @param string  $name Name of Outlet.
-* @param integer $device ID of Device type the outlet belongs to. 
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Bay to update.
+* @param  string  $name Name of Outlet.
+* @param  integer $device_type ID of Device type the outlet belongs to. 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class PowerOutletTemplates extends DCIM_Core
 /**
 * Update Bay value(s).
 *
-* @param integer $id Numerical ID of Bay to update.
-* @param string  $name Name of Outlet.
-* @param integer $device ID of Device type the outlet belongs to. 
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Bay to update.
+* @param  string  $name Name of Outlet.
+* @param  integer $device_type ID of Device type the outlet belongs to. 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -119,8 +119,7 @@ class PowerOutletTemplates extends DCIM_Core
         $options->name        = $name;
         $options->device_type = $device_type;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

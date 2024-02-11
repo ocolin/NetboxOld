@@ -2,17 +2,28 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class ConsolePorts
 {
     public int    $device;
-    public int    $module;
-    public int    $speed;
+    public ?int   $module;
+    public ?int   $speed;
     public bool   $mark_connected;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
+
     public string $name;
     public string $label;
     public string $type;

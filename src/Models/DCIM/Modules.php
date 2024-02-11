@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\Modules AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\Modules AS Options;
 
 class Modules extends DCIM_Core
 {
@@ -25,12 +25,12 @@ class Modules extends DCIM_Core
 /**
 * Create a single Module.
 *
-* @param integer $device ID of device Module belongs to.
-* @param integer $module_bay ID of bay Module belongs to.
-* @param integer $module_type ID of type of Module.
-* @param Options $options optionsl data to be sent.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $device ID of device Module belongs to.
+* @param  integer $module_bay ID of bay Module belongs to.
+* @param  integer $module_type ID of type of Module.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -63,13 +63,13 @@ class Modules extends DCIM_Core
 /**
 * Update Module
 * 
-* @param integer $id Numerical ID of Consol Port to update.
-* @param integer $device ID of device Module belongs to.
-* @param integer $module_bay ID of bay Module belongs to.
-* @param integer $module_type ID of type of Module.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Consol Port to update.
+* @param  integer $device ID of device Module belongs to.
+* @param  integer $module_bay ID of bay Module belongs to.
+* @param  integer $module_type ID of type of Module.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -103,13 +103,13 @@ class Modules extends DCIM_Core
 /**
 * Update Module value(s).
 *
-* @param integer $id Numerical ID of Console Port to update.
-* @param integer $device ID of device Module belongs to.
-* @param integer $module_bay ID of bay Module belongs to.
-* @param integer $module_type ID of type of Module.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Console Port to update.
+* @param  integer $device ID of device Module belongs to.
+* @param  integer $module_bay ID of bay Module belongs to.
+* @param  integer $module_type ID of type of Module.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -129,7 +129,7 @@ class Modules extends DCIM_Core
         $options->module_type = $module_type;
 
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

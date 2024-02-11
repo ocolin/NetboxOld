@@ -2,14 +2,23 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class DeviceRoles
 {
     public bool $vm_role;
 
+    /**
+     * @var array<string>
+     */
+    
     public array $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array $custom_fields;
 
     public string $name;

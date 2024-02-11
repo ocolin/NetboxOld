@@ -2,9 +2,9 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\HTTP;
 
 class PrefixesAvailablePrefixes extends IPAM_Core
 {
@@ -18,6 +18,11 @@ class PrefixesAvailablePrefixes extends IPAM_Core
 /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
+/**
+ * @param  integer $id
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ */
     public function getDetail( 
           int $id,
         array $params  = [],
@@ -38,6 +43,12 @@ class PrefixesAvailablePrefixes extends IPAM_Core
 /* POST METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
+/**
+ * @param  integer $id
+ * @param  object $data
+ * @param  array<string, string> $headers HTML request headers
+ * @return void
+ */
     public function postDetail( 
            int $id, 
         object $data ,

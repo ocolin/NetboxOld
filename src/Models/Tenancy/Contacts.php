@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Tenancy;
+namespace Cruzio\lib\Netbox\Models\Tenancy;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Tenancy\Contacts AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Tenancy\Contacts AS Options;
 
 class Contacts extends Tenancy_Core
 {
@@ -28,11 +28,11 @@ class Contacts extends Tenancy_Core
 /**
 * Create a single Contact.
 *
-* @param string  $name Name of Contact.
-* @param integer $group ID of group contact belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Contact.
+* @param  integer $group ID of group contact belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -62,12 +62,12 @@ class Contacts extends Tenancy_Core
 /**
 * Update Contact
 * 
-* @param integer $id Numerical ID of Contact to update.
-* @param string  $name Name of Contact to update.
-* @param integer $group ID of group contact belongs to.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Contact to update.
+* @param  string  $name Name of Contact to update.
+* @param  integer $group ID of group contact belongs to.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -99,12 +99,12 @@ class Contacts extends Tenancy_Core
 /**
 * Update Contact value(s).
 *
-* @param integer $id Numerical ID of Contact to update.
-* @param string  $name Name of Contact to update.
-* @param integer $group ID of group contact belongs to.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Contact to update.
+* @param  string  $name Name of Contact to update.
+* @param  integer $group ID of group contact belongs to.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -121,8 +121,7 @@ class Contacts extends Tenancy_Core
         $options->name  = $name;
         $options->group = $group;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

@@ -2,9 +2,9 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\lib\Netbox\Models\Circuits;
 
-use Cruzio\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\HTTP;
 
 class CircuitTerminationPaths extends Circuits_Core
 {

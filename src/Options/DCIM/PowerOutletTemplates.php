@@ -2,13 +2,13 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class PowerOutletTemplates
 {
-    public int    $device_type;
-    public int    $power_port;
+    public ?int   $device_type;
+    public ?int   $power_port;
 
     public string $name;
     public string $label;

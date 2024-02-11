@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\Platforms AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\Platforms AS Options;
 
 class Platforms extends DCIM_Core
 {
@@ -25,11 +25,11 @@ class Platforms extends DCIM_Core
 /**
 * Create a single Platform.
 *
-* @param string $name Name of Platform.
-* @param string $slug 
-* @param Options $options optionsl data to be sent.
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string $name Name of Platform.
+* @param  string $slug 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -59,12 +59,12 @@ class Platforms extends DCIM_Core
 /**
 * Update Platform
 * 
-* @param integer $id Numerical ID of Platform to update.
-* @param string  $name Name of Platform to update.
-* @param string  $slug Slug of Platform to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Platform to update.
+* @param  string  $name Name of Platform to update.
+* @param  string  $slug Slug of Platform to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -96,12 +96,12 @@ class Platforms extends DCIM_Core
 /**
 * Update Platform value(s).
 *
-* @param integer $id Numerical ID of Platform to update.
-* @param string  $name Name of Platform to update.
-* @param string  $slug Slug of Platform to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Platform to update.
+* @param  string  $name Name of Platform to update.
+* @param  string  $slug Slug of Platform to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -118,8 +118,7 @@ class Platforms extends DCIM_Core
         $options->name = $name;
         $options->slug = $slug;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

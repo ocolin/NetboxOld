@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Virtualization;
+namespace Cruzio\lib\Netbox\Models\Virtualization;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Virtualization\VirtualMachines AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Virtualization\VirtualMachines AS Options;
 
 class VirtualMachines extends Virtualization_Core
 {
@@ -28,11 +28,11 @@ class VirtualMachines extends Virtualization_Core
 /**
 * Create a single Virtual Machine.
 *
-* @param string  $name Name of Virtual Machine.
-* @param integer $cluster ID of cluster machine belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Virtual Machine.
+* @param  integer $cluster ID of cluster machine belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -62,12 +62,12 @@ class VirtualMachines extends Virtualization_Core
 /**
 * Update Virtual Machine
 * 
-* @param integer $id Numerical ID of Virtual Machine to update.
-* @param string  $name Name of Virtual Machine to update.
-* @param integer $cluster ID of cluster machine belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Virtual Machine to update.
+* @param  string  $name Name of Virtual Machine to update.
+* @param  integer $cluster ID of cluster machine belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -99,12 +99,12 @@ class VirtualMachines extends Virtualization_Core
 /**
 * Update Virtual Machine value(s).
 *
-* @param integer $id Numerical ID of Virtual Machine to update.
-* @param string  $name Name of Virtual Machine to update.
-* @param integer $cluster ID of cluster machine belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Virtual Machine to update.
+* @param  string  $name Name of Virtual Machine to update.
+* @param  integer $cluster ID of cluster machine belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -121,8 +121,7 @@ class VirtualMachines extends Virtualization_Core
         $options->name    = $name;
         $options->cluster = $cluster;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\JournalEntries AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Extras\JournalEntries AS Options;
 
 class JournalEntries extends Extras_Core
 {

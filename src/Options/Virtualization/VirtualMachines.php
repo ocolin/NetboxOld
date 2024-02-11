@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Virtualization;
+namespace Cruzio\lib\Netbox\Options\Virtualization;
 
 #[\AllowDynamicProperties]
 class VirtualMachines
@@ -25,6 +25,15 @@ class VirtualMachines
 
     public bool   $enabled;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

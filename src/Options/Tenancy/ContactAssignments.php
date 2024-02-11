@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Tenancy;
+namespace Cruzio\lib\Netbox\Options\Tenancy;
 
 #[\AllowDynamicProperties]
 class ContactAssignments

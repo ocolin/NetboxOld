@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Users;
+namespace Cruzio\lib\Netbox\Options\Users;
 
 #[\AllowDynamicProperties]
 class Users
@@ -18,5 +18,10 @@ class Users
 
     public bool   $is_staff;
     public bool   $is_active;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $groups;
 }

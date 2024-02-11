@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\ExportTemplates AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Extras\ExportTemplates AS Options;
 
 class ExportTemplates extends Extras_Core
 {
@@ -26,12 +26,12 @@ class ExportTemplates extends Extras_Core
 /**
 * Create a single Template.
 *
-* @param array  $content_types Template content type.
-* @param string $name Name of Template.
-* @param string $template_code Code inside template.
-* @param Options $options Optional data to send.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  array<string, string>  $content_types Template content type.
+* @param  string $name Name of Template.
+* @param  string $template_code Code inside template.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -63,13 +63,13 @@ class ExportTemplates extends Extras_Core
 /**
 * Update Template Link
 * 
-* @param integer $id Numerical ID of Template to update.
-* @param array   $content_types Template content type.
-* @param string  $name Name of Template.
-* @param string  $template_code Code inside template.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Template to update.
+* @param  array<string, string> $content_types Template content type.
+* @param  string  $name Name of Template.
+* @param  string  $template_code Code inside template.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -103,13 +103,13 @@ class ExportTemplates extends Extras_Core
 /**
 * Update Template value(s).
 *
-* @param integer $id Numerical ID of Template to update.
-* @param array   $content_types Template content type.
-* @param string  $name Name of Template.
-* @param string  $template_code Code inside template.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Template to update.
+* @param  array<string, string> $content_types Template content type.
+* @param  string  $name Name of Template.
+* @param  string  $template_code Code inside template.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -128,7 +128,7 @@ class ExportTemplates extends Extras_Core
         $options->name           = $name;
         $options->template_code  = $template_code;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

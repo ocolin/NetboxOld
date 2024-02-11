@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\Locations AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\Locations AS Options;
 
 class Locations extends DCIM_Core
 {
@@ -25,12 +25,12 @@ class Locations extends DCIM_Core
 /**
 * Create a single Location.
 *
-* @param string  $name Name of Location.
-* @param string  $slug 
-* @param integer $site ID of site location is in.
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Location.
+* @param  string  $slug 
+* @param  integer $site ID of site location is in.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -62,13 +62,13 @@ class Locations extends DCIM_Core
 /**
 * Update Location
 * 
-* @param integer $id Numerical ID of Location to update.
-* @param string  $name Name of Location to update.
-* @param string  $slug Slug of Location to update.
-* @param integer $site ID of site location is in.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Location to update.
+* @param  string  $name Name of Location to update.
+* @param  string  $slug Slug of Location to update.
+* @param  integer $site ID of site location is in.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -102,13 +102,13 @@ class Locations extends DCIM_Core
 /**
 * Update Location value(s).
 *
-* @param integer $id Numerical ID of Location to update.
-* @param string  $name Name of Location to update.
-* @param string  $slug Slug of Location to update.
-* @param Options $options Optional data to send.
-* @param integer $site ID of site location is in.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Location to update.
+* @param  string  $name Name of Location to update.
+* @param  string  $slug Slug of Location to update.
+* @param  Options $options Optional data to send.
+* @param  integer $site ID of site location is in.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -128,7 +128,7 @@ class Locations extends DCIM_Core
         $options->site = $site;
 
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

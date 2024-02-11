@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\IPAM\Aggregates AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\IPAM\Aggregates AS Options;
 
 class Aggregates extends IPAM_Core
 {
@@ -26,11 +26,11 @@ class Aggregates extends IPAM_Core
 /**
 * Create a single Aggregate.
 *
-* @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
-* @param integer $rir ID of RIR.
-* @param Options $options Optional data to send.
-* @param array   $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
+* @param  integer $rir ID of RIR.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class Aggregates extends IPAM_Core
 /**
 * Update Aggregate
 * 
-* @param integer $id Numerical ID of Aggregate to update.
-* @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
-* @param integer $rir ID of RIR.
-* @param Options $options Optional data to send.
-* @param array   $headers Optional HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Aggregate to update.
+* @param  string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
+* @param  integer $rir ID of RIR.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class Aggregates extends IPAM_Core
 /**
 * Update Aggregate value(s).
 *
-* @param integer $id Numerical ID of Aggregate to update.
-* @param string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
-* @param integer $rir ID of RIR.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Aggregate to update.
+* @param  string  $prefix Subnet prefix, ex: '192.168.1.0/24' 
+* @param  integer $rir ID of RIR.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -119,7 +119,7 @@ class Aggregates extends IPAM_Core
         $options->prefix = $prefix;
         $options->rir    = $rir;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

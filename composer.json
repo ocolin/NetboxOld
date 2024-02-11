@@ -9,11 +9,12 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^9.5",
-        "vimeo/psalm": "^5.4"
+        "vimeo/psalm": "^5.4",
+        "phpstan/phpstan": "^1.10"
     },
     "autoload": {
         "psr-4": {
-            "Cruzio\\Netbox\\": "src/"
+            "Cruzio\\lib\\Netbox\\": "src/"
         }
     },
     "authors": [

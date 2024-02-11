@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\DCIM\FrontPortTemplates AS Options;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\DCIM\FrontPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 

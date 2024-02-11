@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Extras;
+namespace Cruzio\lib\Netbox\Options\Extras;
 
 #[\AllowDynamicProperties]
 class ImageAttachments

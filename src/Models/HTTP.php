@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models;
+namespace Cruzio\lib\Netbox\Models;
 
 require_once( __DIR__ . '/../mode.php' );
 
@@ -13,6 +13,11 @@ use Symfony\Component\Dotenv\Dotenv;
 class HTTP
 {
     private Client $client;
+
+    /**
+     * @var array<string, string>
+     */
+
     private array $headers = [];
 
     private string $base_uri;
@@ -34,9 +39,8 @@ class HTTP
           bool $errors   = false
     )
     {
-        $env_file = strcmp( MODE, 'PRODUCTION' ) ? '.env.prod' : '.env.dev';
         $dotenv = new Dotenv();
-        $dotenv->load( __DIR__ . '/../' . $env_file );
+        $dotenv->load( __DIR__ . '/../.env' );
         
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
@@ -57,10 +61,10 @@ class HTTP
  * Create an object.
  *
  * @param string $uri
- * @param array|object $body
- * @param array $params
- * @param array $headers
- * @return array
+ * @param array<string, mixed>|object $body
+ * @param array<string, string> $params
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function post(
@@ -92,10 +96,10 @@ class HTTP
  * Modify an existing object. Requires all mandatory fields to be specified.
  *
  * @param string $uri
- * @param array|object $body
- * @param array $params
- * @param array $headers
- * @return array
+ * @param array<string, mixed>|object $body
+ * @param array<string, string> $params
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function put(
@@ -126,10 +130,10 @@ class HTTP
  * Modify an existing object. Only fields to be modified are specified
  *
  * @param string $uri
- * @param array|object $body
- * @param array $params
- * @param array $headers
- * @return array
+ * @param array<string, mixed>|object $body
+ * @param array<string, string> $params
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patch(
@@ -160,10 +164,9 @@ class HTTP
  * Retrieve an object or list of objects.
  *
  * @param string $uri
- * @param array|object $body
- * @param array $params
- * @param array $headers
- * @return array
+ * @param array<string, string> $params
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function get(
@@ -190,9 +193,10 @@ class HTTP
 /**
  * Delete an existing object.
  *
- * @param string $uri
- * @param array $headers
- * @return array
+ * @param  string $uri
+ * @param  array<string, mixed> $body
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function delete( string $uri, array $body = [], array $headers = [] ) : array
@@ -218,8 +222,8 @@ class HTTP
  *  and their available parameters.
  *
  * @param string $uri
- * @param array  $headers
- * @return array
+ * @param  array<string, string> $headers HTML request headers
+ * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function options( string $uri, array $headers = [] ) : array
@@ -241,7 +245,7 @@ class HTTP
  * Generate a default set of headers so none are needed for most queries. Includes
  *  the authentication token which can be overiden with each call if specified.
  *
- *  @return array Array of HTTP request headers
+ *  @return array<string, string> Array of HTTP request headers
 */
 
     private static function default_Headers() : array
@@ -260,6 +264,8 @@ class HTTP
 
 /**
  * Format the Guzzle HTTP request response into an array
+ * 
+ * @return array<string, mixed>
 */
 
     private static function returnResults( ResponseInterface $request ) : array
@@ -279,7 +285,7 @@ class HTTP
 /**
  * Format an array of parametsrs into a URL query
  *
- * @param array   $params
+ * @param array<string, string> $params
  * @param string  $uri
  * @return string final URI with parameters encoded into it, or plain uri.
 */

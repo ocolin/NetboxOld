@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Users;
+namespace Cruzio\lib\Netbox\Options\Users;
 
 #[\AllowDynamicProperties]
 class Permissions
@@ -13,8 +13,27 @@ class Permissions
 
     public bool   $enabled;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $object_types;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $groups;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $users;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $actions;
 }

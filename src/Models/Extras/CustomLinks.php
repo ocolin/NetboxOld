@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\CustomLinks AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Extras\CustomLinks AS Options;
 
 class CustomLinks extends Extras_Core
 {
@@ -26,13 +26,13 @@ class CustomLinks extends Extras_Core
 /**
 * Create a single Custom Link.
 *
-* @param array  $content_types Link content type.
-* @param string $name Name of custom link.
-* @param string $link_text Text of HTTP link.
-* @param string $link_url HTTP link.
-* @param Options $options Optional data to send.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  array<string, string>  $content_types Link content type.
+* @param  string $name Name of custom link.
+* @param  string $link_text Text of HTTP link.
+* @param  string $link_url HTTP link.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -66,14 +66,14 @@ class CustomLinks extends Extras_Core
 /**
 * Update Custom Link
 * 
-* @param integer $id Numerical ID of User to update.
-* @param array   $content_types Link content type.
-* @param string  $name Name of custom link.
-* @param string  $link_text Text of HTTP link.
-* @param string  $link_url HTTP link.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of User to update.
+* @param  array<string, string>   $content_types Link content type.
+* @param  string  $name Name of custom link.
+* @param  string  $link_text Text of HTTP link.
+* @param  string  $link_url HTTP link.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -109,14 +109,14 @@ class CustomLinks extends Extras_Core
 /**
 * Update Custom Link value(s).
 *
-* @param integer $id Numerical ID of User to update.
-* @param array   $content_types Link content type.
-* @param string  $name Name of custom link.
-* @param string  $link_text Text of HTTP link.
-* @param string  $link_url HTTP link.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of User to update.
+* @param  array<string, string> $content_types Link content type.
+* @param  string  $name Name of custom link.
+* @param  string  $link_text Text of HTTP link.
+* @param  string  $link_url HTTP link.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -137,7 +137,7 @@ class CustomLinks extends Extras_Core
         $options->link_text     = $link_text;
         $options->link_url      = $link_url;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

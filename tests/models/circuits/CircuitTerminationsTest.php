@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\lib\Netbox\Models\Circuits;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\Circuits\CircuitTerminations AS Options;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 

@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\IPAM;
+namespace Cruzio\lib\Netbox\Options\IPAM;
 
 #[\AllowDynamicProperties]
 class RouteTargets
@@ -12,6 +12,15 @@ class RouteTargets
     public string $name;
     public string $description;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

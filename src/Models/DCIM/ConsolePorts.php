@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\ConsolePorts AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\ConsolePorts AS Options;
 
 class ConsolePorts extends DCIM_Core
 {
@@ -26,11 +26,11 @@ class ConsolePorts extends DCIM_Core
 /**
 * Create a single Console Port.
 *
-* @param string  $name Name of Console Port.
-* @param integer $device ID of device port belongs to. 
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Console Port.
+* @param  integer $device ID of device port belongs to. 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class ConsolePorts extends DCIM_Core
 /**
 * Update Console Port
 * 
-* @param integer $id Numerical ID of Consol Port to update.
-* @param string  $name Name of Console Port.
-* @param integer $device ID of device port belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Consol Port to update.
+* @param  string  $name Name of Console Port.
+* @param  integer $device ID of device port belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class ConsolePorts extends DCIM_Core
 /**
 * Update Console Port value(s).
 *
-* @param integer $id Numerical ID of Console Port to update.
-* @param string  $name Name of Console Port.
-* @param integer $device ID of device port belongs to. 
-* @param Options $options Optional data to modify.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Console Port to update.
+* @param  string  $name Name of Console Port.
+* @param  integer $device ID of device port belongs to. 
+* @param  Options $options Optional data to modify.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -120,7 +120,7 @@ class ConsolePorts extends DCIM_Core
         $options->device = $device;
 
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

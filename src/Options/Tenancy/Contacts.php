@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Tenancy;
+namespace Cruzio\lib\Netbox\Options\Tenancy;
 
 #[\AllowDynamicProperties]
 class Contacts
@@ -17,6 +17,15 @@ class Contacts
     public string $link;
     public string $comments;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

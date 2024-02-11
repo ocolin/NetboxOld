@@ -2,18 +2,32 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Circuits;
+namespace Cruzio\lib\Netbox\Options\Circuits;
 
 #[\AllowDynamicProperties]
 class Providers
 {
-    public int    $asn;
+    public ?int   $asn;
 
     public string $name;
     public string $slug;
 
+    /**
+     * @var array<string>
+     */
+
     public array  $asns;
+
+    /**
+     * @var array<string>
+     */
+
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+
     public array  $custom_fields;
     
     public string $account;

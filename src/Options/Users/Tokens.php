@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Users;
+namespace Cruzio\lib\Netbox\Options\Users;
 
 #[\AllowDynamicProperties]
 class Tokens

@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\Webhooks AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Extras\Webhooks AS Options;
 
 class Webhooks extends Extras_Core
 {

@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Users;
+namespace Cruzio\lib\Netbox\Models\Users;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Users\Permissions AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Users\Permissions AS Options;
 
 class Premissions extends Users_Core
 {
@@ -29,11 +29,11 @@ class Premissions extends Users_Core
 /**
 * Create a single Permission.
 *
-* @param string  $name Name of Permission.
-* @param array   $object_types String array of objects.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Permission.
+* @param  array<string, string> $object_types String array of objects.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -63,12 +63,12 @@ class Premissions extends Users_Core
 /**
 * Update Permission.
 * 
-* @param integer $id Numerical ID of Permission to update.
-* @param string  $name Name of Permission.
-* @param array   $object_types String array of objects.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Permission to update.
+* @param  string  $name Name of Permission.
+* @param  array<string, string> $object_types String array of objects.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -100,12 +100,12 @@ class Premissions extends Users_Core
 /**
 * Update Permission value(s).
 *
-* @param integer $id Numerical ID of Permission to update.
-* @param string  $name Name of Permission.
-* @param array   $object_types String array of objects.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Permission to update.
+* @param  string  $name Name of Permission.
+* @param  array<string, string> $object_types String array of objects.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -118,11 +118,10 @@ class Premissions extends Users_Core
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
-        
         $options->name         = $name;
         $options->object_types = $object_types;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

@@ -2,13 +2,13 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\DCIM;
+namespace Cruzio\lib\Netbox\Options\DCIM;
 
 #[\AllowDynamicProperties]
 class FrontPorts
 {
     public int    $device;
-    public int    $module;
+    public ?int    $module;
     public int    $rear_port;
     public int    $rear_port_position;
 
@@ -22,6 +22,15 @@ class FrontPorts
 
     public object $cable;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

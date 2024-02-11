@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Circuits;
+namespace Cruzio\lib\Netbox\Models\Circuits;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Circuits\ProviderNetworks AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Circuits\ProviderNetworks AS Options;
 
 class ProviderNetworks extends Circuits_Core
 {
@@ -26,11 +26,11 @@ class ProviderNetworks extends Circuits_Core
 /**
 * Create a single Network Provider.
 *
-* @param string  $name Name of provider network.
-* @param integer $provider ID of provider. 
-* @param Options $options optionsl data to be sent
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of provider network.
+* @param  integer $provider ID of provider. 
+* @param  Options $options optionsl data to be sent
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class ProviderNetworks extends Circuits_Core
 /**
 * Update Network Provider
 * 
-* @param integer $id Numerical ID of Network Provider to update.
-* @param string  $name Name of provider network.
-* @param integer $provider ID of provider. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Network Provider to update.
+* @param  string  $name Name of provider network.
+* @param  integer $provider ID of provider. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class ProviderNetworks extends Circuits_Core
 /**
 * Update Network Provider value(s).
 *
-* @param integer $id Numerical ID of Network Provider to update.
-* @param string  $name Name of provider network.
-* @param integer $provider ID of provider. 
-* @param Options $options Optional data to modify.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Network Provider to update.
+* @param  string  $name Name of provider network.
+* @param  integer $provider ID of provider. 
+* @param  Options $options Optional data to modify.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -119,7 +119,7 @@ class ProviderNetworks extends Circuits_Core
         $options->name     = $name;
         $options->provider = $provider;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

@@ -2,12 +2,12 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
-use Cruzio\Netbox\Options\DCIM\ModuleBayTemplates AS Options;
+use Cruzio\lib\Netbox\Options\DCIM\ModuleBayTemplates AS Options;
 
 final class ModuleBayTemplatesTest extends testCore
 {

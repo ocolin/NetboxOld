@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Extras;
+namespace Cruzio\lib\Netbox\Options\Extras;
 
 #[\AllowDynamicProperties]
 class CustomFields
@@ -22,6 +22,15 @@ class CustomFields
 
     public bool   $required;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $content_types;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $choices;
 }

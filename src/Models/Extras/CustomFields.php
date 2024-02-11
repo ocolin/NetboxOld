@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\CustomFields AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Extras\CustomFields AS Options;
 
 class CustomFields extends Extras_Core
 {
@@ -26,11 +26,11 @@ class CustomFields extends Extras_Core
 /**
 * Create a single Custom Field.
 *
-* @param string $name Name of custom field.
-* @param array  $content_types Array of content types.
-* @param Options $options Optional data to send.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string $name Name of custom field.
+* @param  array<string, string>  $content_types Array of content types.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -62,12 +62,12 @@ class CustomFields extends Extras_Core
 /**
 * Update Custom Field
 * 
-* @param integer $id Numerical ID of Custom Field to update.
-* @param string  $name Name of custom field.
-* @param array   $content_types Array of content types.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Custom Field to update.
+* @param  string  $name Name of custom field.
+* @param  array<string, string> $content_types Array of content types.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -101,12 +101,12 @@ class CustomFields extends Extras_Core
 /**
 * Update Custom Field value(s).
 *
-* @param integer $id Numerical ID of Custom Field to update.
-* @param string  $name Name of custom field.
-* @param array   $content_types Array of content types.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Custom Field to update.
+* @param  string  $name Name of custom field.
+* @param  array<string, string> $content_types Array of content types.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -125,7 +125,7 @@ class CustomFields extends Extras_Core
         $options->name          = $name;
         $options->type          = $type;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

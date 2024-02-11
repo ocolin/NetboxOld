@@ -2,10 +2,10 @@
 
 declare( strict_types=1 );
 
-namespace Cruzio\Netbox\Models\Users;
+namespace Cruzio\lib\Netbox\Models\Users;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Models\Models_Core;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Models_Core;
 
 abstract class Users_Core extends Models_Core
 {

@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\Extras\Tags AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\Extras\Tags AS Options;
 
 class Tags extends Extras_Core
 {
@@ -25,11 +25,11 @@ class Tags extends Extras_Core
 /**
 * Create a single Platform.
 *
-* @param string $name Name of Platform.
-* @param string $slug 
-* @param array  $options optionsl data to be sent.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string $name Name of Platform.
+* @param  string $slug 
+* @param  array<string, string> $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -57,12 +57,12 @@ class Tags extends Extras_Core
 /**
 * Update Platform
 * 
-* @param integer $id Numerical ID of Platform to update.
-* @param string  $name Name of Platform to update.
-* @param string  $slug Slug of Platform to update.
-* @param array   $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Platform to update.
+* @param  string  $name Name of Platform to update.
+* @param  string  $slug Slug of Platform to update.
+* @param  array<string, mixed> $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -92,12 +92,12 @@ class Tags extends Extras_Core
 /**
 * Update Platform value(s).
 *
-* @param integer $id Numerical ID of Platform to update.
-* @param string  $name Name of Platform to update.
-* @param string  $slug Slug of Platform to update.
-* @param array   $options Optional data to modify.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Platform to update.
+* @param  string  $name Name of Platform to update.
+* @param  string  $slug Slug of Platform to update.
+* @param  array<string, string> $options Optional data to modify.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -112,8 +112,7 @@ class Tags extends Extras_Core
         $options['name'] = $name;
         $options['slug'] = $slug;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

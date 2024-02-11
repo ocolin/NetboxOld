@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\PowerPorts AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\PowerPorts AS Options;
 
 class PowerPorts extends DCIM_Core
 {
@@ -26,11 +26,11 @@ class PowerPorts extends DCIM_Core
 /**
 * Create a single Bay.
 *
-* @param string  $name Name of Bay.
-* @param integer $device ID of Bay belongs to. 
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $name Name of Bay.
+* @param  integer $device ID of Bay belongs to. 
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -60,12 +60,12 @@ class PowerPorts extends DCIM_Core
 /**
 * Update Port
 * 
-* @param integer $id Numerical ID of Port to update.
-* @param string  $name Name of Port.
-* @param integer $device ID of Port belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Port to update.
+* @param  string  $name Name of Port.
+* @param  integer $device ID of Port belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -97,12 +97,12 @@ class PowerPorts extends DCIM_Core
 /**
 * Update Port value(s).
 *
-* @param integer $id Numerical ID of Port to update.
-* @param string  $name Name of Port.
-* @param integer $device ID of Port belongs to. 
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Port to update.
+* @param  string  $name Name of Port.
+* @param  integer $device ID of Port belongs to. 
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -119,8 +119,7 @@ class PowerPorts extends DCIM_Core
         $options->name   = $name;
         $options->device = $device;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

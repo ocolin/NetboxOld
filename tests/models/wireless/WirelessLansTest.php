@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Wireless;
+namespace Cruzio\lib\Netbox\Models\Wireless;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\Wireless\WirelessLans AS Options;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\Wireless\WirelessLans AS Options;
 
 
 require_once __DIR__ . '/../testCore.php';

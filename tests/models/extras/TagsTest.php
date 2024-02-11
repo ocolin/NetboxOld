@@ -2,9 +2,9 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\testCore;
 
 require_once __DIR__ . '/../testCore.php';
 

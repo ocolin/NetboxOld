@@ -2,9 +2,9 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Extras;
+namespace Cruzio\lib\Netbox\Models\Extras;
 
-use Cruzio\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\HTTP;
 
 class ContentTypes
 {
@@ -21,8 +21,8 @@ class ContentTypes
 /**
 * List details about API call.
 *
-* @param array $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function options( array $headers = [] ) : array
@@ -38,10 +38,10 @@ class ContentTypes
 /**
 * Get an individual object
 *
-* @param integer $id Numerical ID of an object record.
-* @param array   $params Optional GET parameters.
-* @param array   $headers Optional request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of an object record.
+* @param  array <string, string>  $params Optional GET parameters.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function getDetail( 

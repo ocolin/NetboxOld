@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\IPAM;
+namespace Cruzio\lib\Netbox\Models\IPAM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\IPAM\Prefixes AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\IPAM\Prefixes AS Options;
 
 class Prefixes extends IPAM_Core
 {
@@ -29,10 +29,10 @@ class Prefixes extends IPAM_Core
 /**
 * Create a single prefix.
 *
-* @param string $prefix IP Subnet. ex prefix: '1.1.1.0/24'
-* @param Options $options Optional data to send.
-* @param array  $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string $prefix IP Subnet. ex prefix: '1.1.1.0/24'
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
     
     public function postDetail(
@@ -59,11 +59,11 @@ class Prefixes extends IPAM_Core
 /**
  * Update prefix
  *
-* @param string  $prefix IP Subnet. ex prefix: '1.1.1.0/24'
-* @param integer $id Numerical ID of prefix to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $prefix IP Subnet. ex prefix: '1.1.1.0/24'
+* @param  integer $id Numerical ID of prefix to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -93,10 +93,10 @@ class Prefixes extends IPAM_Core
 /**
 * Update prefix value(s).
 *
-* @param integer $id Numerical ID of prefix to update.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of prefix to update.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -111,8 +111,7 @@ class Prefixes extends IPAM_Core
 
         $options->prefix = $prefix;
 
-
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

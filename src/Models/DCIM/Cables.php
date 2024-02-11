@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\Cables AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\Cables AS Options;
 
 class Cables extends DCIM_Core
 {
@@ -25,13 +25,13 @@ class Cables extends DCIM_Core
 /**
 * Create a single Cable.
 *
-* @param string  $termination_a_type Connection A type.
-* @param integer $termination_a_id Connection A numercal ID.
-* @param string  $termination_b_type Connection B type.
-* @param integer $termination_b_id Connection B numercal ID.
-* @param Options $options optionsl data to be sent
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  string  $termination_a_type Connection A type.
+* @param  integer $termination_a_id Connection A numercal ID.
+* @param  string  $termination_b_type Connection B type.
+* @param  integer $termination_b_id Connection B numercal ID.
+* @param  Options $options optionsl data to be sent
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -65,14 +65,14 @@ class Cables extends DCIM_Core
 /**
 * Update Cable
 * 
-* @param integer $id Numerical ID of Site to update.
-* @param string  $termination_a_type Connection A type.
-* @param integer $termination_a_id Connection A numercal ID.
-* @param string  $termination_b_type Connection B type.
-* @param integer $termination_b_id Connection B numercal ID.
-* @param Options $options Optional data to send.
-* @param array   $headers HTML request headers
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Site to update.
+* @param  string  $termination_a_type Connection A type.
+* @param  integer $termination_a_id Connection A numercal ID.
+* @param  string  $termination_b_type Connection B type.
+* @param  integer $termination_b_id Connection B numercal ID.
+* @param  Options $options Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -108,14 +108,14 @@ class Cables extends DCIM_Core
 /**
 * Update Cable value(s).
 *
-* @param integer $id Numerical ID of Site to update.
-* @param string  $termination_a_type Connection A type.
-* @param integer $termination_a_id Connection A numercal ID.
-* @param string  $termination_b_type Connection B type.
-* @param integer $termination_b_id Connection B numercal ID.
-* @param Options $options Optional data to modify.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Site to update.
+* @param  string  $termination_a_type Connection A type.
+* @param  integer $termination_a_id Connection A numercal ID.
+* @param  string  $termination_b_type Connection B type.
+* @param  integer $termination_b_id Connection B numercal ID.
+* @param  Options $options Optional data to modify.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -136,7 +136,7 @@ class Cables extends DCIM_Core
         $options->termination_b_type = $termination_b_type;
         $options->termination_b_id   = $termination_b_id;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

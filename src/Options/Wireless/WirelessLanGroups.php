@@ -2,7 +2,7 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Wireless;
+namespace Cruzio\lib\Netbox\Options\Wireless;
 
 #[\AllowDynamicProperties]
 class WirelessLanGroups
@@ -13,6 +13,15 @@ class WirelessLanGroups
     public string $slug;
     public string $description;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $tags;
+
+    /**
+     * @var array<string>
+     */
+    
     public array  $custom_fields;
 }

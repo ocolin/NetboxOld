@@ -2,14 +2,19 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Options\Extras;
+namespace Cruzio\lib\Netbox\Options\Extras;
 
 #[\AllowDynamicProperties]
 class CustomLinks
 {
     public int    $weight;
 
+    /**
+     * @var array<string>
+     */
+    
     public array  $content_types;
+    
     public string $name;
     public string $link_text;
     public string $link_url;

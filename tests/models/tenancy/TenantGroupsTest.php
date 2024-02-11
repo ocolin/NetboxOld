@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\Tenancy;
+namespace Cruzio\lib\Netbox\Models\Tenancy;
 
-use Cruzio\Netbox\Models\testCore;
-use Cruzio\Netbox\Options\Tenancy\TenantGroups AS Options;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Options\Tenancy\TenantGroups AS Options;
 
 require_once __DIR__ . '/../testCore.php';
 

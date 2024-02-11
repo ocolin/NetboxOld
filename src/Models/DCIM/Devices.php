@@ -2,10 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\Netbox\Models\HTTP;
-use Cruzio\Netbox\Options\DCIM\Devices AS Options;
+use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Options\DCIM\Devices AS Options;
 
 class Devices extends DCIM_Core
 {
@@ -25,13 +25,13 @@ class Devices extends DCIM_Core
 /**
 * Create a single Device.
 *
-* @param integer $device_type ID of Device type Device belongs to. 
-* @param integer $device_role ID or role that device plays.
-* @param string  $name Name of Device.
-* @param string  $face Rack face.
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $device_type ID of Device type Device belongs to. 
+* @param  integer $device_role ID or role that device plays.
+* @param  string  $name Name of Device.
+* @param  string  $face Rack face.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function postDetail(
@@ -75,14 +75,14 @@ class Devices extends DCIM_Core
 /**
 * Update Device
 * 
-* @param integer $id Numerical ID of Template to update.
-* @param integer $device_type ID of Device type Device belongs to. 
-* @param integer $device_role ID or role that device plays.
-* @param string  $name Name of Device.
-* @param string  $face Rack face.
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Template to update.
+* @param  integer $device_type ID of Device type Device belongs to. 
+* @param  integer $device_role ID or role that device plays.
+* @param  string  $name Name of Device.
+* @param  string  $face Rack face.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function putDetail(
@@ -128,14 +128,14 @@ class Devices extends DCIM_Core
 /**
 * Update Device value(s).
 *
-* @param integer $id Numerical ID of Template to update.
-* @param integer $device_type ID of Device type Device belongs to. 
-* @param integer $device_role ID or role that device plays.
-* @param string  $name Name of Device.
-* @param string  $face Rack face.
-* @param Options $options optionsl data to be sent.
-* @param array   $headers HTML request headers.
-* @return array Array of HTTP status, headers, and body from Netbox API.
+* @param  integer $id Numerical ID of Template to update.
+* @param  integer $device_type ID of Device type Device belongs to. 
+* @param  integer $device_role ID or role that device plays.
+* @param  string  $name Name of Device.
+* @param  string  $face Rack face.
+* @param  Options $options optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
 */
 
     public function patchDetail(
@@ -166,7 +166,7 @@ class Devices extends DCIM_Core
         $options->virtual_chassis = $virtual_chassis;
         $options->vc_position     = $vc_position;
 
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers
