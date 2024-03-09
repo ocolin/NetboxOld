@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\Racks AS Options;
 
 class Racks extends DCIM_Core
@@ -30,7 +31,7 @@ class Racks extends DCIM_Core
 * @param  string  $name name or the rack.
 * @param  Options $options optionsl data to be sent.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -39,7 +40,7 @@ class Racks extends DCIM_Core
         string $name,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -68,7 +69,7 @@ class Racks extends DCIM_Core
 * @param  string  $name name or the rack.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -78,7 +79,7 @@ class Racks extends DCIM_Core
          string $name,
         Options $options = null,
           array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -108,7 +109,7 @@ class Racks extends DCIM_Core
 * @param  string  $name name or the rack.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -118,7 +119,7 @@ class Racks extends DCIM_Core
         string $name,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

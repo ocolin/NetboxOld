@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Tenancy;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Tenancy\ContactRoles AS Options;
 
 class ContactRoles extends Tenancy_Core
@@ -32,7 +33,7 @@ class ContactRoles extends Tenancy_Core
 * @param  string $slug 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -40,7 +41,7 @@ class ContactRoles extends Tenancy_Core
         string $slug,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -67,7 +68,7 @@ class ContactRoles extends Tenancy_Core
 * @param  string  $slug Slug of Contact Role to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -76,7 +77,7 @@ class ContactRoles extends Tenancy_Core
         string $slug,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -104,7 +105,7 @@ class ContactRoles extends Tenancy_Core
 * @param  string  $slug Slug of Contact Role to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -113,7 +114,7 @@ class ContactRoles extends Tenancy_Core
         string $slug,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

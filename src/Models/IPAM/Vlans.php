@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\Vlans AS Options;
 
 class Vlans extends IPAM_Core
@@ -28,7 +29,7 @@ class Vlans extends IPAM_Core
 * @param  string $name Name of RIR.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -37,7 +38,7 @@ class Vlans extends IPAM_Core
         string $name,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -64,7 +65,7 @@ class Vlans extends IPAM_Core
 * @param  string  $name Name of RIR to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -74,7 +75,7 @@ class Vlans extends IPAM_Core
         string $name,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -102,7 +103,7 @@ class Vlans extends IPAM_Core
 * @param  string  $name Name of RIR to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -112,7 +113,7 @@ class Vlans extends IPAM_Core
         string $name,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

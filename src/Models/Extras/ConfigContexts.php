@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Extras\ConfigContexts AS Options;
 
 class ConfigContexts extends Extras_Core
@@ -30,7 +31,7 @@ class ConfigContexts extends Extras_Core
 * @param  array<string, string>   $data Context data.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -38,7 +39,7 @@ class ConfigContexts extends Extras_Core
         array  $data,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -65,7 +66,7 @@ class ConfigContexts extends Extras_Core
 * @param  array<string, string>   $data Context data.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -74,7 +75,7 @@ class ConfigContexts extends Extras_Core
          array $data,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -102,7 +103,7 @@ class ConfigContexts extends Extras_Core
 * @param  array<string, mixed> $data Context data.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -111,7 +112,7 @@ class ConfigContexts extends Extras_Core
          array $data,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\ServiceTemplates AS Options;
 
 class ServiceTemplates extends IPAM_Core
@@ -30,7 +31,7 @@ class ServiceTemplates extends IPAM_Core
 * @param  string  $protocol Service Template protocol: tcp, udp, sctp.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -39,7 +40,7 @@ class ServiceTemplates extends IPAM_Core
         string $protocol,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -68,7 +69,7 @@ class ServiceTemplates extends IPAM_Core
 * @param  string  $protocol Service protocol: tcp, udp, sctp.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -78,7 +79,7 @@ class ServiceTemplates extends IPAM_Core
         string $protocol,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -108,7 +109,7 @@ class ServiceTemplates extends IPAM_Core
 * @param  string  $protocol Service Template protocol: tcp, udp, sctp.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -118,7 +119,7 @@ class ServiceTemplates extends IPAM_Core
         string $protocol,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

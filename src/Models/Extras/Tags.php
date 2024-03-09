@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Extras\Tags AS Options;
 
 class Tags extends Extras_Core
@@ -29,7 +30,7 @@ class Tags extends Extras_Core
 * @param  string $slug 
 * @param  array<string, string> $options optionsl data to be sent.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -37,7 +38,7 @@ class Tags extends Extras_Core
         string $slug,
          array $options = [],
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options['name'] = $name;
         $options['slug'] = $slug;
@@ -62,7 +63,7 @@ class Tags extends Extras_Core
 * @param  string  $slug Slug of Platform to update.
 * @param  array<string, mixed> $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -71,7 +72,7 @@ class Tags extends Extras_Core
         string $slug,
          array $options = [],
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options['name'] = $name;
@@ -97,7 +98,7 @@ class Tags extends Extras_Core
 * @param  string  $slug Slug of Platform to update.
 * @param  array<string, string> $options Optional data to modify.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -106,7 +107,7 @@ class Tags extends Extras_Core
         string $slug,
          array $options = [],
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options['name'] = $name;

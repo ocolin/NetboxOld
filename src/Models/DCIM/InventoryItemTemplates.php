@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\InventoryItemTemplates AS Options;
 
 class InventoryItemTemplates extends DCIM_Core
@@ -29,7 +30,7 @@ class InventoryItemTemplates extends DCIM_Core
 * @param  integer $device_type ID of Device type Template belongs to. 
 * @param  Options $options optionsl data to be sent.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -37,7 +38,7 @@ class InventoryItemTemplates extends DCIM_Core
         string $name,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -64,7 +65,7 @@ class InventoryItemTemplates extends DCIM_Core
 * @param  integer $device_type ID of Device type Template belongs to. 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -73,7 +74,7 @@ class InventoryItemTemplates extends DCIM_Core
            int $device_type,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -101,7 +102,7 @@ class InventoryItemTemplates extends DCIM_Core
 * @param  integer $device_type ID of Device type Template belongs to. 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response.
 */
 
     public function patchDetail(
@@ -110,7 +111,7 @@ class InventoryItemTemplates extends DCIM_Core
            int $device_type,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

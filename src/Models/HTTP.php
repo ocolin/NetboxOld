@@ -8,7 +8,7 @@ require_once( __DIR__ . '/../mode.php' );
 
 use GuzzleHttp\Client;
 use \Psr\Http\Message\ResponseInterface;
-use Symfony\Component\Dotenv\Dotenv;
+use Cruzio\lib\Env\EnvLoad;
 
 class HTTP
 {
@@ -19,6 +19,10 @@ class HTTP
      */
 
     private array $headers = [];
+
+    /**
+     * @var string $base_uri Beginning URL of request
+     */
 
     private string $base_uri;
 
@@ -39,9 +43,7 @@ class HTTP
           bool $errors   = false
     )
     {
-        $dotenv = new Dotenv();
-        $dotenv->load( __DIR__ . '/../.env' );
-        
+        EnvLoad::loadEnv( file_path: __DIR__ . '/../.env', silent: true, append: true );
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
         $this->headers  = self::default_Headers();
@@ -49,6 +51,8 @@ class HTTP
             'base_uri'    => $this->base_uri,
             'verify'      => $verify,
             'http_errors' => $errors,
+            'timeout'     => 10,
+            'connect_timeout' => 10
         ]);
     }
 
@@ -64,7 +68,7 @@ class HTTP
  * @param array<string, mixed>|object $body
  * @param array<string, string> $params
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
 */
 
     public function post(
@@ -72,7 +76,7 @@ class HTTP
         array|object $body,
                array $params  = [],
                array $headers = []
-    ) : array
+    ) : Response
     {
         $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
@@ -99,7 +103,7 @@ class HTTP
  * @param array<string, mixed>|object $body
  * @param array<string, string> $params
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
 */
 
     public function put(
@@ -107,7 +111,7 @@ class HTTP
         array|object $body,
                array $params  = [],
                array $headers = []
-    ) : array
+    ) : Response
     {
         $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
@@ -133,7 +137,7 @@ class HTTP
  * @param array<string, mixed>|object $body
  * @param array<string, string> $params
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
 */
 
     public function patch(
@@ -141,7 +145,7 @@ class HTTP
         array|object $body,
                array $params  = [],
                array $headers = []
-    ) : array
+    ) : Response
     {
         $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
@@ -166,14 +170,14 @@ class HTTP
  * @param string $uri
  * @param array<string, string> $params
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
 */
 
     public function get(
         string $uri,
          array $params  = [],
          array $headers = []
-    ) : array
+    ) : Response
     {
         $uri = self::formtParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
@@ -196,10 +200,10 @@ class HTTP
  * @param  string $uri
  * @param  array<string, mixed> $body
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
 */
 
-    public function delete( string $uri, array $body = [], array $headers = [] ) : array
+    public function delete( string $uri, array $body = [], array $headers = [] ) : Response
     {
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
@@ -223,10 +227,10 @@ class HTTP
  *
  * @param string $uri
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
 */
 
-    public function options( string $uri, array $headers = [] ) : array
+    public function options( string $uri, array $headers = [] ) : Response
     {
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
@@ -265,16 +269,18 @@ class HTTP
 /**
  * Format the Guzzle HTTP request response into an array
  * 
- * @return array<string, mixed>
+ * @return Response
 */
 
-    private static function returnResults( ResponseInterface $request ) : array
+    private static function returnResults( ResponseInterface $request ) : Response
     {
-        return [
-            'status'  => $request->getStatusCode(),
-            'headers' => $request->getHeaders(),
-            'body'    => json_decode( $request->getBody()->getContents())
-        ];
+        $response = new Response();
+        $response->status = $request->getStatusCode();
+        $response->status_message = $request->getReasonPhrase();
+        $response->headers = $request->getHeaders();
+        $response->body = json_decode( $request->getBody()->getContents());
+
+        return $response;
     }
 
 

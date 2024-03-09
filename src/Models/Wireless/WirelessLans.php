@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Wireless;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Wireless\WirelessLans AS Options;
 
 class WirelessLans extends Wireless_Core
@@ -31,14 +32,14 @@ class WirelessLans extends Wireless_Core
 * @param  string $ssid Name of LAN to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
         string $ssid,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
         $options->ssid = $ssid;
@@ -62,7 +63,7 @@ class WirelessLans extends Wireless_Core
 * @param  string  $ssid Name of LAN to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -70,7 +71,7 @@ class WirelessLans extends Wireless_Core
         string $ssid,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -96,7 +97,7 @@ class WirelessLans extends Wireless_Core
 * @param  string  $ssid Name of LAN to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -104,7 +105,7 @@ class WirelessLans extends Wireless_Core
         string $ssid,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

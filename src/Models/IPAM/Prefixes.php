@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\Prefixes AS Options;
 
 class Prefixes extends IPAM_Core
@@ -32,14 +33,14 @@ class Prefixes extends IPAM_Core
 * @param  string $prefix IP Subnet. ex prefix: '1.1.1.0/24'
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
     
     public function postDetail(
         string $prefix,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
         $options->prefix = $prefix;
@@ -63,7 +64,7 @@ class Prefixes extends IPAM_Core
 * @param  integer $id Numerical ID of prefix to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -71,7 +72,7 @@ class Prefixes extends IPAM_Core
            int $id,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -96,7 +97,7 @@ class Prefixes extends IPAM_Core
 * @param  integer $id Numerical ID of prefix to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -104,7 +105,7 @@ class Prefixes extends IPAM_Core
         string $prefix,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

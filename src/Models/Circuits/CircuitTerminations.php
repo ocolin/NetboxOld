@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Circuits;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS Options;
 
 class CircuitTerminations extends Circuits_Core
@@ -37,7 +38,7 @@ class CircuitTerminations extends Circuits_Core
 * @param  integer $circuit ID of circuit.
 * @param  Options $options optionsl data to be sent
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -45,7 +46,7 @@ class CircuitTerminations extends Circuits_Core
            int $circuit,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -72,7 +73,7 @@ class CircuitTerminations extends Circuits_Core
 * @param  integer $circuit ID of circuit.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -81,7 +82,7 @@ class CircuitTerminations extends Circuits_Core
            int $circuit,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -109,7 +110,7 @@ class CircuitTerminations extends Circuits_Core
 * @param  integer $circuit ID of circuit.
 * @param  Options $options Optional data to modify.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -118,7 +119,7 @@ class CircuitTerminations extends Circuits_Core
            int $circuit,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

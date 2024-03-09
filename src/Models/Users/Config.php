@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Users;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 
 class Config extends Users_Core
 {
@@ -25,9 +26,9 @@ class Config extends Users_Core
 
 /**
  * 
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
  */
-    public function get() : array
+    public function get() : Response
     {
         return $this->http->get( uri: $this->uri );
     }

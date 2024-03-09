@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 
 class PrefixesAvailableIps extends IPAM_Core
 {
@@ -20,13 +21,13 @@ class PrefixesAvailableIps extends IPAM_Core
 /**
  * @param  integer $id
  * @param  array<string, string> $headers HTML request headers
- * @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+ * @return Response
  */
     public function getDetail( 
           int $id,
         array $params  = [],
         array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/available-ips/";
 

@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Extras\ImageAttachments AS Options;
 
 class ImageAttachments extends Extras_Core
@@ -31,7 +32,7 @@ class ImageAttachments extends Extras_Core
 * @param  integer $image_width Width of image.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -42,7 +43,7 @@ class ImageAttachments extends Extras_Core
         string $image,
        Options $options = null,
          array $headers = [ 'Content-type' => 'multipart/form-data' ]
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
         
@@ -74,7 +75,7 @@ class ImageAttachments extends Extras_Core
 * @param  integer $image_width Width of image.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -86,7 +87,7 @@ class ImageAttachments extends Extras_Core
         string $image,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -119,7 +120,7 @@ class ImageAttachments extends Extras_Core
 * @param  integer $image_width Width of image.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -131,7 +132,7 @@ class ImageAttachments extends Extras_Core
         string $image,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\FhrpGroupAssignments AS Options;
 
 class FhrpGroupAssignments extends IPAM_Core
@@ -31,7 +32,7 @@ class FhrpGroupAssignments extends IPAM_Core
 * @param  integer $interface_id ID of interface.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -41,7 +42,7 @@ class FhrpGroupAssignments extends IPAM_Core
            int $priority,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
         
@@ -71,7 +72,7 @@ class FhrpGroupAssignments extends IPAM_Core
 * @param  integer $interface_id ID of interface.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -82,7 +83,7 @@ class FhrpGroupAssignments extends IPAM_Core
            int $priority,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -113,7 +114,7 @@ class FhrpGroupAssignments extends IPAM_Core
 * @param  integer $interface_id ID of interface.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -124,7 +125,7 @@ class FhrpGroupAssignments extends IPAM_Core
            int $priority,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

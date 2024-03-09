@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\InterfaceTemplates AS Options;
 
 class InterfaceTemplates extends DCIM_Core
@@ -29,7 +30,7 @@ class InterfaceTemplates extends DCIM_Core
 * @param  string  $type port type.
 * @param  Options $options optionsl data to be sent.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -38,7 +39,7 @@ class InterfaceTemplates extends DCIM_Core
         string $type,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -67,7 +68,7 @@ class InterfaceTemplates extends DCIM_Core
 * @param string  $type Port type.
 * @param Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -77,7 +78,7 @@ class InterfaceTemplates extends DCIM_Core
         string $type,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -107,7 +108,7 @@ class InterfaceTemplates extends DCIM_Core
 * @param  string  $type Port type.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -117,7 +118,7 @@ class InterfaceTemplates extends DCIM_Core
         string $type,
        Options $options = null,
         array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

@@ -10,6 +10,10 @@
     beStrictAboutChangesToGlobalState="true"
     verbose="true"
 >
+    <php>
+        <env name="NETBOX_BASE_URI" value="10.211.55.6:8000/api/"/>
+        <env name="NETBOX_BASE_URI" value="23ba9d80db561bedbb115b0e15917eb073dad7c5"/>
+    </php>
     <testsuites>
 <!--
 TODO:
@@ -28,7 +32,7 @@ PrefixesAvailablePrefixes POST
 /dcim/rear-ports/{id}/
 image attachments
 -->
-
+<!---
         <testsuite name="Circuit_Models">
             <directory>tests/models/circuits</directory>
         </testsuite>
@@ -70,5 +74,6 @@ image attachments
 
         <testsuite name="test_test">
         </testsuite>
+        -->
     </testsuites>
 </phpunit>

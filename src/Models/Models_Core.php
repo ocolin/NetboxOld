@@ -9,7 +9,6 @@ require_once( __DIR__ . '/../mode.php' );
 
 use Cruzio\lib\Netbox\Models\HTTP;
 
-use function Amp\Promise\wait;
 
 abstract class Models_Core
 {
@@ -30,7 +29,7 @@ abstract class Models_Core
  * @param   array<string, string> $optionsArray
  * @return  object
  */
-    public static function autoOptions( $class, array $optionsArray )
+    public static function autoOptions( $class, array $optionsArray ) : object
     {
         $class = str_replace( 'Models', 'Options', $class );
         $options = new $class();
@@ -52,10 +51,10 @@ abstract class Models_Core
 * List details about API call.
 *
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
-    public function options( array $headers = [] ) : array
+    public function options( array $headers = [] ) : Response
     {
         return $this->http->options( uri: $this->uri, headers: $headers );
     }
@@ -70,10 +69,10 @@ abstract class Models_Core
 * 
 * @param  integer $id A unique integer value identifying an object.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
-    public function deleteDetail( int $id, array $headers = [] ) : array
+    public function deleteDetail( int $id, array $headers = [] ) : Response
     {
         $this->uri .= "{$id}/";
 
@@ -90,13 +89,13 @@ abstract class Models_Core
 * 
 * @param  array<string, string> $options List of object to delete. Each object must have an ID.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function deleteList( 
         array $options, 
         array $headers = [] 
-    ) : array
+    ) : Response
     {
         return $this->http->delete( 
                 uri: $this->uri, 
@@ -114,13 +113,13 @@ abstract class Models_Core
 *
 * @param  array<string, string> $options Array of Objects to update.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchList(
         array $options    = [],
         array $headers = []
-    ) : array
+    ) : Response
     {
         return $this->http->put(
                 uri: $this->uri,
@@ -139,13 +138,13 @@ abstract class Models_Core
 *
 * @param  array<string, string> $options List of objects to update.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putList(
         array $options,
         array $headers = []
-    ) : array
+    ) : Response
     {
         return $this->http->put(
                 uri: $this->uri,
@@ -164,13 +163,13 @@ abstract class Models_Core
 *
 * @param  array<string, string> $params Optional URL parameters.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function getList( 
         array $params  = [], 
         array $headers = [] 
-    ) : array
+    ) : Response
     {
 
         return $this->http->get(
@@ -190,13 +189,13 @@ abstract class Models_Core
 * @param  array<string, string> $options An array of object arrays. Each sub array MUST have a 
 *  name and slug key. 
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postList(
         array $options,
         array $headers = []
-    ) : array
+    ) : Response
     {
         return $this->http->post(
                 uri: $this->uri,
@@ -215,14 +214,14 @@ abstract class Models_Core
 * @param integer $id Numerical ID of an object record.
 * @param array<string, string> $params Optional GET parameters.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function getDetail( 
           int $id, 
         array $params  = [], 
         array $headers = [] 
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
 

@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Virtualization;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Virtualization\ClusterGroups AS Options;
 
 class ClusterGroups extends Virtualization_Core
@@ -33,7 +34,7 @@ class ClusterGroups extends Virtualization_Core
 * @param  string  $slug 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -41,7 +42,7 @@ class ClusterGroups extends Virtualization_Core
         string $slug,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
         
@@ -68,7 +69,7 @@ class ClusterGroups extends Virtualization_Core
 * @param  string  $slug Slug of Cluster Group to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -77,7 +78,7 @@ class ClusterGroups extends Virtualization_Core
         string $slug,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -105,7 +106,7 @@ class ClusterGroups extends Virtualization_Core
 * @param  string  $slug Slug of Cluster Group to update.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -114,7 +115,7 @@ class ClusterGroups extends Virtualization_Core
         string $slug,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

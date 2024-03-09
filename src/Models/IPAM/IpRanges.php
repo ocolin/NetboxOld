@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\IpRanges AS Options;
 
 class IpRanges extends IPAM_Core
@@ -30,7 +31,7 @@ class IpRanges extends IPAM_Core
 * @param  string $end_address Last IP address of range. 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -38,7 +39,7 @@ class IpRanges extends IPAM_Core
         string $end_address,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -65,7 +66,7 @@ class IpRanges extends IPAM_Core
 * @param  string  $end_address Last IP address of range. 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -74,7 +75,7 @@ class IpRanges extends IPAM_Core
         string $end_address,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -102,7 +103,7 @@ class IpRanges extends IPAM_Core
 * @param  string  $end_address Last IP address of range. 
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -111,7 +112,7 @@ class IpRanges extends IPAM_Core
         string $end_address,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;

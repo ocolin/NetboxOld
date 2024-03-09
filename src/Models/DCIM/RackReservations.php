@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\RackReservations AS Options;
 
 class RackReservations extends DCIM_Core
@@ -32,7 +33,7 @@ class RackReservations extends DCIM_Core
 * @param  string  $description Description or the reservation.
 * @param  Options $options optionsl data to be sent.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function postDetail(
@@ -42,7 +43,7 @@ class RackReservations extends DCIM_Core
         string $description,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $options = $options ?? $this->options;
 
@@ -73,7 +74,7 @@ class RackReservations extends DCIM_Core
 * @param  string  $description Description or the reservation.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function putDetail(
@@ -84,7 +85,7 @@ class RackReservations extends DCIM_Core
          string $description,
        Options $options = null,
           array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
@@ -116,7 +117,7 @@ class RackReservations extends DCIM_Core
 * @param  string  $description Description or the reservation.
 * @param  Options $options Optional data to send.
 * @param  array<string, string> $headers HTML request headers
-* @return array<string, mixed> Array of HTTP status, headers, and body from Netbox API.
+* @return Response
 */
 
     public function patchDetail(
@@ -127,7 +128,7 @@ class RackReservations extends DCIM_Core
         string $description,
        Options $options = null,
          array $headers = []
-    ) : array
+    ) : Response
     {
         $this->uri .= "{$id}/";
         $options = $options ?? $this->options;
