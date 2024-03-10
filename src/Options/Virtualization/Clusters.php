@@ -7,6 +7,7 @@ namespace Cruzio\lib\Netbox\Options\Virtualization;
 #[\AllowDynamicProperties]
 class Clusters
 {
+    public int    $id;
     public int    $type;
     public int    $group;
     public int    $tenant;

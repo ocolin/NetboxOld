@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\IpRanges AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -26,14 +27,14 @@ final class IpRangesTest extends testCore
         $o = new IpRanges();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -44,19 +45,19 @@ final class IpRangesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
 
         $o = new IpRanges();
         $result = $o->getDetail( id: $range->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -70,20 +71,20 @@ final class IpRangesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
 
         $o = new IpRanges();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertIsArray( $result['body']->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -100,17 +101,17 @@ final class IpRangesTest extends testCore
         $o = new IpRanges();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result->body->id );
     }
 
 
@@ -122,17 +123,17 @@ final class IpRangesTest extends testCore
         $o = new IpRanges();
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $range )
+        foreach( $result->body AS $range )
         {
             $this->deleteDetail( id: $range->id );
         }
@@ -146,7 +147,7 @@ final class IpRangesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
 
         $o = new IpRanges();
         $result = $o->putDetail( 
@@ -156,14 +157,14 @@ final class IpRangesTest extends testCore
         );
         
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -177,20 +178,20 @@ final class IpRangesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
         $this->options->id = $range->id;
 
         $o = new IpRanges();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -204,7 +205,7 @@ final class IpRangesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
 
         $o = new IpRanges();
         $result = $o->patchDetail(
@@ -213,14 +214,14 @@ final class IpRangesTest extends testCore
               end_address: '192.168.66.128/24',
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -234,20 +235,20 @@ final class IpRangesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
         $this->options->id = $range->id;
 
         $o = new IpRanges();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $range->id );
@@ -262,17 +263,17 @@ final class IpRangesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
         
         $o = new IpRanges();
         $result = $o->deleteDetail( id: $range->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -283,19 +284,19 @@ final class IpRangesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $range = $this->postDetail()['body'];
+        $range = $this->postDetail()->body;
 
         $o = new IpRanges();
         $result = $o->deleteList(
             options: [[ 'id' => $range->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -303,7 +304,7 @@ final class IpRangesTest extends testCore
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new IpRanges();
 
@@ -318,7 +319,7 @@ final class IpRangesTest extends testCore
 /* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new IpRanges();
 
@@ -326,8 +327,10 @@ final class IpRangesTest extends testCore
     }
 
 
-
-                
+    
+/*
+---------------------------------------------------------------------------- */
+              
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );
@@ -335,5 +338,14 @@ final class IpRangesTest extends testCore
         $this->options->start_address = '192.168.77.0/24';
         $this->options->end_address   = '192.168.77.254/24';
         $this->options->description   = 'PHPUnit_IpRange-' . $rand;
+    }
+
+        
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        sleep(1);
     }
 }

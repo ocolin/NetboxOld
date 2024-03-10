@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\Aggregates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -29,14 +30,14 @@ final class AggregatesTest extends testCore
         $o = new Aggregates();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -47,19 +48,19 @@ final class AggregatesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
 
         $o = new Aggregates();
         $result = $o->getDetail( id: $agr->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
         // CLEAN UP
         $this->deleteDetail( id: $agr->id );
     } 
@@ -72,20 +73,20 @@ final class AggregatesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
 
         $o = new Aggregates();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertIsArray( $result['body']->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -102,17 +103,17 @@ final class AggregatesTest extends testCore
         $o = new Aggregates();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result->body->id );
     }
 
 
@@ -124,17 +125,17 @@ final class AggregatesTest extends testCore
         $o = new Aggregates();
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $agr )
+        foreach( $result->body AS $agr )
         {
             $this->deleteDetail( id: $agr->id );
         }
@@ -148,7 +149,7 @@ final class AggregatesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
 
         $o = new Aggregates();
         $result = $o->putDetail( 
@@ -157,14 +158,14 @@ final class AggregatesTest extends testCore
                 rir: self::$rir->id, 
         );        
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -178,20 +179,20 @@ final class AggregatesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
         $this->options->id = $agr->id;
 
         $o = new Aggregates();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -205,7 +206,7 @@ final class AggregatesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
 
         $o = new Aggregates();
         $result = $o->patchDetail(
@@ -214,14 +215,14 @@ final class AggregatesTest extends testCore
                 rir: self::$rir->id,
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
 
         // CLEAN UP
@@ -236,20 +237,20 @@ final class AggregatesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
         $this->options->id = $agr->id;
 
         $o = new Aggregates();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $agr->id );
@@ -264,17 +265,17 @@ final class AggregatesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
         
         $o = new Aggregates();
         $result = $o->deleteDetail( id: $agr->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -285,19 +286,19 @@ final class AggregatesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $agr = $this->postDetail()['body'];
+        $agr = $this->postDetail()->body;
 
         $o = new Aggregates();
         $result = $o->deleteList(
             options: [[ 'id' => $agr->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -305,7 +306,7 @@ final class AggregatesTest extends testCore
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new Aggregates();
 
@@ -320,7 +321,7 @@ final class AggregatesTest extends testCore
 /* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new Aggregates();
 
@@ -336,13 +337,22 @@ final class AggregatesTest extends testCore
     {
         self::$rir = self::createRir();
     }
+    
+/*
+---------------------------------------------------------------------------- */
 
+ 
     public static function tearDownAfterClass() : void
     {
         self::destroyRir( rir: self::$rir );
+        sleep(1);
     }
 
-            
+    
+/*
+---------------------------------------------------------------------------- */
+
+             
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );

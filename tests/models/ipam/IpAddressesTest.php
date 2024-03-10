@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\IpAddresses AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -26,14 +27,14 @@ final class IpAddressesTest extends testCore
         $o = new IpAddresses();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -44,19 +45,19 @@ final class IpAddressesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
 
         $o = new IpAddresses();
         $result = $o->getDetail( id: $ip->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -70,20 +71,20 @@ final class IpAddressesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
 
         $o = new IpAddresses();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertIsArray( $result['body']->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -100,17 +101,17 @@ final class IpAddressesTest extends testCore
         $o = new IpAddresses();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result->body->id );
     }
 
 
@@ -122,17 +123,17 @@ final class IpAddressesTest extends testCore
         $o = new IpAddresses();
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $ip )
+        foreach( $result->body AS $ip )
         {
             $this->deleteDetail( id: $ip->id );
         }
@@ -146,7 +147,7 @@ final class IpAddressesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
 
         $o = new IpAddresses();
         $result = $o->putDetail( 
@@ -155,17 +156,17 @@ final class IpAddressesTest extends testCore
         );
         
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
 
 
@@ -176,20 +177,20 @@ final class IpAddressesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
         $this->options->id = $ip->id;
 
         $o = new IpAddresses();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -203,7 +204,7 @@ final class IpAddressesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
 
         $o = new IpAddresses();
         $result = $o->patchDetail(
@@ -211,14 +212,14 @@ final class IpAddressesTest extends testCore
             address: '192.168.7.5/25',
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
 
         // CLEAN UP
@@ -233,20 +234,20 @@ final class IpAddressesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
         $this->options->id = $ip->id;
 
         $o = new IpAddresses();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $ip->id );
@@ -261,17 +262,17 @@ final class IpAddressesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
         
         $o = new IpAddresses();
         $result = $o->deleteDetail( id: $ip->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -282,19 +283,19 @@ final class IpAddressesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $ip = $this->postDetail()['body'];
+        $ip = $this->postDetail()->body;
 
         $o = new IpAddresses();
         $result = $o->deleteList(
             options: [[ 'id' => $ip->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -302,7 +303,7 @@ final class IpAddressesTest extends testCore
 /* CREATE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new IpAddresses();
 
@@ -316,7 +317,7 @@ final class IpAddressesTest extends testCore
 /* DELETE AN IP
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new IpAddresses();
 
@@ -324,7 +325,9 @@ final class IpAddressesTest extends testCore
     }
 
 
-
+    
+/*
+---------------------------------------------------------------------------- */
                 
     public function setUp() : void
     {
@@ -332,5 +335,13 @@ final class IpAddressesTest extends testCore
         $this->options = new Options();
         $this->options->address = "192.168.44.{$rand}/24";
         $this->options->description = 'PHPUnit_IP-' . $rand;
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        sleep(1);
     }
 }

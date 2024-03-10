@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\Services AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -37,14 +38,14 @@ final class ServicesTest extends testCore
         $o = new Services();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -54,19 +55,19 @@ final class ServicesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
 
         $o = new Services();
         $result = $o->getDetail( id: $service->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -80,20 +81,20 @@ final class ServicesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
 
         $o = new Services();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertIsArray( $result['body']->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -109,17 +110,17 @@ final class ServicesTest extends testCore
         $o = new Services();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
 
 
@@ -132,17 +133,17 @@ final class ServicesTest extends testCore
         $o = new Services();
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $service )
+        foreach( $result->body AS $service )
         {
             $this->deleteDetail( id: $service->id );
         }
@@ -156,7 +157,7 @@ final class ServicesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
 
         $o = new Services();
         $result = $o->putDetail( 
@@ -167,14 +168,14 @@ final class ServicesTest extends testCore
              options: $this->options              
         );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -188,20 +189,20 @@ final class ServicesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
         $this->options->id = $service->id;
 
         $o = new Services();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -215,7 +216,7 @@ final class ServicesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
         
 
         $o = new Services();
@@ -227,14 +228,14 @@ final class ServicesTest extends testCore
              options: $this->options
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -248,20 +249,20 @@ final class ServicesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
         $this->options->id = $service->id;
 
         $o = new Services();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $service->id );
@@ -275,17 +276,17 @@ final class ServicesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
         
         $o = new Services();
         $result = $o->deleteDetail( id: $service->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -296,19 +297,19 @@ final class ServicesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $service = $this->postDetail()['body'];
+        $service = $this->postDetail()->body;
 
         $o = new Services();
         $result = $o->deleteList(
             options: [[ 'id' => $service->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -316,7 +317,7 @@ final class ServicesTest extends testCore
 /* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new Services();
 
@@ -333,7 +334,7 @@ final class ServicesTest extends testCore
 /* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new Services();
 
@@ -366,6 +367,9 @@ final class ServicesTest extends testCore
                        rack: self::$rack
         );
     }
+    
+/*
+---------------------------------------------------------------------------- */
 
     public static function tearDownAfterClass() : void
     {
@@ -378,8 +382,12 @@ final class ServicesTest extends testCore
         self::destroyTenant( tenant: self::$tenant );
         self::destroyManufacturer( manf: self::$manf );
         self::destroySite( site: self::$site );
+        sleep(1);
     }
 
+    
+/*
+---------------------------------------------------------------------------- */
                 
     public function setUp() : void
     {

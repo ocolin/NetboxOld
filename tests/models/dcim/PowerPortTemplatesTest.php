@@ -2,9 +2,10 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\Netbox\Models\DCIM;
+namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\PowerPortTemplates AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -30,14 +31,14 @@ final class PowerPortTemplatesTest extends testCore
         $o = new PowerPortTemplates();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -47,19 +48,19 @@ final class PowerPortTemplatesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
 
         $o = new PowerPortTemplates();
         $result = $o->getDetail( id: $temp->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -73,20 +74,20 @@ final class PowerPortTemplatesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
 
         $o = new PowerPortTemplates();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertIsArray( $result['body']->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -102,17 +103,17 @@ final class PowerPortTemplatesTest extends testCore
         $o = new PowerPortTemplates();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
 
 
@@ -125,17 +126,17 @@ final class PowerPortTemplatesTest extends testCore
         $o = new PowerPortTemplates();
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $temp )
+        foreach( $result->body AS $temp )
         {
             $this->deleteDetail( id: $temp->id );
         }
@@ -149,7 +150,7 @@ final class PowerPortTemplatesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
 
         $o = new PowerPortTemplates();
         $result = $o->putDetail( 
@@ -158,14 +159,14 @@ final class PowerPortTemplatesTest extends testCore
             device_type: self::$devtype->id,         
         );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -179,20 +180,20 @@ final class PowerPortTemplatesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
         $this->options->id = $temp->id;
 
         $o = new PowerPortTemplates();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -206,7 +207,7 @@ final class PowerPortTemplatesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
 
         $o = new PowerPortTemplates();
         $result = $o->patchDetail(
@@ -215,14 +216,14 @@ final class PowerPortTemplatesTest extends testCore
             device_type: self::$devtype->id,
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -236,20 +237,20 @@ final class PowerPortTemplatesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
         $this->options->id = $temp->id;
 
         $o = new PowerPortTemplates();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $temp->id );
@@ -263,17 +264,17 @@ final class PowerPortTemplatesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
         
         $o = new PowerPortTemplates();
         $result = $o->deleteDetail( id: $temp->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -284,19 +285,19 @@ final class PowerPortTemplatesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $temp = $this->postDetail()['body'];
+        $temp = $this->postDetail()->body;
 
         $o = new PowerPortTemplates();
         $result = $o->deleteList(
             options: [[ 'id' => $temp->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -304,7 +305,7 @@ final class PowerPortTemplatesTest extends testCore
 /* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new PowerPortTemplates();
 
@@ -319,7 +320,7 @@ final class PowerPortTemplatesTest extends testCore
 /* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new PowerPortTemplates();
 
@@ -336,13 +337,20 @@ final class PowerPortTemplatesTest extends testCore
         self::$manf     = self::createManufacturer();
         self::$devtype  = self::createDeviceType( manf: self::$manf );
     }
+    
+/*
+---------------------------------------------------------------------------- */
 
     public static function tearDownAfterClass() : void
     {
         self::destroyDeviceType( devtype: self::$devtype );
         self::destroyManufacturer( manf: self::$manf );
+        sleep(1);
     }
-        
+     
+/*
+---------------------------------------------------------------------------- */
+       
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );

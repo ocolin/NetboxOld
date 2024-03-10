@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Circuits;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Circuits\CircuitTypes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -31,14 +32,14 @@ final class CircuitTypesTest extends testCore
         $o = new CircuitTypes();
         $type = $o->options();
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsObject( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
     }
 
 
@@ -50,19 +51,19 @@ final class CircuitTypesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
 
         $o = new CircuitTypes();
         $type = $o->getDetail( id: $term->id );
         
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsObject( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -76,20 +77,20 @@ final class CircuitTypesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
 
         $o = new CircuitTypes();
         $type = $o->getList();
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsObject( $type['body'] );
-        $this->assertIsArray( $type['body']->results );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
+        $this->assertIsArray( $type->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -105,17 +106,17 @@ final class CircuitTypesTest extends testCore
         $o = new CircuitTypes();
         $type = $this->postDetail();
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 201, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsObject( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 201, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $type['body']->id );
+        $test = $this->deleteDetail( $type->body->id );
     }
 
 
@@ -129,17 +130,17 @@ final class CircuitTypesTest extends testCore
 
         $type = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 201, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsArray( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 201, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsArray( $type->body );
 
         //CLEAN UP
-        foreach( $type['body'] AS $term )
+        foreach( $type->body AS $term )
         {
             $this->deleteDetail( id: $term->id );
         }
@@ -153,7 +154,7 @@ final class CircuitTypesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
 
         $o = new CircuitTypes();
         $type = $o->putDetail( 
@@ -164,14 +165,14 @@ final class CircuitTypesTest extends testCore
         );
         
         
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsObject( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -185,7 +186,7 @@ final class CircuitTypesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
         $this->options->id = $term->id;
 
         $o = new CircuitTypes();
@@ -193,14 +194,14 @@ final class CircuitTypesTest extends testCore
             options: [ $this->options ]
         );
         
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsArray( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsArray( $type->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -214,7 +215,7 @@ final class CircuitTypesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
 
         $o = new CircuitTypes();
         $type = $o->patchDetail(
@@ -224,14 +225,14 @@ final class CircuitTypesTest extends testCore
             options: $this->options
         );
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsObject( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -245,7 +246,7 @@ final class CircuitTypesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
         $this->options->id = $term->id;
 
         $o = new CircuitTypes();
@@ -253,14 +254,14 @@ final class CircuitTypesTest extends testCore
             options: [ $this->options ]
         );
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 200, $type['status'] );
-        $this->assertIsArray( $type['headers'] );
-        $this->assertIsArray( $type['body'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsArray( $type->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
@@ -275,17 +276,17 @@ final class CircuitTypesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
         
         $o = new CircuitTypes();
         $type = $o->deleteDetail( id: $term->id );
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 204, $type['status'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 204, $type->status );
     }
 
 
@@ -296,26 +297,26 @@ final class CircuitTypesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $term = $this->postDetail()['body'];
+        $term = $this->postDetail()->body;
 
         $o = new CircuitTypes();
         $type = $o->deleteList(
             options: [[ 'id' => $term->id ]]
         );
 
-        $this->assertIsArray( $type );
-        $this->assertArrayHasKey( 'status',  $type );
-        $this->assertArrayHasKey( 'headers', $type );
-        $this->assertArrayHasKey( 'body',    $type );
-        $this->assertIsInt( $type['status'] );
-        $this->assertEquals( 204, $type['status'] );
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 204, $type->status );
     }
 
 
 /* CREATE A SITE
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new CircuitTypes();
 
@@ -338,7 +339,11 @@ final class CircuitTypesTest extends testCore
         return $o->deleteDetail( id: $id  );
     }
 
+    
+/*
+---------------------------------------------------------------------------- */
 
+ 
     public function setUp() : void
     {
         $this->options = new Options();

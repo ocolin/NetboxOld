@@ -4,12 +4,14 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models;
 
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
 use Cruzio\lib\Netbox\Options\DCIM\Interfaces AS IntOptions;
 use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
 
 abstract class testCore extends \PHPUnit\Framework\TestCase
 {
+        
     public function __construct()
     {
         parent::__construct();
@@ -26,7 +28,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             username: 'PHPUnit_Username',
             password: 'PHPUnit_Password'
-        )['body'];
+        )->body;
     }
 
     public static function destroyUser( object $user ) :void
@@ -46,7 +48,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
               name: 'PHPUnit_Contact',
              group: $group->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyContact( object $contact ) :void
@@ -67,7 +69,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
               name: 'PHPUnit_ContactGrp',
               slug: 'PHPUnit_ContactGrp',
             parent: null
-        )['body'];
+        )->body;
     }
 
     public static function destroyContactGroup( object $group ) :void
@@ -87,7 +89,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
               name: 'PHPUnit_ContactRole',
               slug: 'PHPUnit_ContactRole',
-        )['body'];
+        )->body;
     }
 
     public static function destroyContactRole( object $role ) :void
@@ -107,7 +109,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_Provider',
             slug: 'PHPUnit_Provider'
-        )['body'];
+        )->body;
     }
 
     public static function destroyProvider( object $provider ) :void
@@ -130,7 +132,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
                      cid: 'PHPUnit_Circuit',
                 provider: $provider->id,
                     type: $circuit_type->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyCircuit( object $circuit ) :void
@@ -151,7 +153,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_CrtType',
             slug: 'PHPUnit_CrtType'
-        )['body'];
+        )->body;
     }
 
     public static function destroyCircuitType( object $ct ) :void
@@ -171,7 +173,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_Site-' . $rand,
             slug: 'PHPUnit_Site-' . $rand
-        )['body'];
+        )->body;
     }
 
     public static function destroySite( object $site ) :void
@@ -191,7 +193,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_DeviceRole',
             slug: 'PHPUnit_DeviceRole'
-        )['body'];
+        )->body;
     }
 
     public static function destroyDeviceRole( object $devrole ) :void
@@ -212,7 +214,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_Manufacturer-' . $rand,
             slug: 'PHPUnit_Manufacturer-' . $rand
-        )['body'];
+        )->body;
     }
 
     public static function destroyManufacturer( object $manf ) :void
@@ -239,7 +241,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
                    model: 'PHPUnit_DeviceType',
                     slug: 'PHPUnit_DeviceType',
                  options: $obj
-        )['body'];
+        )->body;
     }
 
     public static function destroyDeviceType( object $devtype ) :void
@@ -262,7 +264,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_Tenant',
             slug: 'PHPUnit_Tenant'
-        )['body'];
+        )->body;
     }
 
     public static function destroyTenant( object $tenant ) :void
@@ -286,7 +288,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
             name: 'PHPUnit_Location' . $rand,
             slug: 'PHPUnit_Location' . $rand,
             site: $site->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyLocation( object $location ) : void
@@ -311,7 +313,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
             name: 'PHPUnit_Rack-' . $rand,
             site: $site->id,
             location: $location->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyRack( object $rack ) : void
@@ -330,7 +332,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'phptestunit_rir',
             slug: 'phptestunit_rir'
-        )['body'];
+        )->body;
     }
 
     public static function destroyRir( object $rir ) : void
@@ -348,7 +350,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 1, 100000 );
         $o = new DCIM\VirtualChassis();
-        return $o->postDetail( name: 'PHPUnit_VChas-' . $rand )['body'];
+        return $o->postDetail( name: 'PHPUnit_VChas-' . $rand )->body;
     }
 
     public static function destroyVirtualChassis( object $chassis ) : void
@@ -368,7 +370,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( 
             name: 'PHPUnit_Modbay', 
             device: $device->id 
-        )['body'];
+        )->body;
     }
 
     public static function destroyModuleBay( object $bay ) : void
@@ -388,7 +390,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             manufacturer: $manufacturer->id,
                    model: 'PHPUnit_ModType'
-        )['body'];
+        )->body;
     }
 
     public static function destroyModuleType( object $modtype ) : void
@@ -407,7 +409,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( 
             name: 'PHPUnit_PowerPanel',
             site: $site->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyPowerPanel( object $panel ) : void
@@ -440,10 +442,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
                        site: $site->id,
                      tenant: $tenant->id,
                 device_type: $devicetype->id,
-                device_role: $devicerole->id,
+                       role: $devicerole->id,
             virtual_chassis: $virtual_chassis->id,
                        rack: $rack->id,
-        )['body'];
+        )->body;
     }
 
     public static function destroyDevice( object $device ) :void
@@ -469,7 +471,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
               type: 'ieee802.11ac',
             device: $device->id,
             options: $obj
-        )['body'];
+        )->body;
     }
 
     public static function destroyInterface( object $interface )
@@ -488,7 +490,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         $o = new Wireless\WirelessLans();
         return $o->postDetail(
             ssid: 'PHPUnit_SSID-' . $rand
-        )['body'];
+        )->body;
     }
 
     public static function destroyWirelessLan( object $lan )
@@ -515,7 +517,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
             circuit: $circuit->id,
             term_side: $term,
             options: $obj
-        )['body'];
+        )->body;
     }
 
     public static function destroyCircuitTermination( object $term )
@@ -536,7 +538,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
             name: 'PHPUnit_RearPort',
             type: '8p8c',
             device: $device->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyRearPorts( object $port )
@@ -556,7 +558,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
             device_type: $device_type->id,
             name: 'PHPUnit_RearPortTempl',
             type: '8p8c',
-        )['body'];
+        )->body;
     }
 
     public static function destroyRearPortsTemplate( object $templ ) : void
@@ -576,7 +578,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_ClusterType',
             slug: 'PHPUnit_ClusterType'
-        )['body'];
+        )->body;
     }
 
     public static function destroyClusterType( object $type ) : void
@@ -596,7 +598,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_ClusterGroup',
             slug: 'PHPUnit_ClusterGroup'
-        )['body'];
+        )->body;
     }
 
     public static function destroyClusterGroup( object $group )
@@ -622,7 +624,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
              type: $type->id,
             group: $group->id,
              site: $site->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyCluster( object $cluster )
@@ -642,7 +644,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
                name: 'PHPUnit_VM',
             cluster: $cluster->id
-        )['body'];
+        )->body;
     }
 
     public static function destroyVM( object $vm ) : void
@@ -662,7 +664,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             protocol: 'vrrp2',
             group_id: 1
-        )['body'];
+        )->body;
     }
 
     public static function destroyFhrpGroup( object $group ) : void
@@ -681,7 +683,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             start_address: '192.168.55.1',
               end_address: '192.168.55.254'
-        )['body'];
+        )->body;
     }
 
     public static function destroyIpRange( object $range ) : void
@@ -698,7 +700,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createIpAddress() : object
     {
         $o = new IPAM\IpAddresses();
-        return $o->postDetail( address: '192.168.55.55/24')['body'];
+        return $o->postDetail( address: '192.168.55.55/24')->body;
     }
 
     public static function destroyIpAddress( object $ip ) : void
@@ -715,7 +717,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createPrefix() : object
     {
         $o = new IPAM\Prefixes();
-        return $o->postDetail( prefix: '192.168.55.0/25' )['body'];
+        return $o->postDetail( prefix: '192.168.55.0/25' )->body;
     }
 
     public static function destroyPrefix( object $prefix ) : void
@@ -734,7 +736,7 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail(
             name: 'PHPUnit_VlanGroup',
             slug: 'PHPUnit_VlanGroup'
-        )['body'];
+        )->body;
     }
 
     public static function destroyVlanGroup( object $group ) : void

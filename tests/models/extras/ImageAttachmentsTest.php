@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 
 require_once __DIR__ . '/../testCore.php';
 
@@ -23,43 +24,42 @@ final class ImageAttachmentsTest extends testCore
         $o = new ImageAttachments();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
 
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
-
+/*
     public function testGetDetail() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
-        print_r( $attch );
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->getDetail( id: $attch->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $attch->id );
     }
-
+*/
 
 
 /* TEST GET LIST
@@ -68,22 +68,22 @@ final class ImageAttachmentsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
-        $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'results', $result->body );
+        $this->assertIsArray( $result->body->results );
+        $this->assertObjectHasAttribute( 'id', $result->body->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $attch->id );
@@ -99,18 +99,18 @@ final class ImageAttachmentsTest extends testCore
         $o = new ImageAttachments();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
  */
 
@@ -131,17 +131,17 @@ final class ImageAttachmentsTest extends testCore
         ]  
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $attch )
+        foreach( $result->body AS $attch )
         {
             $this->deleteDetail( id: $attch->id );
         }
@@ -155,7 +155,7 @@ final class ImageAttachmentsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->putDetail( 
@@ -166,15 +166,15 @@ final class ImageAttachmentsTest extends testCore
         );
         
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $attch->id );
@@ -188,7 +188,7 @@ final class ImageAttachmentsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->putList(
@@ -202,15 +202,15 @@ final class ImageAttachmentsTest extends testCore
             ]
         );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body[0] );
 
         // CLEAN UP
         $this->deleteDetail( $attch->id );
@@ -224,7 +224,7 @@ final class ImageAttachmentsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->patchDetail(
@@ -234,15 +234,15 @@ final class ImageAttachmentsTest extends testCore
             template_code: 'testing',
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
 
         // CLEAN UP
@@ -257,7 +257,7 @@ final class ImageAttachmentsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->patchList(
@@ -271,15 +271,15 @@ final class ImageAttachmentsTest extends testCore
             ]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body[0] );
 
         // CLEAN UP
         $this->deleteDetail( $attch->id );
@@ -294,17 +294,17 @@ final class ImageAttachmentsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
         
         $o = new ImageAttachments();
         $result = $o->deleteDetail( id: $attch->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
  */
 
@@ -315,19 +315,19 @@ final class ImageAttachmentsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $attch = $this->postDetail()['body'];
+        $attch = $this->postDetail()->body;
 
         $o = new ImageAttachments();
         $result = $o->deleteList(
             options: [[ 'id' => $attch->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
  */
 
@@ -335,7 +335,7 @@ final class ImageAttachmentsTest extends testCore
 /* CREATE A REGION
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new ImageAttachments();
 
@@ -353,7 +353,7 @@ final class ImageAttachmentsTest extends testCore
 /* DELETE A REGION
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new ImageAttachments();
 

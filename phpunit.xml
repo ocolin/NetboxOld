@@ -32,46 +32,126 @@ PrefixesAvailablePrefixes POST
 /dcim/rear-ports/{id}/
 image attachments
 -->
-<!---
+<!--
         <testsuite name="Circuit_Models">
-            <directory>tests/models/circuits</directory>
+            <file>tests/models/circuits/CircuitsTest.php</file>
+            <file>tests/models/circuits/CircuitTerminationsTest.php</file>
+            <file>tests/models/circuits/CircuitTypesTest.php</file>
+            <file>tests/models/circuits/ProviderNetworksTest.php</file>
+            <file>tests/models/circuits/ProviderNetworksTest.php</file>
         </testsuite>
+-->
 
-
+<!--
         <testsuite name="DCIM_Models">
-            <directory>tests/models/dcim</directory>
+            <file>tests/models/dcim/ConsolePortsTest.php</file>
+            <file>tests/models/dcim/ConsolePortTemplatesTest.php</file>
+            <file>tests/models/dcim/ConsoleServerPortsTest.php</file>
+            <file>tests/models/dcim/ConsoleServerPortTemplatesTest.php</file>
+            <file>tests/models/dcim/DeviceBaysTest.php</file>
+            <file>tests/models/dcim/DeviceBayTemplatesTest.php</file>
+            <file>tests/models/dcim/DeviceRolesTest.php</file>
+            <file>tests/models/dcim/DevicesTest.php</file>
+            <file>tests/models/dcim/DeviceTypesTest.php</file>
+            <file>tests/models/dcim/FrontPortsTest.php</file>
+            <file>tests/models/dcim/FrontPortTemplatesTest.php</file>
+            <file>tests/models/dcim/InterfacesTest.php</file>
+            <file>tests/models/dcim/InterfaceTemplatesTest.php</file>
+            <file>tests/models/dcim/InventoryItemRolesTest.php</file>
+            <file>tests/models/dcim/InventoryItemsTest.php</file>
+            <file>tests/models/dcim/InventoryItemTemplatesTest.php</file>
+            <file>tests/models/dcim/LocationsTest.php</file>
+            <file>tests/models/dcim/ManufacturersTest.php</file>
+            <file>tests/models/dcim/ModuleBaysTest.php</file>
+            <file>tests/models/dcim/ModuleBayTemplatesTest.php</file>
+            <file>tests/models/dcim/ModulesTest.php</file>
+            <file>tests/models/dcim/ModuleTypesTest.php</file>
+            <file>tests/models/dcim/PlatformsTest.php</file>
+            <file>tests/models/dcim/PowerFeedsTest.php</file>
+            <file>tests/models/dcim/PowerOutletsTest.php</file>
+            <file>tests/models/dcim/PowerOutletTemplatesTest.php</file>
+            <file>tests/models/dcim/PowerPanelsTest.php</file>
+            <file>tests/models/dcim/PowerPortsTest.php</file>
+            <file>tests/models/dcim/PowerPortTemplatesTest.php</file>
+            <file>tests/models/dcim/RackReservationsTest.php</file>
+            <file>tests/models/dcim/RackRolesTest.php</file>
+            <file>tests/models/dcim/RacksTest.php</file>
+            <file>tests/models/dcim/RearPortsTest.php</file>
+            <file>tests/models/dcim/RearPortTemplatesTest.php</file>
+            <file>tests/models/dcim/RegionsTest.php</file>
+            <file>tests/models/dcim/SiteGroupsTest.php</file>
+            <file>tests/models/dcim/SitesTest.php</file>
+            <file>tests/models/dcim/VirtualChassisTest.php</file>
         </testsuite>
-
-<!-- 
+-->
+<!--
+         <testsuite name="Users_Models">
+            <file>tests/models/users/ConfigTest.php</file>
+            <file>tests/models/users/GroupsTest.php</file>
+            <file>tests/models/users/UsersTest.php</file>
+            <file>tests/models/users/TokensTest.php</file>
+        </testsuite>
+-->
+<!--
         <testsuite name="Extras_Models">
-            <directory>tests/models/extras</directory>
-        </suite>
- -->
-
+            <file>tests/models/extras/ConfigContextsTest.php</file>
+            <file>tests/models/extras/ContentTypesTest.php</file>
+            <file>tests/models/extras/CustomFieldsTest.php</file>
+            <file>tests/models/extras/CustomLinksTest.php</file>
+            <file>tests/models/extras/ExportTemplatesTest.php</file>
+            <file>tests/models/extras/ImageAttachmentsTest.php</file>
+            <file>tests/models/extras/TagsTest.php</file>
+        </testsuite>
+-->
         <testsuite name="IPAM_Models">
-            <directory>tests/models/ipam</directory>
+            <file>tests/models/ipam/AggregatesTest.php</file>
+            <file>tests/models/ipam/AsnsTest.php</file>
+            <file>tests/models/ipam/FhrpGroupAssignmentsTest.php</file>
+            <file>tests/models/ipam/FhrpGroupsTest.php</file>
+            <file>tests/models/ipam/IpAddressesTest.php</file>
+            <file>tests/models/ipam/IpRangesAvailableIpsTest.php</file>
+            <file>tests/models/ipam/IpRangesTest.php</file>
+            <file>tests/models/ipam/PrefixesAvailableIpsTest.php</file>
+            <file>tests/models/ipam/PrefixesAvailablePrefixesTest.php</file>
+            <file>tests/models/ipam/PrefixesTest.php</file>
+            <file>tests/models/ipam/RirsTest.php</file>
+            <file>tests/models/ipam/RolesTest.php</file>
+            <file>tests/models/ipam/RouteTargetsTest.php</file>
+            <file>tests/models/ipam/ServicesTest.php</file>
+            <file>tests/models/ipam/ServiceTemplatesTest.php</file>
+            <file>tests/models/ipam/VlanGroupsAvailableVlansTest.php</file>
+            <file>tests/models/ipam/VlanGroupsTest.php</file>
+            <file>tests/models/ipam/VlansTest.php</file>
+            <file>tests/models/ipam/VrfsTest.php</file>
         </testsuite>
-        
 
+<!--
         <testsuite name="Tenancy_Models">
-            <directory>tests/models/tenancy</directory>
+            <file>tests/models/tenancy/ContactAssignmentsTest.php</file>
+            <file>tests/models/tenancy/ContactGroupsTest.php</file>
+            <file>tests/models/tenancy/ContactRolesTest.php</file>
+            <file>tests/models/tenancy/ContactsTest.php</file>
+            <file>tests/models/tenancy/TenantGroupsTest.php</file>
+            <file>tests/models/tenancy/TenantsTest.php</file>
         </testsuite>
 
-
-        <testsuite name="Users_Models">
-            <directory>tests/models/users</directory>
-        </testsuite>
 
 
         <testsuite name="Virtualization_Models">
-            <directory>tests/models/virtualization</directory>
+            <file>tests/models/virtualization/ClusterGroupsTest.php</file>
+            <file>tests/models/virtualization/ClustersTest.php</file>
+            <file>tests/models/virtualization/ClusterTypesTest.php</file>
+            <file>tests/models/virtualization/InterfacesTest.php</file>
+            <file>tests/models/virtualization/VirtualMachinesTest.php</file>
         </testsuite>
-
 
         <testsuite name="Wireless_Models">
-            <directory>tests/models/wireless</directory>
+            <file>tests/models/wireless/WirelessLanGroupsTest.php</file>
+            <file>tests/models/wireless/WirelessLansTest.php</file>
+            <file>tests/models/wireless/WirelessLinksTest.php</file>
         </testsuite>
-
+        -->
+<!--
         <testsuite name="test_test">
         </testsuite>
         -->

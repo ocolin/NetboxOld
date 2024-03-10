@@ -4,7 +4,8 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models\Tenancy;
 
-use Cruzio\Nlib\etbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\Tenancy\ContactAssignments AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -31,14 +32,14 @@ final class ContactAssignmentsTest extends testCore
         $o = new ContactAssignments();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -49,20 +50,20 @@ final class ContactAssignmentsTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
         print_r( $assgn );
 
         $o = new ContactAssignments();
         $result = $o->getDetail( id: $assgn->id );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $assgn->id );
@@ -76,22 +77,22 @@ final class ContactAssignmentsTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
 
         $o = new ContactAssignments();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
-        $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'results', $result->body );
+        $this->assertIsArray( $result->body->results );
+        $this->assertObjectHasAttribute( 'id', $result->body->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $assgn->id );
@@ -107,18 +108,18 @@ final class ContactAssignmentsTest extends testCore
         $o = new ContactAssignments();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result->body->id );
     }
  */
 
@@ -138,17 +139,17 @@ final class ContactAssignmentsTest extends testCore
         ]  
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $assgn )
+        foreach( $result->body AS $assgn )
         {
             $this->deleteDetail( id: $assgn->id );
         }
@@ -162,7 +163,7 @@ final class ContactAssignmentsTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
 
         $o = new ContactAssignments();
         $result = $o->putDetail( 
@@ -172,15 +173,15 @@ final class ContactAssignmentsTest extends testCore
         );
         
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $assgn->id );
@@ -194,7 +195,7 @@ final class ContactAssignmentsTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
 
         $o = new ContactAssignments();
         $result = $o->putList(
@@ -207,15 +208,15 @@ final class ContactAssignmentsTest extends testCore
             ]
         );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body[0] );
 
         // CLEAN UP
         $this->deleteDetail( $assgn->id );
@@ -229,7 +230,7 @@ final class ContactAssignmentsTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
 
         $o = new ContactAssignments();
         $result = $o->patchDetail(
@@ -238,15 +239,15 @@ final class ContactAssignmentsTest extends testCore
             group: self::$cgroup->id
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
 
         // CLEAN UP
@@ -261,7 +262,7 @@ final class ContactAssignmentsTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
 
         $o = new ContactAssignments();
         $result = $o->patchList(
@@ -274,15 +275,15 @@ final class ContactAssignmentsTest extends testCore
             ]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body[0] );
 
         // CLEAN UP
         $this->deleteDetail( $assgn->id );
@@ -297,17 +298,17 @@ final class ContactAssignmentsTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
         
         $o = new ContactAssignments();
         $result = $o->deleteDetail( id: $assgn->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
  */
 
@@ -318,26 +319,26 @@ final class ContactAssignmentsTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $assgn = $this->postDetail()['body'];
+        $assgn = $this->postDetail()->body;
 
         $o = new ContactAssignments();
         $result = $o->deleteList(
             options: [[ 'id' => $assgn->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
  */
 
 /* CREATE A REGION
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new ContactAssignments();
 
@@ -355,7 +356,7 @@ final class ContactAssignmentsTest extends testCore
 /* DELETE A REGION
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new ContactAssignments();
 
@@ -372,13 +373,20 @@ final class ContactAssignmentsTest extends testCore
         self::$cgroup  = self::createContactGroup();
         self::$contact = self::createContact( group: self::$cgroup );
     }
+    
+/*
+---------------------------------------------------------------------------- */
 
     public static function tearDownAfterClass() : void
     {
         self::destroyContact( contact: self::$contact );
         self::destroyContactGroup( group: self::$cgroup );
         self::destroyContactRole( role: self::$crole );
+        sleep(1);
     }
+    
+/*
+---------------------------------------------------------------------------- */
 
     public function setUp() : void
     {

@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\Cables AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -27,13 +28,13 @@ final class CablesTest extends testCore
         $result = $o->options();
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -44,21 +45,21 @@ final class CablesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
         print_r( $cable );
 
         $o = new Cables();
         $result = $o->getDetail( id: $cable->id );
         
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $cable->id );
@@ -72,22 +73,22 @@ final class CablesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
 
         $o = new Cables();
         $result = $o->getList();
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'results', $result['body'] );
-        $this->assertIsArray( $result['body']->results );
-        $this->assertObjectHasAttribute( 'id', $result['body']->results[0] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'results', $result->body );
+        $this->assertIsArray( $result->body->results );
+        $this->assertObjectHasAttribute( 'id', $result->body->results[0] );
 
         // CLEAN UP
         $this->deleteDetail( $cable->id );
@@ -104,17 +105,17 @@ final class CablesTest extends testCore
         $result = $this->postDetail();
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
  */
 
@@ -135,16 +136,16 @@ final class CablesTest extends testCore
             );
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $cable )
+        foreach( $result->body AS $cable )
         {
             $this->deleteDetail( id: $cable->id );
         }
@@ -158,7 +159,7 @@ final class CablesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
 
         $o = new Cables();
         $result = $o->putDetail( 
@@ -171,14 +172,14 @@ final class CablesTest extends testCore
         
         
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $cable->id );
@@ -192,7 +193,7 @@ final class CablesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
 
         $o = new Cables();
         $result = $o->putList(
@@ -208,14 +209,14 @@ final class CablesTest extends testCore
         );
         
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body[0] );
 
         // CLEAN UP
         $this->deleteDetail( $cable->id );
@@ -229,7 +230,7 @@ final class CablesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
 
         $o = new Cables();
         $result = $o->patchDetail(
@@ -241,14 +242,14 @@ final class CablesTest extends testCore
         );
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body );
 
 
         // CLEAN UP
@@ -263,7 +264,7 @@ final class CablesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
 
         $o = new Cables();
         $result = $o->patchList(
@@ -279,14 +280,14 @@ final class CablesTest extends testCore
         );
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
-        $this->assertObjectHasAttribute( 'id', $result['body'][0] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+        $this->assertObjectHasAttribute( 'id', $result->body[0] );
 
         // CLEAN UP
         $this->deleteDetail( $cable->id );
@@ -301,17 +302,17 @@ final class CablesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
         
         $o = new Cables();
         $result = $o->deleteDetail( id: $cable->id );
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
  */
 
@@ -322,7 +323,7 @@ final class CablesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $cable = $this->postDetail()['body'];
+        $cable = $this->postDetail()->body;
 
         $o = new Cables();
         $result = $o->deleteList(
@@ -330,18 +331,18 @@ final class CablesTest extends testCore
         );
 
         $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
  */
 
 /* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new Cables();
 
@@ -400,15 +401,20 @@ final class CablesTest extends testCore
               termination_a_id: $_ENV['termA'],
             termination_b_type: 'circuits.circuittermination',
               termination_b_id: $_ENV['termZ'],
-        )['body'];
+        )->body;
         
 
-        print_r( $test );
+        //print_r( $test );
 
 /*         $o = new Cables();
         $test = $o->getDetail( id: 1 );
-        print_r( $test['body']); */
+        print_r( $test->body); */
     }
+    
+/*
+---------------------------------------------------------------------------- */
+
+ 
 /*
     public static function setupTest()
     {
@@ -453,7 +459,11 @@ final class CablesTest extends testCore
         );
     }
 */
+    
+/*
+---------------------------------------------------------------------------- */
 
+ 
     public static function tearDownAfterClass() : void
     {
         self::destroyCircuitTermination( $_ENV['termZ'] );
@@ -462,9 +472,13 @@ final class CablesTest extends testCore
         self::destroyProvider( $_ENV['provider'] );
         self::destroyCircuitType( $_ENV['ctype'] );
         self::destroySite( site: $_ENV['siteA'] );
-        
-
+        sleep(1);
     }
+    
+/*
+---------------------------------------------------------------------------- */
+
+ 
 /*
     public static function closeTest()
     {
@@ -504,6 +518,10 @@ final class CablesTest extends testCore
 */
 
     
+/*
+---------------------------------------------------------------------------- */
+
+ 
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );

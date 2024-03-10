@@ -2,11 +2,11 @@
 
 declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models;
-use Symfony\Component\Dotenv\Dotenv;
+//use Symfony\Component\Dotenv\Dotenv;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-$dotenv = new Dotenv();
-$dotenv->load( __DIR__ . '/.env' );
+//$dotenv = new Dotenv();
+//$dotenv->load( __DIR__ . '/.env' );
 
 
 
@@ -20,6 +20,7 @@ function clearAll()
 {
     clearIpAddresses();
     clearIpRanges();
+    clearVirtualMachines();
     clearClusters();
     clearClusterTypes();
     clearClusterGroups();
@@ -50,10 +51,10 @@ function clearAll()
  * @return void
  */
 
-function clearDevices()
+function clearDevices() : void
 {
     $o = new DCIM\Devices();
-    $devices = $o->getList()['body'];
+    $devices = $o->getList()->body;
 
     foreach( $devices->results as $device )
     {
@@ -65,10 +66,10 @@ function clearDevices()
  * @return void
  */
 
-function clearIpRanges()
+function clearIpRanges() : void
 {
     $o = new IPAM\IpRanges();
-    $ranges = $o->getList()['body'];
+    $ranges = $o->getList()->body;
 
     foreach( $ranges->results as $range )
     {
@@ -80,10 +81,10 @@ function clearIpRanges()
  * @return void
  */
 
-function clearIpAddresses()
+function clearIpAddresses() : void
 {
     $o = new IPAM\IpAddresses();
-    $ips = $o->getList()['body'];
+    $ips = $o->getList()->body;
 
     foreach( $ips->results as $ip )
     {
@@ -91,14 +92,31 @@ function clearIpAddresses()
     }
 }
 
+
 /**
  * @return void
  */
 
-function clearClusterTypes()
+function clearVirtualMachines() : void
+{
+    $o = new Virtualization\VirtualMachines();
+    $machs = $o->getList()->body;
+
+    foreach( $machs->results as $mach )
+    {
+        $o->deleteDetail( id: $mach->id) ;
+    }
+}
+
+
+/**
+ * @return void
+ */
+
+function clearClusterTypes() : void
 {
     $o = new Virtualization\ClusterTypes();
-    $types = $o->getList()['body'];
+    $types = $o->getList()->body;
 
     foreach( $types->results as $type )
     {
@@ -110,10 +128,10 @@ function clearClusterTypes()
  * @return void
  */
 
-function clearClusterGroups()
+function clearClusterGroups() : void
 {
     $o = new Virtualization\ClusterGroups();
-    $groups = $o->getList()['body'];
+    $groups = $o->getList()->body;
 
     foreach( $groups->results as $group )
     {
@@ -126,10 +144,10 @@ function clearClusterGroups()
  * @return void
  */
 
-function clearClusters()
+function clearClusters() : void
 {
     $o = new Virtualization\Clusters();
-    $clusters = $o->getList()['body'];
+    $clusters = $o->getList()->body;
 
     foreach( $clusters->results as $cluster )
     {
@@ -142,10 +160,10 @@ function clearClusters()
  * @return void
  */
 
-function clearRackRoles()
+function clearRackRoles() : void
 {
     $o = new DCIM\RackRoles();
-    $roles = $o->getList()['body'];
+    $roles = $o->getList()->body;
 
     foreach( $roles->results as $role )
     {
@@ -157,10 +175,10 @@ function clearRackRoles()
  * @return void
  */
 
-function clearRacks()
+function clearRacks() : void
 {
     $o = new DCIM\Racks();
-    $rack = $o->getList()['body'];
+    $rack = $o->getList()->body;
 
     foreach( $rack->results as $rack )
     {
@@ -173,10 +191,10 @@ function clearRacks()
  * @return void
  */
 
-function clearVirtualChassis()
+function clearVirtualChassis() : void
 {
     $o = new DCIM\VirtualChassis();
-    $chassis = $o->getList()['body'];
+    $chassis = $o->getList()->body;
 
     foreach( $chassis->results as $chas )
     {
@@ -188,10 +206,10 @@ function clearVirtualChassis()
  * @return void
  */
 
-function clearDeviceRole()
+function clearDeviceRole() : void
 {
     $o = new DCIM\DeviceRoles();
-    $roles = $o->getList()['body'];
+    $roles = $o->getList()->body;
 
     foreach( $roles->results as $role )
     {
@@ -203,10 +221,10 @@ function clearDeviceRole()
  * @return void
  */
 
-function clearLocation()
+function clearLocation() : void
 {
     $o = new DCIM\Locations();
-    $locs = $o->getList()['body'];
+    $locs = $o->getList()->body;
 
     foreach( $locs->results as $loc )
     {
@@ -218,10 +236,10 @@ function clearLocation()
  * @return void
  */
 
-function clearDeviceType()
+function clearDeviceType() : void
 {
     $o = new DCIM\DeviceTypes();
-    $dts = $o->getList()['body'];
+    $dts = $o->getList()->body;
 
     foreach( $dts->results as $dt )
     {
@@ -234,10 +252,10 @@ function clearDeviceType()
  * @return void
  */
 
-function clearTenants()
+function clearTenants() : void
 {
     $o = new Tenancy\Tenants();
-    $tenants = $o->getList()['body'];
+    $tenants = $o->getList()->body;
 
     foreach( $tenants->results as $tenant )
     {
@@ -249,10 +267,10 @@ function clearTenants()
  * @return void
  */
 
-function clearManufacturers()
+function clearManufacturers() : void
 {
     $o = new DCIM\Manufacturers();
-    $manfs = $o->getList()['body'];
+    $manfs = $o->getList()->body;
 
     foreach( $manfs->results as $manf )
     {
@@ -264,10 +282,10 @@ function clearManufacturers()
  * @return void
  */
 
-function clearPlatforms()
+function clearPlatforms() : void
 {
     $o = new DCIM\Platforms();
-    $platforms = $o->getList()['body'];
+    $platforms = $o->getList()->body;
 
     foreach( $platforms->results as $platform )
     {
@@ -279,10 +297,10 @@ function clearPlatforms()
  * @return void
  */
 
-function clearSites()
+function clearSites() : void
 {
     $o = new DCIM\Sites();
-    $sites = $o->getList()['body'];
+    $sites = $o->getList()->body;
 
     foreach( $sites->results as $site )
     {
@@ -295,10 +313,10 @@ function clearSites()
  * @return void
  */
 
-function clearModuleBays()
+function clearModuleBays() : void
 {
     $o = new DCIM\ModuleBays();
-    $bays = $o->getList()['body'];
+    $bays = $o->getList()->body;
 
     foreach( $bays->results as $bay )
     {
@@ -310,10 +328,10 @@ function clearModuleBays()
  * @return void
  */
 
-function clearProviders()
+function clearProviders() : void
 {
     $o = new Circuits\Providers();
-    $provs = $o->getList()['body'];
+    $provs = $o->getList()->body;
 
     foreach( $provs->results as $prov )
     {
@@ -325,10 +343,10 @@ function clearProviders()
  * @return void
  */
 
-function clearProviderNetworks()
+function clearProviderNetworks() : void
 {
     $o = new Circuits\ProviderNetworks();
-    $provs = $o->getList()['body'];
+    $provs = $o->getList()->body;
 
     foreach( $provs->results as $prov )
     {
@@ -340,10 +358,10 @@ function clearProviderNetworks()
  * @return void
  */
 
-function clearCircuitType()
+function clearCircuitType() : void
 {
     $o = new Circuits\CircuitTypes();
-    $cts = $o->getList()['body'];
+    $cts = $o->getList()->body;
 
     foreach( $cts->results as $ct )
     {
@@ -355,10 +373,10 @@ function clearCircuitType()
  * @return void
  */
 
-function clearCircuit()
+function clearCircuit() : void
 {
     $o = new Circuits\Circuits();
-    $cts = $o->getList()['body'];
+    $cts = $o->getList()->body;
 
     foreach( $cts->results as $ct )
     {
@@ -370,10 +388,10 @@ function clearCircuit()
  * @return void
  */
 
-function clearContactGroup()
+function clearContactGroup() : void
 {
     $o = new Tenancy\ContactGroups();
-    $groups = $o->getList()['body'];
+    $groups = $o->getList()->body;
 
     foreach( $groups->results as $group )
     {
@@ -385,10 +403,10 @@ function clearContactGroup()
  * @return void
  */
 
-function clearContact()
+function clearContact() : void
 {
     $o = new Tenancy\Contacts();
-    $contacts = $o->getList()['body'];
+    $contacts = $o->getList()->body;
 
     foreach( $contacts->results as $contact )
     {
@@ -400,10 +418,10 @@ function clearContact()
  * @return void
  */
 
-function clearCotactRole()
+function clearCotactRole() : void
 {
     $o = new Tenancy\ContactRoles();
-    $roles = $o->getList()['body'];
+    $roles = $o->getList()->body;
 
     foreach( $roles->results as $role )
     {
@@ -415,10 +433,10 @@ function clearCotactRole()
  * @return void
  */
 
-function clearCustomLinks()
+function clearCustomLinks() : void
 {
     $o = new Extras\CustomLinks();
-    $links = $o->getList()['body'];
+    $links = $o->getList()->body;
 
     foreach( $links->results as $link )
     {
@@ -430,10 +448,10 @@ function clearCustomLinks()
  * @return void
  */
 
-function clearExportTemplates()
+function clearExportTemplates() : void
 {
     $o = new Extras\ExportTemplates();
-    $temps = $o->getList()['body'];
+    $temps = $o->getList()->body;
 
     foreach( $temps->results as $temp )
     {
@@ -445,10 +463,10 @@ function clearExportTemplates()
  * @return void
  */
 
-function clearTags()
+function clearTags() : void
 {
     $o = new Extras\Tags();
-    $tags = $o->getList()['body'];
+    $tags = $o->getList()->body;
 
     foreach( $tags->results as $tag )
     {
@@ -461,10 +479,10 @@ function clearTags()
  * @return void
  */
 
-function clearWirelessLanGroups()
+function clearWirelessLanGroups() : void
 {
     $o = new Wireless\WirelessLanGroups();
-    $groups = $o->getList()['body'];
+    $groups = $o->getList()->body;
 
     foreach( $groups->results as $group )
     {

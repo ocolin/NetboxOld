@@ -37,7 +37,7 @@ class Devices extends DCIM_Core
 
     public function postDetail(
            int $device_type,
-           int $device_role,
+           int $role,
            int $tenant,
            int $site,
            int $rack,
@@ -53,7 +53,7 @@ class Devices extends DCIM_Core
 
         $options->name            = $name;
         $options->device_type     = $device_type;
-        $options->device_role     = $device_role;
+        $options->role            = $role;
         $options->tenant          = $tenant;
         $options->face            = $face;
         $options->site            = $site;
@@ -89,7 +89,7 @@ class Devices extends DCIM_Core
     public function putDetail(
            int $id,
            int $device_type,
-           int $device_role,
+           int $role,
            int $tenant,
            int $site,
            int $rack,
@@ -106,7 +106,7 @@ class Devices extends DCIM_Core
 
         $options->name            = $name;
         $options->device_type     = $device_type;
-        $options->device_role     = $device_role;
+        $options->role            = $role;
         $options->tenant          = $tenant;
         $options->face            = $face;
         $options->site            = $site;
@@ -142,7 +142,7 @@ class Devices extends DCIM_Core
     public function patchDetail(
            int $id,
            int $device_type,
-           int $device_role,
+           int $role,
            int $tenant,
            int $site,
            int $rack,
@@ -159,7 +159,7 @@ class Devices extends DCIM_Core
 
         $options->name            = $name;
         $options->device_type     = $device_type;
-        $options->device_role     = $device_role;
+        $options->role            = $role;
         $options->tenant          = $tenant;
         $options->face            = $face;
         $options->site            = $site;

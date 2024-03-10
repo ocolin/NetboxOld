@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\IPAM\Prefixes AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -27,14 +28,14 @@ final class PrefixesTest extends testCore
         $o = new Prefixes();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
     
@@ -45,19 +46,19 @@ final class PrefixesTest extends testCore
 public function testGetDetail() : void
 {
     // SETUP
-    $prefix = $this->postDetail()['body'];
+    $prefix = $this->postDetail()->body;
 
     $o = new Prefixes();
     $result = $o->getDetail( id: $prefix->id );
     
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
+    $this->assertIsObject( $result );
+    $this->assertObjectHasProperty( 'status',  $result );
+    $this->assertObjectHasProperty( 'headers', $result );
+    $this->assertObjectHasProperty( 'body',    $result );
+    $this->assertIsInt( $result->status );
+    $this->assertEquals( 200, $result->status );
+    $this->assertIsArray( $result->headers );
+    $this->assertIsObject( $result->body );
 
     // CLEAN UP
     $this->deleteDetail( $prefix->id );
@@ -71,20 +72,20 @@ public function testGetDetail() : void
 public function testGetList() : void
 {
     // SETUP
-    $prefix = $this->postDetail()['body'];
+    $prefix = $this->postDetail()->body;
 
     $o = new Prefixes();
     $result = $o->getList();
 
-    $this->assertIsArray( $result );
-    $this->assertArrayHasKey( 'status',  $result );
-    $this->assertArrayHasKey( 'headers', $result );
-    $this->assertArrayHasKey( 'body',    $result );
-    $this->assertIsInt( $result['status'] );
-    $this->assertEquals( 200, $result['status'] );
-    $this->assertIsArray( $result['headers'] );
-    $this->assertIsObject( $result['body'] );
-    $this->assertIsArray( $result['body']->results );
+    $this->assertIsObject( $result );
+    $this->assertObjectHasProperty( 'status',  $result );
+    $this->assertObjectHasProperty( 'headers', $result );
+    $this->assertObjectHasProperty( 'body',    $result );
+    $this->assertIsInt( $result->status );
+    $this->assertEquals( 200, $result->status );
+    $this->assertIsArray( $result->headers );
+    $this->assertIsObject( $result->body );
+    $this->assertIsArray( $result->body->results );
 
      // CLEAN UP
      $this->deleteDetail( $prefix->id );
@@ -100,17 +101,17 @@ public function testGetList() : void
         $o = new Prefixes();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $test = $this->deleteDetail( $result['body']->id );
+        $test = $this->deleteDetail( $result->body->id );
     }
 
 
@@ -123,17 +124,17 @@ public function testGetList() : void
         $o = new Prefixes();
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $prefix )
+        foreach( $result->body AS $prefix )
         {
             $this->deleteDetail( id: $prefix->id );
         }
@@ -147,7 +148,7 @@ public function testGetList() : void
     public function testPutDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $prefix = $this->postDetail()->body;
 
         $o = new Prefixes();
         $result = $o->putDetail( 
@@ -156,17 +157,17 @@ public function testGetList() : void
         );
         
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
 
 
@@ -177,20 +178,20 @@ public function testGetList() : void
     public function testPutList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $prefix = $this->postDetail()->body;
         $this->options->id = $prefix->id;
 
         $o = new Prefixes();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $prefix->id );
@@ -204,7 +205,7 @@ public function testGetList() : void
     public function testPatchDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $prefix = $this->postDetail()->body;
 
         $o = new Prefixes();
         $result = $o->patchDetail(
@@ -212,14 +213,14 @@ public function testGetList() : void
              prefix: '192.168.1.0/24',
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $prefix->id );
@@ -233,20 +234,20 @@ public function testGetList() : void
     public function testPatchList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $prefix = $this->postDetail()->body;
         $this->options->id = $prefix->id;
 
         $o = new Prefixes();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $prefix->id );
@@ -261,17 +262,17 @@ public function testGetList() : void
     public function testDeleteDetail() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $prefix = $this->postDetail()->body;
         
         $o = new Prefixes();
         $result = $o->deleteDetail( id: $prefix->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -282,19 +283,19 @@ public function testGetList() : void
     public function testDeleteList() : void
     {
         // SETUP
-        $prefix = $this->postDetail()['body'];
+        $prefix = $this->postDetail()->body;
 
         $o = new Prefixes();
         $result = $o->deleteList(
             options: [[ 'id' => $prefix->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -302,7 +303,7 @@ public function testGetList() : void
 /* CREATE A PREFIX
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new Prefixes();
 
@@ -316,7 +317,7 @@ public function testGetList() : void
 /* DELETE A PREFIX
 ---------------------------------------------------------------------------- */
 
-    public function deleteDetail( int $id )
+    public function deleteDetail( int $id ) : Response
     {
         $o = new Prefixes();
 
@@ -324,6 +325,9 @@ public function testGetList() : void
     }
 
 
+    
+/*
+---------------------------------------------------------------------------- */
                 
     public function setUp() : void
     {
@@ -331,6 +335,14 @@ public function testGetList() : void
         $this->options = new Options();
         $this->options->prefix = '192.168.1.0/24';
         $this->options->description = 'PHPUnit_IpRangeAvaIPs-' . $rand;
+    }
 
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        sleep(1);
     }
 }

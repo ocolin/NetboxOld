@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
+use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Options\DCIM\Devices AS Options;
 
 require_once __DIR__ . '/../testCore.php';
@@ -36,14 +37,14 @@ final class DevicesTest extends testCore
         $o = new Devices();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -53,24 +54,24 @@ final class DevicesTest extends testCore
     public function testGetDetail() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
 
         $o = new Devices();
-        $result = $o->getDetail( id: $device->id );
+        $result = $o->getDetail( id: $device->id );        
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
     }
- 
+
 
 
 /* TEST GET LIST
@@ -79,20 +80,20 @@ final class DevicesTest extends testCore
     public function testGetList() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
 
         $o = new Devices();
         $result = $o->getList();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
-        $this->assertIsArray( $result['body']->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -108,17 +109,17 @@ final class DevicesTest extends testCore
         $o = new Devices();
         $result = $this->postDetail();
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         //CLEAN UP
-        $this->deleteDetail( $result['body']->id );
+        $this->deleteDetail( $result->body->id );
     }
 
 
@@ -132,17 +133,17 @@ final class DevicesTest extends testCore
 
         $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 201, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $result['body'] AS $device )
+        foreach( $result->body AS $device )
         {
             $this->deleteDetail( id: $device->id );
         }
@@ -156,7 +157,7 @@ final class DevicesTest extends testCore
     public function testPutDetail() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
 
         $o = new Devices();
         $result = $o->putDetail( 
@@ -164,7 +165,7 @@ final class DevicesTest extends testCore
                        name: 'PHPUnit_Dev',
                        face: 'front',
                 device_type: self::$devtype->id,
-                device_role: self::$devrole->id,
+                       role: self::$devrole->id,
                      tenant: self::$tenant->id,
                        site: self::$site->id,
                        rack: self::$rack->id,
@@ -173,14 +174,14 @@ final class DevicesTest extends testCore
 
         );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -194,20 +195,20 @@ final class DevicesTest extends testCore
     public function testPutList() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
         $this->options->id = $device->id;
 
         $o = new Devices();
         $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -221,7 +222,7 @@ final class DevicesTest extends testCore
     public function testPatchDetail() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
 
         $o = new Devices();
         $result = $o->patchDetail(
@@ -229,7 +230,7 @@ final class DevicesTest extends testCore
                        name: 'PHPUnit_Dev',
                        face: 'front',
                 device_type: self::$devtype->id,
-                device_role: self::$devrole->id,
+                       role: self::$devrole->id,
                      tenant: self::$tenant->id,
                        site: self::$site->id,
                        rack: self::$rack->id,
@@ -237,14 +238,14 @@ final class DevicesTest extends testCore
                 vc_position: 1
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsObject( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -258,20 +259,20 @@ final class DevicesTest extends testCore
     public function testPatchList() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
         $this->options->id = $device->id;
 
         $o = new Devices();
         $result = $o->patchList( options: [ $this->options ] );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 200, $result['status'] );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result['body'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $device->id );
@@ -285,17 +286,17 @@ final class DevicesTest extends testCore
     public function testDeleteDetail() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
         
         $o = new Devices();
         $result = $o->deleteDetail( id: $device->id );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -306,19 +307,19 @@ final class DevicesTest extends testCore
     public function testDeleteList() : void
     {
         // SETUP
-        $device = $this->postDetail()['body'];
+        $device = $this->postDetail()->body;
 
         $o = new Devices();
         $result = $o->deleteList(
             options: [[ 'id' => $device->id ]]
         );
 
-        $this->assertIsArray( $result );
-        $this->assertArrayHasKey( 'status',  $result );
-        $this->assertArrayHasKey( 'headers', $result );
-        $this->assertArrayHasKey( 'body',    $result );
-        $this->assertIsInt( $result['status'] );
-        $this->assertEquals( 204, $result['status'] );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
@@ -326,7 +327,7 @@ final class DevicesTest extends testCore
 /* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
 
-    public function postDetail() : array
+    public function postDetail() : Response
     {
         $o = new Devices();
 
@@ -334,7 +335,7 @@ final class DevicesTest extends testCore
                        name: 'PHPUnit_Dev',
                        face: 'front',
                 device_type: self::$devtype->id,
-                device_role: self::$devrole->id,
+                       role: self::$devrole->id,
                      tenant: self::$tenant->id,
                        site: self::$site->id,
                        rack: self::$rack->id,
@@ -373,10 +374,13 @@ final class DevicesTest extends testCore
             site: self::$site, location: self::$location 
         );
     }
+    
+/*
+---------------------------------------------------------------------------- */
 
+ 
     public static function tearDownAfterClass() : void
     {
-
         self::destroyRack( rack: self::$rack );
         self::destroyVirtualChassis( chassis: self::$vc );
         self::destroyDeviceRole( devrole: self::$devrole );
@@ -385,8 +389,13 @@ final class DevicesTest extends testCore
         self::destroyTenant( tenant: self::$tenant );
         self::destroyManufacturer( manf: self::$manf );
         self::destroySite( site: self::$site );
+        sleep(1);
     }
-        
+    
+/*
+---------------------------------------------------------------------------- */
+
+         
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );
@@ -394,7 +403,7 @@ final class DevicesTest extends testCore
         $this->options->name            = 'PHPUnit_Device-' . $rand;
         $this->options->face            = 'front';
         $this->options->device_type     = self::$devtype->id;
-        $this->options->device_role     = self::$devrole->id;
+        $this->options->role            = self::$devrole->id;
         $this->options->tenant          = self::$tenant->id;
         $this->options->site            = self::$site->id;
         $this->options->rack            = self::$rack->id;
