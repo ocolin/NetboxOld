@@ -18,9 +18,10 @@ clearAll();
 
 function clearAll()
 {
+    clearRir();
     clearIpAddresses();
     clearIpRanges();
-    clearVirtualMachines();
+    //clearVirtualMachines();
     clearClusters();
     clearClusterTypes();
     clearClusterGroups();
@@ -35,16 +36,21 @@ function clearAll()
     clearTenants();
     clearPlatforms();
     clearManufacturers();
+    clearPowerFeed();
+    clearPowerPanels();
     clearProviderNetworks();
     clearProviders();
     clearCircuitType();
     clearCircuit();
+    clearContactRoles();
     clearContactGroup();
     clearContact();
-    clearCustomLinks();
-    clearTags();
+    //clearCustomLinks();
+    //clearTags();
     clearWirelessLanGroups();
     clearSites();
+    clearRegions();
+    clearSiteGroups();
 }
 
 /**
@@ -305,7 +311,7 @@ function clearSites() : void
     foreach( $sites->results as $site )
     {
         $a = new DCIM\Sites();
-        $test = $a->deleteDetail( id: $site->id );
+        $a->deleteDetail( id: $site->id );
     }
 }
 
@@ -487,5 +493,76 @@ function clearWirelessLanGroups() : void
     foreach( $groups->results as $group )
     {
         $o->deleteDetail( id: $group->id );
+    }
+}
+
+function clearRegions() : void
+{
+    $o = new DCIM\Regions();
+    $regions = $o->getList()->body;
+
+    foreach( $regions->results as $region )
+    {
+        $o->deleteDetail( id: $region->id );
+    }
+}
+
+function clearSiteGroups() : void
+{
+    $o = new DCIM\SiteGroups();
+    $groups = $o->getList()->body;
+
+    foreach( $groups->results as $group )
+    {
+        $o->deleteDetail( id: $group->id );
+    }
+}
+
+
+function clearPowerPanels() : void
+{
+    $o = new DCIM\PowerPanels();
+    $groups = $o->getList()->body;
+
+    foreach( $groups->results as $group )
+    {
+        $o->deleteDetail( id: $group->id );
+    }
+}
+
+
+
+function clearPowerFeed() : void
+{
+    $o = new DCIM\PowerFeeds();
+    $groups = $o->getList()->body;
+
+    foreach( $groups->results as $group )
+    {
+        $o->deleteDetail( id: $group->id );
+    }
+}
+
+
+function clearRir() : void
+{
+    $o = new IPAM\Aggregates();
+    $a = $o->getList()->body;
+
+    foreach( $a->results as $a )
+    {
+        $o->deleteDetail( id: $a->id );
+    }
+}
+
+
+function clearContactRoles() : void
+{
+    $o = new Tenancy\ContactRoles();
+    $a = $o->getList()->body;
+
+    foreach( $a->results as $a )
+    {
+        $o->deleteDetail( id: $a->id );
     }
 }

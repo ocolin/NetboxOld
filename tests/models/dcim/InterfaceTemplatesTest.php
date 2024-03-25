@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\InterfaceTemplates AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\InterfaceTemplates AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class InterfaceTemplatesTest extends testCore
 {
-    public Options $options;
     public static $devtype;
     public static $manf;
 
@@ -42,16 +40,44 @@ final class InterfaceTemplatesTest extends testCore
     }
 
 
-/* TEST GET DETAIL
+
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testGetDetail() : void
+    public function testPostDetail() : int
     {
-        // SETUP
-        $template = $this->postDetail()->body;
-
         $o = new InterfaceTemplates();
-        $result = $o->getDetail( id: $template->id );
+        $d = new Data();
+        $d->name = 'InterfaceTemplateTestPost';
+        $d->device_type = self::$devtype->id;
+        $d->type = 'other';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+
+        return $result->body->id;
+    }
+ 
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new InterfaceTemplates();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -61,23 +87,17 @@ final class InterfaceTemplatesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $template->id );
     }
  
 
-
+ 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $template = $this->postDetail()->body;
-
         $o = new InterfaceTemplates();
-        $result = $o->getList();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -88,77 +108,25 @@ final class InterfaceTemplatesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $template->id );
     }
-
-
-
-/* TEST POST DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
-    {
-        $o = new InterfaceTemplates();
-        $result = $this->postDetail();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
-    }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-
-    public function testPostList() :void
-    {
-        $o = new InterfaceTemplates();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $template )
-        {
-            $this->deleteDetail( id: $template->id );
-        }
-    }
-
+ 
 
 
 /* TEST PUT DETAIL
 ---------------------------------------------------------------------------- */
+ 
+/**
+ *  @depends testPostDetail
+ */
 
-    public function testPutDetail() : void
+    public function testPutDetail( int $id ) : void
     {
-        // SETUP
-        $template = $this->postDetail()->body;
-
         $o = new InterfaceTemplates();
-        $result = $o->putDetail( 
-                     id: $template->id, 
-                   name: 'PHPUnit_INTF_Temp',
-            device_type: self::$devtype->id,
-                   type: 'virtual'             
-        );
+        $d = new Data();
+        $d->name = 'InterfaceTemplateTestPut';
+        $d->device_type = self::$devtype->id;
+        $d->type = 'virtual';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -168,55 +136,25 @@ final class InterfaceTemplatesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $template->id );
     }
-
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-
-    public function testPutList() : void
-    {
-        // SETUP
-        $template = $this->postDetail()->body;
-        $this->options->id = $template->id;
-
-        $o = new InterfaceTemplates();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $template->id );
-    }
-
+ 
 
 
 /* TEST PATCH DETAIL
 ---------------------------------------------------------------------------- */
+ 
+/**
+ *  @depends testPostDetail
+ */
 
-    public function testPatchDetail() : void
+    public function testPatchDetail( int $id ) : void
     {
-        // SETUP
-        $template = $this->postDetail()->body;
-
         $o = new InterfaceTemplates();
-        $result = $o->patchDetail(
-                     id: $template->id, 
-                   name: 'PHPUnit_INTF_Temp',
-            device_type: self::$devtype->id ,
-                   type: 'virtual'
-        );
+        $d = new Data();
+        $d->name = 'InterfaceTemplateTestPatch';
+        $d->device_type = self::$devtype->id;
+        $d->type = 'virtual';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -226,50 +164,21 @@ final class InterfaceTemplatesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $template->id );
     }
-
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-
-    public function testPatchList() : void
-    {
-        // SETUP
-        $template = $this->postDetail()->body;
-        $this->options->id = $template->id;
-
-        $o = new InterfaceTemplates();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $template->id );
-    }
-
+ 
 
 
 /* TEST DELETE DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testDeleteDetail() : void
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
     {
-        // SETUP
-        $template = $this->postDetail()->body;
-        
         $o = new InterfaceTemplates();
-        $result = $o->deleteDetail( id: $template->id );
+        $result = $o->deleteDetail( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -278,58 +187,7 @@ final class InterfaceTemplatesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $template = $this->postDetail()->body;
-
-        $o = new InterfaceTemplates();
-        $result = $o->deleteList(
-            options: [[ 'id' => $template->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new InterfaceTemplates();
-
-        return $o->postDetail( 
-            name: 'PHPUnit_INTF_Temp',
-            device_type: self::$devtype->id,
-            type: 'virtual'
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new InterfaceTemplates();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
+ 
 
 
 /* SETUP AND CLOSING FUNCTIONS
@@ -351,15 +209,110 @@ final class InterfaceTemplatesTest extends testCore
         sleep(1);
     }
     
-/*
+
+
+
+/* TEST POST LIST
 ---------------------------------------------------------------------------- */
-     
-    public function setUp() : void
+/* 
+    public function testPostList() :void
     {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name        = 'OHOUnit_InterfaceTempl-' . $rand;
-        $this->options->device_type = self::$devtype->id;
-        $this->options->type        = 'virtual';
+        $o = new InterfaceTemplates();
+        $result = $o->postList( options: [ $this->options ] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        //CLEAN UP
+        foreach( $result->body AS $template )
+        {
+            $this->deleteDetail( id: $template->id );
+        }
     }
+ */
+
+
+
+/* TEST PUT LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testPutList() : void
+    {
+        // SETUP
+        $template = $this->postDetail()->body;
+        $this->options->id = $template->id;
+
+        $o = new InterfaceTemplates();
+        $result = $o->putList( options: [ $this->options ] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        // CLEAN UP
+        $this->deleteDetail( $template->id );
+    }
+ */
+
+
+/* TEST PATCH LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testPatchList() : void
+    {
+        // SETUP
+        $template = $this->postDetail()->body;
+        $this->options->id = $template->id;
+
+        $o = new InterfaceTemplates();
+        $result = $o->patchList( options: [ $this->options ] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        // CLEAN UP
+        $this->deleteDetail( $template->id );
+    }
+ */
+
+
+/* TEST DELETE LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testDeleteList() : void
+    {
+        // SETUP
+        $template = $this->postDetail()->body;
+
+        $o = new InterfaceTemplates();
+        $result = $o->deleteList(
+            options: [[ 'id' => $template->id ]]
+        );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ */
+
 }

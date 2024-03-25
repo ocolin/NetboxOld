@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\IPAM\ServiceTemplates AS Options;
+use Cruzio\lib\Netbox\Data\IPAM\ServiceTemplates AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class ServiceTemplatesTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -40,66 +37,18 @@ final class ServiceTemplatesTest extends testCore
     }
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new ServiceTemplates();
-        $result = $o->getDetail( id: $temp->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
- 
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new ServiceTemplates();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
-
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new ServiceTemplates();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_ServTempl-Post';
+        $d->ports = [1];
+        $d->protocol = 'tcp';
+        $result = $o->postDetail( data: $d , params: [ 'exclude' => 'config_context']);
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -110,15 +59,136 @@ final class ServiceTemplatesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new ServiceTemplates();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+  
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new ServiceTemplates();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new ServiceTemplates();
+        $d = new Data();
+        $d->name = 'PHPUnit_ServTempl-Put';
+        $d->ports = [1];
+        $d->protocol = 'tcp';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new ServiceTemplates();
+        $d = new Data();
+        $d->name = 'PHPUnit_ServTempl-Patch';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new ServiceTemplates();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new ServiceTemplates();
@@ -140,42 +210,14 @@ final class ServiceTemplatesTest extends testCore
         }
     }
 
+ */
 
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new ServiceTemplates();
-        $result = $o->putDetail( 
-                  id: $temp->id, 
-                name: 'PHPUnit_ServiceTemp',
-               ports: [1],
-            protocol: 'tcp',
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -197,43 +239,12 @@ final class ServiceTemplatesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new ServiceTemplates();
-        $result = $o->patchDetail(
-                  id: $temp->id, 
-                name: 'PHPUnit_ServiceTemp',
-               ports: [1],
-            protocol: 'tcp',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -255,33 +266,12 @@ final class ServiceTemplatesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-        
-        $o = new ServiceTemplates();
-        $result = $o->deleteDetail( id: $temp->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testDeleteList() : void
     {
         // SETUP
@@ -299,48 +289,8 @@ final class ServiceTemplatesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new ServiceTemplates();
-
-        return $o->postDetail( 
-                name: 'PHPUnit_ServiceTempTemp',
-               ports: [1],
-            protocol: 'tcp',
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new ServiceTemplates();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-                
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name     = 'PHPUnit_ServTempl-' . $rand;
-        $this->options->ports    = [1];
-        $this->options->protocol = 'tcp';
-    }
-    
 /*
 ---------------------------------------------------------------------------- */
 

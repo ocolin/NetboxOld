@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Circuits;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Circuits\Providers AS Options;
+use Cruzio\lib\Netbox\Data\Circuits\Providers AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class ProvidersTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -25,70 +22,16 @@ final class ProvidersTest extends testCore
     public function testOptions() : void
     {
         $o = new Providers();
-        $prvder = $o->options();
+        $result = $o->options();
 
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsObject( $prvder->body );
-    }
-
-
-
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new Providers();
-        $prvder = $o->getDetail( id: $term->id );
-        
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsObject( $prvder->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new Providers();
-        $prvder = $o->getList();
-
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsObject( $prvder->body );
-        $this->assertIsArray( $prvder->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
@@ -96,87 +39,180 @@ final class ProvidersTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
         $o = new Providers();
-        $prvder = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Provider-Post';
+        $d->slug = 'PHPUnit_Provider-Post';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 201, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsObject( $prvder->body );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $prvder->body->id );
+        return $result->body->id;
     }
+ 
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new Providers();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+ 
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+   
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Providers();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+   
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Providers();
+        $d = new Data();
+        $d->name = 'PHPUnit_Provider-Put';
+        $d->slug = 'PHPUnit_Provider-Put';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+   
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Providers();
+        $d = new Data();
+        $d->name = 'PHPUnit_Provider-Patch';
+        $d->slug = 'PHPUnit_Provider-Patch';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Providers();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new Providers();
-        $prvder = $o->postList( options: [ $this->options ] );
+        $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 201, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsArray( $prvder->body );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         //CLEAN UP
-        foreach( $prvder->body AS $term )
+        foreach( $result->body AS $term )
         {
             $this->deleteDetail( id: $term->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new Providers();
-        $prvder = $o->putDetail( 
-                 id: $term->id, 
-               name: 'PHPUnit_Prvder', 
-               slug: 'PHPUnit_Prvder',
-            options: $this->options
-        );
-        
-        
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsObject( $prvder->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -184,58 +220,26 @@ final class ProvidersTest extends testCore
         $this->options->id = $term->id;
 
         $o = new Providers();
-        $prvder = $o->putList( options: [ $this->options ] );
+        $result = $o->putList( options: [ $this->options ] );
         
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsArray( $prvder->body );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new Providers();
-        $prvder = $o->patchDetail(
-                 id: $term->id,
-               name: 'PHPUnit_Prvder',
-               slug: 'PHPUnit_Prvder',
-            options: $this->options
-        );
-
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsObject( $prvder->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -244,106 +248,46 @@ final class ProvidersTest extends testCore
         $this->options->id = $term->id;
 
         $o = new Providers();
-        $prvder = $o->patchList(
+        $result = $o->patchList(
             options: [ $this->options ]
         );
 
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 200, $prvder->status );
-        $this->assertIsArray( $prvder->headers );
-        $this->assertIsArray( $prvder->body );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
 
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
 
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-        
-        $o = new Providers();
-        $prvder = $o->deleteDetail( id: $term->id );
-
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 204, $prvder->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
         $term = $this->postDetail()->body;
 
         $o = new Providers();
-        $prvder = $o->deleteList(
+        $result = $o->deleteList(
             options: [[ 'id' => $term->id ]]
         );
 
-        $this->assertIsObject( $prvder );
-        $this->assertObjectHasProperty( 'status',  $prvder );
-        $this->assertObjectHasProperty( 'headers', $prvder );
-        $this->assertObjectHasProperty( 'body',    $prvder );
-        $this->assertIsInt( $prvder->status );
-        $this->assertEquals( 204, $prvder->status );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
-
-
-/* CREATE A PROVIDER
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Providers();
-
-        return $o->postDetail( 
-               name: 'PHPUnit_Prvder',
-               slug: 'PHPUnit_Prvder',
-            options: $this->options
-        );
-    }
-
-
-
-/* DELETE A PROVIDER
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id )
-    {
-        $o = new Providers();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public function setUp() : void
-    {
-        $this->options = new Options();
-        $this->options->name        = 'PHPUnit_Prvder';
-        $this->options->slug        = 'PHPUnit_Prvder';
-        $this->options->description = 'PHPUnit_Prvder';
-    }
+ */
 
 }

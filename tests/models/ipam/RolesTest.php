@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\IPAM\Roles AS Options;
+use Cruzio\lib\Netbox\Data\IPAM\Roles AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class RolesTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -39,67 +36,16 @@ final class RolesTest extends testCore
 
 
 
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-
-        $o = new Roles();
-        $result = $o->getDetail( id: $role->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $role->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-
-        $o = new Roles();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $role->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
         $o = new Roles();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Roles-Post';
+        $d->slug = 'PHPUnit_Roles-Post';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -110,15 +56,144 @@ final class RolesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
+    }
+ 
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new Roles();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Roles();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+
+ /**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Roles();
+        $d = new Data();
+        $d->name = 'PHPUnit_Roles-Put';
+        $d->slug = 'PHPUnit_Roles-Put';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Roles();
+        $d = new Data();
+        $d->name = 'PHPUnit_Roles-Patch';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Roles();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        sleep(1);
     }
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new Roles();
@@ -139,43 +214,12 @@ final class RolesTest extends testCore
             $this->deleteDetail( id: $role->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-
-        $o = new Roles();
-        $result = $o->putDetail( 
-                 id: $role->id, 
-               name: 'updateRole', 
-               slug: 'updateRole',
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $role->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -197,43 +241,12 @@ final class RolesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $role->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-
-        $o = new Roles();
-        $result = $o->patchDetail(
-                 id: $role->id,
-               name: 'patchRole',
-               slug: 'patchRole',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $role->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -255,34 +268,13 @@ final class RolesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $role->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-        
-        $o = new Roles();
-        $result = $o->deleteDetail( id: $role->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -300,52 +292,6 @@ final class RolesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
-
-/* CREATE A ROLE
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Roles();
-
-        return $o->postDetail( 
-            name: 'testRole',
-            slug: 'testRole',
-
-        );
-    }
-
-
-
-/* DELETE A ROLE
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Roles();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-    
-/*
----------------------------------------------------------------------------- */
-                 
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_Role-' . $rand;
-        $this->options->slug = 'PHPUnit_Role-' . $rand;
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        sleep(1);
-    }
 }

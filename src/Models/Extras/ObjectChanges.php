@@ -13,6 +13,4 @@ class ObjectChanges extends Extras_Core
         parent::__construct( http: $http );
         $this->uri .= 'object-changes/';
     }
-
-
 }

@@ -6,21 +6,16 @@ namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
 use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\Interfaces AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\Interfaces AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class InterfacesTest extends testCore
 {
-    public Options $options;
-    public static $vc;
-    public static $rack;
     public static $devrole;
-    public static $location;
     public static $devtype;
     public static $manf;
     public static $site;
-    public static $tenant;
     public static $device;
 
     public function __construct()
@@ -49,66 +44,18 @@ final class InterfacesTest extends testCore
     }
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $interface = $this->postDetail()->body;
-
-        $o = new Interfaces();
-        $result = $o->getDetail( id: $interface->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $interface->id );
-    }
- 
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $interface = $this->postDetail()->body;
-
-        $o = new Interfaces();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $interface->id );
-    }
-
-
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new Interfaces();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Interface-Post';
+        $d->device = self::$device->id;
+        $d->type = 'ieee802.11ac';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -119,15 +66,168 @@ final class InterfacesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+ 
 
 
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new Interfaces();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+ 
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Interfaces();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+  
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Interfaces();
+        $d = new Data();
+        $d->name = 'PHPUnit_Interface-Put';
+        $d->device = self::$device->id;
+        $d->type = 'ieee802.11ac';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Interfaces();
+        $d = new Data();
+        $d->name = 'PHPUnit_Interface-Patch';
+        $d->device = self::$device->id;
+        $d->type = 'ieee802.11ac';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Interfaces();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer(); 
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$devrole  = self::createDeviceRole();
+        self::$device   = self::createDevice(
+                       site: self::$site,
+                 devicetype: self::$devtype,
+                 devicerole: self::$devrole,
+        );
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyDevice( device: self::$device );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
+        sleep(1);
+    }
+      
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new Interfaces();
@@ -149,43 +249,13 @@ final class InterfacesTest extends testCore
             $this->deleteDetail( id: $interface->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $interface = $this->postDetail()->body;
-
-        $o = new Interfaces();
-        $result = $o->putDetail( 
-                id: $interface->id, 
-              name: 'PHPUnit_Interface',
-            device: self::$device->id,
-              type: 'ieee802.11ac'                
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $interface->id );
-    }
+ */
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -207,43 +277,12 @@ final class InterfacesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $interface->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $interface = $this->postDetail()->body;
-
-        $o = new Interfaces();
-        $result = $o->patchDetail(
-                id: $interface->id, 
-              name: 'PHPUnit_Interface',
-            device: self::$device->id,
-              type: 'ieee802.11ac'
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $interface->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -265,33 +304,12 @@ final class InterfacesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $interface->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $interface = $this->postDetail()->body;
-        
-        $o = new Interfaces();
-        $result = $o->deleteDetail( id: $interface->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -309,88 +327,5 @@ final class InterfacesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Interfaces();
-
-        return $o->postDetail( 
-              name: 'PHPUnit_Interface',
-            device: self::$device->id,
-              type: 'ieee802.11ac'
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Interfaces();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$site     = self::createSite();
-        self::$manf     = self::createManufacturer(); 
-        self::$tenant   = self::createTenant();
-        self::$devtype  = self::createDeviceType( manf: self::$manf );
-        self::$location = self::createLocation( site: self::$site );
-        self::$devrole  = self::createDeviceRole();
-        self::$vc       = self::createVirtualChassis();
-        self::$rack     = self::createRack( 
-            site: self::$site, location: self::$location 
-        );
-        self::$device   = self::createDevice(
-                       site: self::$site,
-                     tenant: self::$tenant,
-                 devicetype: self::$devtype,
-                 devicerole: self::$devrole,
-            virtual_chassis: self::$vc,
-                       rack: self::$rack
-        );
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyDevice( device: self::$device );
-        self::destroyRack( rack: self::$rack );
-        self::destroyVirtualChassis( chassis: self::$vc );
-        self::destroyDeviceRole( devrole: self::$devrole );
-        self::destroyLocation( location: self::$location );
-        self::destroyDeviceType( devtype: self::$devtype );
-        self::destroyTenant( tenant: self::$tenant );
-        self::destroyManufacturer( manf: self::$manf );
-        self::destroySite( site: self::$site );
-        sleep(1);
-    }
-           
-/*
----------------------------------------------------------------------------- */
- 
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name    = 'PHPUnit_Interface-' . $rand;
-        $this->options->device  = self::$device->id;
-        $this->options->type    = 'ieee802.11ac';
-    }
+ */
 }

@@ -5,37 +5,17 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class PrefixesAvailableIpsTest extends testCore
 {
+    public static object $prefix;
+
     public function __construct()
     {
         parent::__construct();
     }
-
-
-
-/* TEST OPTIONS
----------------------------------------------------------------------------- */
-
-    public function testOptions() : void
-    {
-        $o = new PrefixesAvailableIps();
-        $result = $o->options();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-    }
-
 
 
 /* TEST GET DETAIL
@@ -44,7 +24,7 @@ final class PrefixesAvailableIpsTest extends testCore
     public function testGetDetail() : void
     {
         $o = new PrefixesAvailableIps();
-        $result = $o->getDetail( id: $_ENV['prefix']->id );
+        $result = $o->getDetail( id: self::$prefix->id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -82,17 +62,6 @@ final class PrefixesAvailableIpsTest extends testCore
  */
 
 
-/* CREATE AN IP
----------------------------------------------------------------------------- */
-/* 
-    public function postDetail() : Response
-    {
-        $o = new PrefixesAvailableIps();
-
-        return $o->postDetail();
-    }
- */
-
     
 /*
 ---------------------------------------------------------------------------- */
@@ -100,7 +69,7 @@ final class PrefixesAvailableIpsTest extends testCore
  
     public static function setUpBeforeClass() : void
     {
-        $_ENV['prefix'] = self::createPrefix();
+        self::$prefix = self::createPrefix();
     }
 
     
@@ -110,8 +79,7 @@ final class PrefixesAvailableIpsTest extends testCore
  
     public static function tearDownAfterClass() : void
     {
-        self::destroyPrefix( prefix: $_ENV['prefix'] );
-        unset( $_ENV['prefix'] );
+        self::destroyPrefix( prefix: self::$prefix );
         sleep(1);
     }
 

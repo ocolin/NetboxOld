@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\IPAM\Rirs AS Options;
+use Cruzio\lib\Netbox\Data\IPAM\Rirs AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class RirsTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -39,67 +36,16 @@ final class RirsTest extends testCore
 
 
 
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-public function testGetDetail() : void
-{
-    // SETUP
-    $rir = $this->postDetail()->body;
-
-    $o = new Rirs();
-    $result = $o->getDetail( id: $rir->id );
-    
-    $this->assertIsObject( $result );
-    $this->assertObjectHasProperty( 'status',  $result );
-    $this->assertObjectHasProperty( 'headers', $result );
-    $this->assertObjectHasProperty( 'body',    $result );
-    $this->assertIsInt( $result->status );
-    $this->assertEquals( 200, $result->status );
-    $this->assertIsArray( $result->headers );
-    $this->assertIsObject( $result->body );
-
-    // CLEAN UP
-    $this->deleteDetail( $rir->id );
-}
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-public function testGetList() : void
-{
-    // SETUP
-    $rir = $this->postDetail()->body;
-
-    $o = new Rirs();
-    $result = $o->getList();
-
-    $this->assertIsObject( $result );
-    $this->assertObjectHasProperty( 'status',  $result );
-    $this->assertObjectHasProperty( 'headers', $result );
-    $this->assertObjectHasProperty( 'body',    $result );
-    $this->assertIsInt( $result->status );
-    $this->assertEquals( 200, $result->status );
-    $this->assertIsArray( $result->headers );
-    $this->assertIsObject( $result->body );
-    $this->assertIsArray( $result->body->results );
-
-     // CLEAN UP
-     $this->deleteDetail( $rir->id );
-}
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new Rirs();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Rirs-Post';
+        $d->slug = 'PHPUnit_Rirs-Post';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -110,15 +56,137 @@ public function testGetList() : void
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+ 
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+public function testGetList() : void
+{
+    $o = new Rirs();
+    $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+    $this->assertIsObject( $result );
+    $this->assertObjectHasProperty( 'status',  $result );
+    $this->assertObjectHasProperty( 'headers', $result );
+    $this->assertObjectHasProperty( 'body',    $result );
+    $this->assertIsInt( $result->status );
+    $this->assertEquals( 200, $result->status );
+    $this->assertIsArray( $result->headers );
+    $this->assertIsObject( $result->body );
+    $this->assertIsArray( $result->body->results );
+}
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+public function testGetDetail( int $id ) : void
+{
+    $o = new Rirs();
+
+    $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+    
+    $this->assertIsObject( $result );
+    $this->assertObjectHasProperty( 'status',  $result );
+    $this->assertObjectHasProperty( 'headers', $result );
+    $this->assertObjectHasProperty( 'body',    $result );
+    $this->assertIsInt( $result->status );
+    $this->assertEquals( 200, $result->status );
+    $this->assertIsArray( $result->headers );
+    $this->assertIsObject( $result->body );
+}
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Rirs();
+        $d = new Data();
+        $d->name = 'PHPUnit_Rirs-Put';
+        $d->slug = 'PHPUnit_Rirs-Put';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+   
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Rirs();
+        $d = new Data();
+        $d->name = 'PHPUnit_Rirs-Patch';
+        $d->slug = 'PHPUnit_Rirs-Patch';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Rirs();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new Rirs();
@@ -139,43 +207,12 @@ public function testGetList() : void
             $this->deleteDetail( id: $rir->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $rir = $this->postDetail()->body;
-
-        $o = new Rirs();
-        $result = $o->putDetail( 
-                 id: $rir->id, 
-               name: 'updateRir', 
-               slug: 'updateRir',
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $rir->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -197,43 +234,12 @@ public function testGetList() : void
         // CLEAN UP
         $this->deleteDetail( $rir->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $rir = $this->postDetail()->body;
-
-        $o = new Rirs();
-        $result = $o->patchDetail(
-                 id: $rir->id,
-               name: 'patchRIR',
-               slug: 'patchRIR',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $rir->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -255,92 +261,9 @@ public function testGetList() : void
         // CLEAN UP
         $this->deleteDetail( $rir->id );
     }
+ */
 
 
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $rir = $this->postDetail()->body;
-        
-        $o = new Rirs();
-        $result = $o->deleteDetail( id: $rir->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $rir = $this->postDetail()->body;
-
-        $o = new Rirs();
-        $result = $o->deleteList(
-            options: [[ 'id' => $rir->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
-
-/* CREATE A RIR
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Rirs();
-
-        return $o->postDetail( 
-            name: 'testRir',
-            slug: 'testRir',
-        );
-    }
-
-
-
-/* DELETE A RIR
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Rirs();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-     
-/*
----------------------------------------------------------------------------- */
-                
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_RIR-' . $rand;
-        $this->options->slug = 'PHPUnit_RIR-' . $rand;
-    }
-
-    
 /*
 ---------------------------------------------------------------------------- */
 

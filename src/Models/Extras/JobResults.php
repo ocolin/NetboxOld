@@ -14,6 +14,4 @@ class JobResuts extends Extras_Core
         $this->uri .= 'job-results/';
     }
 
-
-
 }

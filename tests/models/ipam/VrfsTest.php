@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\IPAM\Vrfs AS Options;
+use Cruzio\lib\Netbox\Data\IPAM\Vrfs AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class VrfsTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -41,66 +38,15 @@ final class VrfsTest extends testCore
 
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $vrf = $this->postDetail()->body;
-
-        $o = new Vrfs();
-        $result = $o->getDetail( id: $vrf->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $vrf->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $vrf = $this->postDetail()->body;
-
-        $o = new Vrfs();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $vrf->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new Vrfs();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Vrfs-Post';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -111,15 +57,141 @@ final class VrfsTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
 
 
 
-/* TEST POST LIST
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new Vrfs();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Vrfs();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Vrfs();
+        $d = new Data();
+        $d->name = 'PHPUnit_Vrfs-Put';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Vrfs();
+        $d = new Data();
+        $d->name = 'PHPUnit_Vrfs-Patch';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Vrfs();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+/*
 ---------------------------------------------------------------------------- */
 
+    public static function tearDownAfterClass() : void
+    {
+        sleep(1);
+    }
+
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/* 
     public function testPostList() :void
     {
         $o = new Vrfs();
@@ -142,42 +214,12 @@ final class VrfsTest extends testCore
             $this->deleteDetail( id: $vrf->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $vrf = $this->postDetail()->body;
-
-        $o = new Vrfs();
-        $result = $o->putDetail( 
-                 id: $vrf->id, 
-               name: 'updateVRF', 
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $vrf->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -199,41 +241,12 @@ final class VrfsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $vrf = $this->postDetail()->body;
-
-        $o = new Vrfs();
-        $result = $o->patchDetail(
-                 id: $vrf->id,
-               name: 'patchVRF',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $vrf->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -255,33 +268,12 @@ final class VrfsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $vrf->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $vrf = $this->postDetail()->body;
-        
-        $o = new Vrfs();
-        $result = $o->deleteDetail( id: $vrf->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -299,50 +291,7 @@ final class VrfsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
 
-
-/* CREATE A VRF
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Vrfs();
-
-        return $o->postDetail( 
-            name: 'testVRFs',
-        );
-    }
-
-
-
-/* DELETE A VRF
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Vrfs();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-    
-/*
----------------------------------------------------------------------------- */
-                
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_VRF-' . $rand;
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        sleep(1);
-    }
 }

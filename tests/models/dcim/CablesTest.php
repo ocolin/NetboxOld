@@ -4,15 +4,25 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
-use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\Cables AS Options;
+use Cruzio\lib\Netbox\Models\testCore;;
+use Cruzio\lib\Netbox\Data\DCIM\Cables AS Data;
+use Cruzio\lib\Netbox\Types\TerminationType;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class CablesTest extends testCore
 {
-    public Options $options;
+    public static object $site;
+    public static object $manf;
+    public static object $devrole;
+    public static object $devtype;
+    public static object $deviceA;
+    public static object $deviceB;
+    public static object $interfaceA;
+    public static object $interfaceB;
+    public static TerminationType $termA;
+    public static TerminationType $termB;
+
 
     public function __construct()
     {
@@ -27,7 +37,7 @@ final class CablesTest extends testCore
         $o = new Cables();
         $result = $o->options();
 
-        $this->assertIsArray( $result );
+        $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
@@ -35,6 +45,96 @@ final class CablesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST POST DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPostDetail() : void
+    {
+        $o = new Cables();
+        $d = new Data();
+        $testA = new \stdClass();
+        $testA->object_type = 'dcim.interface';
+        $testA->object_id = self::$deviceA->id;
+        $testB = new \stdClass();
+        $testB->object_type = 'dcim.interface';
+        $testB->object_id = self::$deviceB->id;
+        $d->a_terminations = [ $testA ];
+        $d->b_terminations = [ $testB ];
+        //$d->a_terminations = [ self::$termA ];
+        //$d->b_terminations = [ self::$termB ];
+       // print_r( $d->render());
+
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        print_r( $result->body );
+
+        /*
+        $this->assertIsArray( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        //$this->assertObjectHasAttribute( 'id', $result->body );
+*/
+        //return $result->body->id;
+    }
+  
+
+
+
+/* SETUP DEPENDENT OBJECT
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$termA = new TerminationType();
+        self::$termB = new TerminationType();
+
+        self::$site = self::createSite();
+        self::$manf = self::createManufacturer();
+        self::$devrole = self::createDeviceRole();
+        self::$devtype = self::createDeviceType( manf: self::$manf );
+        self::$deviceA = self::createDevice(
+            site: self::$site,
+            devicetype: self::$devtype,
+            devicerole: self::$devrole
+        );
+        self::$deviceB = self::createDevice(
+            site: self::$site,
+            devicetype: self::$devtype,
+            devicerole: self::$devrole
+        );
+        self::$interfaceA = self::createInterface( device: self::$deviceA );
+        self::$interfaceB = self::createInterface( device: self::$deviceB );
+        
+
+
+        self::$termA->object_type = 'dcim.interface';
+        self::$termB->object_type = 'dcim.interface';
+        self::$termA->object_id = self::$deviceA->id;
+        self::$termB->object_id = self::$deviceB->id;
+    }
+
+ 
+/* CLOSE DEPENDENT OBJECT
+---------------------------------------------------------------------------- */
+ 
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyInterface( interface: self::$interfaceA );
+        self::destroyInterface( interface: self::$interfaceB );
+        self::destroyDevice( device: self::$deviceB );
+        self::destroyDevice( device: self::$deviceA );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
     }
 
 
@@ -92,30 +192,6 @@ final class CablesTest extends testCore
 
         // CLEAN UP
         $this->deleteDetail( $cable->id );
-    }
- */
-
-
-/* TEST POST DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPostDetail() : void
-    {
-        $o = new Cables();
-        $result = $this->postDetail();
-
-        $this->assertIsArray( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
     }
  */
 
@@ -341,7 +417,7 @@ final class CablesTest extends testCore
 
 /* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
-
+/* 
     public function postDetail() : Response
     {
         $o = new Cables();
@@ -353,19 +429,19 @@ final class CablesTest extends testCore
               termination_b_id: $_ENV['termZ']->id,
         );
     }
-
+ */
 
 
 /* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
-
+/* 
     public function deleteDetail( int $id )
     {
         $o = new Cables();
 
         return $o->deleteDetail( id: $id  );
     }
-
+ */
 
 
 /* SETUP AND CLOSING FUNCTIONS
@@ -374,6 +450,7 @@ final class CablesTest extends testCore
 /**
 * @beforeClass
 */
+/* 
     public static function setupTest()
     {
         $_ENV['siteA']    = self::createSite();
@@ -406,13 +483,10 @@ final class CablesTest extends testCore
 
         //print_r( $test );
 
-/*         $o = new Cables();
+         $o = new Cables();
         $test = $o->getDetail( id: 1 );
-        print_r( $test->body); */
-    }
-    
-/*
----------------------------------------------------------------------------- */
+        print_r( $test->body); 
+    */
 
  
 /*
@@ -463,7 +537,7 @@ final class CablesTest extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
- 
+/*  
     public static function tearDownAfterClass() : void
     {
         self::destroyCircuitTermination( $_ENV['termZ'] );
@@ -474,7 +548,7 @@ final class CablesTest extends testCore
         self::destroySite( site: $_ENV['siteA'] );
         sleep(1);
     }
-    
+     */
 /*
 ---------------------------------------------------------------------------- */
 
@@ -521,10 +595,11 @@ final class CablesTest extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
- 
+ /*
     public function setUp() : void
     {
         $rand = rand( 1, 100000 );
         $this->options = new Options();
     }
+    */
 }

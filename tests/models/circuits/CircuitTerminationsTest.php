@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Circuits;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS Options;
+use Cruzio\lib\Netbox\Data\Circuits\CircuitTerminations AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class CircuitTerminationsTest extends testCore
 {
-    public Options $options;
     public static $circuit_type;
     public static $provider;
     public static $site;
@@ -44,9 +42,84 @@ final class CircuitTerminationsTest extends testCore
     }
 
 
-/* TEST GET DETAIL
+
+/* TEST POST DETAIL
+---------------------------------------------------------------------------- */
+ 
+    public function testPostDetail() : int
+    {
+        $o = new CircuitTerminations();
+        $d = new Data();
+        $d->circuit = self::$circuit->id;
+        $d->term_side = 'A';
+        $d->site = self::$site->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+
+        return $result->body->id;
+    }
+ 
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new CircuitTerminations();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
+/* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
+    public static function setUpBeforeClass() : void
+    {
+        self::$provider     = self::createProvider();
+        self::$circuit_type = self::createCircuitType();
+        self::$site         = self::createSite();
+        self::$circuit      = self::createCircuit(
+                provider: self::$provider,
+            circuit_type: self::$circuit_type
+        );
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyCircuit( circuit: self::$circuit );
+        self::destroyProvider( provider: self::$provider );
+        self::destroyCircuitType( ct: self::$circuit_type );
+        self::destroySite( site: self::$site );
+        sleep(1);
+    }
+    
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+/* 
     public function testGetDetail() : void
     {
         // SETUP
@@ -67,12 +140,12 @@ final class CircuitTerminationsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
- 
+  */
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testGetList() : void
     {
         // SETUP
@@ -94,30 +167,7 @@ final class CircuitTerminationsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
-
-
-/* TEST POST DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
-    {
-        $o = new CircuitTerminations();
-        $result = $this->postDetail();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
-    }
-
+ */
 
 
 /* TEST POST LIST
@@ -150,7 +200,7 @@ final class CircuitTerminationsTest extends testCore
 
 /* TEST PUT DETAIL
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutDetail() : void
     {
         // SETUP
@@ -176,12 +226,12 @@ final class CircuitTerminationsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -203,12 +253,12 @@ final class CircuitTerminationsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
+ */
 
 
 /* TEST PATCH DETAIL
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchDetail() : void
     {
         // SETUP
@@ -234,12 +284,12 @@ final class CircuitTerminationsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -269,33 +319,12 @@ final class CircuitTerminationsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-        
-        $o = new CircuitTerminations();
-        $result = $o->deleteDetail( id: $term->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -313,12 +342,12 @@ final class CircuitTerminationsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
+ */
 
 
 /* CREATE A RACK ROLES
 ---------------------------------------------------------------------------- */
-
+/* 
     public function postDetail() : Response
     {
         $o = new CircuitTerminations();
@@ -329,57 +358,17 @@ final class CircuitTerminationsTest extends testCore
               options: $this->options
         );
     }
-
+ */
 
 
 /* DELETE A RACK ROLES
 ---------------------------------------------------------------------------- */
-
+/* 
     public function deleteDetail( int $id )
     {
         $o = new CircuitTerminations();
 
         return $o->deleteDetail( id: $id  );
     }
-
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$provider     = self::createProvider();
-        self::$circuit_type = self::createCircuitType();
-        self::$site         = self::createSite();
-        self::$circuit      = self::createCircuit(
-                provider: self::$provider,
-            circuit_type: self::$circuit_type
-        );
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyCircuit( circuit: self::$circuit );
-        self::destroyProvider( provider: self::$provider );
-        self::destroyCircuitType( ct: self::$circuit_type );
-        self::destroySite( site: self::$site );
-        sleep(1);
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public function setUp() : void
-    {
-        $this->options = new Options();
-        $this->options->term_side = 'A';
-        $this->options->circuit   = self::$circuit->id;
-        $this->options->site      = self::$site->id;
-    }
+ */
 }

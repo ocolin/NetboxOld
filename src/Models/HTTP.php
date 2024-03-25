@@ -65,15 +65,15 @@ class HTTP
  * Create an object.
  *
  * @param string $uri
- * @param array<string, mixed>|object $body
+ * @param array<string, mixed>|object|null $body
  * @param array<string, string> $params
- * @param  array<string, string> $headers HTML request headers
+ * @param array<string, string> $headers HTML request headers
  * @return Response
 */
 
     public function post(
               string $uri,
-        array|object $body,
+   array|object|null $body,
                array $params  = [],
                array $headers = []
     ) : Response
@@ -108,7 +108,7 @@ class HTTP
 
     public function put(
               string $uri,
-        array|object $body,
+   array|object|null $body,
                array $params  = [],
                array $headers = []
     ) : Response
@@ -142,7 +142,7 @@ class HTTP
 
     public function patch(
               string $uri,
-        array|object $body,
+   array|object|null $body,
                array $params  = [],
                array $headers = []
     ) : Response

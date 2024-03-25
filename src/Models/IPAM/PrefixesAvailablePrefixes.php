@@ -39,24 +39,4 @@ class PrefixesAvailablePrefixes extends IPAM_Core
         );
     }
 
-
-    
-/* POST METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/**
- * @param  integer $id
- * @param  object $data
- * @param  array<string, string> $headers HTML request headers
- * @return void
- */
-    public function postDetail( 
-           int $id, 
-        object $data ,
-         array $headers = []
-    )
-    {
-        $this->uri .= "{$id}/available-prefixes/";
-        // NEEDS TO BE ADDED
-    }
 }

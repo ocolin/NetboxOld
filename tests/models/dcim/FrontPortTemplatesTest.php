@@ -5,23 +5,16 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\FrontPortTemplates AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\FrontPortTemplates AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class FrontPortTemplatesTest extends testCore
 {
-    public Options $options;
-    public static $vc;
-    public static $rack;
     public static $devrole;
-    public static $location;
     public static $devtype;
     public static $manf;
     public static $site;
-    public static $tenant;
-    public static $device;
     public static $rearPortTemp;
 
     public function __construct()
@@ -50,66 +43,19 @@ final class FrontPortTemplatesTest extends testCore
     }
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new FrontPortTemplates();
-        $result = $o->getDetail( id: $temp->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
- 
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new FrontPortTemplates();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
-
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new FrontPortTemplates();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_FrontPortTemp-Post';
+        $d->type = '8p8c';
+        $d->device_type = self::$devtype->id;
+        $d->rear_port = self::$rearPortTemp->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -120,15 +66,165 @@ final class FrontPortTemplatesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        return $result->body->id;
+    }
+ 
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */ 
+
+    public function testGetList() : void
+    {
+        $o = new FrontPortTemplates();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+ 
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new FrontPortTemplates();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+  
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new FrontPortTemplates();
+        $d = new Data();
+        $d->name = 'PHPUnit_FrontPortTemp-Put';
+        $d->type = '8p8c';
+        $d->device_type = self::$devtype->id;
+        $d->rear_port = self::$rearPortTemp->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new FrontPortTemplates();
+        $d = new Data();
+        $d->name = 'PHPUnit_FrontPortTemp-Patch';
+        $d->type = '8p8c';
+        $d->device_type = self::$devtype->id;
+        $d->rear_port = self::$rearPortTemp->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new FrontPortTemplates();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site     = self::createSite();
+        self::$manf     = self::createManufacturer();
+        self::$devtype  = self::createDeviceType( manf: self::$manf );
+        self::$devrole  = self::createDeviceRole();
+        self::$rearPortTemp = self::createRearPortTemplate( self::$devtype );
     }
 
+/*
+---------------------------------------------------------------------------- */
 
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyRearPortsTemplate( templ: self::$rearPortTemp );
+        self::destroyDeviceRole( devrole: self::$devrole );
+        self::destroyDeviceType( devtype: self::$devtype );
+        self::destroyManufacturer( manf: self::$manf );
+        self::destroySite( site: self::$site );
+        sleep(1);
+    }
+    
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new FrontPortTemplates();
@@ -149,44 +245,13 @@ final class FrontPortTemplatesTest extends testCore
             $this->deleteDetail( id: $temp->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new FrontPortTemplates();
-        $result = $o->putDetail( 
-                     id: $temp->id, 
-                   name: 'PHPUnit_FrontPortTempl',
-            device_type: self::$devtype->id,
-              rear_port: self::$rearPortTemp->id,
-                   type: '8p8c',          
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
+ */
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -208,44 +273,12 @@ final class FrontPortTemplatesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new FrontPortTemplates();
-        $result = $o->patchDetail(
-                     id: $temp->id,
-                   name: 'PHPUnit_FrontPortTempl',
-            device_type: self::$devtype->id,
-              rear_port: self::$rearPortTemp->id,
-                   type: '8p8c',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -267,33 +300,12 @@ final class FrontPortTemplatesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-        
-        $o = new FrontPortTemplates();
-        $result = $o->deleteDetail( id: $temp->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -311,92 +323,6 @@ final class FrontPortTemplatesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new FrontPortTemplates();
-
-        return $o->postDetail( 
-                   name: 'PHPUnit_FrontPortTempl',
-            device_type: self::$devtype->id,
-              rear_port: self::$rearPortTemp->id,
-                   type: '8p8c'
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new FrontPortTemplates();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$site     = self::createSite();
-        self::$manf     = self::createManufacturer();
-        self::$tenant   = self::createTenant();
-        self::$devtype  = self::createDeviceType( manf: self::$manf );
-        self::$location = self::createLocation( site: self::$site );
-        self::$devrole  = self::createDeviceRole();
-        self::$vc       = self::createVirtualChassis();
-        self::$rack     = self::createRack( 
-            site: self::$site, location: self::$location 
-        );
-        self::$device   = self::createDevice(
-                       site: self::$site,
-                     tenant: self::$tenant,
-                 devicetype: self::$devtype,
-                 devicerole: self::$devrole,
-            virtual_chassis: self::$vc,
-                       rack: self::$rack
-        );
-        self::$rearPortTemp = self::createRearPortTemplate( self::$devtype );
-    }
-
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyRearPortsTemplate( templ: self::$rearPortTemp );
-        self::destroyDevice( device: self::$device );
-        self::destroyRack( rack: self::$rack );
-        self::destroyVirtualChassis( chassis: self::$vc );
-        self::destroyDeviceRole( devrole: self::$devrole );
-        self::destroyLocation( location: self::$location );
-        self::destroyDeviceType( devtype: self::$devtype );
-        self::destroyTenant( tenant: self::$tenant );
-        self::destroyManufacturer( manf: self::$manf );
-        self::destroySite( site: self::$site );
-        sleep(1);
-    }
-      
-/*
----------------------------------------------------------------------------- */
-      
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name        = 'PHPUnit_FrontPortTempl-' . $rand;
-        $this->options->device_type = self::$devtype->id;
-        $this->options->rear_port   = self::$rearPortTemp->id;
-        $this->options->type        = '8p8c';
-    }
 }

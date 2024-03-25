@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\Racks AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\Racks AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class RacksTest extends testCore
 {
-    public Options $options;
     public static $site;
     public static $location;
 
@@ -42,66 +40,17 @@ final class RacksTest extends testCore
     }
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $rack = $this->postDetail()->body;
-
-        $o = new Racks();
-        $result = $o->getDetail( id: $rack->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $rack->id );
-    }
- 
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $rack = $this->postDetail()->body;
-
-        $o = new Racks();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $rack->id );
-    }
-
-
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new Racks();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Rack';
+        $d->site = self::$site->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -112,15 +61,154 @@ final class RacksTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+ 
 
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Racks();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+  
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new Racks();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+ 
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+   
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Racks();
+        $d = new Data();
+        $d->name = 'PHPUnit_RackPut';
+        $d->site = self::$site->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+    
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Racks();
+        $d = new Data();
+        $d->name = 'PHPUnit_RackPatch';
+        $d->site = self::$site->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+ 
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Racks();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ 
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site     = self::createSite();
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroySite( site: self::$site );
+        sleep(1);
+    }
+  
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new Racks();
@@ -141,43 +229,12 @@ final class RacksTest extends testCore
             $this->deleteDetail( id: $rack->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $rack = $this->postDetail()->body;
-
-        $o = new Racks();
-        $result = $o->putDetail( 
-                  id: $rack->id,
-                name: 'PHPUnit_Rack',
-                site: self::$site->id,
-            location: self::$location->id,                
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $rack->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -199,43 +256,12 @@ final class RacksTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $rack->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $rack = $this->postDetail()->body;
-
-        $o = new Racks();
-        $result = $o->patchDetail(
-                  id: $rack->id,
-                name: 'PHPUnit_Rack',
-                site: self::$site->id,
-            location: self::$location->id,
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $rack->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -257,33 +283,13 @@ final class RacksTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $rack->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $rack = $this->postDetail()->body;
-        
-        $o = new Racks();
-        $result = $o->deleteDetail( id: $rack->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -301,65 +307,6 @@ final class RacksTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Racks();
-
-        return $o->postDetail( 
-                name: 'PHPUnit_Rack',
-                site: self::$site->id,
-            location: self::$location->id,
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Racks();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$site     = self::createSite();
-        self::$location = self::createLocation( site: self::$site );
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyLocation( location: self::$location );
-        self::destroySite( site: self::$site );
-        sleep(1);
-    }
-    
-/*
----------------------------------------------------------------------------- */
-        
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name     = 'PHPUnit_Rack-' . $rand;
-        $this->options->site     = self::$site->id;
-        $this->options->location = self::$location->id;
-    }
 }

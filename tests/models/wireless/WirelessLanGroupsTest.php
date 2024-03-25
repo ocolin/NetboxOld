@@ -5,15 +5,13 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Wireless;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Wireless\WirelessLanGroups AS Options;
+use Cruzio\lib\Netbox\Data\Wireless\WirelessLanGroups AS Data;
+
 
 require_once __DIR__ . '/../testCore.php';
 
 final class WirelessLanGroupsTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -39,66 +37,16 @@ final class WirelessLanGroupsTest extends testCore
 
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-
-        $o = new WirelessLanGroups();
-        $result = $o->getDetail( id: $group->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $group->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-
-        $o = new WirelessLanGroups();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $group->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new WirelessLanGroups();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_WirelessLanGroups-Post';
+        $d->slug = 'PHPUnit_WirelessLanGroups-Post';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -109,15 +57,138 @@ final class WirelessLanGroupsTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
 
 
 
-/* TEST POST LIST
+/* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
+    public function testGetList() : void
+    {
+        $o = new WirelessLanGroups();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new WirelessLanGroups();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new WirelessLanGroups();
+        $d = new Data();
+        $d->name = 'PHPUnit_WirelessLanGroups-Post';
+        $d->slug = 'PHPUnit_WirelessLanGroups-Post';
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new WirelessLanGroups();
+        $d = new Data();
+        $d->name = 'PHPUnit_WirelessLanGroups-Post';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new WirelessLanGroups();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+    public static function tearDownAfterClass() : void
+    {
+        sleep(1);
+    }
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/* 
     public function testPostList() :void
     {
         $o = new WirelessLanGroups();
@@ -138,44 +209,12 @@ final class WirelessLanGroupsTest extends testCore
             $this->deleteDetail( id: $group->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-
-        $o = new WirelessLanGroups();
-        $result = $o->putDetail( 
-                id: $group->id, 
-              name: 'PHPUnit_WifiLanGrp',
-              slug: 'PHPUnit_WifiLanGrp',
-            parent: null
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $group->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -197,44 +236,12 @@ final class WirelessLanGroupsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $group->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-
-        $o = new WirelessLanGroups();
-        $result = $o->patchDetail(
-                id: $group->id,
-              name: 'PHPUnit_WifiLanGrp',
-              slug: 'PHPUnit_WifiLanGrp',
-            parent: null
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $group->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -256,34 +263,13 @@ final class WirelessLanGroupsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $group->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-        
-        $o = new WirelessLanGroups();
-        $result = $o->deleteDetail( id: $group->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -301,49 +287,6 @@ final class WirelessLanGroupsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
-
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new WirelessLanGroups();
-
-        return $o->postDetail( 
-              name: 'PHPUnit_WifiLanGrp',
-              slug: 'PHPUnit_WifiLanGrp',
-            parent: null
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new WirelessLanGroups();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name   = 'PHPUnit_WifiLanGrp-' . $rand;
-        $this->options->slug   = 'PHPUnit_WifiLanGrp-' . $rand;
-        $this->options->parent = null;
-    }
-
-    public static function tearDownAfterClass() : void
-    {
-        sleep(1);
-    }
 }

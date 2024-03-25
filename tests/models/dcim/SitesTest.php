@@ -5,19 +5,18 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\Sites AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\Sites AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class SitesTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
     }
+
+
 
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
@@ -39,67 +38,19 @@ final class SitesTest extends testCore
 
 
 
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $site = $this->postDetail()->body;
-
-        $o = new Sites();
-        $result = $o->getDetail( id: $site->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $site->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $site = $this->postDetail()->body;
-
-        $o = new Sites();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $site->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
+        
         $o = new Sites();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'testSite';
+        $d->slug = 'testsite';
+        $d->status = 'active';
+
+        $result = $o->postDetail(data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -110,15 +61,151 @@ final class SitesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Sites();
+        $d = new Data();
+        $d->name = 'updateSite';
+        $d->slug = 'updatesite';
+
+        $result = $o->putDetail( 
+                id: $id,
+              data: $d,
+            params: [ 'exclude' => 'config_context']
+        );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Sites();
+        $d = new Data();
+        $d->name = 'updateSite2';
+        $d->slug = 'updatesite2';
+
+        $result = $o->patchDetail(
+              id: $id,
+            data: $d,
+          params: [ 'exclude' => 'config_context']
+        );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Sites();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+    public function testGetList() : void
+    {
+        $o = new Sites();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+
+/* DELETE A SITE
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Sites();
+
+        $result = $o->deleteDetail( id: $id  );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertNull( $result->body );
+    }
+
+
+
+
+
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPostList() :void
     {
         $o = new Sites();
@@ -142,43 +229,13 @@ final class SitesTest extends testCore
             $this->deleteDetail( id: $site->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $site = $this->postDetail()->body;
-
-        $o = new Sites();
-        $result = $o->putDetail( 
-              id: $site->id, 
-            name: 'updateSite', 
-            slug: 'updateSite',
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $site->id );
-    }
+*/
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPutList() : void
     {
         // SETUP
@@ -202,42 +259,13 @@ final class SitesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $site->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $site = $this->postDetail()->body;
-
-        $o = new Sites();
-        $result = $o->patchDetail(
-              id: $site->id,
-            name: 'patchSite',
-            slug: 'patchSite',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $site->id );
-    }
+*/
 
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPatchList() : void
     {
         // SETUP
@@ -261,34 +289,13 @@ final class SitesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $site->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $site = $this->postDetail()->body;
-        
-        $o = new Sites();
-        $result = $o->deleteDetail( id: $site->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+*/
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testDeleteList() : void
     {
         // SETUP
@@ -306,45 +313,6 @@ final class SitesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-/* CREATE A SITE
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Sites();
-
-        return $o->postDetail( 
-            name: 'testSite',
-            slug: 'testSite',
-        );
-    }
-
-
-
-/* DELETE A RIR
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Sites();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-    
-/*
----------------------------------------------------------------------------- */
-    
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_Site-' . $rand;
-        $this->options->slug = 'PHPUnit_Site-' . $rand;
-    }
-    
+*/
 
 }

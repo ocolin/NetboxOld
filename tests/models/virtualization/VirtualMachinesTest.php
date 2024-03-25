@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Virtualization;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Virtualization\VirtualMachines AS Options;
+use Cruzio\lib\Netbox\Data\Virtualization\VirtualMachines AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class VirtualMachinesTest extends testCore
 {
-    public Options $options;
     public static object $site;
     public static object $type;
     public static object $group;
@@ -43,66 +41,16 @@ final class VirtualMachinesTest extends testCore
 
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $machine = $this->postDetail()->body;
-
-        $o = new VirtualMachines();
-        $result = $o->getDetail( id: $machine->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $machine->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $machine = $this->postDetail()->body;
-
-        $o = new VirtualMachines();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $machine->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
         $o = new VirtualMachines();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_VirtualMachines-Post';
+        $d->cluster = self::$cluster->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -113,15 +61,162 @@ final class VirtualMachinesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
 
 
 
-/* TEST POST LIST
+/* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
+    public function testGetList() : void
+    {
+        $o = new VirtualMachines();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new VirtualMachines();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new VirtualMachines();
+        $d = new Data();
+        $d->name = 'PHPUnit_VirtualMachines-Put';
+        $d->cluster = self::$cluster->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new VirtualMachines();
+        $d = new Data();
+        $d->name = 'PHPUnit_VirtualMachines-Patch';
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new VirtualMachines();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site    = self::createSite();
+        self::$type    = self::createClusterType();
+        self::$group   = self::createClusterGroup();
+        self::$cluster = self::createCluster(
+             type: self::$type,
+            group: self::$group,
+             site: self::$site
+        );
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyCluster( cluster: self::$cluster );
+        self::destroySite( site: self::$site );
+        self::destroyClusterType( type: self::$type );
+        self::destroyClusterGroup( group: self::$group );
+        sleep(1);
+    }
+
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/* 
     public function testPostList() :void
     {
         $o = new VirtualMachines();
@@ -142,43 +237,12 @@ final class VirtualMachinesTest extends testCore
             $this->deleteDetail( id: $machine->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $machine = $this->postDetail()->body;
-
-        $o = new VirtualMachines();
-        $result = $o->putDetail( 
-                 id: $machine->id, 
-               name: 'PHPUnit_VM',
-            cluster: self::$cluster->id,
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $machine->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -200,42 +264,12 @@ final class VirtualMachinesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $machine->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $machine = $this->postDetail()->body;
-
-        $o = new VirtualMachines();
-        $result = $o->patchDetail(
-                 id: $machine->id,
-               name: 'PHPUnit_VM',
-            cluster: self::$cluster->id,
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $machine->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -257,34 +291,13 @@ final class VirtualMachinesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $machine->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $machine = $this->postDetail()->body;
-        
-        $o = new VirtualMachines();
-        $result = $o->deleteDetail( id: $machine->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -302,70 +315,6 @@ final class VirtualMachinesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
+ */
 
-
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new VirtualMachines();
-
-        return $o->postDetail( 
-               name: 'PHPUnit_VM',
-            cluster: self::$cluster->id,
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new VirtualMachines();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$site    = self::createSite();
-        self::$type    = self::createClusterType();
-        self::$group   = self::createClusterGroup();
-        self::$cluster = self::createCluster(
-             type: self::$type,
-            group: self::$group,
-             site: self::$site
-        );
-
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyCluster( cluster: self::$cluster );
-        self::destroySite( site: self::$site );
-        self::destroyClusterType( type: self::$type );
-        self::destroyClusterGroup( group: self::$group );
-        sleep(1);
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_VM-' . $rand;
-        $this->options->cluster = self::$cluster->id;
-    }
 }

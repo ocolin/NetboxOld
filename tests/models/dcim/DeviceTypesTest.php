@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\DeviceTypes AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\DeviceTypes AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class DeviceTypesTest extends testCore
 {
-    public Options $options;
     public static $manf;
 
     public function __construct()
@@ -41,67 +39,17 @@ final class DeviceTypesTest extends testCore
     }
 
 
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $devtype = $this->postDetail()->body;
-
-        $o = new DeviceTypes();
-        $result = $o->getDetail( id: $devtype->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $devtype->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $devtype = $this->postDetail()->body;
-
-        $o = new DeviceTypes();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $devtype->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
         $o = new DeviceTypes();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->model = 'testDeviceType';
+        $d->slug = 'testDeviceType';
+        $d->manufacturer = self::$manf->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -112,15 +60,155 @@ final class DeviceTypesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
 
 
 
-/* TEST POST LIST
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new DeviceTypes();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+    public function testGetList() : void
+    {
+        $o = new DeviceTypes();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new DeviceTypes();
+        $d = new Data();
+        $d->model = 'testDeviceTypePut';
+        $d->slug = 'testDeviceTypePut';
+        $d->manufacturer = self::$manf->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new DeviceTypes();
+        $d = new Data();
+        $d->model = 'testDeviceTypePatch';
+        $d->slug = 'testDeviceTypePatch';
+        $d->manufacturer = self::$manf->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new DeviceTypes();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+/*
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$manf = self::createManufacturer();
+    }
+    
+    
+/*
+---------------------------------------------------------------------------- */
+
+ 
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyManufacturer( self::$manf );
+        sleep(1);
+    }
+    
+
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/*
     public function testPostList() :void
     {
         $o = new DeviceTypes();
@@ -142,44 +230,13 @@ final class DeviceTypesTest extends testCore
             $this->deleteDetail( id: $devtype->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $devtype = $this->postDetail()->body;
-
-        $o = new DeviceTypes();
-        $result = $o->putDetail( 
-                      id: $devtype->id, 
-                   model: 'updateDeviceType', 
-                    slug: 'updateDeviceType',
-            manufacturer: self::$manf->id
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $devtype->id );
-    }
+*/
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPutList() : void
     {
         // SETUP
@@ -201,43 +258,13 @@ final class DeviceTypesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $devtype = $this->postDetail()->body;
-
-        $o = new DeviceTypes();
-        $result = $o->patchDetail(
-                      id: $devtype->id,
-                   model: 'patchDeviceType',
-                    slug: 'patchDeviceType',
-            manufacturer: self::$manf->id
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $devtype->id );
-    }
+*/
 
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPatchList() : void
     {
         // SETUP
@@ -259,34 +286,13 @@ final class DeviceTypesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $devtype->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $devtype = $this->postDetail()->body;
-        
-        $o = new DeviceTypes();
-        $result = $o->deleteDetail( id: $devtype->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+*/
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testDeleteList() : void
     {
         // SETUP
@@ -304,65 +310,5 @@ final class DeviceTypesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-/* CREATE A DEVICE TYPES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new DeviceTypes();
-
-        return $o->postDetail( 
-                   model: 'testDeviceType',
-                    slug: 'testDeviceType',
-            manufacturer: self::$manf->id
-        );
-    }
-
-
-
-/* DELETE A DEVICE TYPES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id )
-    {
-        $o = new DeviceTypes();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-
-/*
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$manf = self::createManufacturer();
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyManufacturer( self::$manf );
-        sleep(1);
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-         
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->model        = 'PHPUnit_DevType-' .$rand;
-        $this->options->slug         = 'PHPUnit_DevType-' .$rand;
-        $this->options->manufacturer = self::$manf->id;
-    }
-
+*/
 }

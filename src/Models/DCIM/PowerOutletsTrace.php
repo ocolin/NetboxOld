@@ -13,7 +13,4 @@ class PowerOutletsTrace extends DCIM_Core
         parent::__construct( http: $http );
         $this->uri .= "power-outlets/{$id}/trace";
     }
-
-
-
 }

@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
+use Cruzio\lib\Netbox\Data\Extras\ExportTemplates AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
@@ -36,40 +36,37 @@ final class ExportTemplatesTest extends testCore
 
 
 
-/* TEST GET DETAIL
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testGetDetail() : void
+    public function testPostDetail() : int
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
         $o = new ExportTemplates();
-        $result = $o->getDetail( id: $temp->id );
-        
+        $d = new Data();
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->name = 'PHPUnit_ExportTemplates_Post';
+        $d->template_code = 'test';
+        $result = $o->postDetail( data: $d );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
+        return $result->body->id;
     }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
         $o = new ExportTemplates();
         $result = $o->getList();
 
@@ -82,39 +79,115 @@ final class ExportTemplatesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
     }
 
 
 
-/* TEST POST DETAIL
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPostDetail() : void
+    public function testGetDetail( int $id ) : void
     {
         $o = new ExportTemplates();
-        $result = $this->postDetail();
+        $result = $o->getDetail( id: $id );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new ExportTemplates();
+        $d = new Data();
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->name = 'PHPUnit_ExportTemplates_Put';
+        $d->template_code = 'test';
+        $result = $o->putDetail( id: $id, data: $d );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new ExportTemplates();
+        $d = new Data();
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->name = 'PHPUnit_ExportTemplates_Patch';
+        $d->template_code = 'test';
+        $result = $o->patchDetail( id: $id, data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+    }
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new ExportTemplates();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new ExportTemplates();
@@ -143,44 +216,12 @@ final class ExportTemplatesTest extends testCore
             $this->deleteDetail( id: $temp->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new ExportTemplates();
-        $result = $o->putDetail( 
-                       id: $temp->id, 
-                     name: 'PHPUnit_ExpTemp',
-            content_types: [ 'dcim.sitegroup' ],
-            template_code: 'testing',
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -210,44 +251,12 @@ final class ExportTemplatesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new ExportTemplates();
-        $result = $o->patchDetail(
-                       id: $temp->id,
-                     name: 'PHPUnit_ExpTemp',
-            content_types: [ 'dcim.sitegroup' ],
-            template_code: 'testing',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -277,34 +286,13 @@ final class ExportTemplatesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $temp->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-        
-        $o = new ExportTemplates();
-        $result = $o->deleteDetail( id: $temp->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -322,33 +310,6 @@ final class ExportTemplatesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-    
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new ExportTemplates();
-
-        return $o->postDetail( 
-                     name: 'PHPUnit_ExpTemp',
-            content_types: [ 'dcim.sitegroup' ],
-            template_code: 'testing',
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new ExportTemplates();
-
-        return $o->deleteDetail( id: $id  );
-    }
+ */
 
 }

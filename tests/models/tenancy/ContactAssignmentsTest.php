@@ -5,17 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Tenancy;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Tenancy\ContactAssignments AS Options;
+use Cruzio\lib\Netbox\Data\Tenancy\ContactAssignments AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class ContactAssignmentsTest extends testCore
 {
-    public Options $options;
-    public static $crole;
-    public static $cgroup;
-    public static $contact;
+    public static object $crole;
+    public static object $contact;
+    public static object $site;
 
     public function __construct()
     {
@@ -43,70 +41,18 @@ final class ContactAssignmentsTest extends testCore
     }
 
 
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $assgn = $this->postDetail()->body;
-        print_r( $assgn );
-
-        $o = new ContactAssignments();
-        $result = $o->getDetail( id: $assgn->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $assgn->id );
-    }
- */
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testGetList() : void
-    {
-        // SETUP
-        $assgn = $this->postDetail()->body;
-
-        $o = new ContactAssignments();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'results', $result->body );
-        $this->assertIsArray( $result->body->results );
-        $this->assertObjectHasAttribute( 'id', $result->body->results[0] );
-
-        // CLEAN UP
-        $this->deleteDetail( $assgn->id );
-    }
- */
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-/* 
-    public function testPostDetail() : void
+
+    public function testPostDetail() : int
     {
         $o = new ContactAssignments();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->contact = self::$contact->id;
+        $d->object_id = self::$site->id;
+        $d->content_type = 'dcim.site';
+        $d->role = self::$crole->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -116,12 +62,162 @@ final class ContactAssignmentsTest extends testCore
         $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+    public function testGetList() : void
+    {
+        $o = new ContactAssignments();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        $this->assertIsArray( $result->body->results );
+        $this->assertObjectHasProperty( 'id', $result->body->results[0] );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
  */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new ContactAssignments();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new ContactAssignments();
+        $d = new Data();
+        $d->contact = self::$contact->id;
+        $d->object_id = self::$site->id;
+        $d->content_type = 'dcim.site';
+        $d->role = self::$crole->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'id', $result->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new ContactAssignments();
+        $d = new Data();
+        $d->contact = self::$contact->id;
+        $d->object_id = self::$site->id;
+        $d->content_type = 'dcim.site';
+        $d->role = self::$crole->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'id', $result->body );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new ContactAssignments();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$site = self::createSite();
+        self::$crole   = self::createContactRole();
+        self::$contact = self::createContact();
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyContact( contact: self::$contact );
+        self::destroyContactRole( role: self::$crole );
+        self::destroySite( self::$site );
+        sleep(1);
+    }
+    
 
 
 /* TEST POST LIST
@@ -153,105 +249,6 @@ final class ContactAssignmentsTest extends testCore
         {
             $this->deleteDetail( id: $assgn->id );
         }
-    }
- */
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $assgn = $this->postDetail()->body;
-
-        $o = new ContactAssignments();
-        $result = $o->putDetail( 
-               id: $assgn->id, 
-             name: 'PHPUnit_Contact', 
-            group: self::$cgroup->id
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $assgn->id );
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $assgn = $this->postDetail()->body;
-
-        $o = new ContactAssignments();
-        $result = $o->putList(
-            options: [
-                [ 
-                       'id' => $assgn->id, 
-                     'name' => 'PHPUnit_Contact',
-                    'group' => self::$cgroup->id
-                ]
-            ]
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body[0] );
-
-        // CLEAN UP
-        $this->deleteDetail( $assgn->id );
-    }
- */
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $assgn = $this->postDetail()->body;
-
-        $o = new ContactAssignments();
-        $result = $o->patchDetail(
-               id: $assgn->id,
-             name: 'PHPUnit_Contact',
-            group: self::$cgroup->id
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $assgn->id );
     }
  */
 
@@ -292,27 +289,6 @@ final class ContactAssignmentsTest extends testCore
 
 
 
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $assgn = $this->postDetail()->body;
-        
-        $o = new ContactAssignments();
-        $result = $o->deleteDetail( id: $assgn->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
 /* 
@@ -334,69 +310,5 @@ final class ContactAssignmentsTest extends testCore
         $this->assertEquals( 204, $result->status );
     }
  */
-
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new ContactAssignments();
-
-        return $o->postDetail( 
-            content_type: 'Tenancy.Contacts',
-               object_id: 0,
-                 contact: self::$contact->id,
-                    role: self::$crole->id,
-                priority: 'primary'
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new ContactAssignments();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$crole   = self::createContactRole();
-        self::$cgroup  = self::createContactGroup();
-        self::$contact = self::createContact( group: self::$cgroup );
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyContact( contact: self::$contact );
-        self::destroyContactGroup( group: self::$cgroup );
-        self::destroyContactRole( role: self::$crole );
-        sleep(1);
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->content_type = 'Tenancy.Contacts';
-        $this->options->object_id    = 0;
-        $this->options->contact      = self::$contact->id;
-        $this->options->role         = self::$crole->id;
-        $this->options->priority     = 'primary';
-    }
 
 }

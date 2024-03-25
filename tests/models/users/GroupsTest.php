@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Users;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Users\Groups AS Options;
+use Cruzio\lib\Netbox\Data\Users\Groups AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class GroupsTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -39,40 +36,35 @@ final class GroupsTest extends testCore
 
 
 
-/* TEST GET DETAIL
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
+ 
+    public function testPostDetail() : int
     {
-        // SETUP
-        $user = $this->postDetail()->body;
-
         $o = new Groups();
-        $result = $o->getDetail( id: $user->id );
-        
+        $d = new Data();
+        $d->name = 'PHPUnit_Groups-Post';
+        $result = $o->postDetail( data: $d );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $user->id );
+        return $result->body->id;
     }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $user = $this->postDetail()->body;
-
         $o = new Groups();
         $result = $o->getList();
 
@@ -85,39 +77,111 @@ final class GroupsTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
+    }
+ 
 
-        // CLEAN UP
-        $this->deleteDetail( $user->id );
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Groups();
+        $result = $o->getDetail( id: $id );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
     }
 
 
 
-/* TEST POST DETAIL
+/* TEST PUT DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPostDetail() : void
+    public function testPutDetail( int $id ) : void
     {
         $o = new Groups();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_Groups-Put';
+        $result = $o->putDetail( id: $id, data: $d );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Groups();
+        $d = new Data();
+        $d->name = 'PHPUnit_Groups-Patch';
+        $result = $o->patchDetail( id: $id, data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+    }
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Groups();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new Groups();
@@ -138,42 +202,12 @@ final class GroupsTest extends testCore
             $this->deleteDetail( id: $user->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $user = $this->postDetail()->body;
-
-        $o = new Groups();
-        $result = $o->putDetail( 
-              id: $user->id, 
-            name: 'PHPUnit_Group',
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $user->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -195,42 +229,13 @@ final class GroupsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $user->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $user = $this->postDetail()->body;
-
-        $o = new Groups();
-        $result = $o->patchDetail(
-              id: $user->id,
-            name: 'PHPUnit_Group'
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $user->id );
-    }
+ */
 
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -253,33 +258,12 @@ final class GroupsTest extends testCore
         $this->deleteDetail( $user->id );
     }
 
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $user = $this->postDetail()->body;
-        
-        $o = new Groups();
-        $result = $o->deleteDetail( id: $user->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -297,41 +281,5 @@ final class GroupsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Groups();
-
-        return $o->postDetail( 
-            name: 'PHPUnit_Group',
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Groups();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name  = 'PHPUnit_Group-' . $rand;
-    }
-
+ */
 }

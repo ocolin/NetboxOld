@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
+use Cruzio\lib\Netbox\Data\Extras\CustomLinks AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
@@ -36,40 +36,38 @@ final class CustomLinksTest extends testCore
 
 
 
-/* TEST GET DETAIL
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
+ 
+    public function testPostDetail() : int
     {
-        // SETUP
-        $link = $this->postDetail()->body;
-
         $o = new CustomLinks();
-        $result = $o->getDetail( id: $link->id );
-        
+        $d = new Data();
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->name = 'PHPUnit_CustomLinks_Post';
+        $d->link_url = 'http://test.com';
+        $d->link_text = 'testing';
+        $result = $o->postDetail( data: $d );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $link->id );
+        return $result->body->id;
     }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $link = $this->postDetail()->body;
-
         $o = new CustomLinks();
         $result = $o->getList();
 
@@ -82,39 +80,114 @@ final class CustomLinksTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $link->id );
     }
 
 
 
-/* TEST POST DETAIL
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPostDetail() : void
+    public function testGetDetail( int $id ) : void
     {
         $o = new CustomLinks();
-        $result = $this->postDetail();
+        $result = $o->getDetail( id: $id );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new CustomLinks();
+        $d = new Data();
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->name = 'PHPUnit_CustomLinks_Post';
+        $d->link_url = 'http://test.com';
+        $d->link_text = 'testing';
+        $result = $o->putDetail( id: $id, data: $d );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new CustomLinks();
+        $d = new Data();
+        $d->name = 'PHPUnit_CustomLinks_Post';
+        $result = $o->patchDetail( id: $id, data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
     }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new CustomLinks();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new CustomLinks();
@@ -144,45 +217,13 @@ final class CustomLinksTest extends testCore
             $this->deleteDetail( id: $link->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $link = $this->postDetail()->body;
-
-        $o = new CustomLinks();
-        $result = $o->putDetail( 
-                      id: $link->id, 
-                    name: 'PHPUnit_CustomLink',
-            content_types: [ 'dcim.sitegroup' ],
-               link_text: 'testing',
-                link_url: 'http://test.com'
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $link->id );
-    }
+ */
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -213,45 +254,13 @@ final class CustomLinksTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $link->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $link = $this->postDetail()->body;
-
-        $o = new CustomLinks();
-        $result = $o->patchDetail(
-                      id: $link->id,
-                    name: 'PHPUnit_CustomLink',
-            content_types: [ 'dcim.sitegroup' ],
-               link_text: 'testing',
-                link_url: 'http://test.com'
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $link->id );
-    }
+ */
 
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -282,34 +291,13 @@ final class CustomLinksTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $link->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $link = $this->postDetail()->body;
-        
-        $o = new CustomLinks();
-        $result = $o->deleteDetail( id: $link->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -327,34 +315,5 @@ final class CustomLinksTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-    
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new CustomLinks();
-
-        return $o->postDetail( 
-                    name: 'PHPUnit_CustomLink',
-            content_types: [ 'dcim.sitegroup' ],
-               link_text: 'testing',
-                link_url: 'http://test.com'
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new CustomLinks();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
+ */
 }

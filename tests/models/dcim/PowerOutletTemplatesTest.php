@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\PowerOutletTemplates AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\PowerOutletTemplates AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class PowerOutletTemplatesTest extends testCore
 {
-    public Options $options;
     public static $devtype;
     public static $manf;
 
@@ -42,42 +40,40 @@ final class PowerOutletTemplatesTest extends testCore
     }
 
 
-/* TEST GET DETAIL
+
+
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testGetDetail() : void
+    public function testPostDetail() : int
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
         $o = new PowerOutletTemplates();
-        $result = $o->getDetail( id: $temp->id );
-        
+        $d = new Data();
+        $d->name = 'PHPUnit_PwrOutletTemp-Post';
+        $d->device_type = self::$devtype->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
+        return $result->body->id;
     }
  
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
         $o = new PowerOutletTemplates();
-        $result = $o->getList();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -88,76 +84,48 @@ final class PowerOutletTemplatesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
     }
+ 
 
 
-
-/* TEST POST DETAIL
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
     {
         $o = new PowerOutletTemplates();
-        $result = $this->postDetail();
-
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
-    }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-
-    public function testPostList() :void
-    {
-        $o = new PowerOutletTemplates();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $temp )
-        {
-            $this->deleteDetail( id: $temp->id );
-        }
     }
 
 
 
 /* TEST PUT DETAIL
 ---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPutDetail() : void
+    public function testPutDetail( int $id ) : void
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
         $o = new PowerOutletTemplates();
-        $result = $o->putDetail( 
-                     id: $temp->id, 
-                   name: 'PHPUnit_PwrOutletTempl',
-            device_type: self::$devtype->id               
-        );
+        $d = new Data();
+        $d->name = 'PHPUnit_PwrOutletTemp-Put';
+        $d->device_type = self::$devtype->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -167,54 +135,24 @@ final class PowerOutletTemplatesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-
-    public function testPutList() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-        $this->options->id = $temp->id;
-
-        $o = new PowerOutletTemplates();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
-
+ 
 
 
 /* TEST PATCH DETAIL
 ---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPatchDetail() : void
+    public function testPatchDetail( int $id ) : void
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
         $o = new PowerOutletTemplates();
-        $result = $o->patchDetail(
-                     id: $temp->id, 
-                   name: 'PHPUnit_PwrOutletTempl',
-            device_type: self::$devtype->id
-        );
+        $d = new Data();
+        $d->name = 'PHPUnit_PwrOutletTemp-Put';
+        $d->device_type = self::$devtype->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -224,50 +162,22 @@ final class PowerOutletTemplatesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
     }
-
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-
-    public function testPatchList() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-        $this->options->id = $temp->id;
-
-        $o = new PowerOutletTemplates();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $temp->id );
-    }
+ 
 
 
 
 /* TEST DELETE DETAIL
 ---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
 
-    public function testDeleteDetail() : void
+    public function testDeleteDetail( int $id ) : void
     {
-        // SETUP
-        $temp = $this->postDetail()->body;
-        
         $o = new PowerOutletTemplates();
-        $result = $o->deleteDetail( id: $temp->id );
+        $result = $o->deleteDetail( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -275,56 +185,6 @@ final class PowerOutletTemplatesTest extends testCore
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
-    }
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $temp = $this->postDetail()->body;
-
-        $o = new PowerOutletTemplates();
-        $result = $o->deleteList(
-            options: [[ 'id' => $temp->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new PowerOutletTemplates();
-
-        return $o->postDetail( 
-                   name: 'PHPUnit_PwrOutletTempl',
-            device_type: self::$devtype->id
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new PowerOutletTemplates();
-
-        return $o->deleteDetail( id: $id  );
     }
 
 
@@ -347,15 +207,110 @@ final class PowerOutletTemplatesTest extends testCore
         self::destroyManufacturer( manf: self::$manf );
         sleep(1);
     }
+
+
     
-/*
+/* TEST POST LIST
 ---------------------------------------------------------------------------- */
-   
-    public function setUp() : void
+/* 
+    public function testPostList() :void
     {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name        = 'PHPUnit_PwrOutletTemp-' . $rand;
-        $this->options->device_type = self::$devtype->id;
+        $o = new PowerOutletTemplates();
+        $result = $o->postList( options: [ $this->options ] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        //CLEAN UP
+        foreach( $result->body AS $temp )
+        {
+            $this->deleteDetail( id: $temp->id );
+        }
     }
+ */
+
+
+/* TEST PUT LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testPutList() : void
+    {
+        // SETUP
+        $temp = $this->postDetail()->body;
+        $this->options->id = $temp->id;
+
+        $o = new PowerOutletTemplates();
+        $result = $o->putList( options: [ $this->options ] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        // CLEAN UP
+        $this->deleteDetail( $temp->id );
+    }
+ */
+
+
+
+/* TEST PATCH LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testPatchList() : void
+    {
+        // SETUP
+        $temp = $this->postDetail()->body;
+        $this->options->id = $temp->id;
+
+        $o = new PowerOutletTemplates();
+        $result = $o->patchList( options: [ $this->options ] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        // CLEAN UP
+        $this->deleteDetail( $temp->id );
+    }
+ */
+
+
+/* TEST DELETE LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testDeleteList() : void
+    {
+        // SETUP
+        $temp = $this->postDetail()->body;
+
+        $o = new PowerOutletTemplates();
+        $result = $o->deleteList(
+            options: [[ 'id' => $temp->id ]]
+        );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ */
+
 }

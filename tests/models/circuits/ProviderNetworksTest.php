@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Circuits;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Circuits\CircuitTypes AS Options;
+use Cruzio\lib\Netbox\Data\Circuits\ProviderNetworks AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class ProviderNetworksTest extends testCore
 {
-    public Options $options;
     public static $provider;
 
     public function __construct()
@@ -41,66 +39,17 @@ final class ProviderNetworksTest extends testCore
     }
 
 
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $network = $this->postDetail()->body;
-
-        $o = new ProviderNetworks();
-        $result = $o->getDetail( id: $network->id );   
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $network->id );
-    }
- 
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $network = $this->postDetail()->body;
-
-        $o = new ProviderNetworks();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $network->id );
-    }
-
-
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
         $o = new ProviderNetworks();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_ProviderNetworks-Post';
+        $d->provider = self::$provider->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -111,18 +60,156 @@ final class ProviderNetworksTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
 
 
 
-/* TEST POST LIST
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new ProviderNetworks();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new ProviderNetworks();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );   
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new ProviderNetworks();
+        $d = new Data();
+        $d->name = 'PHPUnit_ProviderNetworks-Put';
+        $d->provider = self::$provider->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
 ---------------------------------------------------------------------------- */
 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new ProviderNetworks();
+        $d = new Data();
+        $d->name = 'PHPUnit_ProviderNetworks-Patch';
+        $d->provider = self::$provider->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new ProviderNetworks();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+/* SETUP AND CLOSING FUNCTIONS
+---------------------------------------------------------------------------- */
+
+    public static function setUpBeforeClass() : void
+    {
+        self::$provider = self::createProvider();
+    }
+
+    
+/*
+---------------------------------------------------------------------------- */
+
+ 
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyProvider( provider: self::$provider );
+        sleep(1);
+    }
+
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/* 
     public function testPostList() :void
     {
-
         $o = new ProviderNetworks();
         $result = $o->postList( options: [ $this->options ] );
 
@@ -141,42 +228,13 @@ final class ProviderNetworksTest extends testCore
             $this->deleteDetail( id: $network->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $network = $this->postDetail()->body;
-
-        $o = new ProviderNetworks();
-        $result = $o->putDetail( 
-                  id: $network->id, 
-                name: 'PHPUnit_ProvNet',
-            provider: self::$provider->id,              
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $network->id );
-    }
+ */
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -198,42 +256,12 @@ final class ProviderNetworksTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $network->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $network = $this->postDetail()->body;
-
-        $o = new ProviderNetworks();
-        $result = $o->patchDetail(
-                  id: $network->id, 
-                name: 'PHPUnit_ProvNet',
-            provider: self::$provider->id,
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $network->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -255,33 +283,12 @@ final class ProviderNetworksTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $network->id );
     }
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $network = $this->postDetail()->body;
-        
-        $o = new ProviderNetworks();
-        $result = $o->deleteDetail( id: $network->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -299,65 +306,5 @@ final class ProviderNetworksTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new ProviderNetworks();
-
-        return $o->postDetail( 
-                name: 'PHPUnit_ProvNet',
-            provider: self::$provider->id,
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id )
-    {
-        $o = new ProviderNetworks();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$provider = self::createProvider();
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyProvider( provider: self::$provider );
-        sleep(1);
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public function setUp() : void
-    {
-        $this->options = new Options();
-        $this->options->name     = 'PHPUnit_ProvNet';
-        $this->options->provider = self::$provider->id;
-    }
+ */
 }

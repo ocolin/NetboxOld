@@ -7,8 +7,25 @@ namespace Cruzio\lib\Netbox;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-use \Cruzio\lib\Netbox\Models\DCIM\Devices;
+$test = new Models\DCIM\Cables();
 
+$output = $test->getList();
+print_r( $output );
+//$data = new Data\DCIM\Cables();
+
+//use \Cruzio\lib\Netbox\Data\DCIM\Cables;
+
+//$ip = new IpAddresses();
+
+//$ip->address = '1.1.1.2';
+
+//$rend = $ip->render();
+
+//echo $ip->address . "\n";
+
+//print_r( $rend );
+
+/*
 $device = new Devices();
 
 $test = $device->postDetail(
@@ -25,3 +42,4 @@ $test = $device->postDetail(
 
 //$test = $http->get(uri: '' );
 print_r( $test );
+*/

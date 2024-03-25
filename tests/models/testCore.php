@@ -4,9 +4,6 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models;
 
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\DeviceTypes AS DevtOptions;
-use Cruzio\lib\Netbox\Options\DCIM\Interfaces AS IntOptions;
 use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
 
 abstract class testCore extends \PHPUnit\Framework\TestCase
@@ -25,10 +22,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createUser() : object
     {
         $o = new Users\Users();
-        return $o->postDetail(
-            username: 'PHPUnit_Username',
-            password: 'PHPUnit_Password'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Users\Users();
+        $d->username = 'PHPUnit_Username-Post';
+        $d->password = 'PHPUnit_Password-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyUser( object $user ) :void
@@ -42,13 +39,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 /* CONTACT 
 ---------------------------------------------------------------------------- */
 
-    public static function createContact( object $group ) : object
+    public static function createContact() : object
     {
         $o = new Tenancy\Contacts();
-        return $o->postDetail(
-              name: 'PHPUnit_Contact',
-             group: $group->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Tenancy\Contacts();
+        $d->name = 'PHPUnit_Contacts-Post';
+        
+        return$o->postDetail( data: $d )->body;
     }
 
     public static function destroyContact( object $contact ) :void
@@ -65,11 +62,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createContactGroup() : object
     {
         $o = new Tenancy\ContactGroups();
-        return $o->postDetail(
-              name: 'PHPUnit_ContactGrp',
-              slug: 'PHPUnit_ContactGrp',
-            parent: null
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Tenancy\ContactGroups();
+        $d->name = 'PHPUnit_ContactGroups-Post';
+        $d->slug = 'PHPUnit_ContactGroups-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyContactGroup( object $group ) :void
@@ -86,10 +82,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createContactRole() : object
     {
         $o = new Tenancy\ContactRoles();
-        return $o->postDetail(
-              name: 'PHPUnit_ContactRole',
-              slug: 'PHPUnit_ContactRole',
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Tenancy\ContactRoles();
+        $d->name = 'PHPUnit_ContactRoles-Post';
+        $d->slug = 'PHPUnit_ContactRoles-Post';
+
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyContactRole( object $role ) :void
@@ -106,10 +103,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createProvider() : object
     {
         $o = new Circuits\Providers();
-        return $o->postDetail(
-            name: 'PHPUnit_Provider',
-            slug: 'PHPUnit_Provider'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Circuits\Providers();
+        $d->name = 'PHPUnit_Provider-Post';
+        $d->slug = 'PHPUnit_Provider-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyProvider( object $provider ) :void
@@ -128,11 +125,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     ) : object
     {
         $o = new Circuits\Circuits();
-        return $o->postDetail(
-                     cid: 'PHPUnit_Circuit',
-                provider: $provider->id,
-                    type: $circuit_type->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Circuits\Circuits();
+        $d->cid = 'PHPUnit_Circuit-Post';
+        $d->provider = $provider->id;
+        $d->type = $circuit_type->id;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyCircuit( object $circuit ) :void
@@ -142,18 +139,16 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     }
 
 
-
-
 /* CIRCUIT TYPE
 ---------------------------------------------------------------------------- */
 
     public static function createCircuitType() : object
     {
         $o = new Circuits\CircuitTypes();
-        return $o->postDetail(
-            name: 'PHPUnit_CrtType',
-            slug: 'PHPUnit_CrtType'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Circuits\CircuitTypes();
+        $d->name = 'PHPUnit_CircuitType-Post';
+        $d->slug = 'PHPUnit_CircuitType-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyCircuitType( object $ct ) :void
@@ -169,10 +164,14 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createSite() : object
     {
         $rand = rand( 1, 100000 );
+        $data = new \Cruzio\lib\Netbox\Data\DCIM\Sites();
+        $data->name = 'PHPUnit_Site-' . $rand;
+        $data->slug = 'PHPUnit_Site-' . $rand;
+
+        
         $o = new DCIM\Sites();
         return $o->postDetail(
-            name: 'PHPUnit_Site-' . $rand,
-            slug: 'PHPUnit_Site-' . $rand
+            data: $data
         )->body;
     }
 
@@ -189,11 +188,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createDeviceRole() : object
     {
+        $rand = rand( 1, 100000 );
         $o = new DCIM\DeviceRoles();
-        return $o->postDetail(
-            name: 'PHPUnit_DeviceRole',
-            slug: 'PHPUnit_DeviceRole'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\DeviceRoles();
+        $d->name = 'PHPUnit_DeviceRole-' . $rand;
+        $d->slug = 'PHPUnit_DeviceRole-' . $rand;
+
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyDeviceRole( object $devrole ) :void
@@ -211,9 +212,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 1, 100000 );
         $o = new DCIM\Manufacturers();
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\Manufacturers();
+        $d->name = 'PHPUnit_Manufacturer-' . $rand;
+        $d->slug = 'PHPUnit_Manufacturer-' . $rand;
         return $o->postDetail(
-            name: 'PHPUnit_Manufacturer-' . $rand,
-            slug: 'PHPUnit_Manufacturer-' . $rand
+            data: $d
         )->body;
     }
 
@@ -232,24 +235,21 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         object $manf
     ) : object
     {
-        $obj = new DevtOptions();
-        $obj->subdevice_role = 'parent';
-
         $o = new DCIM\DeviceTypes();
-        return $o->postDetail(
-            manufacturer: $manf->id,
-                   model: 'PHPUnit_DeviceType',
-                    slug: 'PHPUnit_DeviceType',
-                 options: $obj
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\DeviceTypes();
+        $d->model = 'PHPUnit_DeviceType';
+        $d->slug = 'PHPUnit_DeviceType';
+        $d->subdevice_role = 'parent';
+        $d->manufacturer = $manf->id;
+
+        return $o->postDetail( data: $d )->body;
+
     }
 
     public static function destroyDeviceType( object $devtype ) :void
     {
         $o = new DCIM\DeviceTypes();
         $o->deleteDetail( id: $devtype->id );
-
-        //self::destroyManufacturer( manf: $devtype->manufacturer );
     }
 
 
@@ -260,11 +260,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createTenant() : object
     {
         $o = new Tenancy\Tenants();
-
-        return $o->postDetail(
-            name: 'PHPUnit_Tenant',
-            slug: 'PHPUnit_Tenant'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Tenancy\Tenants();
+        $d->name = 'PHPUnit_Tenant-Post';
+        $d->slug = 'PHPUnit_Tenant-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyTenant( object $tenant ) :void
@@ -284,11 +283,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 1, 100000 );
         $o = new DCIM\Locations();
-        return $o->postDetail(
-            name: 'PHPUnit_Location' . $rand,
-            slug: 'PHPUnit_Location' . $rand,
-            site: $site->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\Locations();
+        $d->name = 'PHPUnit_Location-' . $rand;
+        $d->slug = 'PHPUnit_Location-' . $rand;
+        $d->site = $site->id;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyLocation( object $location ) : void
@@ -304,16 +303,14 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createRack( 
         object $site,
-        object $location
     ) : object
     {
         $rand = rand( 1, 100000 );
         $o = new DCIM\Racks();
-        return $o->postDetail(
-            name: 'PHPUnit_Rack-' . $rand,
-            site: $site->id,
-            location: $location->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\Racks();
+        $d->name = 'PHPUnit_Rack-' . $rand;
+        $d->site = $site->id;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyRack( object $rack ) : void
@@ -329,10 +326,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createRir() : object
     {
         $o = new IPAM\Rirs();
-        return $o->postDetail(
-            name: 'phptestunit_rir',
-            slug: 'phptestunit_rir'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\IPAM\Rirs();
+        $d->name = 'PHPUnit_Rirs-Post';
+        $d->slug = 'PHPUnit_Rirs-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyRir( object $rir ) : void
@@ -350,7 +347,9 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 1, 100000 );
         $o = new DCIM\VirtualChassis();
-        return $o->postDetail( name: 'PHPUnit_VChas-' . $rand )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\VirtualChassis();
+        $d->name = 'PHPUnit_VChas-' . $rand;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyVirtualChassis( object $chassis ) : void
@@ -367,10 +366,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createModuleBay( object $device ) : object
     {
         $o = new DCIM\ModuleBays();
-        return $o->postDetail( 
-            name: 'PHPUnit_Modbay', 
-            device: $device->id 
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\ModuleBays();
+        $d->name = 'PHPUnit_ModBay-Post';
+        $d->device = $device->id;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyModuleBay( object $bay ) : void
@@ -387,10 +386,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createModuleType( object $manufacturer ) : object
     {
         $o = new DCIM\ModuleTypes();
-        return $o->postDetail(
-            manufacturer: $manufacturer->id,
-                   model: 'PHPUnit_ModType'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\ModuleTypes();
+        $d->model = 'PHPUnit_ModelTypePut';
+        $d->manufacturer = $manufacturer->id;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyModuleType( object $modtype ) : void
@@ -406,10 +405,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createPowerPanel( object $site ) : object
     {
         $o = new DCIM\PowerPanels();
-        return $o->postDetail( 
-            name: 'PHPUnit_PowerPanel',
-            site: $site->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\PowerPanels();
+        $d->name = 'PHPUnit_PowerPanel';
+        $d->slug = 'PHPUnit_PowerPanel';
+        $d->site = $site->id;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyPowerPanel( object $panel ) : void
@@ -425,27 +425,19 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createDevice( 
         object $site,
-        object $tenant,
         object $devicetype,
         object $devicerole,
-        object $virtual_chassis,
-        object $rack
     ) : object
     {
-        $rand1 = rand( 0, 100000 );
-        $rand2 = rand( 0, 100 );
+        $rand = rand( 0, 100000 );
         $o = new DCIM\Devices();
-        return $o->postDetail(
-                       name: 'PHPUnit_device-' . $rand1,
-                       face: 'front',
-                vc_position: $rand2,
-                       site: $site->id,
-                     tenant: $tenant->id,
-                device_type: $devicetype->id,
-                       role: $devicerole->id,
-            virtual_chassis: $virtual_chassis->id,
-                       rack: $rack->id,
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\Devices();
+        $d->name = 'PHPUnit_Device-' . $rand;
+        $d->device_type = $devicetype->id;
+        $d->site = $site->id;
+        $d->role = $devicerole->id;
+
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyDevice( object $device ) :void
@@ -463,15 +455,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 0,100000 );
         $o = new DCIM\Interfaces();
-        $obj = new IntOptions();
-        $obj->rf_role = 'station';
-
-        return $o->postDetail(
-              name: 'PHPUnit_Interface-' . $rand,
-              type: 'ieee802.11ac',
-            device: $device->id,
-            options: $obj
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\Interfaces();
+        $d->name = 'PHPUnit_Interface-Post-' . $rand;
+        $d->device = $device->id;
+        $d->type = 'ieee802.11ac';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyInterface( object $interface )
@@ -488,9 +476,9 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     {
         $rand = rand( 1, 100000 );
         $o = new Wireless\WirelessLans();
-        return $o->postDetail(
-            ssid: 'PHPUnit_SSID-' . $rand
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Wireless\WirelessLans();
+        $d->ssid = "PHPUnit_SSID-Post";
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyWirelessLan( object $lan )
@@ -510,14 +498,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         string $term = 'A'
     ) : object
     {
-        $obj = new CTOptions();
-        $obj->site = $site->id;
         $o = new Circuits\CircuitTerminations();
-        return $o->postDetail(
-            circuit: $circuit->id,
-            term_side: $term,
-            options: $obj
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Circuits\CircuitTerminations();
+        $d->circuit = $circuit->id;
+        $d->site = $site->id;
+        $d->term_side = $term;
+
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyCircuitTermination( object $term )
@@ -534,12 +521,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createRearPort( object $device ) : object
     {
         $o = new DCIM\RearPorts();
-        return $o->postDetail(
-            name: 'PHPUnit_RearPort',
-            type: '8p8c',
-            device: $device->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\RearPorts();
+        $d->name = 'PHPUnit_RearPort-Post';
+        $d->type = '8p8c';
+        $d->device = $device->id;
+        return $o->postDetail( data: $d )->body;
     }
+    
 
     public static function destroyRearPorts( object $port )
     {
@@ -554,11 +542,12 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createRearPortTemplate( object $device_type ) : object
     {
         $o = new DCIM\RearPortTemplates();
-        return $o->postDetail(
-            device_type: $device_type->id,
-            name: 'PHPUnit_RearPortTempl',
-            type: '8p8c',
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\DCIM\RearPortTemplates();
+        $d->name = 'PHPUnit_RearPortTempl-Post';
+        $d->type = '8p8c';
+        $d->device_type = $device_type->id;
+        
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyRearPortsTemplate( object $templ ) : void
@@ -575,10 +564,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createClusterType() : object
     {
         $o = new Virtualization\ClusterTypes();
-        return $o->postDetail(
-            name: 'PHPUnit_ClusterType',
-            slug: 'PHPUnit_ClusterType'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Virtualization\ClusterTypes();
+        $d->name = 'PHPUnit_ClusterType-Post';
+        $d->slug = 'PHPUnit_ClusterType-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyClusterType( object $type ) : void
@@ -595,10 +584,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createClusterGroup() : object
     {
         $o = new Virtualization\ClusterGroups();
-        return $o->postDetail(
-            name: 'PHPUnit_ClusterGroup',
-            slug: 'PHPUnit_ClusterGroup'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Virtualization\ClusterGroups();
+        $d->name = 'PHPUnit_ClusterGroups-Post';
+        $d->slug = 'PHPUnit_ClusterGroups-Post';
+
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyClusterGroup( object $group )
@@ -619,12 +609,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     ) : object
     {
         $o = new Virtualization\Clusters();
-        return $o->postDetail(
-             name: 'PHPUnit_Cluster',
-             type: $type->id,
-            group: $group->id,
-             site: $site->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Virtualization\Clusters();
+        $d->name = 'PHPUnit_Clusters-Post';
+        $d->type  = $type->id;
+        $d->group = $group->id;
+        $d->site  = $site->id;
+        
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyCluster( object $cluster )
@@ -641,10 +632,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createVM( object $cluster ) : object
     {
         $o = new Virtualization\VirtualMachines();
-        return $o->postDetail(
-               name: 'PHPUnit_VM',
-            cluster: $cluster->id
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\Virtualization\VirtualMachines();
+        $d->name = 'PHPUnit_VirtualMachines-Post';
+        $d->cluster = $cluster->id;
+        return $o->postDetail( data: $d )->body;
+
     }
 
     public static function destroyVM( object $vm ) : void
@@ -660,11 +652,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createFhrpGroup() : object
     {
+        $rand = rand( 1, 10000 );
         $o = new IPAM\FhrpGroups();
-        return $o->postDetail(
-            protocol: 'vrrp2',
-            group_id: 1
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\IPAM\FhrpGroups();
+        $d->protocol = 'vrrp2';
+        $d->group_id = $rand;
+        $d->description = 'PHPUnit_FhrpGroupPost-' . $rand;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyFhrpGroup( object $group ) : void
@@ -680,10 +674,11 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createIpRange() : object
     {
         $o = new IPAM\IpRanges();
-        return $o->postDetail(
-            start_address: '192.168.55.1',
-              end_address: '192.168.55.254'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\IPAM\IpRanges();
+        $d->start_address = '192.168.77.0/24';
+        $d->end_address   = '192.168.77.254/24';
+        $d->description   = 'PHPUnit_IpRange-Post';
+        return $o->postDetail( data: $d)->body;
     }
 
     public static function destroyIpRange( object $range ) : void
@@ -699,8 +694,12 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     public static function createIpAddress() : object
     {
+        $rand = rand( 2, 254 );
         $o = new IPAM\IpAddresses();
-        return $o->postDetail( address: '192.168.55.55/24')->body;
+        $d = new \Cruzio\lib\Netbox\Data\IPAM\IpAddresses();
+        $d->address = "192.168.44.{$rand}/24";
+        $d->description = 'PHPUnit_IP-Post-' . $rand;
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyIpAddress( object $ip ) : void
@@ -717,7 +716,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createPrefix() : object
     {
         $o = new IPAM\Prefixes();
-        return $o->postDetail( prefix: '192.168.55.0/25' )->body;
+        $d = new \Cruzio\lib\Netbox\Data\IPAM\Prefixes();
+        $d->prefix = '192.168.1.0/24';
+        $d->description = 'PHPUnit_IpRangeAvaIPs-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyPrefix( object $prefix ) : void
@@ -733,10 +735,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
     public static function createVlanGroup() : object
     {
         $o = new IPAM\VlanGroups();
-        return $o->postDetail(
-            name: 'PHPUnit_VlanGroup',
-            slug: 'PHPUnit_VlanGroup'
-        )->body;
+        $d = new \Cruzio\lib\Netbox\Data\IPAM\VlanGroups();
+        $d->name = 'PHPUnit_VlanGroup-Post';
+        $d->slug = 'PHPUnit_VlanGroup-Post';
+        return $o->postDetail( data: $d )->body;
     }
 
     public static function destroyVlanGroup( object $group ) : void

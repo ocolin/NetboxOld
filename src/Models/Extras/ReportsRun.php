@@ -13,7 +13,4 @@ class ReportsRun extends Extras_Core
         parent::__construct( http: $http );
         $this->uri .= "reports/{$id}/run/";
     }
-
-
-
 }

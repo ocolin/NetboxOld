@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
+use Cruzio\lib\Netbox\Data\Extras\ImageAttachments AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
@@ -36,6 +36,58 @@ final class ImageAttachmentsTest extends testCore
 
 
 
+/* TEST POST DETAIL
+---------------------------------------------------------------------------- */
+
+    public function testPostDetail() : int
+    {
+        $o = new ImageAttachments();
+        $d = new Data();
+        $d->content_type = 'dcim.devicerole';
+        $d->object_id = 1;
+        $d->image_width = 100;
+        $d->image_height = 100;
+        $d->image = 'site_612_test1.jpg';
+        $result = $o->postDetail( data: $d );
+        print_r( $result->body );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'id', $result->body );
+
+        return $result->body->id;
+    }
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ *  
+ */
+/* 
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new ImageAttachments();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ */
+
+
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 /*
@@ -64,14 +116,12 @@ final class ImageAttachmentsTest extends testCore
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-/* 
+ /* 
     public function testGetList() : void
     {
-        // SETUP
-        $attch = $this->postDetail()->body;
-
         $o = new ImageAttachments();
         $result = $o->getList();
+        print_r( $result );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -81,36 +131,9 @@ final class ImageAttachmentsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'results', $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
         $this->assertIsArray( $result->body->results );
-        $this->assertObjectHasAttribute( 'id', $result->body->results[0] );
-
-        // CLEAN UP
-        $this->deleteDetail( $attch->id );
-    }
- */
-
-
-/* TEST POST DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPostDetail() : void
-    {
-        $o = new ImageAttachments();
-        $result = $this->postDetail();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        $this->assertObjectHasProperty( 'id', $result->body->results[0] );
     }
  */
 
@@ -288,27 +311,6 @@ final class ImageAttachmentsTest extends testCore
 
 
 
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $attch = $this->postDetail()->body;
-        
-        $o = new ImageAttachments();
-        $result = $o->deleteDetail( id: $attch->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
 /* 
@@ -334,7 +336,7 @@ final class ImageAttachmentsTest extends testCore
     
 /* CREATE A REGION
 ---------------------------------------------------------------------------- */
-
+/* 
     public function postDetail() : Response
     {
         $o = new ImageAttachments();
@@ -347,17 +349,17 @@ final class ImageAttachmentsTest extends testCore
             image: ''
         );
     }
-
+ */
 
 
 /* DELETE A REGION
 ---------------------------------------------------------------------------- */
-
+/* 
     public function deleteDetail( int $id ) : Response
     {
         $o = new ImageAttachments();
 
         return $o->deleteDetail( id: $id  );
     }
-
+ */
 }

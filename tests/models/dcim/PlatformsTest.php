@@ -5,15 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\Platforms AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\Platforms AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class PlatformsTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
@@ -38,68 +35,16 @@ final class PlatformsTest extends testCore
     }
 
 
-
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $plat = $this->postDetail()->body;
-
-        $o = new Platforms();
-        $result = $o->getDetail( id: $plat->id );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $plat->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $plat = $this->postDetail()->body;
-
-        $o = new Platforms();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $plat->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
-    public function testPostDetail() : void
+    public function testPostDetail() : int
     {
         $o = new Platforms();
-        $result = $this->postDetail();
+        $d = new Data();
+        $d->name = 'testPlatform';
+        $d->slug = 'testplatform';
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -110,15 +55,145 @@ final class PlatformsTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
+        return $result->body->id;
     }
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new Platforms();
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+    public function testGetList() : void
+    {
+        $o = new Platforms();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertIsArray( $result->body->results );
+    }
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPutDetail(int $id ) : void
+    {
+        $o = new Platforms();
+        $d = new Data();
+        $d->name = 'updatePlatform';
+        $d->slug = 'updateplatform';
+        $result = $o->putDetail( 
+              id: $id, 
+            data: $d,
+          params: [ 'exclude' => 'config_context']
+        );
+        
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Platforms();
+        $d = new Data();
+        $d->name = 'patchPlatform';
+        $d->slug = 'patchplatform';
+
+        $result = $o->patchDetail(
+              id: $id,
+            data: $d,
+          params: [ 'exclude' => 'config_context']
+        );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+ *  @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Platforms();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPostList() :void
     {
         $o = new Platforms();
@@ -139,43 +214,13 @@ final class PlatformsTest extends testCore
             $this->deleteDetail( id: $plat->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $plat = $this->postDetail()->body;
-
-        $o = new Platforms();
-        $result = $o->putDetail( 
-              id: $plat->id, 
-            name: 'updatePlatform', 
-            slug: 'updatePlatform',
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $plat->id );
-    }
+*/
 
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPutList() : void
     {
         // SETUP
@@ -197,42 +242,13 @@ final class PlatformsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $plat->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $plat = $this->postDetail()->body;
-
-        $o = new Platforms();
-        $result = $o->patchDetail(
-              id: $plat->id,
-            name: 'patchPlatform',
-            slug: 'patchPlatform',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $plat->id );
-    }
+*/
 
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testPatchList() : void
     {
         // SETUP
@@ -254,34 +270,13 @@ final class PlatformsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $plat->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $plat = $this->postDetail()->body;
-        
-        $o = new Platforms();
-        $result = $o->deleteDetail( id: $plat->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+*/
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/*
     public function testDeleteList() : void
     {
         // SETUP
@@ -299,43 +294,6 @@ final class PlatformsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-/* CREATE A SITE
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Platforms();
-
-        return $o->postDetail( 
-            name: 'testPlatform',
-            slug: 'testPlatform',
-        );
-    }
-
-
-
-/* DELETE A RIR
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Platforms();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-   
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_Platform-' . $rand;
-        $this->options->slug = 'PHPUnit_Platform-' . $rand;
-    }
+*/
 
 }

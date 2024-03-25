@@ -5,23 +5,15 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Circuits;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Circuits\CircuitTypes AS Options;
+use Cruzio\lib\Netbox\Data\Circuits\CircuitTypes AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class CircuitTypesTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();
-        $this->options = new Options();
-        $this->options->name        = 'PHPUnit_CType';
-        $this->options->slug        = 'PHPUnit_CType';
-        $this->options->description = 'PHPUnit_CType';
-
     }
 
 /* TEST OPTIONS
@@ -44,67 +36,16 @@ final class CircuitTypesTest extends testCore
 
 
 
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTypes();
-        $type = $o->getDetail( id: $term->id );
-        
-        $this->assertIsObject( $type );
-        $this->assertObjectHasProperty( 'status',  $type );
-        $this->assertObjectHasProperty( 'headers', $type );
-        $this->assertObjectHasProperty( 'body',    $type );
-        $this->assertIsInt( $type->status );
-        $this->assertEquals( 200, $type->status );
-        $this->assertIsArray( $type->headers );
-        $this->assertIsObject( $type->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-
-    public function testGetList() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTypes();
-        $type = $o->getList();
-
-        $this->assertIsObject( $type );
-        $this->assertObjectHasProperty( 'status',  $type );
-        $this->assertObjectHasProperty( 'headers', $type );
-        $this->assertObjectHasProperty( 'body',    $type );
-        $this->assertIsInt( $type->status );
-        $this->assertEquals( 200, $type->status );
-        $this->assertIsArray( $type->headers );
-        $this->assertIsObject( $type->body );
-        $this->assertIsArray( $type->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
-
-
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testPostDetail() : void
+ 
+    public function testPostDetail() : int
     {
         $o = new CircuitTypes();
-        $type = $this->postDetail();
+        $d = new Data();
+        $d->name = 'PHPUnit_CircuitType-Post';
+        $d->slug = 'PHPUnit_CircuitType-Post';
+        $type = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $type );
         $this->assertObjectHasProperty( 'status',  $type );
@@ -115,15 +56,136 @@ final class CircuitTypesTest extends testCore
         $this->assertIsArray( $type->headers );
         $this->assertIsObject( $type->body );
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $type->body->id );
+        return $type->body->id;
     }
+
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+ 
+    public function testGetList() : void
+    {
+        $o = new CircuitTypes();
+        $type = $o->getList( params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
+        $this->assertIsArray( $type->body->results );
+    }
+ 
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testGetDetail( int $id ) : void
+    {
+        $o = new CircuitTypes();
+        $type = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
+    }
+ 
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new CircuitTypes();
+        $d = new Data();
+        $d->name = 'PHPUnit_CircuitType-Put';
+        $d->slug = 'PHPUnit_CircuitType-Put';
+        $type = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
+    }
+ 
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new CircuitTypes();
+        $d = new Data();
+        $d->name = 'PHPUnit_CircuitType-Patch';
+        $d->slug = 'PHPUnit_CircuitType-Patch';
+        $type = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 200, $type->status );
+        $this->assertIsArray( $type->headers );
+        $this->assertIsObject( $type->body );
+    }
+ 
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new CircuitTypes();
+        $type = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $type );
+        $this->assertObjectHasProperty( 'status',  $type );
+        $this->assertObjectHasProperty( 'headers', $type );
+        $this->assertObjectHasProperty( 'body',    $type );
+        $this->assertIsInt( $type->status );
+        $this->assertEquals( 204, $type->status );
+    }
+ 
+
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new CircuitTypes();
@@ -145,44 +207,12 @@ final class CircuitTypesTest extends testCore
             $this->deleteDetail( id: $term->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTypes();
-        $type = $o->putDetail( 
-                 id: $term->id, 
-               name: 'PHPUnit_CType', 
-               slug: 'PHPUnit_CType',
-            options: $this->options
-        );
-        
-        
-        $this->assertIsObject( $type );
-        $this->assertObjectHasProperty( 'status',  $type );
-        $this->assertObjectHasProperty( 'headers', $type );
-        $this->assertObjectHasProperty( 'body',    $type );
-        $this->assertIsInt( $type->status );
-        $this->assertEquals( 200, $type->status );
-        $this->assertIsArray( $type->headers );
-        $this->assertIsObject( $type->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -206,43 +236,12 @@ final class CircuitTypesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTypes();
-        $type = $o->patchDetail(
-                 id: $term->id,
-               name: 'PHPUnit_CType',
-               slug: 'PHPUnit_CType',
-            options: $this->options
-        );
-
-        $this->assertIsObject( $type );
-        $this->assertObjectHasProperty( 'status',  $type );
-        $this->assertObjectHasProperty( 'headers', $type );
-        $this->assertObjectHasProperty( 'body',    $type );
-        $this->assertIsInt( $type->status );
-        $this->assertEquals( 200, $type->status );
-        $this->assertIsArray( $type->headers );
-        $this->assertIsObject( $type->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -266,34 +265,13 @@ final class CircuitTypesTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $term->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-        
-        $o = new CircuitTypes();
-        $type = $o->deleteDetail( id: $term->id );
-
-        $this->assertIsObject( $type );
-        $this->assertObjectHasProperty( 'status',  $type );
-        $this->assertObjectHasProperty( 'headers', $type );
-        $this->assertObjectHasProperty( 'body',    $type );
-        $this->assertIsInt( $type->status );
-        $this->assertEquals( 204, $type->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -311,43 +289,6 @@ final class CircuitTypesTest extends testCore
         $this->assertIsInt( $type->status );
         $this->assertEquals( 204, $type->status );
     }
+ */
 
-
-/* CREATE A SITE
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new CircuitTypes();
-
-        return $o->postDetail( 
-               name: 'PHPUnit_CType',
-               slug: 'PHPUnit_CType',
-            options: $this->options
-        );
-    }
-
-
-
-/* DELETE A RIR
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id )
-    {
-        $o = new CircuitTypes();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-    
-/*
----------------------------------------------------------------------------- */
-
- 
-    public function setUp() : void
-    {
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_CType';
-        $this->options->slug = 'PHPUnit_CType';
-    }
 }

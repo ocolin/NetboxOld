@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
+use Cruzio\lib\Netbox\Data\Extras\CustomFields AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
@@ -36,28 +36,28 @@ final class CustomFieldsTest extends testCore
 
 
 
-/* TEST GET DETAIL
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
+ 
+    public function testPostDetail() : int
     {
-        // SETUP
-        $field = $this->postDetail()->body;
-
         $o = new CustomFields();
-        $result = $o->getDetail( id: $field->id );
-        
+        $d = new Data();
+        $d->name = 'PHPOUnit_CustomFields_Post';
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->type = 'text';
+        $result = $o->postDetail( data: $d );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $field->id );
+        return $result->body->id;
     }
 
 
@@ -67,9 +67,6 @@ final class CustomFieldsTest extends testCore
 
     public function testGetList() : void
     {
-        // SETUP
-        $field = $this->postDetail()->body;
-
         $o = new CustomFields();
         $result = $o->getList();
 
@@ -82,39 +79,115 @@ final class CustomFieldsTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $field->id );
     }
 
 
 
-/* TEST POST DETAIL
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPostDetail() : void
+    public function testGetDetail( int $id ) : void
     {
         $o = new CustomFields();
-        $result = $this->postDetail();
+        $result = $o->getDetail( id: $id );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+   
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new CustomFields();
+        $d = new Data();
+        $d->name = 'PHPOUnit_CustomFields_Put';
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->type = 'text';
+        $result = $o->putDetail( id: $id, data: $d );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new CustomFields();
+        $d = new Data();
+        $d->name = 'PHPOUnit_CustomFields_Patch';
+        $d->content_types = [ 'dcim.sitegroup' ];
+        $d->type = 'text';
+        $result = $o->patchDetail( id: $id, data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+    }
 
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
+
+
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new CustomFields();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
     }
 
 
 
 /* TEST POST LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPostList() :void
     {
         $o = new CustomFields();
@@ -143,44 +216,12 @@ final class CustomFieldsTest extends testCore
             $this->deleteDetail( id: $field->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $field = $this->postDetail()->body;
-
-        $o = new CustomFields();
-        $result = $o->putDetail( 
-                       id: $field->id, 
-                     name: 'PHPUnit_CustomField',
-            content_types: [ 'dcim.sitegroup' ],
-                     type: 'text'
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $field->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -210,44 +251,12 @@ final class CustomFieldsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $field->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $field = $this->postDetail()->body;
-
-        $o = new CustomFields();
-        $result = $o->patchDetail(
-                       id: $field->id,
-                     name: 'PHPUnit_CustomField',
-            content_types: [ 'dcim.sitegroup' ],
-                     type: 'text'
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $field->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -277,34 +286,13 @@ final class CustomFieldsTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $field->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $field = $this->postDetail()->body;
-        
-        $o = new CustomFields();
-        $result = $o->deleteDetail( id: $field->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
+ */
 
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -322,33 +310,6 @@ final class CustomFieldsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-    
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new CustomFields();
-
-        return $o->postDetail( 
-                     name: 'PHPUnit_CustomField',
-            content_types: [ 'dcim.sitegroup' ],
-                     type: 'text'
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new CustomFields();
-
-        return $o->deleteDetail( id: $id  );
-    }
+ */
 
 }

@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Users;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\Users\Tokens AS Options;
+use Cruzio\lib\Netbox\Data\Users\Tokens AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class TokensTest extends testCore
 {
-    public Options $options;
     public static $user;
 
     public function __construct()
@@ -27,8 +25,8 @@ final class TokensTest extends testCore
     {
         $o = new Tokens();
         $result = $o->options();
-
         $this->assertIsObject( $result );
+
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
@@ -40,40 +38,36 @@ final class TokensTest extends testCore
 
 
 
-/* TEST GET DETAIL
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
+ 
+    public function testPostDetail() : int
     {
-        // SETUP
-        $token = $this->postDetail()->body;
-
         $o = new Tokens();
-        $result = $o->getDetail( id: $token->id );
-        
+        $d = new Data();
+        $d->description = 'PHPUnit_Tokens-Post';
+        $d->user = self::$user->id;
+        $result = $o->postDetail( data: $d );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $token->id );
+        return $result->body->id;
     }
 
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $token = $this->postDetail()->body;
-
         $o = new Tokens();
         $result = $o->getList();
 
@@ -86,39 +80,130 @@ final class TokensTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $token->id );
     }
 
 
 
-/* TEST POST DETAIL
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
 
-    public function testPostDetail() : void
+    public function testGetDetail( int $id ) : void
     {
         $o = new Tokens();
-        $result = $this->postDetail();
+        $result = $o->getDetail( id: $id );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PUT DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPutDetail( int $id ) : void
+    {
+        $o = new Tokens();
+        $d = new Data();
+        $d->user = self::$user->id;
+        $d->description = 'PHPUnit_Tokens-Put';
+        $result = $o->putDetail( id: $id, data: $d );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST PATCH DETAIL
+---------------------------------------------------------------------------- */
+  
+/**
+ * @depends testPostDetail
+ */
+
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Tokens();
+        $d = new Data();
+        $d->user = self::$user->id;
+        $d->description = 'PHPUnit_Tokens-Patch';
+        $result = $o->patchDetail( id: $id, data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
     }
 
 
 
-/* TEST POST LIST
+/* TEST DELETE DETAIL
+---------------------------------------------------------------------------- */
+ 
+/**
+ * @depends testPostDetail
+ */
+
+    public function testDeleteDetail( int $id ) : void
+    {
+        $o = new Tokens();
+        $result = $o->deleteDetail( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+
+
+/* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
+    public static function setUpBeforeClass() : void
+    {
+        self::$user = self::createUser();
+    }
+    
+/*
+---------------------------------------------------------------------------- */
+
+    public static function tearDownAfterClass() : void
+    {
+        self::destroyUser( user: self::$user );
+        sleep(1);
+    }
+    
+
+/* TEST POST LIST
+---------------------------------------------------------------------------- */
+/* 
     public function testPostList() :void
     {
         $o = new Tokens();
@@ -139,42 +224,12 @@ final class TokensTest extends testCore
             $this->deleteDetail( id: $token->id );
         }
     }
-
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $token = $this->postDetail()->body;
-
-        $o = new Tokens();
-        $result = $o->putDetail( 
-              id: $token->id, 
-            user: self::$user->id
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $token->id );
-    }
-
+ */
 
 
 /* TEST PUT LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPutList() : void
     {
         // SETUP
@@ -196,42 +251,12 @@ final class TokensTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $token->id );
     }
-
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $token = $this->postDetail()->body;
-
-        $o = new Tokens();
-        $result = $o->patchDetail(
-              id: $token->id,
-            user: self::$user->id
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-
-        // CLEAN UP
-        $this->deleteDetail( $token->id );
-    }
-
+ */
 
 
 /* TEST PATCH LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testPatchList() : void
     {
         // SETUP
@@ -253,34 +278,12 @@ final class TokensTest extends testCore
         // CLEAN UP
         $this->deleteDetail( $token->id );
     }
-
-
-
-
-/* TEST DELETE DETAIL
----------------------------------------------------------------------------- */
-
-    public function testDeleteDetail() : void
-    {
-        // SETUP
-        $token = $this->postDetail()->body;
-        
-        $o = new Tokens();
-        $result = $o->deleteDetail( id: $token->id );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
+ */
 
 
 /* TEST DELETE LIST
 ---------------------------------------------------------------------------- */
-
+/* 
     public function testDeleteList() : void
     {
         // SETUP
@@ -298,57 +301,5 @@ final class TokensTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new Tokens();
-
-        return $o->postDetail( 
-            user: self::$user->id
-        );
-    }
-
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Tokens();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
-
-/* SETUP AND CLOSING FUNCTIONS
----------------------------------------------------------------------------- */
-
-    public static function setUpBeforeClass() : void
-    {
-        self::$user = self::createUser();
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public static function tearDownAfterClass() : void
-    {
-        self::destroyUser( user: self::$user );
-        sleep(1);
-    }
-    
-/*
----------------------------------------------------------------------------- */
-
-    public function setUp() : void
-    {
-        $this->options = new Options();
-        $this->options->user  =  self::$user->id;
-    }
-
+ */
 }

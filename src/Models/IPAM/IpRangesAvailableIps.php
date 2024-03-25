@@ -16,6 +16,25 @@ class IpRangesAvailableIps extends IPAM_Core
         $this->uri .= "ip-ranges/";
     }
 
+
+/* OPTIONS METHOD
+---------------------------------------------------------------------------- */
+
+/**
+* List details about API call.
+*
+* @param  array<string, string> $headers HTML request headers
+* @return Response
+*/
+
+    public function options( array $headers = [] ) : Response
+    {
+        $this->uri .= 'available-ips/';
+        return $this->http->options( uri: $this->uri, headers: $headers );
+    }
+
+
+
 /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -37,25 +56,5 @@ class IpRangesAvailableIps extends IPAM_Core
              params: $params,
             headers: $headers 
         );
-    }
-
-
-    
-/* POST METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/**
- * @param  integer $id
- * @param  array<string, string> $headers HTML request headers
- * @return void
- */
-    public function postDetail( 
-           int $id, 
-        object $data ,
-         array $headers = []
-    )
-    {
-        $this->uri .= "{$id}/available-ips/";
-        // NEEDS TO BE ADDED
     }
 }

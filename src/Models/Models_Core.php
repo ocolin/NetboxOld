@@ -5,9 +5,10 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models;
 
 require_once( __DIR__ . '/../../vendor/autoload.php' );
-require_once( __DIR__ . '/../mode.php' );
+//require_once( __DIR__ . '/../mode.php' );
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Data\DataInterface;
 
 
 abstract class Models_Core
@@ -44,7 +45,97 @@ abstract class Models_Core
     }
 
 
-    /* OPTIONS METHOD
+
+/* POST METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+* Create a single Platform.
+*
+* @param  DataInterface $data optionsl data to be sent.
+* @param  array<string, string> $headers HTML request headers
+* @param  array<string, string> $params URL Parameters
+* @return Response
+*/
+
+    public function postDetail(
+          DataInterface $data,
+         array $headers = [],
+         array $params = [],
+    ) : Response
+    {
+        return $this->http->post(
+                uri: $this->uri,
+               body: $data->render( required: true ),
+            headers: $headers,
+             params: $params
+        );
+    }
+
+
+/* PUT METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+* Update Site
+* 
+* @param  integer $id Numerical ID of Site to update.
+* @param  DataInterface $data Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @param  array<string, string> $params URL Parameters
+* @return Response
+*/
+
+    public function putDetail(
+           int $id,
+          DataInterface $data,
+         array $headers = [],
+         array $params = []
+    ) : Response
+    {
+        $this->uri .= "{$id}/";
+
+        return $this->http->put(
+                uri: $this->uri,
+               body: $data->render(),
+            headers: $headers,
+             params: $params
+        );
+    }
+
+
+/* PATCH METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+/**
+* Update Site value(s).
+*
+* @param  integer $id Numerical ID of Site to update.
+* @param  DataInterface $data Optional data to send.
+* @param  array<string, string> $headers HTML request headers
+* @param  array<string, string> $params URL Parameters
+* @return Response
+*/
+
+    public function patchDetail(
+           int $id,
+          DataInterface $data,
+         array $headers = [],
+         array $params = []
+    ) : Response
+    {
+        $this->uri .= "{$id}/";
+
+        return $this->http->patch(
+                uri: $this->uri,
+               body: $data->render(),
+            headers: $headers,
+             params: $params
+        );
+    }
+
+    
+/* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
 /**
@@ -105,6 +196,7 @@ abstract class Models_Core
     }
 
 
+
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
@@ -121,7 +213,7 @@ abstract class Models_Core
         array $headers = []
     ) : Response
     {
-        return $this->http->put(
+        return $this->http->patch(
                 uri: $this->uri,
                body: $options,
             headers: $headers

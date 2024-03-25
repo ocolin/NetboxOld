@@ -16,5 +16,4 @@ abstract class Virtualization_Core extends Models_Core
         $this->http = $http ?? new HTTP();
         parent::__construct( http: $http );
     }
-
 }

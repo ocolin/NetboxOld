@@ -5,7 +5,6 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\HTTP;
-use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Models\Models_Core;
 
 abstract class Extras_Core extends Models_Core

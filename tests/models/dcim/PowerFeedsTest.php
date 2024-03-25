@@ -5,14 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
-use Cruzio\lib\Netbox\Models\Response;
-use Cruzio\lib\Netbox\Options\DCIM\PowerFeeds AS Options;
+use Cruzio\lib\Netbox\Data\DCIM\PowerFeeds AS Data;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class PowerFeedsTest extends testCore
 {
-    public Options $options;
     public static $site;
     public static $panel;
 
@@ -42,42 +40,39 @@ final class PowerFeedsTest extends testCore
     }
 
 
-/* TEST GET DETAIL
+
+/* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-
-    public function testGetDetail() : void
+ 
+    public function testPostDetail() : int
     {
-        // SETUP
-        $feed = $this->postDetail()->body;
-
         $o = new PowerFeeds();
-        $result = $o->getDetail( id: $feed->id );
-        
+        $d = new Data();
+        $d->name = 'PHPUnit_PwrFeed-Post';
+        $d->power_panel = self::$panel->id;
+        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
+        $this->assertEquals( 201, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
 
-        // CLEAN UP
-        $this->deleteDetail( $feed->id );
+        return $result->body->id;
     }
  
 
 
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
-
+ 
     public function testGetList() : void
     {
-        // SETUP
-        $feed = $this->postDetail()->body;
-
         $o = new PowerFeeds();
-        $result = $o->getList();
+        $result = $o->getList( params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -88,76 +83,48 @@ final class PowerFeedsTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
         $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $feed->id );
     }
+ 
 
 
-
-/* TEST POST DETAIL
+/* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ *  @depends  testPostDetail
+ */
 
-    public function testPostDetail() : void
+    public function testGetDetail( int $id ) : void
     {
         $o = new PowerFeeds();
-        $result = $this->postDetail();
-
+        $result = $o->getDetail( id: $id, params: [ 'exclude' => 'config_context'] );
+        
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
         $this->assertObjectHasProperty( 'body',    $result );
         $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
+        $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        //CLEAN UP
-        $this->deleteDetail( $result->body->id );
-    }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-
-    public function testPostList() :void
-    {
-        $o = new PowerFeeds();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $feed )
-        {
-            $this->deleteDetail( id: $feed->id );
-        }
     }
 
 
 
 /* TEST PUT DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ *  @depends  testPostDetail
+ */
 
-    public function testPutDetail() : void
+    public function testPutDetail( int $id ) : void
     {
-        // SETUP
-        $feed = $this->postDetail()->body;
-
         $o = new PowerFeeds();
-        $result = $o->putDetail( 
-                     id: $feed->id, 
-                   name: 'PHPUnit_PowerFeed',
-            power_panel: self::$panel->id              
-        );
+        $d = new Data();
+        $d->name = 'PHPUnit_PwrFeed-Put';
+        $d->power_panel = self::$panel->id;
+        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -167,54 +134,24 @@ final class PowerFeedsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $feed->id );
-    }
-
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-
-    public function testPutList() : void
-    {
-        // SETUP
-        $feed = $this->postDetail()->body;
-        $this->options->id = $feed->id;
-
-        $o = new PowerFeeds();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $feed->id );
     }
 
 
 
 /* TEST PATCH DETAIL
 ---------------------------------------------------------------------------- */
+  
+/**
+ *  @depends  testPostDetail
+ */
 
-    public function testPatchDetail() : void
+    public function testPatchDetail( int $id ) : void
     {
-        // SETUP
-        $feed = $this->postDetail()->body;
-
         $o = new PowerFeeds();
-        $result = $o->patchDetail(
-                     id: $feed->id, 
-                   name: 'PHPUnit_PowerFeed',
-            power_panel: self::$panel->id
-        );
+        $d = new Data();
+        $d->name = 'PHPUnit_PwrFeed-Patch';
+        $d->power_panel = self::$panel->id;
+        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -224,50 +161,21 @@ final class PowerFeedsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $feed->id );
     }
-
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-
-    public function testPatchList() : void
-    {
-        // SETUP
-        $feed = $this->postDetail()->body;
-        $this->options->id = $feed->id;
-
-        $o = new PowerFeeds();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $feed->id );
-    }
-
+ 
 
 
 /* TEST DELETE DETAIL
 ---------------------------------------------------------------------------- */
+ 
+/**
+ *  @depends  testPostDetail
+ */
 
-    public function testDeleteDetail() : void
+    public function testDeleteDetail( int $id ) : void
     {
-        // SETUP
-        $feed = $this->postDetail()->body;
-        
         $o = new PowerFeeds();
-        $result = $o->deleteDetail( id: $feed->id );
+        $result = $o->deleteDetail( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -276,57 +184,7 @@ final class PowerFeedsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $feed = $this->postDetail()->body;
-
-        $o = new PowerFeeds();
-        $result = $o->deleteList(
-            options: [[ 'id' => $feed->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function postDetail() : Response
-    {
-        $o = new PowerFeeds();
-
-        return $o->postDetail( 
-                   name: 'PHPUnit_PowerFeed',
-            power_panel: self::$panel->id
-        );
-    }
-
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new PowerFeeds();
-
-        return $o->deleteDetail( id: $id  );
-    }
-
+ 
 
 
 /* SETUP AND CLOSING FUNCTIONS
@@ -349,15 +207,106 @@ final class PowerFeedsTest extends testCore
         sleep(1);
     }
 
-    
-/*
+
+/* TEST POST LIST
 ---------------------------------------------------------------------------- */
-    
-    public function setUp() : void
+/* 
+    public function testPostList() :void
     {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name        = 'PHPUnit_PwrFeed-' . $rand;
-        $this->options->power_panel = self::$panel->id;
+        $o = new PowerFeeds();
+        $result = $o->postList( options: [ $this->options ] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        //CLEAN UP
+        foreach( $result->body AS $feed )
+        {
+            $this->deleteDetail( id: $feed->id );
+        }
     }
+ */
+
+
+/* TEST PUT LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testPutList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()->body;
+        $this->options->id = $feed->id;
+
+        $o = new PowerFeeds();
+        $result = $o->putList( options: [ $this->options ] );
+        
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+ */
+
+
+/* TEST PATCH LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testPatchList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()->body;
+        $this->options->id = $feed->id;
+
+        $o = new PowerFeeds();
+        $result = $o->patchList( options: [ $this->options ] );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsArray( $result->body );
+
+        // CLEAN UP
+        $this->deleteDetail( $feed->id );
+    }
+ */
+
+
+/* TEST DELETE LIST
+---------------------------------------------------------------------------- */
+/* 
+    public function testDeleteList() : void
+    {
+        // SETUP
+        $feed = $this->postDetail()->body;
+
+        $o = new PowerFeeds();
+        $result = $o->deleteList(
+            options: [[ 'id' => $feed->id ]]
+        );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 204, $result->status );
+    }
+ */
 }

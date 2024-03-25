@@ -13,7 +13,4 @@ class RacksElevation extends DCIM_Core
         parent::__construct( http: $http );
         $this->uri .= "racks/{$id}/elevation/";
     }
-
-
-
 }
