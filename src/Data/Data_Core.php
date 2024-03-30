@@ -8,10 +8,13 @@ class Data_Core
 {
 
 
-/*
+/* RENDER DATA INTO AN OBJECT FOR HTTP
 ----------------------------------------------------------------------------- */
 
-    public function render( bool $required = false ) : object|null
+    /**
+     * @throws \Exception
+     */
+    public function render(bool $required = false ) : object|null
     {
         $reflect = new \ReflectionClass( $this );
         $props   = $reflect->getProperties( \ReflectionProperty::IS_PROTECTED );
@@ -36,7 +39,10 @@ class Data_Core
 /* SETTER
 ----------------------------------------------------------------------------- */
 
-    public function __set( string $property, mixed $value ) : void
+    /**
+     * @throws \Exception
+     */
+    public function __set(string $property, mixed $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new \ReflectionProperty( $this, $property );
@@ -70,7 +76,7 @@ class Data_Core
     }
 
 
-/*
+/* GET REQUIRED PROPERTIES
 ----------------------------------------------------------------------------- */
 
 /**
@@ -83,7 +89,7 @@ class Data_Core
 
 
 
-/*
+/* GET PROPERTY VALIDATION RULES
 ----------------------------------------------------------------------------- */
 
 /**
@@ -96,7 +102,7 @@ class Data_Core
     }
 
 
-/*
+/* GET ALL READ ONLY PROPERTIES
 ----------------------------------------------------------------------------- */
 
 /**

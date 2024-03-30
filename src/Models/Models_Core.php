@@ -6,8 +6,8 @@ namespace Cruzio\lib\Netbox\Models;
 
 require_once( __DIR__ . '/../../vendor/autoload.php' );
 
-use Cruzio\lib\Netbox\Models\HTTP;
 use Cruzio\lib\Netbox\Data\DataInterface;
+use Cruzio\lib\Netbox\Props\PropsInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
 
@@ -250,32 +250,6 @@ abstract class Models_Core
 
 
 
-/* GET METHOD LIST
----------------------------------------------------------------------------- */
-
-    /**
-     * Get all Objects
-     *
-     * @param array<string, string> $params Optional URL parameters.
-     * @param array<string, string> $headers HTML request headers
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function getList( 
-        array $params  = [], 
-        array $headers = [] 
-    ) : Response
-    {
-
-        return $this->http->get(
-                uri: $this->uri,
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
 /* POST METHOD LIST
 ---------------------------------------------------------------------------- */
 
@@ -301,30 +275,59 @@ abstract class Models_Core
     }
 
 
- /* GET METHOD DETAIL
+
+/* GET METHOD LIST
+---------------------------------------------------------------------------- */
+
+    /**
+     * Get all Objects
+     *
+     * @param PropsInterface|null $params
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
+
+    public function getList(
+        PropsInterface $params  = null,
+        array $headers = []
+    ) : Response
+    {
+
+        return $this->http->get(
+            uri: $this->uri,
+            params: $params->render() ?? [],
+            headers: $headers
+        );
+    }
+
+
+
+/* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
     /**
      * Get an individual object
      *
      * @param integer $id Numerical ID of an object record.
-     * @param array<string, string> $params Optional GET parameters.
+     * @param PropsInterface|null $params Optional GET parameters.
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
      */
 
     public function getDetail( 
-          int $id, 
-        array $params  = [], 
+          int $id,
+          PropsInterface $params  = null,
         array $headers = [] 
     ) : Response
     {
         $this->uri .= "{$id}/";
 
+
         return $this->http->get(
                 uri: $this->uri,
-             params: $params,
+             params: $params->render() ?? [],
             headers: $headers
         );
     }
