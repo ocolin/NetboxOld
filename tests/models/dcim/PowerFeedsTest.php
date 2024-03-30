@@ -11,8 +11,8 @@ require_once __DIR__ . '/../testCore.php';
 
 final class PowerFeedsTest extends testCore
 {
-    public static $site;
-    public static $panel;
+    public static object $site;
+    public static object $panel;
 
     public function __construct()
     {

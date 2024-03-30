@@ -6,20 +6,21 @@ namespace Cruzio\lib\Netbox\Models\Wireless;
 
 use Cruzio\lib\Netbox\Models\testCore;
 use Cruzio\lib\Netbox\Data\Wireless\WirelessLinks AS Data;
+use GuzzleHttp\Exception\GuzzleException;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class WirelessLinksTest extends testCore
 {
-    public static $interfaceA;
-    public static $interfaceB;
-    public static $deviceA;
-    public static $deviceB;
-    public static $siteA;
-    public static $siteB;
-    public static $devtype;
-    public static $manf;
-    public static $devrole;
+    public static object $interfaceA;
+    public static object $interfaceB;
+    public static object $deviceA;
+    public static object $deviceB;
+    public static object $siteA;
+    public static object $siteB;
+    public static object $devtype;
+    public static object $manf;
+    public static object $devrole;
 
     public function __construct()
     {
@@ -178,6 +179,7 @@ final class WirelessLinksTest extends testCore
  
 /**
  * @depends testPostDetail
+ * @throws GuzzleException
  */
 
     public function testDeleteDetail( int $id ) : void
@@ -228,6 +230,9 @@ final class WirelessLinksTest extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyInterface( interface: self::$interfaceB );

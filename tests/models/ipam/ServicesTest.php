@@ -11,11 +11,11 @@ require_once __DIR__ . '/../testCore.php';
 
 final class ServicesTest extends testCore
 {
-    public static $site;
-    public static $manf;
-    public static $device;
-    public static $devrole;
-    public static $devtype;
+    public static object $site;
+    public static object $manf;
+    public static object $device;
+    public static object $devrole;
+    public static object $devtype;
 
     public function __construct()
     {

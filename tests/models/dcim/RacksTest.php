@@ -11,8 +11,8 @@ require_once __DIR__ . '/../testCore.php';
 
 final class RacksTest extends testCore
 {
-    public static $site;
-    public static $location;
+    public static object $site;
+    public static object $location;
 
     public function __construct()
     {

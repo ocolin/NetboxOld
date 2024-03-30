@@ -13,10 +13,9 @@ require_once __DIR__ . '/../testCore.php';
 
 final class ClustersTest extends testCore
 {
-    public Options $options;
-    public static $site;
-    public static $type;
-    public static $group;
+    public static object $site;
+    public static object $type;
+    public static object $group;
 
     public function __construct()
     {

@@ -12,11 +12,11 @@ require_once __DIR__ . '/../testCore.php';
 
 final class InterfacesTest extends testCore
 {
-    public static $site;
-    public static $type;
-    public static $group;
-    public static $cluster;
-    public static $vm;
+    public static object $site;
+    public static object $type;
+    public static object $group;
+    public static object $cluster;
+    public static object $vm;
 
     public function __construct()
     {

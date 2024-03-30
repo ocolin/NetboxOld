@@ -6,20 +6,17 @@ namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
 use Cruzio\lib\Netbox\Data\DCIM\ConsolePorts AS Data;
+use GuzzleHttp\Exception\GuzzleException;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class ConsolePortsTest extends testCore
 {
-    public static $vc;
-    public static $rack;
-    public static $devrole;
-    public static $location;
-    public static $devtype;
-    public static $manf;
-    public static $site;
-    public static $tenant;
-    public static $device;
+    public static object $devrole;
+    public static object $devtype;
+    public static object $manf;
+    public static object $site;
+    public static object $device;
 
     public function __construct()
     {
@@ -213,7 +210,10 @@ final class ConsolePortsTest extends testCore
     
 /*
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyDevice( device: self::$device );

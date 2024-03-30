@@ -11,8 +11,8 @@ require_once __DIR__ . '/../testCore.php';
 
 final class PowerOutletTemplatesTest extends testCore
 {
-    public static $devtype;
-    public static $manf;
+    public static object $devtype;
+    public static object $manf;
 
     public function __construct()
     {

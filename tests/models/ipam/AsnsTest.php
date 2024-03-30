@@ -11,7 +11,7 @@ require_once __DIR__ . '/../testCore.php';
 
 final class AsnsTest extends testCore
 {
-    public static $rir;
+    public static object $rir;
 
     public function __construct()
     {

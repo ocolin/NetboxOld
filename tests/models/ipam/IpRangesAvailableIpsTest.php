@@ -10,7 +10,7 @@ require_once __DIR__ . '/../testCore.php';
 
 final class IpRangesAvailableIpsTest extends testCore
 {
-    public static $range;
+    public static object $range;
 
     public function __construct()
     {

@@ -22,5 +22,10 @@
             "name": "Colin Miller",
             "email": "ocolin@staff.cruzio.com"
         }
-    ]
+    ],
+    "config": {
+        "platform": {
+            "php": "8.3"
+        }
+    }
 }

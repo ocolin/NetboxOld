@@ -6,15 +6,16 @@ namespace Cruzio\lib\Netbox\Models\DCIM;
 
 use Cruzio\lib\Netbox\Models\testCore;
 use Cruzio\lib\Netbox\Data\DCIM\FrontPortTemplates AS Data;
+use GuzzleHttp\Exception\GuzzleException;
 
 require_once __DIR__ . '/../testCore.php';
 
 final class FrontPortTemplatesTest extends testCore
 {
-    public static $devrole;
-    public static $devtype;
-    public static $manf;
-    public static $site;
+    public static object $devrole;
+    public static object $devtype;
+    public static object $manf;
+    public static object $site;
     public static $rearPortTemp;
 
     public function __construct()
@@ -211,9 +212,12 @@ final class FrontPortTemplatesTest extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
-        self::destroyRearPortsTemplate( templ: self::$rearPortTemp );
+        self::destroyRearPortsTemplate( temp: self::$rearPortTemp );
         self::destroyDeviceRole( devrole: self::$devrole );
         self::destroyDeviceType( devtype: self::$devtype );
         self::destroyManufacturer( manf: self::$manf );

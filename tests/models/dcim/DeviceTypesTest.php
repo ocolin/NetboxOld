@@ -11,7 +11,7 @@ require_once __DIR__ . '/../testCore.php';
 
 final class DeviceTypesTest extends testCore
 {
-    public static $manf;
+    public static object $manf;
 
     public function __construct()
     {

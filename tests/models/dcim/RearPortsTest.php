@@ -11,11 +11,11 @@ require_once __DIR__ . '/../testCore.php';
 
 final class RearPortsTest extends testCore
 {
-    public static $devrole;
-    public static $devtype;
-    public static $manf;
-    public static $site;
-    public static $device;
+    public static object $devrole;
+    public static object $devtype;
+    public static object $manf;
+    public static object $site;
+    public static object $device;
 
     public function __construct()
     {

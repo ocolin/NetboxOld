@@ -11,8 +11,8 @@ require_once __DIR__ . '/../testCore.php';
 
 final class RearPortTemplatesTest extends testCore
 {
-    public static $manf;
-    public static $devtype;
+    public static object $manf;
+    public static object $devtype;
 
     public function __construct()
     {

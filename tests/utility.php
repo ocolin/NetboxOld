@@ -4,6 +4,8 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models;
 //use Symfony\Component\Dotenv\Dotenv;
 
+use GuzzleHttp\Exception\GuzzleException;
+
 require_once __DIR__ . '/../vendor/autoload.php';
 //$dotenv = new Dotenv();
 //$dotenv->load( __DIR__ . '/.env' );
@@ -85,6 +87,7 @@ function clearIpRanges() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearIpAddresses() : void
@@ -101,6 +104,7 @@ function clearIpAddresses() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearVirtualMachines() : void

@@ -11,13 +11,13 @@ require_once __DIR__ . '/../testCore.php';
 
 final class ModulesTest extends testCore
 {
-    public static $devrole;
-    public static $devtype;
-    public static $manf;
-    public static $site;
-    public static $device;
-    public static $modbay;
-    public static $modtype;
+    public static object $devrole;
+    public static object $devtype;
+    public static object $manf;
+    public static object $site;
+    public static object $device;
+    public static object $modbay;
+    public static object $modtype;
 
     public function __construct()
     {

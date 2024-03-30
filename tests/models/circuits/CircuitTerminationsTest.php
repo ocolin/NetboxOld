@@ -11,10 +11,10 @@ require_once __DIR__ . '/../testCore.php';
 
 final class CircuitTerminationsTest extends testCore
 {
-    public static $circuit_type;
-    public static $provider;
-    public static $site;
-    public static $circuit;
+    public static object $circuit_type;
+    public static object $provider;
+    public static object $site;
+    public static object $circuit;
 
     public function __construct()
     {

@@ -7,6 +7,7 @@ namespace Cruzio\lib\Netbox\Models;
 require_once( __DIR__ . '/../mode.php' );
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
 use \Psr\Http\Message\ResponseInterface;
 use Cruzio\lib\Env\EnvLoad;
 
@@ -30,8 +31,8 @@ class HTTP
 ---------------------------------------------------------------------------- */
 
 /**
- * @param Client  $client
- * @param string  $base_uri
+ * @param ?Client  $client
+ * @param ?string  $base_uri
  * @param boolean $verify
  * @param boolean $errors
 */
@@ -78,7 +79,7 @@ class HTTP
                array $headers = []
     ) : Response
     {
-        $uri = self::formtParams( params: $params, uri: $uri );
+        $uri = self::formatParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
@@ -113,7 +114,7 @@ class HTTP
                array $headers = []
     ) : Response
     {
-        $uri = self::formtParams( params: $params, uri: $uri );
+        $uri = self::formatParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
             'PUT', $uri, [
@@ -147,7 +148,7 @@ class HTTP
                array $headers = []
     ) : Response
     {
-        $uri = self::formtParams( params: $params, uri: $uri );
+        $uri = self::formatParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
             'PATCH', $uri, [
@@ -164,14 +165,15 @@ class HTTP
 /* GET METHOD
 ---------------------------------------------------------------------------- */
 
-/**
- * Retrieve an object or list of objects.
- *
- * @param string $uri
- * @param array<string, string> $params
- * @param  array<string, string> $headers HTML request headers
- * @return Response
-*/
+    /**
+     * Retrieve an object or list of objects.
+     *
+     * @param string $uri
+     * @param array<string, string> $params
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function get(
         string $uri,
@@ -179,7 +181,7 @@ class HTTP
          array $headers = []
     ) : Response
     {
-        $uri = self::formtParams( params: $params, uri: $uri );
+        $uri = self::formatParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
@@ -194,14 +196,15 @@ class HTTP
 /* DELETE METHOD
 ---------------------------------------------------------------------------- */
 
-/**
- * Delete an existing object.
- *
- * @param  string $uri
- * @param  array<string, mixed> $body
- * @param  array<string, string> $headers HTML request headers
- * @return Response
-*/
+    /**
+     * Delete an existing object.
+     *
+     * @param string $uri
+     * @param array<string, mixed> $body
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function delete( string $uri, array $body = [], array $headers = [] ) : Response
     {
@@ -221,14 +224,15 @@ class HTTP
 /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
-/**
- * Inspect a particular REST API endpoint and return all supported actions
- *  and their available parameters.
- *
- * @param string $uri
- * @param  array<string, string> $headers HTML request headers
- * @return Response
-*/
+    /**
+     * Inspect a particular REST API endpoint and return all supported actions
+     *  and their available parameters.
+     *
+     * @param string $uri
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function options( string $uri, array $headers = [] ) : Response
     {
@@ -289,14 +293,14 @@ class HTTP
 ---------------------------------------------------------------------------- */
 
 /**
- * Format an array of parametsrs into a URL query
+ * Format an array of parameters into a URL query
  *
  * @param array<string, string> $params
  * @param string  $uri
  * @return string final URI with parameters encoded into it, or plain uri.
 */
 
-    private static function formtParams( array $params, string $uri ) : string
+    private static function formatParams( array $params, string $uri ) : string
     {
         if( empty( $params )) { return $uri; }
 

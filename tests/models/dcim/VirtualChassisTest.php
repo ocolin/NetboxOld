@@ -13,8 +13,6 @@ require_once __DIR__ . '/../testCore.php';
 
 final class VirtualChassisTest extends testCore
 {
-    public Options $options;
-
     public function __construct()
     {
         parent::__construct();

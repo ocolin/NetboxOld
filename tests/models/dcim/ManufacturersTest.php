@@ -11,7 +11,6 @@ require_once __DIR__ . '/../testCore.php';
 
 final class ManufacturersTest extends testCore
 {
-
     public function __construct()
     {
         parent::__construct();

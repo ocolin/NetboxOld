@@ -11,7 +11,7 @@ require_once __DIR__ . '/../testCore.php';
 
 final class TokensTest extends testCore
 {
-    public static $user;
+    public static object $user;
 
     public function __construct()
     {

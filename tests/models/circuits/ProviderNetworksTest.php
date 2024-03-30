@@ -11,7 +11,7 @@ require_once __DIR__ . '/../testCore.php';
 
 final class ProviderNetworksTest extends testCore
 {
-    public static $provider;
+    public static object $provider;
 
     public function __construct()
     {

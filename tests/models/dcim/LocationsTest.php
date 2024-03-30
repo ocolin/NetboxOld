@@ -11,7 +11,7 @@ require_once __DIR__ . '/../testCore.php';
 
 final class LocationsTest extends testCore
 {
-    public static $site;
+    public static object $site;
 
     public function __construct()
     {

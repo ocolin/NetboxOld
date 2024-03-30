@@ -5,6 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models;
 
 use Cruzio\lib\Netbox\Options\Circuits\CircuitTerminations AS CTOptions;
+use GuzzleHttp\Exception\GuzzleException;
 
 abstract class testCore extends \PHPUnit\Framework\TestCase
 {
@@ -28,7 +29,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyUser( object $user ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyUser(object $user ) :void
     {
         $o = new Users\Users();
         $o->deleteDetail( id: $user->id );
@@ -48,7 +52,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return$o->postDetail( data: $d )->body;
     }
 
-    public static function destroyContact( object $contact ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyContact(object $contact ) :void
     {
         $o = new Tenancy\Contacts();
         $o->deleteDetail( id: $contact->id );
@@ -68,7 +75,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyContactGroup( object $group ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyContactGroup(object $group ) :void
     {
         $o = new Tenancy\ContactGroups();
         $o->deleteDetail( id: $group->id );
@@ -89,7 +99,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyContactRole( object $role ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyContactRole(object $role ) :void
     {
         $o = new Tenancy\ContactRoles();
         $o->deleteDetail( id: $role->id );
@@ -109,7 +122,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyProvider( object $provider ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyProvider(object $provider ) :void
     {
         $o = new Circuits\Providers();
         $o->deleteDetail( id: $provider->id );
@@ -132,7 +148,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyCircuit( object $circuit ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyCircuit(object $circuit ) :void
     {
         $o = new Circuits\Circuits();
         $o->deleteDetail( id: $circuit->id );
@@ -151,7 +170,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyCircuitType( object $ct ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyCircuitType(object $ct ) :void
     {
         $o = new Circuits\CircuitTypes();
         $o->deleteDetail( id: $ct->id );
@@ -175,7 +197,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         )->body;
     }
 
-    public static function destroySite( object $site ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroySite(object $site ) :void
     {
         $o = new DCIM\Sites();
         $o->deleteDetail( id: $site->id );
@@ -197,7 +222,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyDeviceRole( object $devrole ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyDeviceRole(object $devrole ) :void
     {
         $o = new DCIM\DeviceRoles();
         $o->deleteDetail( id: $devrole->id );
@@ -220,7 +248,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         )->body;
     }
 
-    public static function destroyManufacturer( object $manf ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyManufacturer(object $manf ) :void
     {
         $o = new DCIM\Manufacturers();
         $o->deleteDetail( id: $manf->id );
@@ -246,7 +277,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     }
 
-    public static function destroyDeviceType( object $devtype ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyDeviceType(object $devtype ) :void
     {
         $o = new DCIM\DeviceTypes();
         $o->deleteDetail( id: $devtype->id );
@@ -266,7 +300,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyTenant( object $tenant ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyTenant(object $tenant ) :void
     {
         $o = new Tenancy\Tenants();
         $test = $o->deleteDetail( id: $tenant->id );
@@ -290,7 +327,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyLocation( object $location ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyLocation(object $location ) : void
     {
         $o = new DCIM\Locations();
         $o->deleteDetail( id: $location->id );
@@ -313,7 +353,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyRack( object $rack ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyRack(object $rack ) : void
     {
         $o = new DCIM\Racks();
         $o->deleteDetail( id: $rack->id );
@@ -332,7 +375,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyRir( object $rir ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyRir(object $rir ) : void
     {
         $o = new IPAM\Rirs();
         $o->deleteDetail( id: $rir->id );
@@ -352,7 +398,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyVirtualChassis( object $chassis ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyVirtualChassis(object $chassis ) : void
     {
         $o = new DCIM\VirtualChassis();
         $o->deleteDetail( id: $chassis->id );
@@ -372,7 +421,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyModuleBay( object $bay ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyModuleBay(object $bay ) : void
     {
         $o = new DCIM\ModuleBays();
         $o->deleteDetail( id: $bay->id );
@@ -392,7 +444,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyModuleType( object $modtype ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyModuleType(object $modtype ) : void
     {
         $o = new DCIM\ModuleTypes();
         $o->deleteDetail( id: $modtype->id );
@@ -412,7 +467,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyPowerPanel( object $panel ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyPowerPanel(object $panel ) : void
     {
         $o = new DCIM\PowerPanels();
         $o->deleteDetail( id: $panel->id );
@@ -440,7 +498,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyDevice( object $device ) :void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyDevice(object $device ) :void
     {
         $o = new DCIM\Devices();
         $o->deleteDetail( id: $device->id );    
@@ -462,7 +523,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyInterface( object $interface )
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyInterface(object $interface )
     {
         $o = new DCIM\Interfaces();
         $o->deleteDetail( id: $interface->id );
@@ -481,7 +545,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyWirelessLan( object $lan )
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyWirelessLan(object $lan )
     {
         $o = new Wireless\WirelessLans();
         $o->deleteDetail( id: $lan->id );
@@ -507,7 +574,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyCircuitTermination( object $term )
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyCircuitTermination(object $term )
     {
         $o = new Circuits\CircuitTerminations();
         $o->deleteDetail( id: $term->id );
@@ -527,9 +597,12 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         $d->device = $device->id;
         return $o->postDetail( data: $d )->body;
     }
-    
 
-    public static function destroyRearPorts( object $port )
+
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyRearPorts(object $port ) : void
     {
         $o = new DCIM\RearPorts();
         $o->deleteDetail( id: $port->id );
@@ -550,10 +623,13 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyRearPortsTemplate( object $templ ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyRearPortsTemplate(object $temp ) : void
     {
         $o = new DCIM\RearPortTemplates();
-        $o->deleteDetail( id: $templ->id );
+        $o->deleteDetail( id: $temp->id );
     }
 
 
@@ -570,7 +646,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyClusterType( object $type ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyClusterType(object $type ) : void
     {
         $o = new Virtualization\ClusterTypes();
         $o->deleteDetail( id: $type->id );
@@ -591,7 +670,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyClusterGroup( object $group )
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyClusterGroup(object $group ) : void
     {
         $o = new Virtualization\ClusterGroups();
         $o->deleteDetail( id: $group->id );
@@ -618,7 +700,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyCluster( object $cluster )
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyCluster(object $cluster ) : void
     {
         $o = new Virtualization\Clusters();
         $o->deleteDetail( id: $cluster->id );
@@ -639,7 +724,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
 
     }
 
-    public static function destroyVM( object $vm ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyVM(object $vm ) : void
     {
         $o = new Virtualization\VirtualMachines();
         $o->deleteDetail( id: $vm->id );
@@ -661,7 +749,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyFhrpGroup( object $group ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyFhrpGroup(object $group ) : void
     {
         $o = new IPAM\FhrpGroups();
         $o->deleteDetail( id: $group->id );
@@ -681,7 +772,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d)->body;
     }
 
-    public static function destroyIpRange( object $range ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyIpRange(object $range ) : void
     {
         $o = new IPAM\IpRanges();
         $o->deleteDetail( id: $range->id );
@@ -702,7 +796,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyIpAddress( object $ip ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyIpAddress(object $ip ) : void
     {
         $o = new IPAM\IpAddresses();
         $o->deleteDetail( id: $ip->id );
@@ -722,7 +819,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyPrefix( object $prefix ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyPrefix(object $prefix ) : void
     {
         $o = new IPAM\Prefixes();
         $o->deleteDetail( id: $prefix->id );
@@ -741,7 +841,10 @@ abstract class testCore extends \PHPUnit\Framework\TestCase
         return $o->postDetail( data: $d )->body;
     }
 
-    public static function destroyVlanGroup( object $group ) : void
+    /**
+     * @throws GuzzleException
+     */
+    public static function destroyVlanGroup(object $group ) : void
     {
         $o = new IPAM\VlanGroups();
         $o->deleteDetail( id: $group->id );

@@ -5,10 +5,10 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models;
 
 require_once( __DIR__ . '/../../vendor/autoload.php' );
-//require_once( __DIR__ . '/../mode.php' );
 
 use Cruzio\lib\Netbox\Models\HTTP;
 use Cruzio\lib\Netbox\Data\DataInterface;
+use GuzzleHttp\Exception\GuzzleException;
 
 
 abstract class Models_Core
@@ -30,7 +30,7 @@ abstract class Models_Core
  * @param   array<string, string> $optionsArray
  * @return  object
  */
-    public static function autoOptions( $class, array $optionsArray ) : object
+    public static function autoOptions( string $class, array $optionsArray ) : object
     {
         $class = str_replace( 'Models', 'Options', $class );
         $options = new $class();
@@ -52,7 +52,7 @@ abstract class Models_Core
 /**
 * Create a single Platform.
 *
-* @param  DataInterface $data optionsl data to be sent.
+* @param  DataInterface $data optional data to be sent.
 * @param  array<string, string> $headers HTML request headers
 * @param  array<string, string> $params URL Parameters
 * @return Response
@@ -67,8 +67,8 @@ abstract class Models_Core
         return $this->http->post(
                 uri: $this->uri,
                body: $data->render( required: true ),
-            headers: $headers,
-             params: $params
+             params: $params,
+            headers: $headers
         );
     }
 
@@ -98,8 +98,8 @@ abstract class Models_Core
         return $this->http->put(
                 uri: $this->uri,
                body: $data->render(),
-            headers: $headers,
-             params: $params
+             params: $params,
+            headers: $headers
         );
     }
 
@@ -129,8 +129,8 @@ abstract class Models_Core
         return $this->http->patch(
                 uri: $this->uri,
                body: $data->render(),
-            headers: $headers,
-             params: $params
+             params: $params,
+            headers: $headers
         );
     }
 
@@ -138,12 +138,13 @@ abstract class Models_Core
 /* OPTIONS METHOD
 ---------------------------------------------------------------------------- */
 
-/**
-* List details about API call.
-*
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * List details about API call.
+     *
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function options( array $headers = [] ) : Response
     {
@@ -155,13 +156,14 @@ abstract class Models_Core
 /* DELETE METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/**
-* Delete an individual object.
-* 
-* @param  integer $id A unique integer value identifying an object.
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * Delete an individual object.
+     *
+     * @param integer $id A unique integer value identifying an object.
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function deleteDetail( int $id, array $headers = [] ) : Response
     {
@@ -175,13 +177,14 @@ abstract class Models_Core
 /* DELETE METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/**
-* Delete a list of objects.
-* 
-* @param  array<string, string> $options List of object to delete. Each object must have an ID.
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * Delete a list of objects.
+     *
+     * @param array<string, string> $options List of object to delete. Each object must have an ID.
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function deleteList( 
         array $options, 
@@ -250,13 +253,14 @@ abstract class Models_Core
 /* GET METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/**
-* Get all Objects
-*
-* @param  array<string, string> $params Optional URL parameters.
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * Get all Objects
+     *
+     * @param array<string, string> $params Optional URL parameters.
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function getList( 
         array $params  = [], 
@@ -300,14 +304,15 @@ abstract class Models_Core
  /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/**
-* Get an individual object
-*
-* @param integer $id Numerical ID of an object record.
-* @param array<string, string> $params Optional GET parameters.
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * Get an individual object
+     *
+     * @param integer $id Numerical ID of an object record.
+     * @param array<string, string> $params Optional GET parameters.
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function getDetail( 
           int $id, 
