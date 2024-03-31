@@ -74,7 +74,7 @@ class ContactAssignments extends Data_Core implements DataInterface
     {
         return [ 
             'priority'      => 'ContactPriority', 
-            'content_type'  => 'ContactContentTypes' 
+            'content_type'  => 'ContactContentTypes'
         ];
     }
 

@@ -7,7 +7,7 @@ namespace Cruzio\lib\Netbox;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$test = new Models\DCIM\Cables();
+$test = new \Cruzio\lib\Netbox\Models\DCIM\Cables();
 
 $output = $test->getList();
 print_r( $output );

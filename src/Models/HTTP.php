@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models;
 
-require_once( __DIR__ . '/../mode.php' );
-
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use \Psr\Http\Message\ResponseInterface;
@@ -62,15 +60,16 @@ class HTTP
 /* POST METHOD
 ---------------------------------------------------------------------------- */
 
-/**
- * Create an object.
- *
- * @param string $uri
- * @param array<string, mixed>|object|null $body
- * @param array<string, string> $params
- * @param array<string, string> $headers HTML request headers
- * @return Response
-*/
+    /**
+     * Create an object.
+     *
+     * @param string $uri
+     * @param array<string, mixed>|object|null $body
+     * @param array<string, string> $params
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function post(
               string $uri,
@@ -97,15 +96,16 @@ class HTTP
 /* PUT METHOD
 ---------------------------------------------------------------------------- */
 
-/**
- * Modify an existing object. Requires all mandatory fields to be specified.
- *
- * @param string $uri
- * @param array<string, mixed>|object $body
- * @param array<string, string> $params
- * @param  array<string, string> $headers HTML request headers
- * @return Response
-*/
+    /**
+     * Modify an existing object. Requires all mandatory fields to be specified.
+     *
+     * @param string $uri
+     * @param array<string, mixed>|object $body
+     * @param array<string, string> $params
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function put(
               string $uri,
@@ -131,15 +131,16 @@ class HTTP
 /* PATCH METHOD
 ---------------------------------------------------------------------------- */
 
-/**
- * Modify an existing object. Only fields to be modified are specified
- *
- * @param string $uri
- * @param array<string, mixed>|object $body
- * @param array<string, string> $params
- * @param  array<string, string> $headers HTML request headers
- * @return Response
-*/
+    /**
+     * Modify an existing object. Only fields to be modified are specified
+     *
+     * @param string $uri
+     * @param array<string, mixed>|object $body
+     * @param array<string, string> $params
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function patch(
               string $uri,

@@ -12,6 +12,7 @@ class ConsolePortTemplates extends Data_Core implements DataInterface
 {
     protected int    $device_type; // Class: DeviceType
     protected int    $module_type; // Class: ModuleType
+
     protected string $name; // Max: 64
     protected string $label; // Max: 64
     protected string $type;

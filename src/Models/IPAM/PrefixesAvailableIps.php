@@ -6,6 +6,8 @@ namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
 use Cruzio\lib\Netbox\Models\Response;
+use Cruzio\lib\Netbox\Params\ParamsInterface;
+use GuzzleHttp\Exception\GuzzleException;
 
 class PrefixesAvailableIps extends IPAM_Core
 {
@@ -18,18 +20,21 @@ class PrefixesAvailableIps extends IPAM_Core
 /* GET METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/**
- * @param  integer $id
- * @param  array<string, string> $headers HTML request headers
- * @return Response
- */
-    public function getDetail( 
-          int $id,
-        array $params  = [],
-        array $headers = []
+    /**
+     * @param integer $id
+     * @param ParamsInterface|null $params
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
+    public function getDetail(
+        int             $id,
+        ParamsInterface $params = null,
+        array           $headers = []
     ) : Response
     {
         $this->uri .= "{$id}/available-ips/";
+        $params = $params === null ? [] : $params->render();
 
         return $this->http->get( 
                 uri: $this->uri, 

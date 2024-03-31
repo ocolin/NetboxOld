@@ -7,14 +7,13 @@ namespace Cruzio\lib\Netbox\Models;
 require_once( __DIR__ . '/../../vendor/autoload.php' );
 
 use Cruzio\lib\Netbox\Data\DataInterface;
-use Cruzio\lib\Netbox\Props\PropsInterface;
+use Cruzio\lib\Netbox\Params\ParamsInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
 
 abstract class Models_Core
 {
     protected HTTP $http;
-
     protected string $uri = '';
 
     public function __construct( HTTP $http = null )
@@ -61,7 +60,7 @@ abstract class Models_Core
     public function postDetail(
           DataInterface $data,
          array $headers = [],
-         array $params = [],
+         array $params  = [],
     ) : Response
     {
         return $this->http->post(
@@ -76,21 +75,22 @@ abstract class Models_Core
 /* PUT METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/**
-* Update Site
-* 
-* @param  integer $id Numerical ID of Site to update.
-* @param  DataInterface $data Optional data to send.
-* @param  array<string, string> $headers HTML request headers
-* @param  array<string, string> $params URL Parameters
-* @return Response
-*/
+    /**
+     * Update Site
+     *
+     * @param integer $id Numerical ID of Site to update.
+     * @param DataInterface $data Optional data to send.
+     * @param array<string, string> $headers HTML request headers
+     * @param array<string, string> $params URL Parameters
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function putDetail(
            int $id,
           DataInterface $data,
          array $headers = [],
-         array $params = []
+         array $params  = []
     ) : Response
     {
         $this->uri .= "{$id}/";
@@ -107,21 +107,22 @@ abstract class Models_Core
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/**
-* Update Site value(s).
-*
-* @param  integer $id Numerical ID of Site to update.
-* @param  DataInterface $data Optional data to send.
-* @param  array<string, string> $headers HTML request headers
-* @param  array<string, string> $params URL Parameters
-* @return Response
-*/
+    /**
+     * Update Site value(s).
+     *
+     * @param integer $id Numerical ID of Site to update.
+     * @param DataInterface $data Optional data to send.
+     * @param array<string, string> $headers HTML request headers
+     * @param array<string, string> $params URL Parameters
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function patchDetail(
            int $id,
           DataInterface $data,
          array $headers = [],
-         array $params = []
+         array $params  = []
     ) : Response
     {
         $this->uri .= "{$id}/";
@@ -203,16 +204,17 @@ abstract class Models_Core
 /* PATCH METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
-/**
-* Update a list of objects.
-*
-* @param  array<string, string> $options Array of Objects to update.
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * Update a list of objects.
+     *
+     * @param array<string, string> $options Array of Objects to update.
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function patchList(
-        array $options    = [],
+        array $options = [],
         array $headers = []
     ) : Response
     {
@@ -253,14 +255,15 @@ abstract class Models_Core
 /* POST METHOD LIST
 ---------------------------------------------------------------------------- */
 
-/**
-* Create multiple objects at once.
-*
-* @param  array<string, string> $options An array of object arrays. Each sub array MUST have a 
-*  name and slug key. 
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
+    /**
+     * Create multiple objects at once.
+     *
+     * @param array<string, string> $options An array of object arrays. Each sub array MUST have a
+     *  name and slug key.
+     * @param array<string, string> $headers HTML request headers
+     * @return Response
+     * @throws GuzzleException
+     */
 
     public function postList(
         array $options,
@@ -282,21 +285,22 @@ abstract class Models_Core
     /**
      * Get all Objects
      *
-     * @param PropsInterface|null $params
+     * @param ParamsInterface|null $params
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
      */
 
     public function getList(
-        PropsInterface $params  = null,
-        array $headers = []
+        ParamsInterface $params = null,
+        array           $headers = []
     ) : Response
     {
+        $params = $params === null ? [] : $params->render();
 
         return $this->http->get(
-            uri: $this->uri,
-            params: $params->render() ?? [],
+            uri:     $this->uri,
+            params:  $params,
             headers: $headers
         );
     }
@@ -310,24 +314,24 @@ abstract class Models_Core
      * Get an individual object
      *
      * @param integer $id Numerical ID of an object record.
-     * @param PropsInterface|null $params Optional GET parameters.
+     * @param ParamsInterface|null $params Optional GET parameters.
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
      */
 
-    public function getDetail( 
-          int $id,
-          PropsInterface $params  = null,
-        array $headers = [] 
+    public function getDetail(
+        int             $id,
+        ParamsInterface $params  = null,
+        array           $headers = []
     ) : Response
     {
         $this->uri .= "{$id}/";
-
+        $params = $params === null ? [] : $params->render();
 
         return $this->http->get(
                 uri: $this->uri,
-             params: $params->render() ?? [],
+             params: $params,
             headers: $headers
         );
     }

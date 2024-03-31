@@ -7,18 +7,14 @@ namespace Cruzio\lib\Netbox\Models;
 use GuzzleHttp\Exception\GuzzleException;
 
 require_once __DIR__ . '/../vendor/autoload.php';
-//$dotenv = new Dotenv();
-//$dotenv->load( __DIR__ . '/.env' );
 
 
 
 clearAll();
 
-/**
- * @return void
- */
 
-function clearAll()
+
+function clearAll() : void
 {
     clearRir();
     clearIpAddresses();
@@ -57,6 +53,7 @@ function clearAll()
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearDevices() : void
@@ -72,6 +69,7 @@ function clearDevices() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearIpRanges() : void
@@ -121,6 +119,7 @@ function clearVirtualMachines() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearClusterTypes() : void
@@ -136,6 +135,7 @@ function clearClusterTypes() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearClusterGroups() : void
@@ -152,6 +152,7 @@ function clearClusterGroups() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearClusters() : void
@@ -168,6 +169,7 @@ function clearClusters() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearRackRoles() : void
@@ -183,6 +185,7 @@ function clearRackRoles() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearRacks() : void
@@ -199,6 +202,7 @@ function clearRacks() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearVirtualChassis() : void
@@ -214,6 +218,7 @@ function clearVirtualChassis() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearDeviceRole() : void
@@ -229,6 +234,7 @@ function clearDeviceRole() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearLocation() : void
@@ -244,6 +250,7 @@ function clearLocation() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearDeviceType() : void
@@ -260,6 +267,7 @@ function clearDeviceType() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearTenants() : void
@@ -275,6 +283,7 @@ function clearTenants() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearManufacturers() : void
@@ -290,6 +299,7 @@ function clearManufacturers() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearPlatforms() : void
@@ -305,6 +315,7 @@ function clearPlatforms() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearSites() : void
@@ -321,6 +332,7 @@ function clearSites() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearModuleBays() : void
@@ -336,6 +348,7 @@ function clearModuleBays() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearProviders() : void
@@ -351,6 +364,7 @@ function clearProviders() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearProviderNetworks() : void
@@ -366,6 +380,7 @@ function clearProviderNetworks() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearCircuitType() : void
@@ -381,6 +396,7 @@ function clearCircuitType() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearCircuit() : void
@@ -396,6 +412,7 @@ function clearCircuit() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearContactGroup() : void
@@ -411,6 +428,7 @@ function clearContactGroup() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearContact() : void
@@ -426,6 +444,7 @@ function clearContact() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearCotactRole() : void
@@ -441,6 +460,7 @@ function clearCotactRole() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearCustomLinks() : void
@@ -456,6 +476,7 @@ function clearCustomLinks() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearExportTemplates() : void
@@ -471,6 +492,7 @@ function clearExportTemplates() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearTags() : void
@@ -487,6 +509,7 @@ function clearTags() : void
 
 /**
  * @return void
+ * @throws GuzzleException
  */
 
 function clearWirelessLanGroups() : void
@@ -500,6 +523,9 @@ function clearWirelessLanGroups() : void
     }
 }
 
+/**
+ * @throws GuzzleException
+ */
 function clearRegions() : void
 {
     $o = new DCIM\Regions();
@@ -511,6 +537,9 @@ function clearRegions() : void
     }
 }
 
+/**
+ * @throws GuzzleException
+ */
 function clearSiteGroups() : void
 {
     $o = new DCIM\SiteGroups();
@@ -523,6 +552,9 @@ function clearSiteGroups() : void
 }
 
 
+/**
+ * @throws GuzzleException
+ */
 function clearPowerPanels() : void
 {
     $o = new DCIM\PowerPanels();
@@ -535,7 +567,9 @@ function clearPowerPanels() : void
 }
 
 
-
+/**
+ * @throws GuzzleException
+ */
 function clearPowerFeed() : void
 {
     $o = new DCIM\PowerFeeds();
@@ -548,6 +582,9 @@ function clearPowerFeed() : void
 }
 
 
+/**
+ * @throws GuzzleException
+ */
 function clearRir() : void
 {
     $o = new IPAM\Aggregates();
@@ -560,6 +597,9 @@ function clearRir() : void
 }
 
 
+/**
+ * @throws GuzzleException
+ */
 function clearContactRoles() : void
 {
     $o = new Tenancy\ContactRoles();

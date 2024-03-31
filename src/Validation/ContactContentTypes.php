@@ -8,7 +8,7 @@ trait ContactContentTypes
 /* 
 ----------------------------------------------------------------------------- */
 
-    public static function validate_ContentTypes( string $input ) : true|string
+    public static function validate_ContactContentTypes( string $input ) : true|string
     {
         $allowed = [ 
             'circuits.circuit',

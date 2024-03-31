@@ -9,7 +9,7 @@ use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
 use Cruzio\lib\Netbox\Validation;
 
-class PowerOutletTemplates extends Data_Core implements DataInterface
+class PowerOutlets extends Data_Core implements DataInterface
 {
     protected int    $device; // CLass: Devices
     protected int    $module; // Class: Modules
