@@ -7,30 +7,10 @@ namespace Cruzio\lib\Netbox\Params\DCIM;
 use Cruzio\lib\Netbox\Params\Params_Core;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 
-class Sites extends Params_Core implements ParamsInterface
+class Regions extends Params_Core implements ParamsInterface
 {
     /**
-     * @var array<int> $asn
-     */
-    protected array $asn;
-
-    /**
-     * @var array<int> $asn__n
-     */
-    protected array $asn__n;
-
-    /**
-     * @var array<int> $asn_id
-     */
-    protected array $asn_id;
-
-    /**
-     * @var array<int> $asn_id__n
-     */
-    protected array $asn_id__n;
-
-    /**
-     * @var array<int> $contact
+     * @var array<int>
      */
     protected array $contact;
 
@@ -60,7 +40,7 @@ class Sites extends Params_Core implements ParamsInterface
     protected array $contact_role__n;
 
     /**
-     * @var array<string> $created
+     * @var array<int> $created
      */
     protected array $created;
 
@@ -94,10 +74,6 @@ class Sites extends Params_Core implements ParamsInterface
      */
     protected array $created__n;
     protected string $created_by_request;
-
-    /**
-     * @var array<string> $description
-     */
     protected array $description;
     protected bool $description__empty;
 
@@ -147,77 +123,6 @@ class Sites extends Params_Core implements ParamsInterface
     protected array $description__nisw;
 
     /**
-     * @var array<string> $facility
-     */
-    protected array $facility;
-    protected bool $facility__empty;
-
-    /**
-     * @var array<string> $facility__ic
-     */
-    protected array $facility__ic;
-
-    /**
-     * @var array<string> $facility__ie
-     */
-    protected array $facility__ie;
-
-    /**
-     * @var array<string> $facility__iew
-     */
-    protected array $facility__iew;
-
-    /**
-     * @var array<string> $facility__isw
-     */
-    protected array $facility__isw;
-
-    /**
-     * @var array<string> $facility__n
-     */
-    protected array $facility__n;
-
-    /**
-     * @var array<string> $facility__nic
-     */
-    protected array $facility__nic;
-
-    /**
-     * @var array<string> $facility__nie
-     */
-    protected array $facility__nie;
-
-    /**
-     * @var array<string> $facility__niew
-     */
-    protected array $facility__niew;
-
-    /**
-     * @var array<string> $facility__nisw
-     */
-    protected array $facility__nisw;
-
-    /**
-     * @var array<int> $group
-     */
-    protected array $group;
-
-    /**
-     * @var array<int> $group__n
-     */
-    protected array $group__n;
-
-    /**
-     * @var array<int> $group_id
-     */
-    protected array $group_id;
-
-    /**
-     * @var array<int> $group_id__n
-     */
-    protected array $group_id__n;
-
-    /**
      * @var array<int> $id
      */
     protected array $id;
@@ -252,10 +157,6 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $last_updated
      */
     protected array $last_updated;
-
-    /**
-     * @var array<string> $last_updated__empty
-     */
     protected array $last_updated__empty;
 
     /**
@@ -282,69 +183,7 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $last_updated__n
      */
     protected array $last_updated__n;
-
-    /**
-     * @var array<float|int> $latitude
-     */
-    protected array $latitude;
-    protected bool $latitude__empty;
-
-    /**
-     * @var array<float|int> $latitude__gt
-     */
-    protected array $latitude__gt;
-
-    /**
-     * @var array<float|int> $latitude__gte
-     */
-    protected array $latitude__gte;
-
-    /**
-     * @var array<float|int> $latitude__lt
-     */
-    protected array $latitude__lt;
-
-    /**
-     * @var array<float|int> $latitude__lte
-     */
-    protected array $latitude__lte;
-
-    /**
-     * @var array<float|int> $latitude__n
-     */
-    protected array $latitude__n;
     protected int $limit;
-
-    /**
-     * @var array<float|int> $longitude
-     */
-    protected array $longitude;
-    protected bool $longitude__empty;
-
-    /**
-     * @var array<float|int> $longitude__gt
-     */
-    protected array $longitude__gt;
-
-    /**
-     * @var array<float|int> $longitude__gte
-     */
-    protected array $longitude__gte;
-
-    /**
-     * @var array<float|int> $longitude__lt
-     */
-    protected array $longitude__lt;
-
-    /**
-     * @var array<float|int> $longitude__lte
-     */
-    protected array $longitude__lte;
-
-    /**
-     * @var array<float|int> $longitude__n
-     */
-    protected array $longitude__n;
     protected string $modified_by_request;
 
     /**
@@ -399,27 +238,27 @@ class Sites extends Params_Core implements ParamsInterface
     protected array $name__nisw;
     protected int $offset;
     protected string $ordering;
+
+    /**
+     * @var array<int> $parent
+     */
+    protected array $parent;
+
+    /**
+     * @var array<int> $parent__n
+     */
+    protected array $parent__n;
+
+    /**
+     * @var array<int> $parent_id
+     */
+    protected array $parent_id;
+
+    /**
+     * @var array<int> $parent_id__n
+     */
+    protected array $parent_id__n;
     protected string $q;
-
-    /**
-     * @var array<int> $region
-     */
-    protected array $region;
-
-    /**
-     * @var array<int> $region__n
-     */
-    protected array $region__n;
-
-    /**
-     * @var array<int> $region_id
-     */
-    protected array $region_id;
-
-    /**
-     * @var array<int> $region_id__n
-     */
-    protected array $region_id__n;
 
     /**
      * @var array<string> $slug
@@ -473,16 +312,6 @@ class Sites extends Params_Core implements ParamsInterface
     protected array $slug__nisw;
 
     /**
-     * @var array<string> $status
-     */
-    protected array $status;
-
-    /**
-     * @var array<string> $status__n
-     */
-    protected array $status__n;
-
-    /**
      * @var array<string> $tag
      */
     protected array $tag;
@@ -491,45 +320,5 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $tag__n
      */
     protected array $tag__n;
-
-    /**
-     * @var array<string> $tenant
-     */
-    protected array $tenant;
-
-    /**
-     * @var array<string> $tenant__n
-     */
-    protected array $tenant__n;
-
-    /**
-     * @var array<int> $tenant_group
-     */
-    protected array $tenant_group;
-
-    /**
-     * @var array<int> $tenant_group__n
-     */
-    protected array $tenant_group__n;
-
-    /**
-     * @var array<int> $tenant_group_id
-     */
-    protected array $tenant_group_id;
-
-    /**
-     * @var array<int> $tenant_group_id__n
-     */
-    protected array $tenant_group_id__n;
-
-    /**
-     * @var array<int> $tenant_id
-     */
-    protected array $tenant_id;
-
-    /**
-     * @var array<int> $tenant_id__n
-     */
-    protected array $tenant_id__n;
-    protected string $updated_by_request; // UUID
+    protected string $updated_by_request;
 }

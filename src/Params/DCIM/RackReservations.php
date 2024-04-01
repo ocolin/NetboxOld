@@ -2,12 +2,12 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\lib\Netbox\Params\IMAP;
+namespace Cruzio\lib\Netbox\Params\DCIM;
 
 use Cruzio\lib\Netbox\Params\Params_Core;
-use \Cruzio\lib\Netbox\Params\ParamsInterface;
+use Cruzio\lib\Netbox\Params\ParamsInterface;
 
-class Aggregates extends Params_Core implements ParamsInterface
+class RackReservations extends Params_Core implements ParamsInterface
 {
 
     /**
@@ -44,44 +44,13 @@ class Aggregates extends Params_Core implements ParamsInterface
      * @var array<string> $created__n
      */
     protected array $created__n;
-    protected string $created_by_request; // UUID
-
-    /**
-     * @var array<string> $date_added
-     */
-    protected array $date_added;
-    protected bool  $date_added__empty;
-
-    /**
-     * @var array<string> $date_added__gt
-     */
-    protected array $date_added__gt;
-
-    /**
-     * @var array<string> $date_added__gte
-     */
-    protected array $date_added__gte;
-
-    /**
-     * @var array<string> $date_added__lt
-     */
-    protected array $date_added__lt;
-
-    /**
-     * @var array<string> $date_added__lte
-     */
-    protected array $date_added__lte;
-
-    /**
-     * @var array<string> $date_added__n
-     */
-    protected array $date_added__n;
+    protected string $created_by_request;
 
     /**
      * @var array<string> $description
      */
     protected array $description;
-    protected bool  $description__empty;
+    protected bool $description__empty;
 
     /**
      * @var array<string> $description__ic
@@ -127,13 +96,12 @@ class Aggregates extends Params_Core implements ParamsInterface
      * @var array<string> $description__nisw
      */
     protected array $description__nisw;
-    protected int   $family;
 
     /**
      * @var array<int> $id
      */
     protected array $id;
-    protected bool  $id__empty;
+    protected bool $id__empty;
 
     /**
      * @var array<int> $id__gt
@@ -163,64 +131,129 @@ class Aggregates extends Params_Core implements ParamsInterface
     /**
      * @var array<string> $last_updated
      */
-    protected array  $last_updated;
-
-    /**
-     * @var array<string> $last_updated__empty
-     */
-    protected array  $last_updated__empty;
+    protected array $last_updated;
+    protected array $last_updated__empty;
 
     /**
      * @var array<string> $last_updated__gt
      */
-    protected array  $last_updated__gt;
+    protected array $last_updated__gt;
 
     /**
      * @var array<string> $last_updated__gte
      */
-    protected array  $last_updated__gte;
+    protected array $last_updated__gte;
 
     /**
      * @var array<string> $last_updated__lt
      */
-    protected array  $last_updated__lt;
+    protected array $last_updated__lt;
 
     /**
      * @var array<string> $last_updated__lte
      */
-    protected array  $last_updated__lte;
+    protected array $last_updated__lte;
 
     /**
      * @var array<string> $last_updated__n
      */
-    protected array  $last_updated__n;
-    protected int    $limit;
-    protected string $modified_by_request; // UUID
-    protected int    $offset;
+    protected array $last_updated__n;
+    protected int $limit;
+
+    /**
+     * @var array<int> $location Slug
+     */
+    protected array $location;
+
+    /**
+     * @var array<int> $location__n Slug
+     */
+    protected array $location__n;
+
+    /**
+     * @var array<int> $location_id
+     */
+    protected array $location_id;
+
+    /**
+     * @var array<int> $location_id__n
+     */
+    protected array $location_id__n;
+
+    protected string $modified_by_request;
+    protected int $offset;
     protected string $ordering;
-    protected string $prefix;
     protected string $q;
 
     /**
-     * @var array<string> $rir
+     * @var array<int> $rack_id
      */
-    protected array $rir;
+    protected array $rack_id;
 
     /**
-     * @var array<string> $rir__n
+     * @var array<int> $rack_id__n
      */
-    protected array $rir__n;
+    protected array $rack_id__n;
 
     /**
-     * @var array<string> $rir_id
+     * @var array<int> $region
      */
-    protected array $rir_id;
+    protected array $region;
 
     /**
-     * @var array<string> $rir_id__n
+     * @var array<int> $region__n
      */
-    protected array $rir_id__n;
+    protected array $region__n;
 
+    /**
+     * @var array<int> $region_id
+     */
+    protected array $region_id;
+
+    /**
+     * @var array<int> $region_id__n
+     */
+    protected array $region_id__n;
+
+    /**
+     * @var array<string> $site
+     */
+    protected array $site;
+
+    /**
+     * @var array<string> $site__n
+     */
+    protected array $site__n;
+
+    /**
+     * @var array<int> $site_group
+     */
+    protected array $site_group;
+
+    /**
+     * @var array<int> $site_group__n
+     */
+    protected array $site_group__n;
+
+    /**
+     * @var array<int> $site_group_id
+     */
+    protected array $site_group_id;
+
+    /**
+     * @var array<int> $site_group_id__n
+     */
+    protected array $site_group_id__n;
+
+    /**
+     * @var array<int> $site_id
+     */
+    protected array $site_id;
+
+    /**
+     * @var array<int> $site_id__n
+     */
+    protected array $site_id__n;
     /**
      * @var array<string> $tag
      */
@@ -234,96 +267,62 @@ class Aggregates extends Params_Core implements ParamsInterface
     /**
      * @var array<string> $tenant
      */
-    protected array  $tenant;
+    protected array $tenant;
 
     /**
      * @var array<string> $tenant__n
      */
-    protected array  $tenant__n;
+    protected array $tenant__n;
 
     /**
      * @var array<int> $tenant_group
      */
-    protected array  $tenant_group;
+    protected array $tenant_group;
 
     /**
      * @var array<int> $tenant_group__n
      */
-    protected array  $tenant_group__n;
+    protected array $tenant_group__n;
 
     /**
      * @var array<int> $tenant_group_id
      */
-    protected array  $tenant_group_id;
+    protected array $tenant_group_id;
 
     /**
      * @var array<int> $tenant_group_id__n
      */
-    protected array  $tenant_group_id__n;
+    protected array $tenant_group_id__n;
 
     /**
      * @var array<int> $tenant_id
      */
-    protected array  $tenant_id;
+    protected array $tenant_id;
 
     /**
      * @var array<int> $tenant_id__n
      */
-    protected array  $tenant_id__n;
+    protected array $tenant_id__n;
     protected string $updated_by_request; // UUID
 
-}
+    /**
+     * @var array<string> $user
+     */
+    protected array $user;
 
-/**
-{
-  "count": 123,
-  "next": "http://api.example.org/accounts/?offset=400&limit=100",
-  "previous": "http://api.example.org/accounts/?offset=200&limit=100",
-  "results": [
-    {
-      "id": 0,
-      "url": "string",
-      "display": "string",
-      "family": {
-        "value": 4,
-        "label": "IPv4"
-      },
-      "prefix": "string",
-      "rir": {
-        "id": 0,
-        "url": "string",
-        "display": "string",
-        "name": "string",
-        "slug": "L1rDni5iI_EZgaPFyj82kx_7R53OAfX8N_BeZoWoYFzFxibnVZICr_wDtvR46j-a-2"
-      },
-      "tenant": {
-        "id": 0,
-        "url": "string",
-        "display": "string",
-        "name": "string",
-        "slug": "5ZpTREwkGyEzq_nMTtTYQSxQ"
-      },
-      "date_added": "2024-03-29",
-      "description": "string",
-      "comments": "string",
-      "tags": [
-        {
-          "id": 0,
-          "url": "string",
-          "display": "string",
-          "name": "string",
-          "slug": "fqdlFbvFv-iTRvDusLeGjADx",
-          "color": "0285ad"
-        }
-      ],
-      "custom_fields": {
-        "additionalProp1": "string",
-        "additionalProp2": "string",
-        "additionalProp3": "string"
-      },
-      "created": "2024-03-29T02:49:53.759Z",
-      "last_updated": "2024-03-29T02:49:53.759Z"
-    }
-  ]
+    /**
+     * @var array<int> $user__n
+     */
+    protected array $user__n;
+
+    /**
+     * @var array<int> $user_id
+     */
+    protected array $user_id;
+
+    /**
+     * @var array<int> $user_id__n
+     */
+    protected array $user_id__n;
+
 }
- */

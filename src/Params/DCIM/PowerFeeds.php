@@ -7,60 +7,47 @@ namespace Cruzio\lib\Netbox\Params\DCIM;
 use Cruzio\lib\Netbox\Params\Params_Core;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 
-class Sites extends Params_Core implements ParamsInterface
+class PowerFeeds extends Params_Core implements ParamsInterface
 {
     /**
-     * @var array<int> $asn
+     * @var array<int>
      */
-    protected array $asn;
+    protected array $amperage;
+
+    protected bool $amperage__empty;
 
     /**
-     * @var array<int> $asn__n
+     * @var array<int> $amperage__gt
      */
-    protected array $asn__n;
+    protected array $amperage__gt;
 
     /**
-     * @var array<int> $asn_id
+     * @var array<int> $amperage__gte
      */
-    protected array $asn_id;
+    protected array $amperage__gte;
 
     /**
-     * @var array<int> $asn_id__n
+     * @var array<int> $amperage__lt
      */
-    protected array $asn_id__n;
+    protected array $amperage__lt;
 
     /**
-     * @var array<int> $contact
+     * @var array<int> $amperage__lte
      */
-    protected array $contact;
+    protected array $amperage__lte;
 
     /**
-     * @var array<int> $contact__n
+     * @var array<int> $amperage__n
      */
-    protected array $contact__n;
+    protected array $amperage__n;
+    protected string $cable_end;
+    protected string $cable_end__n;
+
+    protected bool $cabled;
+    protected bool $connected;
 
     /**
-     * @var array<int> $contact_group
-     */
-    protected array $contact_group;
-
-    /**
-     * @var array<int> $contact_group__n
-     */
-    protected array $contact_group__n;
-
-    /**
-     * @var array<int> $contact_role
-     */
-    protected array $contact_role;
-
-    /**
-     * @var array<int> $contact_role__n
-     */
-    protected array $contact_role__n;
-
-    /**
-     * @var array<string> $created
+     * @var array<int> $created
      */
     protected array $created;
 
@@ -147,77 +134,6 @@ class Sites extends Params_Core implements ParamsInterface
     protected array $description__nisw;
 
     /**
-     * @var array<string> $facility
-     */
-    protected array $facility;
-    protected bool $facility__empty;
-
-    /**
-     * @var array<string> $facility__ic
-     */
-    protected array $facility__ic;
-
-    /**
-     * @var array<string> $facility__ie
-     */
-    protected array $facility__ie;
-
-    /**
-     * @var array<string> $facility__iew
-     */
-    protected array $facility__iew;
-
-    /**
-     * @var array<string> $facility__isw
-     */
-    protected array $facility__isw;
-
-    /**
-     * @var array<string> $facility__n
-     */
-    protected array $facility__n;
-
-    /**
-     * @var array<string> $facility__nic
-     */
-    protected array $facility__nic;
-
-    /**
-     * @var array<string> $facility__nie
-     */
-    protected array $facility__nie;
-
-    /**
-     * @var array<string> $facility__niew
-     */
-    protected array $facility__niew;
-
-    /**
-     * @var array<string> $facility__nisw
-     */
-    protected array $facility__nisw;
-
-    /**
-     * @var array<int> $group
-     */
-    protected array $group;
-
-    /**
-     * @var array<int> $group__n
-     */
-    protected array $group__n;
-
-    /**
-     * @var array<int> $group_id
-     */
-    protected array $group_id;
-
-    /**
-     * @var array<int> $group_id__n
-     */
-    protected array $group_id__n;
-
-    /**
      * @var array<int> $id
      */
     protected array $id;
@@ -252,10 +168,6 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $last_updated
      */
     protected array $last_updated;
-
-    /**
-     * @var array<string> $last_updated__empty
-     */
     protected array $last_updated__empty;
 
     /**
@@ -282,69 +194,39 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $last_updated__n
      */
     protected array $last_updated__n;
-
-    /**
-     * @var array<float|int> $latitude
-     */
-    protected array $latitude;
-    protected bool $latitude__empty;
-
-    /**
-     * @var array<float|int> $latitude__gt
-     */
-    protected array $latitude__gt;
-
-    /**
-     * @var array<float|int> $latitude__gte
-     */
-    protected array $latitude__gte;
-
-    /**
-     * @var array<float|int> $latitude__lt
-     */
-    protected array $latitude__lt;
-
-    /**
-     * @var array<float|int> $latitude__lte
-     */
-    protected array $latitude__lte;
-
-    /**
-     * @var array<float|int> $latitude__n
-     */
-    protected array $latitude__n;
     protected int $limit;
 
     /**
-     * @var array<float|int> $longitude
+     * @var array<int> $max_utilization
      */
-    protected array $longitude;
-    protected bool $longitude__empty;
+    protected array $max_utilization;
+
+    protected bool $max_utilization__empty;
 
     /**
-     * @var array<float|int> $longitude__gt
+     * @var array<int> $max_utilization__gt
      */
-    protected array $longitude__gt;
+    protected array $max_utilization__gt;
 
     /**
-     * @var array<float|int> $longitude__gte
+     * @var array<int> $max_utilization__gte
      */
-    protected array $longitude__gte;
+    protected array $max_utilization__gte;
 
     /**
-     * @var array<float|int> $longitude__lt
+     * @var array<int> $max_utilization__lt
      */
-    protected array $longitude__lt;
+    protected array $max_utilization__lt;
 
     /**
-     * @var array<float|int> $longitude__lte
+     * @var array<int> $max_utilization__lte
      */
-    protected array $longitude__lte;
+    protected array $max_utilization__lte;
 
     /**
-     * @var array<float|int> $longitude__n
+     * @var array<int> $max_utilization__n
      */
-    protected array $longitude__n;
+    protected array $max_utilization__n;
     protected string $modified_by_request;
 
     /**
@@ -397,9 +279,32 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $name__nisw
      */
     protected array $name__nisw;
+    protected bool $occupied;
     protected int $offset;
     protected string $ordering;
+    protected string $phase;
+    protected string $phase__n;
+
+    /**
+     * @var array<int> $power_panel_id
+     */
+    protected array $power_panel_id;
+
+    /**
+     * @var array<int> $power_panel_id__n
+     */
+    protected array $power_panel_id__n;
     protected string $q;
+
+    /**
+     * @var array<int> $rack_id
+     */
+    protected array $rack_id;
+
+    /**
+     * @var array<int> $rack_id__n
+     */
+    protected array $rack_id__n;
 
     /**
      * @var array<int> $region
@@ -422,55 +327,44 @@ class Sites extends Params_Core implements ParamsInterface
     protected array $region_id__n;
 
     /**
-     * @var array<string> $slug
+     * @var array<string> $site
      */
-    protected array $slug;
-    protected bool $slug__empty;
+    protected array $site;
 
     /**
-     * @var array<string> $slug__ic
+     * @var array<string> $site__n
      */
-    protected array $slug__ic;
+    protected array $site__n;
 
     /**
-     * @var array<string> $slug__ie
+     * @var array<int> $site_group
      */
-    protected array $slug__ie;
+    protected array $site_group;
 
     /**
-     * @var array<string> $slug__iew
+     * @var array<int> $site_group__n
      */
-    protected array $slug__iew;
+    protected array $site_group__n;
 
     /**
-     * @var array<string> $slug__isw
+     * @var array<int> $site_group_id
      */
-    protected array $slug__isw;
+    protected array $site_group_id;
 
     /**
-     * @var array<string> $slug__n
+     * @var array<int> $site_group_id__n
      */
-    protected array $slug__n;
+    protected array $site_group_id__n;
 
     /**
-     * @var array<string> $slug__nic
+     * @var array<int> $site_id
      */
-    protected array $slug__nic;
+    protected array $site_id;
 
     /**
-     * @var array<string> $slug__nie
+     * @var array<int> $site_id__n
      */
-    protected array $slug__nie;
-
-    /**
-     * @var array<string> $slug__niew
-     */
-    protected array $slug__niew;
-
-    /**
-     * @var array<string> $slug__nisw
-     */
-    protected array $slug__nisw;
+    protected array $site_id__n;
 
     /**
      * @var array<string> $status
@@ -481,14 +375,16 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<string> $status__n
      */
     protected array $status__n;
+    protected string $supply;
+    protected string $supply__n;
 
     /**
-     * @var array<string> $tag
+     * @var array<string>
      */
     protected array $tag;
 
     /**
-     * @var array<string> $tag__n
+     * @var array<string>
      */
     protected array $tag__n;
 
@@ -531,5 +427,38 @@ class Sites extends Params_Core implements ParamsInterface
      * @var array<int> $tenant_id__n
      */
     protected array $tenant_id__n;
-    protected string $updated_by_request; // UUID
+    protected string $type;
+    protected string $type__n;
+    protected string $updated_by_request;
+
+    /**
+     * @var array<int> $voltage
+     */
+    protected array $voltage;
+    protected bool $voltage__empty;
+
+    /**
+     * @var array<int> $voltage__gt
+     */
+    protected array $voltage__gt;
+
+    /**
+     * @var array<int> $voltage__gte
+     */
+    protected array $voltage__gte;
+
+    /**
+     * @var array<int> $voltage__lt
+     */
+    protected array $voltage__lt;
+
+    /**
+     * @var array<int> $voltage__lte
+     */
+    protected array $voltage__lte;
+
+    /**
+     * @var array<int> $voltage__n
+     */
+    protected array $voltage__n;
 }

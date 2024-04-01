@@ -53,6 +53,7 @@ final class SitesTest extends testCore
         $d->status = 'active';
 
         $result = $o->postDetail(data: $d, params: [ 'exclude' => 'config_context'] );
+        print_r( $result->body );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -144,9 +145,7 @@ final class SitesTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Sites();
-        $p = new Props();
-        $p->exclude = 'config_context';
-        $result = $o->getDetail( id: $id, params: $p );
+        $result = $o->getDetail( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

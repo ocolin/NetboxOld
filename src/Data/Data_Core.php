@@ -4,6 +4,11 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Data;
 
+use Exception;
+use ReflectionClass;
+use ReflectionProperty;
+use stdClass;
+
 class Data_Core
 {
 
@@ -12,13 +17,13 @@ class Data_Core
 ----------------------------------------------------------------------------- */
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function render(bool $required = false ) : object|null
     {
-        $reflect = new \ReflectionClass( $this );
-        $props   = $reflect->getProperties( \ReflectionProperty::IS_PROTECTED );
-        $obj = new \stdClass();
+        $reflect = new ReflectionClass( $this );
+        $props   = $reflect->getProperties( ReflectionProperty::IS_PROTECTED );
+        $obj = new stdClass();
         foreach( $props as $prop )
         {
             $name = $prop->getName();
@@ -28,7 +33,7 @@ class Data_Core
             }
             
             elseif( $required === true AND in_array($name, static::required() )) {
-                throw new \Exception("Property '{$name}' is required");
+                throw new Exception("Property '$name' is required");
             }
         }
 
@@ -40,18 +45,18 @@ class Data_Core
 ----------------------------------------------------------------------------- */
 
     /**
-     * @throws \Exception
+     * @throws Exception
      */
     public function __set(string $property, mixed $value ) : void
     {
         if( property_exists( $this, $property )) {
-            $rp = new \ReflectionProperty( $this, $property );
+            $rp = new ReflectionProperty( $this, $property );
             if( !$rp->isPrivate() ) {
                 if( array_key_exists( $property, $this->validate())) {
                     $val_func = 'validate_' . static::validate()[$property];
                     $result = static::$val_func( $value );
                     if(  $result !== true ) {
-                        throw new \Exception( $result );
+                        throw new Exception( $result );
                     }
                 }
                 $this->$property = $value;
@@ -66,7 +71,7 @@ class Data_Core
     public function __get( string $property ) : mixed
     {
         if( property_exists( $this, $property )) {
-            $rp = new \ReflectionProperty( $this, $property );
+            $rp = new ReflectionProperty( $this, $property );
             if( !$rp->isPrivate() ) {
                 return $this->$property;
             }
@@ -114,15 +119,5 @@ class Data_Core
         return [];
     }
 
-/*
------------------------------------------------------------------------------ */
-
-    public static function validate_IPv4( string $input ) : true|string
-    {
-        return filter_var( $input, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4 )
-            ? true
-            : "'$input' is not a valid IPv4 Address.";
-    }
-    
 }
 

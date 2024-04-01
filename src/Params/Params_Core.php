@@ -4,13 +4,13 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Params;
 
-use ReflectionException;
 use ReflectionProperty;
 use ReflectionClass;
 
 class Params_Core
 {
 
+    protected string $exclude;
 
 /* GETTER
 ----------------------------------------------------------------------------- */
@@ -32,23 +32,24 @@ class Params_Core
 ----------------------------------------------------------------------------- */
 
     /**
-     * @param string $prop name of class property
+     * @param string $param name of class property
      * @param string|int|array<string> $value value to assign to prop
-     * @throws ReflectionException
      */
 
-    public function __set(string $prop, string|int|array $value ) : void
+    public function __set(string $param, string|int|array $value ) : void
     {
-        if( property_exists( $this, $prop )) {
-            $rp = new ReflectionProperty( static::class, $prop );
-            $type = $rp->getType()->getName();
-            if( 
-                $type === 'array' AND
-                gettype( $value !== 'array' )
-            ) {
-                $this->$prop[] = $value;
-            } else {
-                $this->$prop = $value;
+        if( property_exists( $this, $param )) {
+            $rp = new ReflectionProperty( $this, $param );
+            if (!$rp->isPrivate()) {
+                if (
+                    #@phpstan-ignore-next-line
+                    $rp->getType()->getName() === 'array' and
+                    gettype($value) !== 'array'
+                ) {
+                    $this->$param[] = $value;
+                } else {
+                    $this->$param = $value;
+                }
             }
         }
     }
@@ -56,6 +57,9 @@ class Params_Core
 /*
 ------------------------------------------------------------------------ */
 
+    /**
+     * @return array<string, string|int|float|array<string|int|float>>
+     */
     public function render() : array
     {
         $output = [];

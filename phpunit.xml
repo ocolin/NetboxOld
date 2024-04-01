@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="vendor/autoload.php" colors="true" stopOnFailure="true" beStrictAboutChangesToGlobalState="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/11.0/phpunit.xsd" cacheDirectory=".phpunit.cache">
+<phpunit
+        bootstrap="vendor/autoload.php"
+        colors="true"
+        stopOnFailure="true"
+        beStrictAboutChangesToGlobalState="true"
+        cacheDirectory=".phpunit.cache"
+>
   <php>
     <env name="NETBOX_BASE_URI" value="10.211.55.6:8000/api/"/>
     <env name="NETBOX_BASE_URI" value="23ba9d80db561bedbb115b0e15917eb073dad7c5"/>
@@ -36,46 +42,47 @@ image attachments
         <file>tests/Models/DCIM/CablesTest.php</file>
         <file>tests/Models/DCIM/CableTerminationsTest.php</file>
         -->
-<!--
-        <file>tests/Models/DCIM/ConsolePortsTest.php</file>
-        <file>tests/Models/DCIM/ConsolePortTemplatesTest.php</file>
-        <file>tests/Models/DCIM/ConsoleServerPortsTest.php</file>
-        <file>tests/Models/DCIM/ConsoleServerPortTemplatesTest.php</file>
-        <file>tests/Models/DCIM/DeviceBaysTest.php</file>
-        <file>tests/Models/DCIM/DeviceBayTemplatesTest.php</file>
-        <file>tests/Models/DCIM/DeviceRolesTest.php</file>
-        <file>tests/Models/DCIM/DevicesTest.php</file>
-        <file>tests/Models/DCIM/DeviceTypesTest.php</file>
-        <file>tests/Models/DCIM/FrontPortsTest.php</file>
-        <file>tests/Models/DCIM/FrontPortTemplatesTest.php</file>
-        <file>tests/Models/DCIM/InterfacesTest.php</file>
-        <file>tests/Models/DCIM/InterfaceTemplatesTest.php</file>
-        <file>tests/Models/DCIM/InventoryItemRolesTest.php</file>
-        <file>tests/Models/DCIM/InventoryItemsTest.php</file>
-        <file>tests/Models/DCIM/InventoryItemTemplatesTest.php</file>
-        <file>tests/Models/DCIM/LocationsTest.php</file>
-        <file>tests/Models/DCIM/ManufacturersTest.php</file>
-        <file>tests/Models/DCIM/ModuleBaysTest.php</file>
-        <file>tests/Models/DCIM/ModuleBayTemplatesTest.php</file>
-        <file>tests/Models/DCIM/ModulesTest.php</file>
-        <file>tests/Models/DCIM/ModuleTypesTest.php</file>
-        <file>tests/Models/DCIM/PlatformsTest.php</file>
-        <file>tests/Models/DCIM/PowerFeedsTest.php</file>
-        <file>tests/Models/DCIM/PowerOutletsTest.php</file>
-        <file>tests/Models/DCIM/PowerOutletTemplatesTest.php</file>
-        <file>tests/Models/DCIM/PowerPanelsTest.php</file>
-        <file>tests/Models/DCIM/PowerPortsTest.php</file>
-        <file>tests/Models/DCIM/PowerPortTemplatesTest.php</file>
-        <file>tests/Models/DCIM/RackReservationsTest.php</file>
-        <file>tests/Models/DCIM/RackRolesTest.php</file>
-        <file>tests/Models/DCIM/RacksTest.php</file>
-        <file>tests/Models/DCIM/RearPortsTest.php</file>
-        <file>tests/Models/DCIM/RearPortTemplatesTest.php</file>
-        <file>tests/Models/DCIM/RegionsTest.php</file>
-        <file>tests/Models/DCIM/SiteGroupsTest.php</file>
-        <file>tests/Models/DCIM/SitesTest.php</file>
-        <file>tests/Models/DCIM/VirtualChassisTest.php</file>
--->
+
+        <!--
+                <file>tests/Models/DCIM/ConsolePortsTest.php</file>
+                <file>tests/Models/DCIM/ConsolePortTemplatesTest.php</file>
+                <file>tests/Models/DCIM/ConsoleServerPortsTest.php</file>
+                <file>tests/Models/DCIM/ConsoleServerPortTemplatesTest.php</file>
+                <file>tests/Models/DCIM/DeviceBaysTest.php</file>
+                <file>tests/Models/DCIM/DeviceBayTemplatesTest.php</file>
+                <file>tests/Models/DCIM/DeviceRolesTest.php</file>
+                <file>tests/Models/DCIM/DevicesTest.php</file>
+                <file>tests/Models/DCIM/DeviceTypesTest.php</file>
+                <file>tests/Models/DCIM/FrontPortsTest.php</file>
+                <file>tests/Models/DCIM/FrontPortTemplatesTest.php</file>
+                <file>tests/Models/DCIM/InterfacesTest.php</file>
+                <file>tests/Models/DCIM/InterfaceTemplatesTest.php</file>
+                <file>tests/Models/DCIM/InventoryItemRolesTest.php</file>
+                <file>tests/Models/DCIM/InventoryItemsTest.php</file>
+                <file>tests/Models/DCIM/InventoryItemTemplatesTest.php</file>
+                <file>tests/Models/DCIM/LocationsTest.php</file>
+                <file>tests/Models/DCIM/ManufacturersTest.php</file>
+                <file>tests/Models/DCIM/ModuleBaysTest.php</file>
+                <file>tests/Models/DCIM/ModuleBayTemplatesTest.php</file>
+                <file>tests/Models/DCIM/ModulesTest.php</file>
+                <file>tests/Models/DCIM/ModuleTypesTest.php</file>
+                <file>tests/Models/DCIM/PlatformsTest.php</file>
+                <file>tests/Models/DCIM/PowerFeedsTest.php</file>
+                <file>tests/Models/DCIM/PowerOutletsTest.php</file>
+                <file>tests/Models/DCIM/PowerOutletTemplatesTest.php</file>
+                <file>tests/Models/DCIM/PowerPanelsTest.php</file>
+                <file>tests/Models/DCIM/PowerPortsTest.php</file>
+                <file>tests/Models/DCIM/PowerPortTemplatesTest.php</file>
+                <file>tests/Models/DCIM/RackReservationsTest.php</file>
+                <file>tests/Models/DCIM/RackRolesTest.php</file>
+                <file>tests/Models/DCIM/RacksTest.php</file>
+                <file>tests/Models/DCIM/RearPortsTest.php</file>
+                <file>tests/Models/DCIM/RearPortTemplatesTest.php</file>
+                <file>tests/Models/DCIM/RegionsTest.php</file>
+                <file>tests/Models/DCIM/SiteGroupsTest.php</file>
+                <file>tests/Models/DCIM/SitesTest.php</file>
+                <file>tests/Models/DCIM/VirtualChassisTest.php</file>
+        -->
     </testsuite>
     <testsuite name="Users_Models">
 <!--

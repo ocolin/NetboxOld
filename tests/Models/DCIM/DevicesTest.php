@@ -7,6 +7,7 @@ namespace Tests\Models\DCIM;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\Devices;
 use Cruzio\lib\Netbox\Data\DCIM\Devices AS Data;
+use Cruzio\lib\Netbox\Params\DCIM\Sites AS Params;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 
@@ -108,7 +109,7 @@ final class DevicesTest extends testCore
     {
         $o = new Devices();
         $result = $o->getDetail( id: $id );
-        
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );

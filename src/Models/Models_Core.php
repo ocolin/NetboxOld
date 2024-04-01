@@ -314,7 +314,6 @@ abstract class Models_Core
      * Get an individual object
      *
      * @param integer $id Numerical ID of an object record.
-     * @param ParamsInterface|null $params Optional GET parameters.
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
@@ -322,16 +321,14 @@ abstract class Models_Core
 
     public function getDetail(
         int             $id,
-        ParamsInterface $params  = null,
         array           $headers = []
     ) : Response
     {
         $this->uri .= "{$id}/";
-        $params = $params === null ? [] : $params->render();
 
         return $this->http->get(
                 uri: $this->uri,
-             params: $params,
+            params: ['exclude' => 'config_context'],
             headers: $headers
         );
     }

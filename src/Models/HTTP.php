@@ -6,6 +6,7 @@ namespace Cruzio\lib\Netbox\Models;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Query;
 use \Psr\Http\Message\ResponseInterface;
 use Cruzio\lib\Env\EnvLoad;
 
@@ -170,7 +171,7 @@ class HTTP
      * Retrieve an object or list of objects.
      *
      * @param string $uri
-     * @param array<string, string> $params
+     * @param array<string, string|int|float|array<int|float|string>> $params
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
@@ -182,11 +183,10 @@ class HTTP
          array $headers = []
     ) : Response
     {
-        $uri = self::formatParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
-            'GET', $uri, [ 'headers' => $this->headers ]
+            'GET', $uri, [ 'headers' => $this->headers, 'query' => Query::build($params)]
         );
 
         return self::returnResults( request: $request );
@@ -271,11 +271,12 @@ class HTTP
 /* FORMAT RESPONSE
 ---------------------------------------------------------------------------- */
 
-/**
- * Format the Guzzle HTTP request response into an array
- * 
- * @return Response
-*/
+    /**
+     * Format the Guzzle HTTP request response into an array
+     *
+     * @param ResponseInterface $request
+     * @return Response
+     */
 
     private static function returnResults( ResponseInterface $request ) : Response
     {
