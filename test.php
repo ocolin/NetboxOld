@@ -5,14 +5,20 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox;
 
+use GuzzleHttp\Exception\GuzzleException;
+
 require_once __DIR__ . '/vendor/autoload.php';
 
 $test = new \Cruzio\lib\Netbox\Models\DCIM\Sites();
 $param = new \Cruzio\lib\Netbox\Params\DCIM\Sites();
 $param->description = ['charry'];
 
-$output = $test->getList( params: $param );
-print_r( $output->body );
+try {
+    $output = $test->getList(params: $param);
+    print_r( $output->body );
+} catch (GuzzleException $e) {
+    echo "Nah gone dew-it...";
+}
 //$data = new Data\DCIM\Cables();
 
 //use \Cruzio\lib\Netbox\Data\DCIM\Cables;

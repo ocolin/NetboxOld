@@ -10,221 +10,221 @@ use Cruzio\lib\Netbox\Params\ParamsInterface;
 class ConsoleServerPortTemplates extends Params_Core implements ParamsInterface
 {
     /**
-     * @var array<int> $created
+     * @var int|array<int> $created
      */
-    protected array $created;
+    protected int|array $created;
 
     /**
-     * @var array<string> $created__empty
+     * @var string|array<string> $created__empty
      */
-    protected array $created__empty;
+    protected string|array $created__empty;
 
     /**
-     * @var array<string> $created__gt
+     * @var string|array<string> $created__gt
      */
-    protected array $created__gt;
+    protected string|array $created__gt;
 
     /**
-     * @var array<string> $created__gte
+     * @var string|array<string> $created__gte
      */
-    protected array $created__gte;
+    protected string|array $created__gte;
 
     /**
-     * @var array<string> $created__lt
+     * @var string|array<string> $created__lt
      */
-    protected array $created__lt;
+    protected string|array $created__lt;
 
     /**
-     * @var array<string> $created__lte
+     * @var string|array<string> $created__lte
      */
-    protected array $created__lte;
+    protected string|array $created__lte;
 
     /**
-     * @var array<string> $created__n
+     * @var string|array<string> $created__n
      */
-    protected array $created__n;
+    protected string|array $created__n;
     protected string $created_by_request;
 
     /**
-     * @var array<string> $description
+     * @var string|array<string> $description
      */
-    protected array $description;
+    protected string|array $description;
     protected bool $description__empty;
 
     /**
-     * @var array<string> $description__ic
+     * @var string|array<string> $description__ic
      */
-    protected array $description__ic;
+    protected string|array $description__ic;
 
     /**
-     * @var array<string> $description__ie
+     * @var string|array<string> $description__ie
      */
-    protected array $description__ie;
+    protected string|array $description__ie;
 
     /**
-     * @var array<string> $description__iew
+     * @var string|array<string> $description__iew
      */
-    protected array $description__iew;
+    protected string|array $description__iew;
 
     /**
-     * @var array<string> $description__isw
+     * @var string|array<string> $description__isw
      */
-    protected array $description__isw;
+    protected string|array $description__isw;
 
     /**
-     * @var array<string> $description__n
+     * @var string|array<string> $description__n
      */
-    protected array $description__n;
+    protected string|array $description__n;
 
     /**
-     * @var array<string> $description__nic
+     * @var string|array<string> $description__nic
      */
-    protected array $description__nic;
+    protected string|array $description__nic;
 
     /**
-     * @var array<string> $description__nie
+     * @var string|array<string> $description__nie
      */
-    protected array $description__nie;
+    protected string|array $description__nie;
 
     /**
-     * @var array<string> $description__niew
+     * @var string|array<string> $description__niew
      */
-    protected array $description__niew;
+    protected string|array $description__niew;
 
     /**
-     * @var array<string> $description__nisw
+     * @var string|array<string> $description__nisw
      */
-    protected array $description__nisw;
+    protected string|array $description__nisw;
 
     /**
-     * @var array<int> $id
+     * @var int|array<int> $id
      */
-    protected array $id;
+    protected int|array $id;
     protected bool $id__empty;
 
     /**
-     * @var array<int> $id__gt
+     * @var int|array<int> $id__gt
      */
-    protected array $id__gt;
+    protected int|array $id__gt;
 
     /**
-     * @var array<int> $id__gte
+     * @var int|array<int> $id__gte
      */
-    protected array $id__gte;
+    protected int|array $id__gte;
 
     /**
-     * @var array<int> $id__lt
+     * @var int|array<int> $id__lt
      */
-    protected array $id__lt;
+    protected int|array $id__lt;
 
     /**
-     * @var array<int> $id__lte
+     * @var int|array<int> $id__lte
      */
-    protected array $id__lte;
+    protected int|array $id__lte;
 
     /**
-     * @var array<int> $id__n
+     * @var int|array<int> $id__n
      */
-    protected array $id__n;
+    protected int|array $id__n;
 
     /**
-     * @var array<string> $last_updated
+     * @var string|array<string> $last_updated
      */
-    protected array $last_updated;
+    protected string|array $last_updated;
 
     /**
-     * @var array<string> $last_updated__empty
+     * @var string|array<string> $last_updated__empty
      */
-    protected array $last_updated__empty;
+    protected string|array $last_updated__empty;
 
     /**
-     * @var array<string> $last_updated__gt
+     * @var string|array<string> $last_updated__gt
      */
-    protected array $last_updated__gt;
+    protected string|array $last_updated__gt;
 
     /**
-     * @var array<string> $last_updated__gte
+     * @var string|array<string> $last_updated__gte
      */
-    protected array $last_updated__gte;
+    protected string|array $last_updated__gte;
 
     /**
-     * @var array<string> $last_updated__lt
+     * @var string|array<string> $last_updated__lt
      */
-    protected array $last_updated__lt;
+    protected string|array $last_updated__lt;
 
     /**
-     * @var array<string> $last_updated__lte
+     * @var string|array<string> $last_updated__lte
      */
-    protected array $last_updated__lte;
+    protected string|array $last_updated__lte;
 
     /**
-     * @var array<string> $last_updated__n
+     * @var string|array<string> $last_updated__n
      */
-    protected array $last_updated__n;
+    protected string|array $last_updated__n;
     protected int $limit;
 
     protected string $modified_by_request;
 
     /**
-     * @var array<int> $moduletype_id
+     * @var int|array<int> $moduletype_id
      */
-    protected array $moduletype_id;
+    protected int|array $moduletype_id;
 
     /**
-     * @var array<int> $moduletype_id__n
+     * @var int|array<int> $moduletype_id__n
      */
-    protected array $moduletype_id__n;
+    protected int|array $moduletype_id__n;
 
     /**
-     * @var array<string> $name
+     * @var string|array<string> $name
      */
-    protected array $name;
+    protected string|array $name;
     protected bool $name__empty;
 
     /**
-     * @var array<string> $name__ic
+     * @var string|array<string> $name__ic
      */
-    protected array $name__ic;
+    protected string|array $name__ic;
 
     /**
-     * @var array<string> $name__ie
+     * @var string|array<string> $name__ie
      */
-    protected array $name__ie;
+    protected string|array $name__ie;
 
     /**
-     * @var array<string> $name__iew
+     * @var string|array<string> $name__iew
      */
-    protected array $name__iew;
+    protected string|array $name__iew;
 
     /**
-     * @var array<string> $name__isw
+     * @var string|array<string> $name__isw
      */
-    protected array $name__isw;
+    protected string|array $name__isw;
 
     /**
-     * @var array<string> $name__n
+     * @var string|array<string> $name__n
      */
-    protected array $name__n;
+    protected string|array $name__n;
 
     /**
-     * @var array<string> $name__nic
+     * @var string|array<string> $name__nic
      */
-    protected array $name__nic;
+    protected string|array $name__nic;
 
     /**
-     * @var array<string> $name__nie
+     * @var string|array<string> $name__nie
      */
-    protected array $name__nie;
+    protected string|array $name__nie;
 
     /**
-     * @var array<string> $name__niew
+     * @var string|array<string> $name__niew
      */
-    protected array $name__niew;
+    protected string|array $name__niew;
 
     /**
-     * @var array<string> $name__nisw
+     * @var string|array<string> $name__nisw
      */
-    protected array $name__nisw;
+    protected string|array $name__nisw;
     protected int $offset;
     protected string $ordering;
     protected string $q;

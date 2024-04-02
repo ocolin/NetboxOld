@@ -23,5 +23,8 @@
             "email": "ocolin@cruzio.com"
         }
     ],
-    "minimum-stability": "stable"
+    "minimum-stability": "stable",
+    "scripts": {
+        "phpstan": "vendor/bin/phpstan -c phpstan.neon"
+    }
 }

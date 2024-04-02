@@ -13,216 +13,216 @@ class Devices extends Params_Core implements ParamsInterface
     protected string $airflow__n;
 
     /**
-     * @var array<string> $asset_tag
+     * @var string|array<string> $asset_tag
      */
-    protected array $asset_tag;
+    protected string|array $asset_tag;
     protected bool $asset_tag__empty;
 
     /**
-     * @var array<string> $asset_tag__ic
+     * @var string|array<string> $asset_tag__ic
      */
-    protected array $asset_tag__ic;
+    protected string|array $asset_tag__ic;
 
     /**
-     * @var array<string> $asset_tag__ie
+     * @var string|array<string> $asset_tag__ie
      */
-    protected array $asset_tag__ie;
+    protected string|array $asset_tag__ie;
 
     /**
-     * @var array<string> $asset_tag__iew
+     * @var string|array<string> $asset_tag__iew
      */
-    protected array $asset_tag__iew;
+    protected string|array $asset_tag__iew;
 
     /**
-     * @var array<string> $asset_tag__isw
+     * @var string|array<string> $asset_tag__isw
      */
-    protected array $asset_tag__isw;
+    protected string|array $asset_tag__isw;
 
     /**
-     * @var array<string> $asset_tag__n
+     * @var string|array<string> $asset_tag__n
      */
-    protected array $asset_tag__n;
+    protected string|array $asset_tag__n;
 
     /**
-     * @var array<string> $asset_tag__nic
+     * @var string|array<string> $asset_tag__nic
      */
-    protected array $asset_tag__nic;
+    protected string|array $asset_tag__nic;
 
     /**
-     * @var array<string> $asset_tag__nie
+     * @var string|array<string> $asset_tag__nie
      */
-    protected array $asset_tag__nie;
+    protected string|array $asset_tag__nie;
 
     /**
-     * @var array<string> $asset_tag__niew
+     * @var string|array<string> $asset_tag__niew
      */
-    protected array $asset_tag__niew;
+    protected string|array $asset_tag__niew;
 
     /**
-     * @var array<string> $asset_tag__nisw
+     * @var string|array<string> $asset_tag__nisw
      */
-    protected array $asset_tag__nisw;
+    protected string|array $asset_tag__nisw;
 
     /**
-     * @var array<int> $cluster_id
+     * @var int|array<int> $cluster_id
      */
-    protected array $cluster_id;
+    protected int|array $cluster_id;
 
     /**
-     * @var array<int> $cluster_id__n
+     * @var int|array<int> $cluster_id__n
      */
-    protected array $cluster_id__n;
+    protected int|array $cluster_id__n;
 
     /**
-     * @var array<int> $config_template_id
+     * @var int|array<int> $config_template_id
      */
-    protected array $config_template_id;
+    protected int|array $config_template_id;
 
     /**
-     * @var array<int> $config_template_id__n
+     * @var int|array<int> $config_template_id__n
      */
-    protected array $config_template_id__n;
+    protected int|array $config_template_id__n;
     protected bool $console_ports;
     protected bool $console_server_ports;
 
     /**
-     * @var array<int> $contact
+     * @var int|array<int> $contact
      */
-    protected array $contact;
+    protected int|array $contact;
 
     /**
-     * @var array<int> $contact__n
+     * @var int|array<int> $contact__n
      */
-    protected array $contact__n;
+    protected int|array $contact__n;
 
     /**
-     * @var array<int> $contact_group
+     * @var int|array<int> $contact_group
      */
-    protected array $contact_group;
+    protected int|array $contact_group;
 
     /**
-     * @var array<int> $contact_group__n
+     * @var int|array<int> $contact_group__n
      */
-    protected array $contact_group__n;
+    protected int|array $contact_group__n;
 
     /**
-     * @var array<int> $contact_role
+     * @var int|array<int> $contact_role
      */
-    protected array $contact_role;
+    protected int|array $contact_role;
 
     /**
-     * @var array<int> $contact_role__n
+     * @var int|array<int> $contact_role__n
      */
-    protected array $contact_role__n;
+    protected int|array $contact_role__n;
 
     /**
-     * @var array<int> $created
+     * @var int|array<int> $created
      */
-    protected array $created;
+    protected int|array $created;
 
     /**
-     * @var array<string> $created__empty
+     * @var string|array<string> $created__empty
      */
-    protected array $created__empty;
+    protected string|array $created__empty;
 
     /**
-     * @var array<string> $created__gt
+     * @var string|array<string> $created__gt
      */
-    protected array $created__gt;
+    protected string|array $created__gt;
 
     /**
-     * @var array<string> $created__gte
+     * @var string|array<string> $created__gte
      */
-    protected array $created__gte;
+    protected string|array $created__gte;
 
     /**
-     * @var array<string> $created__lt
+     * @var string|array<string> $created__lt
      */
-    protected array $created__lt;
+    protected string|array $created__lt;
 
     /**
-     * @var array<string> $created__lte
+     * @var string|array<string> $created__lte
      */
-    protected array $created__lte;
+    protected string|array $created__lte;
 
     /**
-     * @var array<string> $created__n
+     * @var string|array<string> $created__n
      */
-    protected array $created__n;
+    protected string|array $created__n;
     protected string $created_by_request;
 
     /**
-     * @var array<string> $description
+     * @var string|array<string> $description
      */
-    protected array $description;
+    protected string|array $description;
     protected bool $description__empty;
 
     /**
-     * @var array<string> $description__ic
+     * @var string|array<string> $description__ic
      */
-    protected array $description__ic;
+    protected string|array $description__ic;
 
     /**
-     * @var array<string> $description__ie
+     * @var string|array<string> $description__ie
      */
-    protected array $description__ie;
+    protected string|array $description__ie;
 
     /**
-     * @var array<string> $description__iew
+     * @var string|array<string> $description__iew
      */
-    protected array $description__iew;
+    protected string|array $description__iew;
 
     /**
-     * @var array<string> $description__isw
+     * @var string|array<string> $description__isw
      */
-    protected array $description__isw;
+    protected string|array $description__isw;
 
     /**
-     * @var array<string> $description__n
+     * @var string|array<string> $description__n
      */
-    protected array $description__n;
+    protected string|array $description__n;
 
     /**
-     * @var array<string> $description__nic
+     * @var string|array<string> $description__nic
      */
-    protected array $description__nic;
+    protected string|array $description__nic;
 
     /**
-     * @var array<string> $description__nie
+     * @var string|array<string> $description__nie
      */
-    protected array $description__nie;
+    protected string|array $description__nie;
 
     /**
-     * @var array<string> $description__niew
+     * @var string|array<string> $description__niew
      */
-    protected array $description__niew;
+    protected string|array $description__niew;
 
     /**
-     * @var array<string> $description__nisw
+     * @var string|array<string> $description__nisw
      */
-    protected array $description__nisw;
+    protected string|array $description__nisw;
 
     protected bool $device_bays;
 
     /**
-     * @var array<string> $device_type
+     * @var string|array<string> $device_type
      */
-    protected array $device_type;
+    protected string|array $device_type;
 
     /**
-     * @var array<string> $device_type__n
+     * @var string|array<string> $device_type__n
      */
-    protected array $device_type__n;
+    protected string|array $device_type__n;
 
     /**
-     * @var array<string> $device_type_id
+     * @var string|array<string> $device_type_id
      */
-    protected array $device_type_id;
+    protected string|array $device_type_id;
 
     /**
-     * @var array<string> $device_type_id__n
+     * @var string|array<string> $device_type_id__n
      */
-    protected array $device_type_id__n;
+    protected string|array $device_type_id__n;
 
     protected string $face;
     protected string $face__n;
@@ -230,643 +230,647 @@ class Devices extends Params_Core implements ParamsInterface
     protected bool $has_primary_ip;
 
     /**
-     * @var array<int> id
+     * @var int|array<int> id
      */
-    protected array $id;
+    protected int|array $id;
     protected bool $id__empty;
 
     /**
-     * @var array<int> $id__gt
+     * @var int|array<int> $id__gt
      */
-    protected array $id__gt;
+    protected int|array $id__gt;
 
     /**
-     * @var array<int> $id__gte
+     * @var int|array<int> $id__gte
      */
-    protected array $id__gte;
+    protected int|array $id__gte;
 
     /**
-     * @var array<int> $id__lt
+     * @var int|array<int> $id__lt
      */
-    protected array $id__lt;
+    protected int|array $id__lt;
 
     /**
-     * @var array<int> $id__lte
+     * @var int|array<int> $id__lte
      */
-    protected array $id__lte;
+    protected int|array $id__lte;
 
     /**
-     * @var array<int> $id__n
+     * @var int|array<int> $id__n
      */
-    protected array $id__n;
+    protected int|array $id__n;
 
     protected bool $interfaces;
     protected bool $is_full_depth;
 
     /**
-     * @var array<string> $last_updated
+     * @var string|array<string> $last_updated
      */
-    protected array $last_updated;
-    protected array $last_updated__empty;
+    protected string|array $last_updated;
 
     /**
-     * @var array<string> $last_updated__gt
+     * @var string|array<string> $last_updated__empty
      */
-    protected array $last_updated__gt;
+    protected string|array $last_updated__empty;
 
     /**
-     * @var array<string> $last_updated__gte
+     * @var string|array<string> $last_updated__gt
      */
-    protected array $last_updated__gte;
+    protected string|array $last_updated__gt;
 
     /**
-     * @var array<string> $last_updated__lt
+     * @var string|array<string> $last_updated__gte
      */
-    protected array $last_updated__lt;
+    protected string|array $last_updated__gte;
 
     /**
-     * @var array<string> $last_updated__lte
+     * @var string|array<string> $last_updated__lt
      */
-    protected array $last_updated__lte;
+    protected string|array $last_updated__lt;
 
     /**
-     * @var array<string> $last_updated__n
+     * @var string|array<string> $last_updated__lte
      */
-    protected array $last_updated__n;
+    protected string|array $last_updated__lte;
 
     /**
-     * @var array<float|int> $latitude
+     * @var string|array<string> $last_updated__n
      */
-    protected array $latitude;
+    protected string|array $last_updated__n;
+
+    /**
+     * @var int|float|array<int|float> $latitude
+     */
+    protected int|float|array $latitude;
     protected bool $latitude__empty;
 
     /**
-     * @var array<float|int> $latitude__gt
+     * @var int|float|array<int|float> $latitude__gt
      */
-    protected array $latitude__gt;
+    protected int|float|array $latitude__gt;
 
     /**
-     * @var array<float|int> $latitude__gte
+     * @var int|float|array<int|float> $latitude__gte
      */
-    protected array $latitude__gte;
+    protected int|float|array $latitude__gte;
 
     /**
-     * @var array<float|int> $latitude__lt
+     * @var int|float|array<int|float> $latitude__lt
      */
-    protected array $latitude__lt;
+    protected int|float|array $latitude__lt;
 
     /**
-     * @var array<float|int> $latitude__lte
+     * @var int|float|array<int|float> $latitude__lte
      */
-    protected array $latitude__lte;
+    protected int|float|array $latitude__lte;
 
     /**
-     * @var array<float|int> $latitude__n
+     * @var int|float|array<int|float> $latitude__n
      */
-    protected array $latitude__n;
+    protected int|float|array $latitude__n;
     protected int $limit;
     protected bool $local_context_data;
 
 
     /**
-     * @var array<float|int> $longitude
+     * @var int|float|array<int|float> $longitude
      */
-    protected array $longitude;
+    protected int|float|array $longitude;
     protected bool $longitude__empty;
 
     /**
-     * @var array<float|int> $longitude__gt
+     * @var int|float|array<int|float> $longitude__gt
      */
-    protected array $longitude__gt;
+    protected int|float|array $longitude__gt;
 
     /**
-     * @var array<float|int> $longitude__gte
+     * @var int|float|array<int|float> $longitude__gte
      */
-    protected array $longitude__gte;
+    protected int|float|array $longitude__gte;
 
     /**
-     * @var array<float|int> $longitude__lt
+     * @var int|float|array<int|float> $longitude__lt
      */
-    protected array $longitude__lt;
+    protected int|float|array $longitude__lt;
 
     /**
-     * @var array<float|int> $longitude__lte
+     * @var int|float|array<int|float> $longitude__lte
      */
-    protected array $longitude__lte;
+    protected int|float|array $longitude__lte;
 
     /**
-     * @var array<float|int> $longitude__n
+     * @var int|float|array<int|float> $longitude__n
      */
-    protected array $longitude__n;
+    protected int|float|array $longitude__n;
 
     /**
-     * @var array<string> $mac_address
+     * @var string|array<string> $mac_address
      */
-    protected array $mac_address;
+    protected string|array $mac_address;
 
     /**
-     * @var array<string> $mac_address__ic
+     * @var string|array<string> $mac_address__ic
      */
-    protected array $mac_address__ic;
+    protected string|array $mac_address__ic;
 
     /**
-     * @var array<string> $mac_address__ie
+     * @var string|array<string> $mac_address__ie
      */
-    protected array $mac_address__ie;
+    protected string|array $mac_address__ie;
 
     /**
-     * @var array<string> $mac_address__iew
+     * @var string|array<string> $mac_address__iew
      */
-    protected array $mac_address__iew;
+    protected string|array $mac_address__iew;
 
     /**
-     * @var array<string> $mac_address__isw
+     * @var string|array<string> $mac_address__isw
      */
-    protected array $mac_address__isw;
+    protected string|array $mac_address__isw;
 
     /**
-     * @var array<string> $mac_address__n
+     * @var string|array<string> $mac_address__n
      */
-    protected array $mac_address__n;
+    protected string|array $mac_address__n;
 
     /**
-     * @var array<string> $mac_address__nic
+     * @var string|array<string> $mac_address__nic
      */
-    protected array $mac_address__nic;
+    protected string|array $mac_address__nic;
 
     /**
-     * @var array<string> $mac_address__nie
+     * @var string|array<string> $mac_address__nie
      */
-    protected array $mac_address__nie;
+    protected string|array $mac_address__nie;
 
     /**
-     * @var array<string> $mac_address__niew
+     * @var string|array<string> $mac_address__niew
      */
-    protected array $mac_address__niew;
+    protected string|array $mac_address__niew;
 
     /**
-     * @var array<string> $mac_address__nisw
+     * @var string|array<string> $mac_address__nisw
      */
-    protected array $mac_address__nisw;
+    protected string|array $mac_address__nisw;
 
     /**
-     * @var array<string>
+     * @var string|array<string>
      */
-    protected array $manufacturer;
+    protected string|array $manufacturer;
 
     /**
-     * @var array<string> $manufacturer__n
+     * @var string|array<string> $manufacturer__n
      */
-    protected array $manufacturer__n;
+    protected string|array $manufacturer__n;
 
     /**
-     * @var array<string> $manufacturer_id
+     * @var string|array<string> $manufacturer_id
      */
-    protected array $manufacturer_id;
+    protected string|array $manufacturer_id;
 
     /**
-     * @var array<string> $manufacturer_id__n
+     * @var string|array<string> $manufacturer_id__n
      */
-    protected array $manufacturer_id__n;
+    protected string|array $manufacturer_id__n;
 
     /**
-     * @var array<string> $model
+     * @var string|array<string> $model
      */
-    protected array $model;
+    protected string|array $model;
 
     /**
-     * @var array<string> $model__n
+     * @var string|array<string> $model__n
      */
-    protected array $model__n;
+    protected string|array $model__n;
     protected string $modified_by_request;
     protected bool $module_bays;
 
     /**
-     * @var array<string> $name
+     * @var string|array<string> $name
      */
-    protected array $name;
+    protected string|array $name;
     protected bool $name__empty;
 
     /**
-     * @var array<string> $name__ic
+     * @var string|array<string> $name__ic
      */
-    protected array $name__ic;
+    protected string|array $name__ic;
 
     /**
-     * @var array<string> $name__ie
+     * @var string|array<string> $name__ie
      */
-    protected array $name__ie;
+    protected string|array $name__ie;
 
     /**
-     * @var array<string> $name__iew
+     * @var string|array<string> $name__iew
      */
-    protected array $name__iew;
+    protected string|array $name__iew;
 
     /**
-     * @var array<string> $name__isw
+     * @var string|array<string> $name__isw
      */
-    protected array $name__isw;
+    protected string|array $name__isw;
 
     /**
-     * @var array<string> $name__n
+     * @var string|array<string> $name__n
      */
-    protected array $name__n;
+    protected string|array $name__n;
 
     /**
-     * @var array<string> $name__nic
+     * @var string|array<string> $name__nic
      */
-    protected array $name__nic;
+    protected string|array $name__nic;
 
     /**
-     * @var array<string> $name__nie
+     * @var string|array<string> $name__nie
      */
-    protected array $name__nie;
+    protected string|array $name__nie;
 
     /**
-     * @var array<string> $name__niew
+     * @var string|array<string> $name__niew
      */
-    protected array $name__niew;
+    protected string|array $name__niew;
 
     /**
-     * @var array<string> $name__nisw
+     * @var string|array<string> $name__nisw
      */
-    protected array $name__nisw;
+    protected string|array $name__nisw;
     protected int $offset;
 
     /**
-     * @var array<int> $oob_ip_id
+     * @var int|array<int> $oob_ip_id
      */
-    protected array $oob_ip_id;
+    protected int|array $oob_ip_id;
 
     /**
-     * @var array<int> $oob_ip_id__n
+     * @var int|array<int> $oob_ip_id__n
      */
-    protected array $oob_ip_id__n;
+    protected int|array $oob_ip_id__n;
     protected string $ordering;
 
     /**
-     * @var array<int> $parent_device_id
+     * @var int|array<int> $parent_device_id
      */
-    protected array $parent_device_id;
+    protected int|array $parent_device_id;
 
     /**
-     * @var array<int> $parent_device_id__n
+     * @var int|array<int> $parent_device_id__n
      */
-    protected array $parent_device_id__n;
+    protected int|array $parent_device_id__n;
     protected bool $pass_through_ports;
 
     /**
-     * @var array<string> $platform
+     * @var string|array<string> $platform
      */
-    protected array $platform;
+    protected string|array $platform;
 
     /**
-     * @var array<string> $platform__n
+     * @var string|array<string> $platform__n
      */
-    protected array $platform__n;
+    protected string|array $platform__n;
 
     /**
-     * @var array<int> $platform_id
+     * @var int|array<int> $platform_id
      */
-    protected array $platform_id;
+    protected int|array $platform_id;
 
     /**
-     * @var array<int> $platform_id__n
+     * @var int|array<int> $platform_id__n
      */
-    protected array $platform_id__n;
+    protected int|array $platform_id__n;
 
     /**
-     * @var array<int|float> $position
+     * @var int|float|array<int|float> $position
      */
-    protected array $position;
+    protected int|float|array $position;
 
     protected bool $position__empty;
 
     /**
-     * @var array<int|float> $position__gt
+     * @var int|float|array<int|float> $position__gt
      */
-    protected array $position__gt;
+    protected int|float|array $position__gt;
 
     /**
-     * @var array<int|float> $position__gte
+     * @var int|float|array<int|float> $position__gte
      */
-    protected array $position__gte;
+    protected int|float|array $position__gte;
 
     /**
-     * @var array<int|float> $position__lt
+     * @var int|float|array<int|float> $position__lt
      */
-    protected array $position__lt;
+    protected int|float|array $position__lt;
 
     /**
-     * @var array<int|float> $position__lte
+     * @var int|float|array<int|float> $position__lte
      */
-    protected array $position__lte;
+    protected int|float|array $position__lte;
 
     /**
-     * @var array<int|float> $position__n
+     * @var int|float|array<int|float> $position__n
      */
-    protected array $position__n;
+    protected int|float|array $position__n;
     protected bool $power_outlets;
     protected bool $power_ports;
 
     /**
-     * @var array<int> $primary_ip4_id
+     * @var int|array<int> $primary_ip4_id
      */
-    protected array $primary_ip4_id;
+    protected int|array $primary_ip4_id;
 
     /**
-     * @var array<int> $primary_ip4_id__n
+     * @var int|array<int> $primary_ip4_id__n
      */
-    protected array $primary_ip4_id__n;
+    protected int|array $primary_ip4_id__n;
 
     /**
-     * @var array<int> $primary_ip6_id
+     * @var int|array<int> $primary_ip6_id
      */
-    protected array $primary_ip6_id;
+    protected int|array $primary_ip6_id;
 
     /**
-     * @var array<int> $primary_ip6_id__n
+     * @var int|array<int> $primary_ip6_id__n
      */
-    protected array $primary_ip6_id__n;
+    protected int|array $primary_ip6_id__n;
     protected string $q;
 
     /**
-     * @var array<int> $rack_id
+     * @var int|array<int> $rack_id
      */
-    protected array $rack_id;
+    protected int|array $rack_id;
 
     /**
-     * @var array<int> $rack_id__n
+     * @var int|array<int> $rack_id__n
      */
-    protected array $rack_id__n;
+    protected int|array $rack_id__n;
 
     /**
-     * @var array<int> $region
+     * @var int|array<int> $region
      */
-    protected array $region;
+    protected int|array $region;
 
     /**
-     * @var array<int> $region__n
+     * @var int|array<int> $region__n
      */
-    protected array $region__n;
+    protected int|array $region__n;
 
     /**
-     * @var array<int> $region_id
+     * @var int|array<int> $region_id
      */
-    protected array $region_id;
+    protected int|array $region_id;
 
     /**
-     * @var array<int> $region_id__n
+     * @var int|array<int> $region_id__n
      */
-    protected array $region_id__n;
+    protected int|array $region_id__n;
 
     /**
-     * @var array<string> $device_role
+     * @var string|array<string> $device_role
      */
-    protected array $device_role;
+    protected string|array $device_role;
 
     /**
-     * @var array<string> $device_role__n
+     * @var string|array<string> $device_role__n
      */
-    protected array $device_role__n;
+    protected string|array $device_role__n;
 
     /**
-     * @var array<int> $device_role_id
+     * @var int|array<int> $device_role_id
      */
-    protected array $device_role_id;
+    protected int|array $device_role_id;
 
     /**
-     * @var array<int> $device_role_id__n
+     * @var int|array<int> $device_role_id__n
      */
-    protected array $device_role_id__n;
+    protected int|array $device_role_id__n;
 
     /**
-     * @var array<string>
+     * @var string|array<string>
      */
-    protected array $serial;
+    protected string|array $serial;
 
     protected bool $serial__empty;
 
     /**
-     * @var array<string> $serial__ic
+     * @var string|array<string> $serial__ic
      */
-    protected array $serial__ic;
+    protected string|array $serial__ic;
 
     /**
-     * @var array<string> $serial__ie
+     * @var string|array<string> $serial__ie
      */
-    protected array $serial__ie;
+    protected string|array $serial__ie;
 
     /**
-     * @var array<string> $serial__iew
+     * @var string|array<string> $serial__iew
      */
-    protected array $serial__iew;
+    protected string|array $serial__iew;
 
     /**
-     * @var array<string> $serial__isw
+     * @var string|array<string> $serial__isw
      */
-    protected array $serial__isw;
+    protected string|array $serial__isw;
 
     /**
-     * @var array<string> $serial__n
+     * @var string|array<string> $serial__n
      */
-    protected array $serial__n;
+    protected string|array $serial__n;
 
     /**
-     * @var array<string> $serial__nic
+     * @var string|array<string> $serial__nic
      */
-    protected array $serial__nic;
+    protected string|array $serial__nic;
 
     /**
-     * @var array<string> $serial__nie
+     * @var string|array<string> $serial__nie
      */
-    protected array $serial__nie;
+    protected string|array $serial__nie;
 
     /**
-     * @var array<string> $serial__niew
+     * @var string|array<string> $serial__niew
      */
-    protected array $serial__niew;
+    protected string|array $serial__niew;
 
     /**
-     * @var array<string> $serial__nisw
+     * @var string|array<string> $serial__nisw
      */
-    protected array $serial__nisw;
+    protected string|array $serial__nisw;
 
     /**
-     * @var array<string> $site
+     * @var string|array<string> $site
      */
-    protected array $site;
+    protected string|array $site;
 
     /**
-     * @var array<string> $site__n
+     * @var string|array<string> $site__n
      */
-    protected array $site__n;
+    protected string|array $site__n;
 
     /**
-     * @var array<int> $site_group
+     * @var int|array<int> $site_group
      */
-    protected array $site_group;
+    protected int|array $site_group;
 
     /**
-     * @var array<int> $site_group__n
+     * @var int|array<int> $site_group__n
      */
-    protected array $site_group__n;
+    protected int|array $site_group__n;
 
     /**
-     * @var array<int> $site_group_id
+     * @var int|array<int> $site_group_id
      */
-    protected array $site_group_id;
+    protected int|array $site_group_id;
 
     /**
-     * @var array<int> $site_group_id__n
+     * @var int|array<int> $site_group_id__n
      */
-    protected array $site_group_id__n;
+    protected int|array $site_group_id__n;
 
     /**
-     * @var array<int> $site_id
+     * @var int|array<int> $site_id
      */
-    protected array $site_id;
+    protected int|array $site_id;
 
     /**
-     * @var array<int> $site_id__n
+     * @var int|array<int> $site_id__n
      */
-    protected array $site_id__n;
+    protected int|array $site_id__n;
 
     /**
-     * @var array<string>
+     * @var string|array<string>
      */
-    protected array $status;
+    protected string|array $status;
 
     /**
-     * @var array<string> $status__n
+     * @var string|array<string> $status__n
      */
-    protected array $status__n;
+    protected string|array $status__n;
 
     /**
-     * @var array<string> $tag
+     * @var string|array<string> $tag
      */
-    protected array $tag;
+    protected string|array $tag;
 
     /**
-     * @var array<string> $tag__n
+     * @var string|array<string> $tag__n
      */
-    protected array $tag__n;
+    protected string|array $tag__n;
 
     /**
-     * @var array<string> $tenant
+     * @var string|array<string> $tenant
      */
-    protected array $tenant;
+    protected string|array $tenant;
 
     /**
-     * @var array<string> $tenant__n
+     * @var string|array<string> $tenant__n
      */
-    protected array $tenant__n;
+    protected string|array $tenant__n;
 
     /**
-     * @var array<int> $tenant_group
+     * @var int|array<int> $tenant_group
      */
-    protected array $tenant_group;
+    protected int|array $tenant_group;
 
     /**
-     * @var array<int> $tenant_group__n
+     * @var int|array<int> $tenant_group__n
      */
-    protected array $tenant_group__n;
+    protected int|array $tenant_group__n;
 
     /**
-     * @var array<int> $tenant_group_id
+     * @var int|array<int> $tenant_group_id
      */
-    protected array $tenant_group_id;
+    protected int|array $tenant_group_id;
 
     /**
-     * @var array<int> $tenant_group_id__n
+     * @var int|array<int> $tenant_group_id__n
      */
-    protected array $tenant_group_id__n;
+    protected int|array $tenant_group_id__n;
 
     /**
-     * @var array<int> $tenant_id
+     * @var int|array<int> $tenant_id
      */
-    protected array $tenant_id;
+    protected int|array $tenant_id;
 
     /**
-     * @var array<int> $tenant_id__n
+     * @var int|array<int> $tenant_id__n
      */
-    protected array $tenant_id__n;
+    protected int|array $tenant_id__n;
     protected string $updated_by_request; // UUID
 
     /**
-     * @var array<int> $vc_position
+     * @var int|array<int> $vc_position
      */
-    protected array $vc_position;
+    protected int|array $vc_position;
     protected bool $vc_position__empty;
 
     /**
-     * @var array<int> $vc_position__gt
+     * @var int|array<int> $vc_position__gt
      */
-    protected array $vc_position__gt;
+    protected int|array $vc_position__gt;
 
     /**
-     * @var array<int> $vc_position__gte
+     * @var int|array<int> $vc_position__gte
      */
-    protected array $vc_position__gte;
+    protected int|array $vc_position__gte;
 
     /**
-     * @var array<int> $vc_position__lt
+     * @var int|array<int> $vc_position__lt
      */
-    protected array $vc_position__lt;
+    protected int|array $vc_position__lt;
 
     /**
-     * @var array<int> $vc_position__lte
+     * @var int|array<int> $vc_position__lte
      */
-    protected array $vc_position__lte;
+    protected int|array $vc_position__lte;
 
     /**
-     * @var array<int> $vc_position__n
+     * @var int|array<int> $vc_position__n
      */
-    protected array $vc_position__n;
+    protected int|array $vc_position__n;
 
     /**
-     * @var array<int> $vc_priority
+     * @var int|array<int> $vc_priority
      */
-    protected array $vc_priority;
+    protected int|array $vc_priority;
     protected bool $vc_priority__empty;
 
     /**
-     * @var array<int> $vc_priority__gt
+     * @var int|array<int> $vc_priority__gt
      */
-    protected array $vc_priority__gt;
+    protected int|array $vc_priority__gt;
 
     /**
-     * @var array<int> $vc_priority__gte
+     * @var int|array<int> $vc_priority__gte
      */
-    protected array $vc_priority__gte;
+    protected int|array $vc_priority__gte;
 
     /**
-     * @var array<int> $vc_priority__lt
+     * @var int|array<int> $vc_priority__lt
      */
-    protected array $vc_priority__lt;
+    protected int|array $vc_priority__lt;
 
     /**
-     * @var array<int> $vc_priority__lte
+     * @var int|array<int> $vc_priority__lte
      */
-    protected array $vc_priority__lte;
+    protected int|array $vc_priority__lte;
 
     /**
-     * @var array<int> $vc_priority__n
+     * @var int|array<int> $vc_priority__n
      */
-    protected array $vc_priority__n;
+    protected int|array $vc_priority__n;
 
     /**
-     * @var array<int> $virtual_chassis_id
+     * @var int|array<int> $virtual_chassis_id
      */
-    protected array $virtual_chassis_id;
+    protected int|array $virtual_chassis_id;
 
     /**
-     * @var array<int> $virtual_chassis_id__n
+     * @var int|array<int> $virtual_chassis_id__n
      */
-    protected array $virtual_chassis_id__n;
+    protected int|array $virtual_chassis_id__n;
 
     /**
-     * @var array<int> $virtual_chassis_member
+     * @var int|array<int> $virtual_chassis_member
      */
-    protected array $virtual_chassis_member;
+    protected int|array $virtual_chassis_member;
 }
