@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\InventoryItems;
 use Cruzio\lib\Netbox\Data\DCIM\InventoryItems AS Data;
@@ -47,14 +48,18 @@ final class InventoryItemsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new InventoryItems();
         $d = new Data();
-        $d->name = 'PHPUnit_InvItem-Post';
-        $d->device = self::$device->id;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPUnit_InvItem-Post' );
+        $d->set( 'device', self::$device->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -79,7 +84,7 @@ final class InventoryItemsTest extends testCore
     public function testGetList() : void
     {
         $o = new InventoryItems();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -89,6 +94,8 @@ final class InventoryItemsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -104,7 +111,7 @@ final class InventoryItemsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new InventoryItems();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -123,6 +130,7 @@ final class InventoryItemsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -130,9 +138,9 @@ final class InventoryItemsTest extends testCore
     {
         $o = new InventoryItems();
         $d = new Data();
-        $d->name = 'PHPUnit_InvItem-Put';
-        $d->device = self::$device->id;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_InvItem-Put' );
+        $d->set( 'device', self::$device->id );
+        $result = $o->put( data: $d,id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -151,6 +159,7 @@ final class InventoryItemsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -158,9 +167,8 @@ final class InventoryItemsTest extends testCore
     {
         $o = new InventoryItems();
         $d = new Data();
-        $d->name = 'PHPUnit_InvItem-Patch';
-        $d->device = self::$device->id;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_InvItem-Patch' );
+        $result = $o->patch( data: $d,id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -186,7 +194,7 @@ final class InventoryItemsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new InventoryItems();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -198,9 +206,12 @@ final class InventoryItemsTest extends testCore
  
 
 
-/* SETUP AND CLOSING FUNCTIONS
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site     = self::createSite();
@@ -214,8 +225,9 @@ final class InventoryItemsTest extends testCore
         );
     
     }
-    
-/*
+
+
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
     /**

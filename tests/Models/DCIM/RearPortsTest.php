@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\RearPorts;
 use Cruzio\lib\Netbox\Data\DCIM\RearPorts AS Data;
@@ -47,15 +48,19 @@ final class RearPortsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new RearPorts();
         $d = new Data();
-        $d->name = 'PHPUnit_RearPort-Post';
-        $d->type = '8p8c';
-        $d->device = self::$device->id;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPUnit_RearPort-Post' );
+        $d->set( 'type', '8p8c' );
+        $d->set( 'device', self::$device->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -80,7 +85,7 @@ final class RearPortsTest extends testCore
     public function testGetList() : void
     {
         $o = new RearPorts();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -90,6 +95,8 @@ final class RearPortsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -106,7 +113,7 @@ final class RearPortsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new RearPorts();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -125,6 +132,7 @@ final class RearPortsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -132,10 +140,10 @@ final class RearPortsTest extends testCore
     {
         $o = new RearPorts();
         $d = new Data();
-        $d->name = 'PHPUnit_RearPort-Put';
-        $d->type = '8p8c';
-        $d->device = self::$device->id;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_RearPort-Put' );
+        $d->set( 'type', '8p8c' );
+        $d->set( 'device', self::$device->id );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -154,6 +162,7 @@ final class RearPortsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -161,10 +170,8 @@ final class RearPortsTest extends testCore
     {
         $o = new RearPorts();
         $d = new Data();
-        $d->name = 'PHPUnit_RearPort-Patch';
-        $d->type = '8p8c';
-        $d->device = self::$device->id;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_RearPort-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -190,7 +197,7 @@ final class RearPortsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new RearPorts();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -202,9 +209,12 @@ final class RearPortsTest extends testCore
  
 
 
-/* SETUP AND CLOSING FUNCTIONS
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site     = self::createSite();
@@ -217,8 +227,9 @@ final class RearPortsTest extends testCore
                  devicerole: self::$devrole,
         );
     }
-    
-/*
+
+
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
     /**
@@ -233,110 +244,4 @@ final class RearPortsTest extends testCore
         self::destroySite( site: self::$site );
         sleep(1);
     }
-   
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new RearPorts();
-
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $port )
-        {
-            $this->deleteDetail( id: $port->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-        $this->options->id = $port->id;
-
-        $o = new RearPorts();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $port->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-        $this->options->id = $port->id;
-
-        $o = new RearPorts();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $port->id );
-    }
- */
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-
-        $o = new RearPorts();
-        $result = $o->deleteList(
-            options: [[ 'id' => $port->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
- 
 }

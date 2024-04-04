@@ -8,7 +8,6 @@ use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Validation;
 
-
 class CustomFields extends Data_Core implements DataInterface
 { 
     /**

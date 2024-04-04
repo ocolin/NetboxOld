@@ -20,7 +20,9 @@ PrefixesAvailablePrefixes POST
 /Users/permissions/
 /Tenancy/contact-assignments/
 /DCIM/cables/
-/DCIM/connected-device/
+/
+
+DCIM/connected-device/
 ​/DCIM​/console-ports​/{id}​/trace​/
 /DCIM/power-outlets/{id}/trace/
 /DCIM/power-ports/{id}/trace/
@@ -29,13 +31,13 @@ PrefixesAvailablePrefixes POST
 image attachments
 -->
     <testsuite name="Circuit_Models">
-<!--
+        <!--
         <file>tests/Models/Circuits/CircuitsTest.php</file>
         <file>tests/Models/Circuits/CircuitTerminationsTest.php</file>
         <file>tests/Models/Circuits/CircuitTypesTest.php</file>
         <file>tests/Models/Circuits/ProviderNetworksTest.php</file>
         <file>tests/Models/Circuits/ProvidersTest.php</file>
- -->
+        -->
     </testsuite>
     <testsuite name="DCIM_Models">
       <!--

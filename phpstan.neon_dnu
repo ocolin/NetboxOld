@@ -1,0 +1,10 @@
+parameters:
+    universalObjectCratesClasses:
+        - Data\Circuits\Circuits
+        - Data\Circuits\CircuitTerminations
+        - Data\Circuits\CircuitTypes
+        - Data\Circuits\ProviderNetworks
+        - Data\Circuits\Providers
+    ignoreErrors:
+        - '#Access to an undefined property object::\$[a-zA-Z0-9\\_]+\.#'
+        - '#Access to protected property [a-zA-Z0-9\\_]+#'

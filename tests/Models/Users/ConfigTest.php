@@ -11,6 +11,7 @@ use Cruzio\lib\Netbox\Models\Users\Config;
 require_once __DIR__ . '/../testCore.php';
 
 final class ConfigTest extends testCore
+
 {
 
 /* TEST OPTIONS
@@ -39,6 +40,9 @@ final class ConfigTest extends testCore
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public function testGet() : void
     {
         $o = new Config();

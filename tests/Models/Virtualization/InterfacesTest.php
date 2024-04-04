@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Virtualization;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -47,13 +48,17 @@ final class InterfacesTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Interfaces();
         $d = new Data();
-        $d->virtual_machine = self::$vm->id;
-        $d->name = 'PHPUnit_Interfaces-Post';
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'virtual_machine', self::$vm->id );
+        $d->set( 'name', 'PHPUnit_Interfaces-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -78,7 +83,7 @@ final class InterfacesTest extends testCore
     public function testGetList() : void
     {
         $o = new Interfaces();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -88,6 +93,8 @@ final class InterfacesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -104,7 +111,7 @@ final class InterfacesTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Interfaces();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -123,6 +130,7 @@ final class InterfacesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -130,9 +138,9 @@ final class InterfacesTest extends testCore
     {
         $o = new Interfaces();
         $d = new Data();
-        $d->virtual_machine = self::$vm->id;
-        $d->name = 'PHPUnit_Interfaces-Put';
-        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'virtual_machine', self::$vm->id );
+        $d->set( 'name', 'PHPUnit_Interfaces-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -151,6 +159,7 @@ final class InterfacesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -158,8 +167,8 @@ final class InterfacesTest extends testCore
     {
         $o = new Interfaces();
         $d = new Data();
-        $d->name = 'PHPUnit_Interfaces-Patch';
-        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Interfaces-Patch' );
+        $result = $o->patch( data: $d, id: $id );
        
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -184,7 +193,7 @@ final class InterfacesTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Interfaces();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -195,139 +204,12 @@ final class InterfacesTest extends testCore
     }
 
 
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Interfaces();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $if )
-        {
-            $this->deleteDetail( id: $if->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $if = $this->postDetail()->body;
-        $this->options->id = $if->id;
-
-        $o = new Interfaces();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $if->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $if = $this->postDetail()->body;
-        $this->options->id = $if->id;
-
-        $o = new Interfaces();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $if->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $if = $this->postDetail()->body;
-
-        $o = new Interfaces();
-        $result = $o->deleteList(
-            options: [[ 'id' => $if->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-/* CREATE A REGION
----------------------------------------------------------------------------- */
-/* 
-    public function postDetail() : Response
-    {
-        $o = new Interfaces();
-
-        return $o->postDetail( 
-                       name: 'PHPUnit_VM',
-            virtual_machine: self::$vm->id,
-        );
-    }
- */
-
-
-/* DELETE A REGION
----------------------------------------------------------------------------- */
-/* 
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new Interfaces();
-
-        return $o->deleteDetail( id: $id  );
-    }
- */
-
-/* SETUP AND CLOSING FUNCTIONS
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site  = self::createSite();
@@ -342,9 +224,12 @@ final class InterfacesTest extends testCore
 
     }
     
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyVM( self::$vm );
@@ -354,16 +239,4 @@ final class InterfacesTest extends testCore
         self::destroyClusterGroup( group: self::$group );
         sleep(1);
     }
-    
-/*
----------------------------------------------------------------------------- */
-/* 
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_Tenant-' . $rand;
-        $this->options->virtual_machine = self::$vm->id;
-    }
- */
 }

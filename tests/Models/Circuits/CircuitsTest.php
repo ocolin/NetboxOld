@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Circuits;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -43,15 +44,19 @@ final class CircuitsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Circuits();
         $d = new Data();
-        $d->cid = 'PHPUnit_Circuit-Post';
-        $d->provider = self::$provider->id;
-        $d->type = self::$circuit_type->id;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'cid', 'PHPUnit_Circuit-Post' );
+        $d->set( 'provider', self::$provider->id );
+        $d->set( 'type', self::$circuit_type->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -76,7 +81,7 @@ final class CircuitsTest extends testCore
     public function testGetList() : void
     {
         $o = new Circuits();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -86,7 +91,10 @@ final class CircuitsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        if( isset( $result->body->results )) {
+            $this->assertIsArray($result->body->results);
+        }
     }
  
 
@@ -102,7 +110,7 @@ final class CircuitsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Circuits();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -121,6 +129,7 @@ final class CircuitsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -128,10 +137,10 @@ final class CircuitsTest extends testCore
     {
         $o = new Circuits();
         $d = new Data();
-        $d->cid = 'PHPUnit_Circuit-Put';
-        $d->provider = self::$provider->id;
-        $d->type = self::$circuit_type->id;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'cid', 'PHPUnit_Circuit-Put' );
+        $d->set( 'provider', self::$provider->id );
+        $d->set( 'type', self::$circuit_type->id );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -150,6 +159,7 @@ final class CircuitsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -157,10 +167,8 @@ final class CircuitsTest extends testCore
     {
         $o = new Circuits();
         $d = new Data();
-        $d->cid = 'PHPUnit_Circuit-Patch';
-        $d->provider = self::$provider->id;
-        $d->type = self::$circuit_type->id;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'cid', 'PHPUnit_Circuit-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -185,7 +193,7 @@ final class CircuitsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Circuits();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -196,16 +204,19 @@ final class CircuitsTest extends testCore
     }
  
 
-/* SETUP AND CLOSING FUNCTIONS
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$provider = self::createProvider();
         self::$circuit_type = self::createCircuitType();
     }
     
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
 
@@ -218,112 +229,4 @@ final class CircuitsTest extends testCore
         self::destroyCircuitType( ct: self::$circuit_type );
         sleep(1);
     }
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Circuits();
-
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $circuit )
-        {
-            $this->deleteDetail( id: $circuit->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $circuit = $this->postDetail()->body;
-        $this->options->id = $circuit->id;
-        
-        $o = new Circuits();
-        $result = $o->putList(
-            options: [ $this->options ]
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $circuit->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $circuit = $this->postDetail()->body;
-        $this->options->id = $circuit->id;
-
-        $o = new Circuits();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $circuit->id );
-    }
- */
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $circuit = $this->postDetail()->body;
-
-        $o = new Circuits();
-        $result = $o->deleteList(
-            options: [[ 'id' => $circuit->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
 }

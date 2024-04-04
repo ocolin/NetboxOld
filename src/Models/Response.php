@@ -24,7 +24,7 @@ class Response
     public array $headers = [];
 
     /**
-     * @var mixed $body HTTP content returned
+     * @var array|object|null $body HTTP content returned
      */
 
     public mixed $body;

@@ -14,7 +14,7 @@ $param = new \Cruzio\lib\Netbox\Params\DCIM\Sites();
 $param->description = ['charry'];
 
 try {
-    $output = $test->getList(params: $param);
+    $output = $test->get(params: $param);
     print_r( $output->body );
 } catch (GuzzleException $e) {
     echo "Nah gone dew-it...";

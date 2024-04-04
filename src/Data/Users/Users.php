@@ -6,7 +6,6 @@ namespace Cruzio\lib\Netbox\Data\Users;
 
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
-use Cruzio\lib\Netbox\Types\TagType;
 
 class Users extends Data_Core implements DataInterface
 {

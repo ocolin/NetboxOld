@@ -10,7 +10,6 @@ use Cruzio\lib\Netbox\Types\TagType;
 use Cruzio\lib\Netbox\Types\TerminationType;
 use Cruzio\lib\Netbox\Validation;
 
-
 class Cables extends Data_Core implements DataInterface
 { 
     protected string $type;    

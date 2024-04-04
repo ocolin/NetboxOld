@@ -48,8 +48,8 @@ class IpRangesAvailableIps extends IPAM_Core
      * @throws GuzzleException
      */
 
-    public function getDetail(
-        int             $id,
+    public function get(
+        int             $id = null,
         ParamsInterface $params = null,
         array           $headers = []
     ) : Response

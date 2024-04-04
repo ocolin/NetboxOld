@@ -5,17 +5,19 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\Models_Core;
 use Cruzio\lib\Netbox\Models\Response;
 
-class ContentTypes
+class ContentTypes extends Models_Core
 {
-    protected string $uri = 'extras/';
-    protected HTTP $http;
+    //protected string $uri = 'extras/';
+    //protected HTTP $http;
 
     public function __construct( HTTP $http = null )
     {
         $this->uri = 'extras/content-types/';
-        $this->http = $http ?? new HTTP();
+        parent::__construct( http: $http );
+        //$this->http = $http ?? new HTTP();
     }
 
 
@@ -25,11 +27,11 @@ class ContentTypes
 * @param  array<string, string> $headers HTML request headers
 * @return Response
 */
-
+/*
     public function options( array $headers = [] ) : Response
     {
         return $this->http->options( uri: $this->uri, headers: $headers );
-    }
+    }*/
 
 
 
@@ -44,7 +46,7 @@ class ContentTypes
 * @param  array<string, string> $headers HTML request headers
 * @return Response
 */
-
+/*
     public function getDetail( 
         array $params  = [], 
         array $headers = [],
@@ -56,5 +58,5 @@ class ContentTypes
              params: $params,
             headers: $headers
         );
-    }
+    }*/
 }

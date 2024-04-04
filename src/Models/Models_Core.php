@@ -45,99 +45,8 @@ abstract class Models_Core
 
 
 
-/* POST METHOD DETAIL
----------------------------------------------------------------------------- */
-
-/**
-* Create a single Platform.
-*
-* @param  DataInterface $data optional data to be sent.
-* @param  array<string, string> $headers HTML request headers
-* @param  array<string, string> $params URL Parameters
-* @return Response
-*/
-
-    public function postDetail(
-          DataInterface $data,
-         array $headers = [],
-         array $params  = [],
-    ) : Response
-    {
-        return $this->http->post(
-                uri: $this->uri,
-               body: $data->render( required: true ),
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-/* PUT METHOD DETAIL
----------------------------------------------------------------------------- */
-
-    /**
-     * Update Site
-     *
-     * @param integer $id Numerical ID of Site to update.
-     * @param DataInterface $data Optional data to send.
-     * @param array<string, string> $headers HTML request headers
-     * @param array<string, string> $params URL Parameters
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function putDetail(
-           int $id,
-          DataInterface $data,
-         array $headers = [],
-         array $params  = []
-    ) : Response
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->put(
-                uri: $this->uri,
-               body: $data->render(),
-             params: $params,
-            headers: $headers
-        );
-    }
-
-
-/* PATCH METHOD DETAIL
----------------------------------------------------------------------------- */
-
-    /**
-     * Update Site value(s).
-     *
-     * @param integer $id Numerical ID of Site to update.
-     * @param DataInterface $data Optional data to send.
-     * @param array<string, string> $headers HTML request headers
-     * @param array<string, string> $params URL Parameters
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function patchDetail(
-           int $id,
-          DataInterface $data,
-         array $headers = [],
-         array $params  = []
-    ) : Response
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->patch(
-                uri: $this->uri,
-               body: $data->render(),
-             params: $params,
-            headers: $headers
-        );
-    }
-
-    
-/* OPTIONS METHOD
----------------------------------------------------------------------------- */
+    /* OPTIONS METHOD
+    ---------------------------------------------------------------------------- */
 
     /**
      * List details about API call.
@@ -154,23 +63,163 @@ abstract class Models_Core
 
 
 
+/* POST METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+    /**
+     * Create a single Platform.
+     *
+     * @param DataInterface|array<DataInterface> $data optional data to be sent.
+     * @param array<string, string> $headers HTML request headers
+     * @param array<string, string> $params URL Parameters
+     * @return Response
+     * @throws GuzzleException
+     */
+
+    public function post(
+        DataInterface|array $data,
+         array              $headers = [],
+         array              $params  = [],
+    ) : Response
+    {
+        if( gettype($data) == 'array' ) {
+            $body = [];
+            foreach( $data as $part )
+            {
+                $body[] = $part->render( required: true );
+            }
+        }
+        else {
+            $body = $data->render( required: true );
+        }
+
+        return $this->http->post(
+                uri: $this->uri,
+               body: $body,
+             params: $params,
+            headers: $headers
+        );
+    }
+
+
+/* PUT METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+    /**
+     * Update Site
+     *
+     * @param DataInterface|array<DataInterface> $data Optional data to send.
+     * @param int|null $id Numerical ID of Site to update.
+     * @param array<string, string> $headers HTML request headers
+     * @param array<string, string> $params URL Parameters
+     * @return Response
+     * @throws GuzzleException
+     */
+
+    public function put(
+        DataInterface|array $data,
+        int                 $id = null,
+        array               $headers = [],
+        array               $params  = []
+    ) : Response
+    {
+        if( $id !== null ) { $this->uri .= "{$id}/"; }
+
+        if( gettype($data) == 'array' ) {
+            $body = [];
+            foreach( $data as $part )
+            {
+                $body[] = $part->render();
+            }
+        }
+        else {
+            $body = $data->render();
+        }
+
+        return $this->http->put(
+                uri: $this->uri,
+               body: $body,
+             params: $params,
+            headers: $headers
+        );
+    }
+
+
+/* PATCH METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+    /**
+     * Update Site value(s).
+     *
+     * @param int|null $id Numerical ID of Site to update.
+     * @param DataInterface|array<DataInterface> $data Optional data to send.
+     * @param array<string, string> $headers HTML request headers
+     * @param array<string, string> $params URL Parameters
+     * @return Response
+     * @throws GuzzleException
+     */
+
+    public function patch(
+        DataInterface|array $data,
+        int                 $id = null,
+        array               $headers = [],
+        array               $params  = []
+    ) : Response
+    {
+        if( $id !== null ) { $this->uri .= "{$id}/"; }
+
+        if( gettype($data) == 'array' ) {
+            $body = [];
+            foreach( $data as $part )
+            {
+                $body[] = $part->render();
+            }
+        }
+        else {
+            $body = $data->render();
+        }
+
+        return $this->http->patch(
+                uri: $this->uri,
+               body: $body,
+             params: $params,
+            headers: $headers
+        );
+    }
+
+
+
 /* DELETE METHOD DETAIL
 ---------------------------------------------------------------------------- */
 
     /**
      * Delete an individual object.
      *
-     * @param integer $id A unique integer value identifying an object.
+     * @param int|null $id A unique integer value identifying an object.
+     * @param array<DataInterface> $data array of data objects
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
      */
 
-    public function deleteDetail( int $id, array $headers = [] ) : Response
+    public function delete(
+        int $id = null,
+        array $data = [],
+        array $headers = []
+    ) : Response
     {
-        $this->uri .= "{$id}/";
+        if( $id !== null ) {
+            $this->uri .= "{$id}/";
+        }
 
-        return $this->http->delete( uri: $this->uri, headers: $headers );
+        $body = [];
+        if( !empty( $data )) {
+            foreach( $data as $part ) {
+                $body[] = $part;
+            }
+        }
+
+        return $this->http->delete( uri: $this->uri, body: $body, headers: $headers );
     }
 
 
@@ -227,56 +276,6 @@ abstract class Models_Core
 
 
 
-/* PUT METHOD LIST
----------------------------------------------------------------------------- */
-
-/**
-* Updte an array of object.
-*
-* @param  array<string, string> $options List of objects to update.
-* @param  array<string, string> $headers HTML request headers
-* @return Response
-*/
-
-    public function putList(
-        array $options,
-        array $headers = []
-    ) : Response
-    {
-        return $this->http->put(
-                uri: $this->uri,
-               body: $options,
-            headers: $headers
-        );
-    }
-
-
-
-/* POST METHOD LIST
----------------------------------------------------------------------------- */
-
-    /**
-     * Create multiple objects at once.
-     *
-     * @param array<string, string> $options An array of object arrays. Each sub array MUST have a
-     *  name and slug key.
-     * @param array<string, string> $headers HTML request headers
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function postList(
-        array $options,
-        array $headers = []
-    ) : Response
-    {
-        return $this->http->post(
-                uri: $this->uri,
-               body: $options,
-            headers: $headers
-        );
-    }
-
 
 
 /* GET METHOD LIST
@@ -291,12 +290,16 @@ abstract class Models_Core
      * @throws GuzzleException
      */
 
-    public function getList(
+    public function get(
+        int             $id = null,
         ParamsInterface $params = null,
         array           $headers = []
     ) : Response
     {
         $params = $params === null ? [] : $params->render();
+        if( $id !== null ) {
+            $this->uri .= "{$id}/";
+        }
 
         return $this->http->get(
             uri:     $this->uri,
@@ -305,31 +308,4 @@ abstract class Models_Core
         );
     }
 
-
-
-/* GET METHOD DETAIL
----------------------------------------------------------------------------- */
-
-    /**
-     * Get an individual object
-     *
-     * @param integer $id Numerical ID of an object record.
-     * @param array<string, string> $headers HTML request headers
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function getDetail(
-        int             $id,
-        array           $headers = []
-    ) : Response
-    {
-        $this->uri .= "{$id}/";
-
-        return $this->http->get(
-                uri: $this->uri,
-            params: ['exclude' => 'config_context'],
-            headers: $headers
-        );
-    }
 }

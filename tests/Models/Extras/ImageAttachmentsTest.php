@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Extras;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\Extras\ImageAttachments;
@@ -40,16 +41,20 @@ final class ImageAttachmentsTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new ImageAttachments();
         $d = new Data();
-        $d->content_type = 'dcim.devicerole';
-        $d->object_id = 1;
-        $d->image_width = 100;
-        $d->image_height = 100;
-        $d->image = 'site_612_test1.jpg';
-        $result = $o->postDetail( data: $d );
+        $d->set('content_type', 'dcim.devicerole' );
+        $d->set('object_id', 1 );
+        $d->set('image_width', 100 );
+        $d->set('image_height', 100 );
+        $d->set('image', 'site_612_test1.jpg' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

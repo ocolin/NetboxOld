@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\FrontPorts;
 use Cruzio\lib\Netbox\Data\DCIM\FrontPorts AS Data;
@@ -19,7 +20,7 @@ final class FrontPortsTest extends testCore
     public static object $manf;
     public static object $site;
     public static object $device;
-    public static $rearPort;
+    public static object $rearPort;
 
 
 
@@ -48,16 +49,20 @@ final class FrontPortsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new FrontPorts();
         $d = new Data();
-        $d->name = 'PHPUnit_FrontPort-Post';
-        $d->type = '8p8c';
-        $d->device = self::$device->id;
-        $d->rear_port = self::$rearPort->id;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPUnit_FrontPort-Post' );
+        $d->set( 'type', '8p8c' );
+        $d->set( 'device', self::$device->id );
+        $d->set( 'rear_port', self::$rearPort->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -82,7 +87,7 @@ final class FrontPortsTest extends testCore
     public function testGetList() : void
     {
         $o = new FrontPorts();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -92,6 +97,8 @@ final class FrontPortsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -108,7 +115,7 @@ final class FrontPortsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new FrontPorts();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -127,6 +134,7 @@ final class FrontPortsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -134,11 +142,11 @@ final class FrontPortsTest extends testCore
     {
         $o = new FrontPorts();
         $d = new Data();
-        $d->name = 'PHPUnit_FrontPort-Put';
-        $d->type = '8p8c';
-        $d->device = self::$device->id;
-        $d->rear_port = self::$rearPort->id;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_FrontPort-Put' );
+        $d->set( 'type', '8p8c' );
+        $d->set( 'device', self::$device->id );
+        $d->set( 'rear_port', self::$rearPort->id );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -157,6 +165,7 @@ final class FrontPortsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -164,11 +173,8 @@ final class FrontPortsTest extends testCore
     {
         $o = new FrontPorts();
         $d = new Data();
-        $d->name = 'PHPUnit_FrontPort-Patch';
-        $d->type = '8p8c';
-        $d->device = self::$device->id;
-        $d->rear_port = self::$rearPort->id;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_FrontPort-Patch' );
+        $result = $o->patch( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -192,7 +198,7 @@ final class FrontPortsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new FrontPorts();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -236,141 +242,4 @@ final class FrontPortsTest extends testCore
         self::destroySite( site: self::$site );
         sleep(1);
     }
-    
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new FrontPorts();
-
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $port )
-        {
-            $this->deleteDetail( id: $port->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-        $this->options->id = $port->id;
-
-        $o = new FrontPorts();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $port->id );
-    }
- */
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-
-        $o = new FrontPorts();
-        $result = $o->patchDetail(
-                   id: $port->id, 
-                 name: 'PHPUnit_FrontPort',
-               device: self::$device->id,
-                 type: '8p8c',
-            rear_port: self::$rearPort->id
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $port->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-        $this->options->id = $port->id;
-
-        $o = new FrontPorts();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $port->id );
-    }
- */
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $port = $this->postDetail()->body;
-
-        $o = new FrontPorts();
-        $result = $o->deleteList(
-            options: [[ 'id' => $port->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
 }

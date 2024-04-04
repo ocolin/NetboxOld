@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -40,14 +41,18 @@ final class RirsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Rirs();
         $d = new Data();
-        $d->name = 'PHPUnit_Rirs-Post';
-        $d->slug = 'PHPUnit_Rirs-Post';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPUnit_Rirs-Post' );
+        $d->set( 'slug', 'PHPUnit_Rirs-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -71,18 +76,20 @@ final class RirsTest extends testCore
      */
     public function testGetList() : void
     {
-    $o = new Rirs();
-    $result = $o->getList();
+        $o = new Rirs();
+        $result = $o->get();
 
-    $this->assertIsObject( $result );
-    $this->assertObjectHasProperty( 'status',  $result );
-    $this->assertObjectHasProperty( 'headers', $result );
-    $this->assertObjectHasProperty( 'body',    $result );
-    $this->assertIsInt( $result->status );
-    $this->assertEquals( 200, $result->status );
-    $this->assertIsArray( $result->headers );
-    $this->assertIsObject( $result->body );
-    $this->assertIsArray( $result->body->results );
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
+        $this->assertIsArray( $result->body->results );
     }
 
 
@@ -96,20 +103,19 @@ final class RirsTest extends testCore
 
     #[Depends('testPostDetail')]
     public function testGetDetail( int $id ) : void
-{
-    $o = new Rirs();
+    {
+        $o = new Rirs();
+        $result = $o->get( id: $id );
 
-    $result = $o->getDetail( id: $id );
-    
-    $this->assertIsObject( $result );
-    $this->assertObjectHasProperty( 'status',  $result );
-    $this->assertObjectHasProperty( 'headers', $result );
-    $this->assertObjectHasProperty( 'body',    $result );
-    $this->assertIsInt( $result->status );
-    $this->assertEquals( 200, $result->status );
-    $this->assertIsArray( $result->headers );
-    $this->assertIsObject( $result->body );
-}
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
 
 
 
@@ -118,6 +124,7 @@ final class RirsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -125,9 +132,9 @@ final class RirsTest extends testCore
     {
         $o = new Rirs();
         $d = new Data();
-        $d->name = 'PHPUnit_Rirs-Put';
-        $d->slug = 'PHPUnit_Rirs-Put';
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Rirs-Put' );
+        $d->set( 'slug', 'PHPUnit_Rirs-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -146,6 +153,7 @@ final class RirsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -153,9 +161,8 @@ final class RirsTest extends testCore
     {
         $o = new Rirs();
         $d = new Data();
-        $d->name = 'PHPUnit_Rirs-Patch';
-        $d->slug = 'PHPUnit_Rirs-Patch';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Rirs-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -179,7 +186,7 @@ final class RirsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Rirs();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -188,90 +195,6 @@ final class RirsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
- 
-
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Rirs();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $rir )
-        {
-            $this->deleteDetail( id: $rir->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $rir = $this->postDetail()->body;
-        $this->options->id = $rir->id;
-
-        $o = new Rirs();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $rir->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $rir = $this->postDetail()->body;
-        $this->options->id = $rir->id;
-
-        $o = new Rirs();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $rir->id );
-    }
- */
-
 
 /*
 ---------------------------------------------------------------------------- */

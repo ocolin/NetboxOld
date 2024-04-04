@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\ModuleBays;
 use Cruzio\lib\Netbox\Data\DCIM\ModuleBays AS Data;
@@ -47,14 +48,18 @@ final class ModuleBaysTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new ModuleBays();
         $d = new Data();
-        $d->name = 'PHPUnit_ModBay-Post';
-        $d->device = self::$device->id;
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_ModBay-Post' );
+        $d->set( 'device', self::$device->id );
+        $result = $o->post( data: $d );
         
 
         $this->assertIsObject( $result );
@@ -80,7 +85,7 @@ final class ModuleBaysTest extends testCore
     public function testGetList() : void
     {
         $o = new ModuleBays();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -90,6 +95,8 @@ final class ModuleBaysTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -106,7 +113,7 @@ final class ModuleBaysTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new ModuleBays();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -125,6 +132,7 @@ final class ModuleBaysTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -132,9 +140,9 @@ final class ModuleBaysTest extends testCore
     {
         $o = new ModuleBays();
         $d = new Data();
-        $d->name = 'PHPUnit_ModBay-Put';
-        $d->device = self::$device->id;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_ModBay-Put' );
+        $d->set( 'device', self::$device->id );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -153,6 +161,7 @@ final class ModuleBaysTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -160,8 +169,8 @@ final class ModuleBaysTest extends testCore
     {
         $o = new ModuleBays();
         $d = new Data();
-        $d->name = 'PHPUnit_ModBay-Patch';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_ModBay-Patch' );
+        $result = $o->patch( data: $d,id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -186,7 +195,7 @@ final class ModuleBaysTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new ModuleBays();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -198,9 +207,12 @@ final class ModuleBaysTest extends testCore
  
 
     
-/* SETUP AND CLOSING FUNCTIONS
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site     = self::createSite();
@@ -213,8 +225,9 @@ final class ModuleBaysTest extends testCore
                  devicerole: self::$devrole,
         );
     }
-    
-/*
+
+
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
     /**
@@ -229,141 +242,4 @@ final class ModuleBaysTest extends testCore
         self::destroySite( site: self::$site );
         sleep(1);
     }
-    
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new ModuleBays();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $bay )
-        {
-            $this->deleteDetail( id: $bay->id );
-        }
-    }
- */
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $bay = $this->postDetail()->body;
-
-        $o = new ModuleBays();
-        $result = $o->putDetail( 
-                id: $bay->id, 
-              name: 'PHPUnit_ModBay',
-            device: self::$device->id                 
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $bay->id );
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $bay = $this->postDetail()->body;
-        $this->options->id = $bay->id;
-
-        $o = new ModuleBays();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $bay->id );
-    }
- */
-
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $bay = $this->postDetail()->body;
-        $this->options->id = $bay->id;
-
-        $o = new ModuleBays();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $bay->id );
-    }
- */
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $bay = $this->postDetail()->body;
-
-        $o = new ModuleBays();
-        $result = $o->deleteList(
-            options: [[ 'id' => $bay->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
 }

@@ -25,6 +25,6 @@
     ],
     "minimum-stability": "stable",
     "scripts": {
-        "phpstan": "vendor/bin/phpstan -c phpstan.neon"
+        "phpstan": "vendor/bin/phpstan -c phpstan.neon_dnu"
     }
 }

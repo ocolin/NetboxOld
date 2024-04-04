@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\Locations;
 use Cruzio\lib\Netbox\Data\DCIM\Locations AS Data;
@@ -44,15 +45,19 @@ final class LocationsTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $rand = rand( 1, 100000 );
         $o = new Locations();
         $d = new Data();
-        $d->name = 'PHPUnit_Location-' . $rand;
-        $d->slug = 'PHPUnit_Location-' . $rand;
-        $d->site = self::$site->id;
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Location-' . $rand );
+        $d->set( 'slug', 'PHPUnit_Location-' . $rand );
+        $d->set( 'site', self::$site->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -79,7 +84,7 @@ final class LocationsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Locations();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -102,7 +107,7 @@ final class LocationsTest extends testCore
     public function testGetList() : void
     {
         $o = new Locations();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -112,6 +117,8 @@ final class LocationsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
   
@@ -122,6 +129,7 @@ final class LocationsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -130,10 +138,10 @@ final class LocationsTest extends testCore
         $o = new Locations();
         $o = new Locations();
         $d = new Data();
-        $d->name = 'PHPUnit_Location-PUT';
-        $d->slug = 'PHPUnit_Location-PUT';
-        $d->site = self::$site->id;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Location-PUT' );
+        $d->set( 'slug', 'PHPUnit_Location-PUT' );
+        $d->set( 'site', self::$site->id );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -151,6 +159,7 @@ final class LocationsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -159,10 +168,8 @@ final class LocationsTest extends testCore
         $o = new Locations();
         $o = new Locations();
         $d = new Data();
-        $d->name = 'PHPUnit_Location-PATCH';
-        $d->slug = 'PHPUnit_Location-PATCH';
-        $d->site = self::$site->id;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Location-PATCH' );
+        $result = $o->patch( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -187,7 +194,7 @@ final class LocationsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Locations();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -199,15 +206,19 @@ final class LocationsTest extends testCore
  
 
 
-/*
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site = self::createSite();
     }
-    
-/*
+
+
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
     /**

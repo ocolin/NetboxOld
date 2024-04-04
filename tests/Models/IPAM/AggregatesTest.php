@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -42,15 +43,19 @@ final class AggregatesTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Aggregates();
         $d = new Data();
-        $d->rir = self::$rir->id;
-        $d->prefix = '192.168.77.0/24';
-        $d->description = 'PHPUnit_Aggregates-Post';
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'rir', self::$rir->id );
+        $d->set( 'prefix', '192.168.77.0/24' );
+        $d->set( 'description', 'PHPUnit_Aggregates-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -75,7 +80,7 @@ final class AggregatesTest extends testCore
     public function testGetList() : void
     {
         $o = new Aggregates();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -85,6 +90,8 @@ final class AggregatesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -101,7 +108,7 @@ final class AggregatesTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Aggregates();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -120,6 +127,7 @@ final class AggregatesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -127,10 +135,10 @@ final class AggregatesTest extends testCore
     {
         $o = new Aggregates();
         $d = new Data();
-        $d->rir = self::$rir->id;
-        $d->prefix = '192.167.77.0/24';
-        $d->description = 'PHPUnit_Aggregates-Put';
-        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );    
+        $d->set( 'rir', self::$rir->id );
+        $d->set( 'prefix', '192.168.77.0/24' );
+        $d->set( 'description', 'PHPUnit_Aggregates-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -149,6 +157,7 @@ final class AggregatesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -156,10 +165,8 @@ final class AggregatesTest extends testCore
     {
         $o = new Aggregates();
         $d = new Data();
-        $d->rir = self::$rir->id;
-        $d->prefix = '192.167.77.0/24';
-        $d->description = 'PHPUnit_Aggregates-Patch';
-        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'description', 'PHPUnit_Aggregates-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -185,7 +192,7 @@ final class AggregatesTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Aggregates();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -197,129 +204,27 @@ final class AggregatesTest extends testCore
  
 
  
-/*
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$rir = self::createRir();
     }
     
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
- 
+
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyRir( rir: self::$rir );
         sleep(1);
     }
-
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Aggregates();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $agr )
-        {
-            $this->deleteDetail( id: $agr->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $agr = $this->postDetail()->body;
-        $this->options->id = $agr->id;
-
-        $o = new Aggregates();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $agr->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $agr = $this->postDetail()->body;
-        $this->options->id = $agr->id;
-
-        $o = new Aggregates();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $agr->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $agr = $this->postDetail()->body;
-
-        $o = new Aggregates();
-        $result = $o->deleteList(
-            options: [[ 'id' => $agr->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
 }

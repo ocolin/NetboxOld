@@ -6,7 +6,6 @@ namespace Cruzio\lib\Netbox\Data\Extras;
 
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
-use Cruzio\lib\Netbox\Validation;
 
 class ExportTemplates extends Data_Core implements DataInterface
 { 

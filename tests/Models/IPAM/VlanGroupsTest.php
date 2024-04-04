@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -40,14 +41,18 @@ final class VlanGroupsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new VlanGroups();
         $d = new Data();
-        $d->name = 'PHPUnit_VlanGroup-Post';
-        $d->slug = 'PHPUnit_VlanGroup-Post';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPUnit_VlanGroup-Post' );
+        $d->set( 'slug', 'PHPUnit_VlanGroup-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -72,7 +77,7 @@ final class VlanGroupsTest extends testCore
     public function testGetList() : void
 {
     $o = new VlanGroups();
-    $result = $o->getList();
+    $result = $o->get();
 
     $this->assertIsObject( $result );
     $this->assertObjectHasProperty( 'status',  $result );
@@ -82,6 +87,8 @@ final class VlanGroupsTest extends testCore
     $this->assertEquals( 200, $result->status );
     $this->assertIsArray( $result->headers );
     $this->assertIsObject( $result->body );
+    $this->assertObjectHasProperty( 'results', $result->body );
+    #@phpstan-ignore-next-line
     $this->assertIsArray( $result->body->results );
 }
 
@@ -98,7 +105,7 @@ final class VlanGroupsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new VlanGroups();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -117,6 +124,7 @@ final class VlanGroupsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -124,9 +132,9 @@ final class VlanGroupsTest extends testCore
     {
         $o = new VlanGroups();
         $d = new Data();
-        $d->name = 'PHPUnit_VlanGroup-Put';
-        $d->slug = 'PHPUnit_VlanGroup-Put';
-        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_VlanGroup-Put' );
+        $d->set( 'slug', 'PHPUnit_VlanGroup-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -145,6 +153,7 @@ final class VlanGroupsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -152,8 +161,8 @@ final class VlanGroupsTest extends testCore
     {
         $o = new VlanGroups();
         $d = new Data();
-        $d->name = 'PHPUnit_VlanGroup-Patch';
-        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_VlanGroup-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -178,7 +187,7 @@ final class VlanGroupsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new VlanGroups();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -196,110 +205,4 @@ final class VlanGroupsTest extends testCore
     {
         sleep(1);
     }
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new VlanGroups();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $vgrp )
-        {
-            $this->deleteDetail( id: $vgrp->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $vgrp = $this->postDetail()->body;
-        $this->options->id = $vgrp->id;
-
-        $o = new VlanGroups();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $vgrp->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $vgrp = $this->postDetail()->body;
-        $this->options->id = $vgrp->id;
-
-        $o = new VlanGroups();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $vgrp->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $vgrp = $this->postDetail()->body;
-
-        $o = new VlanGroups();
-        $result = $o->deleteList(
-            options: [[ 'id' => $vgrp->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
 }

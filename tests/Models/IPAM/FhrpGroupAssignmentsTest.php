@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -48,16 +49,20 @@ final class FhrpGroupAssignmentsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
-  
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new FhrpGroupAssignments();
         $d = new Data();
-        $d->group = self::$group->id;
-        $d->interface_type  = 'dcim.device';
-        $d->interface_id    = self::$interface->id;
-        $d->priority        = 1;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'group', self::$group->id );
+        $d->set( 'interface_type', 'dcim.device' );
+        $d->set( 'interface_id', self::$interface->id );
+        $d->set( 'priority', 1 );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -84,7 +89,7 @@ final class FhrpGroupAssignmentsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new FhrpGroupAssignments();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -107,7 +112,7 @@ final class FhrpGroupAssignmentsTest extends testCore
     public function testGetList() : void
     {
         $o = new FhrpGroupAssignments();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -117,6 +122,8 @@ final class FhrpGroupAssignmentsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -127,6 +134,7 @@ final class FhrpGroupAssignmentsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -134,11 +142,11 @@ final class FhrpGroupAssignmentsTest extends testCore
     {
         $o = new FhrpGroupAssignments();
         $d = new Data();
-        $d->group = self::$group->id;
-        $d->interface_type  = 'dcim.device';
-        $d->interface_id    = self::$interface->id;
-        $d->priority        = 1;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'group', self::$group->id );
+        $d->set( 'interface_type', 'dcim.device' );
+        $d->set( 'interface_id', self::$interface->id );
+        $d->set( 'priority', 1 );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -157,6 +165,7 @@ final class FhrpGroupAssignmentsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -164,8 +173,8 @@ final class FhrpGroupAssignmentsTest extends testCore
     {
         $o = new FhrpGroupAssignments();
         $d = new Data();
-        $d->priority = 2;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'priority', 2 );
+        $result = $o->patch( data: $d, id: $id );
  
 
         $this->assertIsObject( $result );
@@ -191,7 +200,7 @@ final class FhrpGroupAssignmentsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new FhrpGroupAssignments();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -200,150 +209,14 @@ final class FhrpGroupAssignmentsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
- 
 
 
-
-
-
-
-/* TEST POST LIST
+/* SETUP
 ---------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new FhrpGroupAssignments();
-        $result = $o->postList( options: [ $this->options ] );
 
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $assign )
-        {
-            $this->deleteDetail( id: $assign->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $assign = $this->postDetail()->body;
-        $this->options->id = $assign->id;
-
-        $o = new FhrpGroupAssignments();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $assign->id );
-    }
- */
-
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $assign = $this->postDetail()->body;
-        $this->options->id = $assign->id;
-
-        $o = new FhrpGroupAssignments();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $assign->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $assign = $this->postDetail()->body;
-
-        $o = new FhrpGroupAssignments();
-        $result = $o->deleteList(
-            options: [[ 'id' => $assign->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
-/* CREATE AN IP
----------------------------------------------------------------------------- */
-/* 
-    public function postDetail() : Response
-    {
-        $o = new FhrpGroupAssignments();
-
-        return $o->postDetail( 
-            group: self::$group->id,
-            interface_type: 'dcim.device',
-            interface_id: self::$interface->id,
-            priority: 1
-        );
-    }
- */
-
-
-/* DELETE AN IP
----------------------------------------------------------------------------- */
-/* 
-    public function deleteDetail( int $id ) : Response
-    {
-        $o = new FhrpGroupAssignments();
-
-        return $o->deleteDetail( id: $id  );
-    }
- */
-
-    
-/*
----------------------------------------------------------------------------- */
- 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$group    = self::createFhrpGroup();
@@ -360,10 +233,12 @@ final class FhrpGroupAssignmentsTest extends testCore
     }
 
 
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
- 
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyInterface( interface: self::$interface );

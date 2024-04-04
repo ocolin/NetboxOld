@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Extras;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -40,15 +41,19 @@ final class CustomFieldsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new CustomFields();
         $d = new Data();
-        $d->name = 'PHPOUnit_CustomFields_Post';
-        $d->content_types = [ 'dcim.sitegroup' ];
-        $d->type = 'text';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPOUnit_CustomFields_Post' );
+        $d->set( 'content_types', [ 'dcim.sitegroup' ] );
+        $d->set( 'type', 'text' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -73,7 +78,7 @@ final class CustomFieldsTest extends testCore
     public function testGetList() : void
     {
         $o = new CustomFields();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -83,6 +88,8 @@ final class CustomFieldsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -99,7 +106,7 @@ final class CustomFieldsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new CustomFields();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -118,6 +125,7 @@ final class CustomFieldsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -125,10 +133,10 @@ final class CustomFieldsTest extends testCore
     {
         $o = new CustomFields();
         $d = new Data();
-        $d->name = 'PHPOUnit_CustomFields_Put';
-        $d->content_types = [ 'dcim.sitegroup' ];
-        $d->type = 'text';
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPOUnit_CustomFields_Put' );
+        $d->set( 'content_types', [ 'dcim.sitegroup' ] );
+        $d->set( 'type', 'text' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -147,6 +155,7 @@ final class CustomFieldsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -154,10 +163,8 @@ final class CustomFieldsTest extends testCore
     {
         $o = new CustomFields();
         $d = new Data();
-        $d->name = 'PHPOUnit_CustomFields_Patch';
-        $d->content_types = [ 'dcim.sitegroup' ];
-        $d->type = 'text';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPOUnit_CustomFields_Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -182,7 +189,7 @@ final class CustomFieldsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new CustomFields();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -191,134 +198,4 @@ final class CustomFieldsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new CustomFields();
-        $result = $o->postList(
-        options: [
-            [ 
-                         'name' => 'PHPUnit_CustomField',
-                'content_types' => [ 'dcim.sitegroup' ],
-                         'type' => 'text'
-            ],
-        ]  
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $field )
-        {
-            $this->deleteDetail( id: $field->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $field = $this->postDetail()->body;
-
-        $o = new CustomFields();
-        $result = $o->putList(
-            options: [
-                [ 
-                               'id' => $field->id, 
-                             'name' => 'PHPUnit_CustomField',
-                    'content_types' => [ 'dcim.sitegroup' ],
-                             'type' => 'text'
-                ]
-            ]
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $field->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $field = $this->postDetail()->body;
-
-        $o = new CustomFields();
-        $result = $o->patchList(
-            options: [
-                [ 
-                               'id' => $field->id, 
-                             'name' => 'PHPUnit_CustomField',
-                    'content_types' => [ 'dcim.sitegroup' ],
-                             'type' => 'text'
-                ]
-            ]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $field->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $field = $this->postDetail()->body;
-
-        $o = new CustomFields();
-        $result = $o->deleteList(
-            options: [[ 'id' => $field->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
 }

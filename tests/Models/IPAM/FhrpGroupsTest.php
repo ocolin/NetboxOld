@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -41,16 +42,20 @@ final class FhrpGroupsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $rand = rand( 1, 10000 );
         $o = new FhrpGroups();
         $d = new Data();
-        $d->protocol = 'vrrp2';
-        $d->group_id = $rand;
-        $d->description = 'PHPUnit_FhrpGroupPost-' . $rand;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'protocol', 'vrrp2' );
+        $d->set( 'group_id', $rand );
+        $d->set( 'description', 'PHPUnit_FhrpGroupPost-' . $rand );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -75,7 +80,7 @@ final class FhrpGroupsTest extends testCore
     public function testGetList() : void
     {
         $o = new FhrpGroups();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -85,6 +90,8 @@ final class FhrpGroupsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -101,7 +108,7 @@ final class FhrpGroupsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new FhrpGroups();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -120,6 +127,7 @@ final class FhrpGroupsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -128,10 +136,10 @@ final class FhrpGroupsTest extends testCore
         $rand = rand( 1, 10000 );
         $o = new FhrpGroups();
         $d = new Data();
-        $d->protocol = 'vrrp2';
-        $d->group_id = $rand;
-        $d->description = 'PHPUnit_FhrpGroupPut-' . $rand;
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'protocol', 'vrrp2' );
+        $d->set( 'group_id', $rand );
+        $d->set( 'description', 'PHPUnit_FhrpGroupPut-' . $rand );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -150,6 +158,7 @@ final class FhrpGroupsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -158,8 +167,8 @@ final class FhrpGroupsTest extends testCore
         $rand = rand( 1, 10000 );
         $o = new FhrpGroups();
         $d = new Data();
-        $d->description = 'PHPUnit_FhrpGroupPatch-' . $rand;
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'description', 'PHPUnit_FhrpGroupPatch-' . $rand );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -184,7 +193,7 @@ final class FhrpGroupsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new FhrpGroups();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -203,111 +212,4 @@ final class FhrpGroupsTest extends testCore
     {
         sleep(1);
     }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new FhrpGroups();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $group )
-        {
-            $this->deleteDetail( id: $group->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-        $this->options->id = $group->id;
-
-        $o = new FhrpGroups();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $group->id );
-    }
- */
-
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-        $this->options->id = $group->id;
-
-        $o = new FhrpGroups();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $group->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $group = $this->postDetail()->body;
-
-        $o = new FhrpGroups();
-        $result = $o->deleteList(
-            options: [[ 'id' => $group->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
 }

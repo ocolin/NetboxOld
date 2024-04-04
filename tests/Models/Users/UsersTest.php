@@ -41,14 +41,18 @@ final class UsersTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws \Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Users();
         $d = new Data();
-        $d->username = 'PHPUnit_Username-Post';
-        $d->password = 'PHPUnit_Password-Post';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'username', 'PHPUnit_Username-Post' );
+        $d->set( 'password', 'PHPUnit_Password-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -73,7 +77,7 @@ final class UsersTest extends testCore
     public function testGetList() : void
     {
         $o = new Users();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -83,6 +87,8 @@ final class UsersTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -99,7 +105,7 @@ final class UsersTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Users();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -118,6 +124,7 @@ final class UsersTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws \Exception
      */
 
     #[Depends('testPostDetail')]
@@ -125,9 +132,9 @@ final class UsersTest extends testCore
     {
         $o = new Users();
         $d = new Data();
-        $d->username = 'PHPUnit_Username-Put';
-        $d->password = 'PHPUnit_Password-Put';
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'username', 'PHPUnit_Username-Put' );
+        $d->set( 'password', 'PHPUnit_Password-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -146,6 +153,7 @@ final class UsersTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws \Exception
      */
 
     #[Depends('testPostDetail')]
@@ -153,8 +161,8 @@ final class UsersTest extends testCore
     {
         $o = new Users();
         $d = new Data();
-        $d->username = 'PHPUnit_Username-Patch';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'username', 'PHPUnit_Username-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -179,7 +187,7 @@ final class UsersTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Users();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

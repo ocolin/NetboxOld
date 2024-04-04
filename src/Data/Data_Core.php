@@ -41,13 +41,12 @@ class Data_Core
     }
 
 
-/* SETTER
------------------------------------------------------------------------------ */
 
-    /**
-     * @throws Exception
-     */
-    public function __set(string $property, mixed $value ) : void
+
+    /*
+    ----------------------------------------------------------------------------- */
+
+    public function set( string $property, string|int|float $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );
@@ -63,7 +62,6 @@ class Data_Core
             }
         }
     }
-
 
 /* GETTER
 ----------------------------------------------------------------------------- */
@@ -81,8 +79,8 @@ class Data_Core
     }
 
 
-/* GET REQUIRED PROPERTIES
------------------------------------------------------------------------------ */
+
+
 
 /**
  *  @return array<string>

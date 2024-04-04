@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\Manufacturers;
 use Cruzio\lib\Netbox\Data\DCIM\Manufacturers AS Data;
@@ -40,13 +41,17 @@ final class ManufacturersTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Manufacturers();
         $d = new Data();
-        $d->name = 'testManufacturer';
-        $d->slug = 'testManufacturer';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'testManufacturer' );
+        $d->set( 'slug', 'testManufacturer' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -73,7 +78,7 @@ final class ManufacturersTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Manufacturers();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -96,7 +101,7 @@ final class ManufacturersTest extends testCore
     public function testGetList() : void
     {
         $o = new Manufacturers();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -106,6 +111,8 @@ final class ManufacturersTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -116,6 +123,7 @@ final class ManufacturersTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -123,13 +131,9 @@ final class ManufacturersTest extends testCore
     {
         $o = new Manufacturers();
         $d = new Data();
-        $d->name = 'putManufacturer';
-        $d->slug = 'putManufacturer';
-        $result = $o->putDetail( 
-              id: $id, 
-            data: $d ,
-          params: [ 'exclude' => 'config_context']
-        );
+        $d->set( 'name', 'putManufacturer' );
+        $d->set( 'slug', 'putManufacturer' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -148,6 +152,7 @@ final class ManufacturersTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -155,12 +160,8 @@ final class ManufacturersTest extends testCore
     {
         $o = new Manufacturers();
         $d = new Data();
-        $d->name = 'patchManufacturer';
-        $d->slug = 'patchManufacturer';
-        $result = $o->putDetail( 
-              id: $id, 
-            data: $d,
-        );
+        $d->set( 'name', 'patchManufacturer' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -185,7 +186,7 @@ final class ManufacturersTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {        
         $o = new Manufacturers();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
 
         $this->assertIsObject( $result );
@@ -195,111 +196,4 @@ final class ManufacturersTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPostList() :void
-    {
-        $o = new Manufacturers();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $manf )
-        {
-            $this->deleteDetail( id: $manf->id );
-        }
-    }
-*/
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPutList() : void
-    {
-        // SETUP
-        $manf = $this->postDetail()->body;
-        $this->options->id = $manf->id;
-
-        $o = new Manufacturers();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $manf->id );
-    }
-*/
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPatchList() : void
-    {
-        // SETUP
-        $manf = $this->postDetail()->body;
-        $this->options->id = $manf->id;
-
-        $o = new Manufacturers();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $manf->id );
-    }
-*/
-
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/*
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $manf = $this->postDetail()->body;
-
-        $o = new Manufacturers();
-        $result = $o->deleteList(
-            options: [[ 'id' => $manf->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-*/
-
 }

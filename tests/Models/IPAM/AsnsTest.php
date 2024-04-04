@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -43,15 +44,19 @@ final class AsnsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Asns();
         $d = new Data();
-        $d->asn = 12345;
-        $d->description = 'PHPUnit_Asns-Post';
-        $d->rir = self::$rir->id;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'asn', 12345 );
+        $d->set( 'description', 'PHPUnit_Asns-Post' );
+        $d->set( 'rir', self::$rir->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -76,7 +81,7 @@ final class AsnsTest extends testCore
     public function testGetList() : void
     {
         $o = new Asns();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -86,6 +91,8 @@ final class AsnsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
   
@@ -102,7 +109,7 @@ final class AsnsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Asns();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -121,6 +128,7 @@ final class AsnsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -128,12 +136,12 @@ final class AsnsTest extends testCore
     {
         $o = new Asns();
         $d = new Data();
-        $d->asn = 12345;
-        $d->description = 'PHPUnit_Asns-Put';
-        $d->rir = self::$rir->id;
-        $result = $o->putDetail( id: $id, data: $d );
-  
-        
+        $d->set( 'asn', 12345 );
+        $d->set( 'description', 'PHPUnit_Asns-Put' );
+        $d->set( 'rir', self::$rir->id );
+        $result = $o->put( data: $d, id: $id );
+
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
@@ -151,6 +159,7 @@ final class AsnsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -158,8 +167,8 @@ final class AsnsTest extends testCore
     {
         $o = new Asns();
         $d = new Data();
-        $d->description = 'PHPUnit_Asns-Patch';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'description', 'PHPUnit_Asns-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -184,7 +193,7 @@ final class AsnsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Asns();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -196,9 +205,12 @@ final class AsnsTest extends testCore
  
 
 
-/*
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         $o = new Rirs();
@@ -206,7 +218,7 @@ final class AsnsTest extends testCore
     }
 
 
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
     /**
@@ -217,112 +229,4 @@ final class AsnsTest extends testCore
         self::destroyRir( rir: self::$rir );
         sleep(1);
     }
-
-
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Asns();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $asn )
-        {
-            $this->deleteDetail( id: $asn->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function Asns() : void
-    {
-        // SETUP
-        $asn = $this->postDetail()->body;
-        $this->options->id = $asn->id;
-
-        $o = new Asns();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $asn->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $asn = $this->postDetail()->body;
-        $this->options->id = $asn->id;
-
-        $o = new Asns();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $asn->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $asn = $this->postDetail()->body;
-
-        $o = new Asns();
-        $result = $o->deleteList(
-            options: [[ 'id' => $asn->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
 }

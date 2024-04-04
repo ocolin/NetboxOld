@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Virtualization;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -44,16 +45,20 @@ final class ClustersTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Clusters();
         $d = new Data();
-        $d->name = 'PHPUnit_Clusters-Post';
-        $d->type  = self::$type->id;
-        $d->group = self::$group->id;
-        $d->site  = self::$site->id;
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Clusters-Post' );
+        $d->set( 'type',  self::$type->id );
+        $d->set( 'group', self::$group->id );
+        $d->set( 'site',  self::$site->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -78,7 +83,7 @@ final class ClustersTest extends testCore
     public function testGetList() : void
     {
         $o = new Clusters();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -88,6 +93,8 @@ final class ClustersTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -104,7 +111,7 @@ final class ClustersTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Clusters();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -123,6 +130,7 @@ final class ClustersTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -130,11 +138,11 @@ final class ClustersTest extends testCore
     {
         $o = new Clusters();
         $d = new Data();
-        $d->name = 'PHPUnit_Clusters-Put';
-        $d->type  = self::$type->id;
-        $d->group = self::$group->id;
-        $d->site  = self::$site->id;
-        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Clusters-Put' );
+        $d->set( 'type',  self::$type->id );
+        $d->set( 'group', self::$group->id );
+        $d->set( 'site',  self::$site->id );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -153,14 +161,15 @@ final class ClustersTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
     public function testPatchDetail( int $id ) : void
     {
         $o = new Clusters();$d = new Data();
-        $d->name = 'PHPUnit_Clusters-Patch';
-        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Clusters-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -185,7 +194,7 @@ final class ClustersTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Clusters();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -199,6 +208,9 @@ final class ClustersTest extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site  = self::createSite();
@@ -220,111 +232,4 @@ final class ClustersTest extends testCore
         self::destroyClusterGroup( group: self::$group );
         sleep(1);
     }
-    
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Clusters();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $cluster )
-        {
-            $this->deleteDetail( id: $cluster->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $cluster = $this->postDetail()->body;
-        $this->options->id = $cluster->id;
-
-        $o = new Clusters();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $cluster->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $cluster = $this->postDetail()->body;
-        $this->options->id = $cluster->id;
-
-        $o = new Clusters();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $cluster->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $cluster = $this->postDetail()->body;
-
-        $o = new Clusters();
-        $result = $o->deleteList(
-            options: [[ 'id' => $cluster->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
 }

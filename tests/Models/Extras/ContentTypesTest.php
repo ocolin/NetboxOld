@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Extras;
 
+use GuzzleHttp\Exception\GuzzleException;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\Extras\ContentTypes;
 
@@ -16,6 +17,9 @@ final class ContentTypesTest extends testCore
 /* TEST OPTIONS
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public function testOptions() : void
     {
         $o = new ContentTypes();
@@ -36,10 +40,13 @@ final class ContentTypesTest extends testCore
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public function testGetDetail() : void
     {
         $o = new ContentTypes();
-        $result = $o->getDetail();
+        $result = $o->get();
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -50,5 +57,4 @@ final class ContentTypesTest extends testCore
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
     }
-
 }

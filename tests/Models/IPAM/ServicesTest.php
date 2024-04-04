@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -45,16 +46,20 @@ final class ServicesTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Services();
         $d = new Data();
-        $d->device   = self::$device->id;
-        $d->name     = 'PHPUnit_Service-Post';
-        $d->ports    = [1];
-        $d->protocol = 'tcp';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'device', self::$device->id );
+        $d->set( 'name', 'PHPUnit_Service-Post' );
+        $d->set( 'ports', [1] );
+        $d->set( 'protocol', 'tcp' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -80,7 +85,7 @@ final class ServicesTest extends testCore
     public function testGetList() : void
     {
         $o = new Services();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -90,6 +95,8 @@ final class ServicesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -106,7 +113,7 @@ final class ServicesTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Services();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -125,6 +132,7 @@ final class ServicesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -132,11 +140,11 @@ final class ServicesTest extends testCore
     {
         $o = new Services();
         $d = new Data();
-        $d->device   = self::$device->id;
-        $d->name     = 'PHPUnit_Service-Put';
-        $d->ports    = [1];
-        $d->protocol = 'tcp';
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'device', self::$device->id );
+        $d->set( 'name', 'PHPUnit_Service-Put' );
+        $d->set( 'ports', [1] );
+        $d->set( 'protocol', 'tcp' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -155,6 +163,7 @@ final class ServicesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -162,8 +171,8 @@ final class ServicesTest extends testCore
     {
         $o = new Services();
         $d = new Data();
-        $d->name     = 'PHPUnit_Service-Patch';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Service-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -188,7 +197,7 @@ final class ServicesTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Services();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -203,6 +212,9 @@ final class ServicesTest extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site     = self::createSite();

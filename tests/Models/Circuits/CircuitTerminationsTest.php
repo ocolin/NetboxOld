@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Circuits;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -45,15 +46,19 @@ final class CircuitTerminationsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new CircuitTerminations();
         $d = new Data();
-        $d->circuit = self::$circuit->id;
-        $d->term_side = 'A';
-        $d->site = self::$site->id;
-        $result = $o->postDetail( data: $d );
+        $d->set( 'circuit', self::$circuit->id );
+        $d->set( 'term_side', 'A' );
+        $d->set( 'site', self::$site->id );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -80,7 +85,7 @@ final class CircuitTerminationsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new CircuitTerminations();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -91,9 +96,12 @@ final class CircuitTerminationsTest extends testCore
     }
  
 
-/* SETUP AND CLOSING FUNCTIONS
+/* SETUP
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$provider     = self::createProvider();
@@ -105,7 +113,7 @@ final class CircuitTerminationsTest extends testCore
         );
     }
     
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
     /**

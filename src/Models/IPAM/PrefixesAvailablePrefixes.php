@@ -27,8 +27,8 @@ class PrefixesAvailablePrefixes extends IPAM_Core
      * @return Response
      * @throws GuzzleException
      */
-    public function getDetail(
-        int             $id,
+    public function get(
+        int             $id = null,
         ParamsInterface $params = null,
         array           $headers = []
     ) : Response

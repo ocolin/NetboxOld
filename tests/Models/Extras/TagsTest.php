@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Extras;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -21,7 +22,7 @@ final class TagsTest extends testCore
     /**
      * @throws GuzzleException
      */
-    public function testOptions()
+    public function testOptions() : void
     {
         $o = new Tags();
         $result = $o->options();
@@ -40,14 +41,18 @@ final class TagsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Tags();
         $d = new Data();
-        $d->name = 'PHPUnit_Tags-Post';
-        $d->slug = 'PHPUnit_Tags-Post';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'PHPUnit_Tags-Post' );
+        $d->set( 'slug', 'PHPUnit_Tags-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -72,7 +77,7 @@ final class TagsTest extends testCore
     public function testGetList() : void
     {
         $o = new Tags();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -82,6 +87,8 @@ final class TagsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -98,7 +105,7 @@ final class TagsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Tags();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -116,6 +123,7 @@ final class TagsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -123,9 +131,9 @@ final class TagsTest extends testCore
     {
         $o = new Tags();
         $d = new Data();
-        $d->name = 'PHPUnit_Tags-Put';
-        $d->slug = 'PHPUnit_Tags-Put';
-        $result = $o->putDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Tags-Put' );
+        $d->set( 'slug', 'PHPUnit_Tags-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -144,6 +152,7 @@ final class TagsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -151,9 +160,8 @@ final class TagsTest extends testCore
     {
         $o = new Tags();
         $d = new Data();
-        $d->name = 'PHPUnit_Tags-Patch';
-        $d->slug = 'PHPUnit_Tags-Patch';
-        $result = $o->patchDetail( id: $id, data: $d );
+        $d->set( 'name', 'PHPUnit_Tags-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -179,7 +187,7 @@ final class TagsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Tags();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -188,191 +196,4 @@ final class TagsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new Tags();
-        $result = $o->postList(
-        options: [
-            [ 
-                'name' => 'PHPUnit_Tag',
-                'slug' => 'PHPUnit_Tag'
-            ],
-        ]  
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $tag )
-        {
-            $this->deleteDetail( id: $tag->id );
-        }
-    }
- */
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $tag = $this->postDetail()->body;
-
-        $o = new Tags();
-        $result = $o->putDetail( 
-              id: $tag->id, 
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
-        );
-        
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $tag->id );
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $tag = $this->postDetail()->body;
-
-        $o = new Tags();
-        $result = $o->putList(
-            options: [
-                [ 
-                      'id' => $tag->id, 
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $tag->id );
-    }
- */
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $tag = $this->postDetail()->body;
-
-        $o = new Tags();
-        $result = $o->patchDetail(
-              id: $tag->id,
-            name: 'PHPUnit_Tag',
-            slug: 'PHPUnit_Tag'
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $tag->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $tag = $this->postDetail()->body;
-
-        $o = new Tags();
-        $result = $o->patchList(
-            options: [
-                [ 
-                    'id'   => $tag->id,
-                    'name' => 'PHPUnit_Tag',
-                    'slug' => 'PHPUnit_Tag'
-                ]
-            ]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $tag->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $tag = $this->postDetail()->body;
-
-        $o = new Tags();
-        $result = $o->deleteList(
-            options: [[ 'id' => $tag->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
 }

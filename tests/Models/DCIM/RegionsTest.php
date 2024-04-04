@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\Regions;
 use Cruzio\lib\Netbox\Data\DCIM\Regions AS Data;
@@ -41,13 +42,17 @@ final class RegionsTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Regions();
         $d = new Data();
-        $d->name = 'testRegion';
-        $d->slug = 'testRegion';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'testRegion' );
+        $d->set( 'slug', 'testRegion' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -74,7 +79,7 @@ final class RegionsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Regions();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -97,7 +102,7 @@ final class RegionsTest extends testCore
     public function testGetList() : void
     {
         $o = new Regions();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -107,6 +112,8 @@ final class RegionsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -117,6 +124,7 @@ final class RegionsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -124,13 +132,37 @@ final class RegionsTest extends testCore
     {
         $o = new Regions();
         $d = new Data();
-        $d->name = 'putRegion';
-        $d->slug = 'putRegion';
-        $result = $o->putDetail(
-            id: $id,
-            data: $d
-        );
+        $d->set( 'name', 'putRegion' );
+        $d->set( 'slug', 'putRegion' );
+        $result = $o->put( data: $d, id: $id );
         
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+    /* TEST PUT DETAIL
+    ---------------------------------------------------------------------------- */
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
+
+    #[Depends('testPostDetail')]
+    public function testPatchDetail( int $id ) : void
+    {
+        $o = new Regions();
+        $d = new Data();
+        $d->set( 'name', 'patchRegion' );
+        $result = $o->patch( data: $d, id: $id );
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
@@ -154,7 +186,7 @@ final class RegionsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {        
         $o = new Regions();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -163,155 +195,4 @@ final class RegionsTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPostList() :void
-    {
-        $o = new Regions();
-
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $region )
-        {
-            $this->deleteDetail( id: $region->id );
-        }
-    }
-*/
-
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPutList() : void
-    {
-        // SETUP
-        $region = $this->postDetail()->body;
-        $this->options->id   = $region->id;
-
-        $o = new Regions();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $region->id );
-    }
-*/
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-/*
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $region = $this->postDetail()->body;
-
-        $o = new Regions();
-        $result = $o->patchDetail(
-              id: $region->id,
-            name: 'patchRegion',
-            slug: 'patchRegion',
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $region->id );
-    }
-*/
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPatchList() : void
-    {
-        // SETUP
-        $region = $this->postDetail()->body;
-        $this->options->id   = $region->id;
-
-        $o = new Regions();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $region->id );
-    }
-*/
-
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/*
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $region = $this->postDetail()->body;
-
-        $o = new Regions();
-        $result = $o->deleteList(
-            options: [[ 'id' => $region->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-*/
-
-/*
----------------------------------------------------------------------------- */
-/*    
-    public function setUp() : void
-    {
-        $rand = rand( 1, 100000 );
-        $this->options = new Options();
-        $this->options->name = 'PHPUnit_Region-' . $rand;
-        $this->options->slug = 'PHPUnit_Region-' . $rand;
-    }
-*/
 }

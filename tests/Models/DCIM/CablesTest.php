@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\Cables;;
@@ -53,6 +54,10 @@ final class CablesTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : void
     {
         $o = new Cables();
@@ -63,13 +68,13 @@ final class CablesTest extends testCore
         $testB = new \stdClass();
         $testB->object_type = 'dcim.interface';
         $testB->object_id = self::$deviceB->id;
-        $d->a_terminations = [ $testA ];
-        $d->b_terminations = [ $testB ];
+        $d->set( 'a_terminations', [ $testA ] );
+        $d->set( 'b_terminations', [ $testB ] );
         //$d->a_terminations = [ self::$termA ];
         //$d->b_terminations = [ self::$termB ];
        // print_r( $d->render());
 
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $result = $o->post( data: $d, params: [ 'exclude' => 'config_context'] );
         print_r( $result->body );
 
         /*
@@ -92,13 +97,16 @@ final class CablesTest extends testCore
 /* SETUP DEPENDENT OBJECT
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$termA = new TerminationType();
         self::$termB = new TerminationType();
 
-        self::$site = self::createSite();
-        self::$manf = self::createManufacturer();
+        self::$site    = self::createSite();
+        self::$manf    = self::createManufacturer();
         self::$devrole = self::createDeviceRole();
         self::$devtype = self::createDeviceType( manf: self::$manf );
         self::$deviceA = self::createDevice(

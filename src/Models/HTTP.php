@@ -65,7 +65,7 @@ class HTTP
      * Create an object.
      *
      * @param string $uri
-     * @param array<string, mixed>|object|null $body
+     * @param array<object>|object|null $body
      * @param array<string, string> $params
      * @param array<string, string> $headers HTML request headers
      * @return Response
@@ -201,13 +201,17 @@ class HTTP
      * Delete an existing object.
      *
      * @param string $uri
-     * @param array<string, mixed> $body
+     * @param array<string, object> $body
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
      */
 
-    public function delete( string $uri, array $body = [], array $headers = [] ) : Response
+    public function delete(
+        string $uri,
+        array $body = [],
+        array $headers = []
+    ) : Response
     {
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
@@ -284,7 +288,7 @@ class HTTP
         $response->status = $request->getStatusCode();
         $response->status_message = $request->getReasonPhrase();
         $response->headers = $request->getHeaders();
-        $response->body = json_decode( $request->getBody()->getContents());
+        $response->body = json_decode( $request->getBody()->getContents() );
 
         return $response;
     }

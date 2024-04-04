@@ -41,15 +41,7 @@ class Params_Core
         if( property_exists( $this, $param )) {
             $rp = new ReflectionProperty( $this, $param );
             if (!$rp->isPrivate()) {
-                if (
-                    #@phpstan-ignore-next-line
-                    $rp->getType()->getName() === 'array' and
-                    gettype($value) !== 'array'
-                ) {
-                    $this->$param[] = $value;
-                } else {
-                    $this->$param = $value;
-                }
+                $this->$param = $value;
             }
         }
     }

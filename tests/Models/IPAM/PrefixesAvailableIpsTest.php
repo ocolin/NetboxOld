@@ -24,7 +24,7 @@ final class PrefixesAvailableIpsTest extends testCore
     public function testGetDetail() : void
     {
         $o = new PrefixesAvailableIps();
-        $result = $o->getDetail( id: self::$prefix->id );
+        $result = $o->get( id: self::$prefix->id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -63,20 +63,24 @@ final class PrefixesAvailableIpsTest extends testCore
 
 
     
-/*
+/* SETUP
 ---------------------------------------------------------------------------- */
 
- 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$prefix = self::createPrefix();
     }
 
     
-/*
+/* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
- 
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyPrefix( prefix: self::$prefix );

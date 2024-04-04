@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\DCIM;
 
+use Exception;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\DCIM\DeviceRoles;
 use Cruzio\lib\Netbox\Data\DCIM\DeviceRoles AS Data;
@@ -40,13 +41,17 @@ final class DeviceRolesTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new DeviceRoles();
         $d = new Data();
-        $d->name = 'testDeviceRole';
-        $d->slug = 'testDeviceRole';
-        $result = $o->postDetail( data: $d );
+        $d->set( 'name', 'testDeviceRole' );
+        $d->set( 'slug', 'testDeviceRole' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -73,7 +78,7 @@ final class DeviceRolesTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new DeviceRoles();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -96,7 +101,7 @@ final class DeviceRolesTest extends testCore
     public function testGetList() : void
     {
         $o = new DeviceRoles();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -106,6 +111,8 @@ final class DeviceRolesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -116,6 +123,7 @@ final class DeviceRolesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -123,9 +131,9 @@ final class DeviceRolesTest extends testCore
     {
         $o = new DeviceRoles();
         $d = new Data();
-        $d->name = 'updateDeviceRoles';
-        $d->slug = 'updateDeviceRoles';
-        $result = $o->putDetail( id: $id, data: $d  );
+        $d->set( 'name', 'updateDeviceRoles' );
+        $d->set( 'slug', 'updateDeviceRoles' );
+        $result = $o->put( data: $d,id: $id );
 
         
         $this->assertIsObject( $result );
@@ -145,6 +153,7 @@ final class DeviceRolesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -152,9 +161,8 @@ final class DeviceRolesTest extends testCore
     {
         $o = new DeviceRoles();
         $d = new Data();
-        $d->name = 'patchDeviceRoles';
-        $d->slug = 'patchDeviceRoles';
-        $result = $o->patchDetail( id: $id, data: $d  );
+        $d->set( 'name', 'patchDeviceRoles' );
+        $result = $o->patch( data: $d,id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -179,7 +187,7 @@ final class DeviceRolesTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new DeviceRoles();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -188,116 +196,4 @@ final class DeviceRolesTest extends testCore
         $this->assertIsInt( $result->status );
         $this->assertEquals( 204, $result->status );
     }
-
-
-
-
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPostList() :void
-    {
-        $o = new DeviceRoles();
-
-        $result = $o->postList(
-            options: [ $this->options ]  
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $role )
-        {
-            $this->deleteDetail( id: $role->id );
-        }
-    }
-*/
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPutList() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-        $this->options->id = $role->id;
-
-        $o = new DeviceRoles();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $role->id );
-    }
-*/
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/*
-    public function testPatchList() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-        $this->options->id = $role->id;
-
-        $o = new DeviceRoles();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $role->id );
-    }
-*/
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/*
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $role = $this->postDetail()->body;
-
-        $o = new DeviceRoles();
-        $result = $o->deleteList(
-            options: [[ 'id' => $role->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
-*/
-
 }

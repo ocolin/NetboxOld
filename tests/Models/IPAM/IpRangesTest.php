@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -41,15 +42,19 @@ final class IpRangesTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new IpRanges();
         $d = new Data();
-        $d->start_address = '192.168.77.0/24';
-        $d->end_address   = '192.168.77.254/24';
-        $d->description   = 'PHPUnit_IpRange-Post';
-        $result = $o->postDetail( data: $d );
+        $d->set('start_address', '192.168.77.0/24' );
+        $d->set( 'end_address', '192.168.77.254/24' );
+        $d->set( 'description', 'PHPUnit_IpRange-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -74,7 +79,7 @@ final class IpRangesTest extends testCore
     public function testGetList() : void
     {
         $o = new IpRanges();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -84,6 +89,8 @@ final class IpRangesTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -100,7 +107,7 @@ final class IpRangesTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new IpRanges();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -119,6 +126,7 @@ final class IpRangesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -126,10 +134,10 @@ final class IpRangesTest extends testCore
     {
         $o = new IpRanges();
         $d = new Data();
-        $d->start_address = '192.168.76.0/24';
-        $d->end_address   = '192.168.76.254/24';
-        $d->description   = 'PHPUnit_IpRange-Put';
-        $result = $o->putDetail(id: $id,  data: $d );
+        $d->set('start_address', '192.168.77.0/24' );
+        $d->set( 'end_address', '192.168.77.254/24' );
+        $d->set( 'description', 'PHPUnit_IpRange-Put' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -148,6 +156,7 @@ final class IpRangesTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -155,10 +164,8 @@ final class IpRangesTest extends testCore
     {
         $o = new IpRanges();
         $d = new Data();
-        $d->start_address = '192.168.76.0/24';
-        $d->end_address   = '192.168.76.254/24';
-        $d->description   = 'PHPUnit_IpRange-Patch';
-        $result = $o->patchDetail(id: $id,  data: $d );
+        $d->set( 'description', 'PHPUnit_IpRange-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -183,7 +190,7 @@ final class IpRangesTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new IpRanges();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -201,109 +208,4 @@ final class IpRangesTest extends testCore
     {
         sleep(1);
     }
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPostList() :void
-    {
-        $o = new IpRanges();
-        $result = $o->postList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $range )
-        {
-            $this->deleteDetail( id: $range->id );
-        }
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $range = $this->postDetail()->body;
-        $this->options->id = $range->id;
-
-        $o = new IpRanges();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $range->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $range = $this->postDetail()->body;
-        $this->options->id = $range->id;
-
-        $o = new IpRanges();
-        $result = $o->patchList( options: [ $this->options ] );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $range->id );
-    }
- */
-
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $range = $this->postDetail()->body;
-
-        $o = new IpRanges();
-        $result = $o->deleteList(
-            options: [[ 'id' => $range->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
 }

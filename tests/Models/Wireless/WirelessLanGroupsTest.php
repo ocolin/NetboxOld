@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Wireless;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -42,14 +43,18 @@ final class WirelessLanGroupsTest extends testCore
 
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new WirelessLanGroups();
         $d = new Data();
-        $d->name = 'PHPUnit_WirelessLanGroups-Post';
-        $d->slug = 'PHPUnit_WirelessLanGroups-Post';
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_WirelessLanGroups-Post' );
+        $d->set( 'slug', 'PHPUnit_WirelessLanGroups-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -74,7 +79,7 @@ final class WirelessLanGroupsTest extends testCore
     public function testGetList() : void
     {
         $o = new WirelessLanGroups();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -84,6 +89,8 @@ final class WirelessLanGroupsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
 
@@ -100,7 +107,7 @@ final class WirelessLanGroupsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new WirelessLanGroups();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -119,6 +126,7 @@ final class WirelessLanGroupsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -126,9 +134,9 @@ final class WirelessLanGroupsTest extends testCore
     {
         $o = new WirelessLanGroups();
         $d = new Data();
-        $d->name = 'PHPUnit_WirelessLanGroups-Post';
-        $d->slug = 'PHPUnit_WirelessLanGroups-Post';
-        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_WirelessLanGroups-Post' );
+        $d->set( 'slug', 'PHPUnit_WirelessLanGroups-Post' );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -147,6 +155,7 @@ final class WirelessLanGroupsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -154,8 +163,8 @@ final class WirelessLanGroupsTest extends testCore
     {
         $o = new WirelessLanGroups();
         $d = new Data();
-        $d->name = 'PHPUnit_WirelessLanGroups-Post';
-        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_WirelessLanGroups-Post' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -180,7 +189,7 @@ final class WirelessLanGroupsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new WirelessLanGroups();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

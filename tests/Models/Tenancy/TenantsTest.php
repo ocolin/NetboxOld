@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\Tenancy;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -42,13 +43,17 @@ final class TenantsTest extends testCore
 /* TEST POST DETAIL
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     * @throws Exception
+     */
     public function testPostDetail() : int
     {
         $o = new Tenants();
         $d = new Data();
-        $d->name = 'PHPUnit_Tenant-Post';
-        $d->slug = 'PHPUnit_Tenant-Post';
-        $result = $o->postDetail( data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Tenant-Post' );
+        $d->set( 'slug', 'PHPUnit_Tenant-Post' );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -73,7 +78,7 @@ final class TenantsTest extends testCore
     public function testGetList() : void
     {
         $o = new Tenants();
-        $result = $o->getList();
+        $result = $o->get();
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -83,6 +88,8 @@ final class TenantsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsObject( $result->body );
+        $this->assertObjectHasProperty( 'results', $result->body );
+        #@phpstan-ignore-next-line
         $this->assertIsArray( $result->body->results );
     }
  
@@ -99,7 +106,7 @@ final class TenantsTest extends testCore
     public function testGetDetail( int $id ) : void
     {
         $o = new Tenants();
-        $result = $o->getDetail( id: $id );
+        $result = $o->get( id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -119,6 +126,7 @@ final class TenantsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -126,9 +134,9 @@ final class TenantsTest extends testCore
     {
         $o = new Tenants();
         $d = new Data();
-        $d->name = 'PHPUnit_Tenant-Put';
-        $d->slug = 'PHPUnit_Tenant-Put';
-        $result = $o->putDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Tenant-Put' );
+        $d->set( 'slug', 'PHPUnit_Tenant-Put' );
+        $result = $o->put( data: $d, id: $id );
     
         
         $this->assertIsObject( $result );
@@ -148,6 +156,7 @@ final class TenantsTest extends testCore
 
     /**
      * @throws GuzzleException
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -155,9 +164,8 @@ final class TenantsTest extends testCore
     {
         $o = new Tenants();
         $d = new Data();
-        $d->name = 'PHPUnit_Tenant-Patch';
-        $d->slug = 'PHPUnit_Tenant-Patch';
-        $result = $o->patchDetail( id: $id, data: $d, params: [ 'exclude' => 'config_context'] );
+        $d->set( 'name', 'PHPUnit_Tenant-Patch' );
+        $result = $o->patch( data: $d, id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -182,7 +190,7 @@ final class TenantsTest extends testCore
     public function testDeleteDetail( int $id ) : void
     {
         $o = new Tenants();
-        $result = $o->deleteDetail( id: $id );
+        $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

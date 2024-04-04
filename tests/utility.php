@@ -59,11 +59,11 @@ function clearAll() : void
 function clearDevices() : void
 {
     $o = new DCIM\Devices();
-    $devices = $o->getList()->body;
+    $devices = $o->get()->body;
 
     foreach( $devices->results as $device )
     {
-        $o->deleteDetail( id: $device->id) ;
+        $o->delete( id: $device->id) ;
     }
 }
 
@@ -75,11 +75,11 @@ function clearDevices() : void
 function clearIpRanges() : void
 {
     $o = new IPAM\IpRanges();
-    $ranges = $o->getList()->body;
+    $ranges = $o->get()->body;
 
     foreach( $ranges->results as $range )
     {
-        $o->deleteDetail( id: $range->id) ;
+        $o->delete( id: $range->id) ;
     }
 }
 
@@ -91,11 +91,11 @@ function clearIpRanges() : void
 function clearIpAddresses() : void
 {
     $o = new IPAM\IpAddresses();
-    $ips = $o->getList()->body;
+    $ips = $o->get()->body;
 
     foreach( $ips->results as $ip )
     {
-        $o->deleteDetail( id: $ip->id) ;
+        $o->delete( id: $ip->id) ;
     }
 }
 
@@ -108,11 +108,11 @@ function clearIpAddresses() : void
 function clearVirtualMachines() : void
 {
     $o = new Virtualization\VirtualMachines();
-    $machs = $o->getList()->body;
+    $machs = $o->get()->body;
 
     foreach( $machs->results as $mach )
     {
-        $o->deleteDetail( id: $mach->id) ;
+        $o->delete( id: $mach->id) ;
     }
 }
 
@@ -125,11 +125,11 @@ function clearVirtualMachines() : void
 function clearClusterTypes() : void
 {
     $o = new Virtualization\ClusterTypes();
-    $types = $o->getList()->body;
+    $types = $o->get()->body;
 
     foreach( $types->results as $type )
     {
-        $o->deleteDetail( id: $type->id) ;
+        $o->delete( id: $type->id) ;
     }
 }
 
@@ -141,11 +141,11 @@ function clearClusterTypes() : void
 function clearClusterGroups() : void
 {
     $o = new Virtualization\ClusterGroups();
-    $groups = $o->getList()->body;
+    $groups = $o->get()->body;
 
     foreach( $groups->results as $group )
     {
-        $o->deleteDetail( id: $group->id) ;
+        $o->delete( id: $group->id) ;
     }
 }
 
@@ -158,11 +158,11 @@ function clearClusterGroups() : void
 function clearClusters() : void
 {
     $o = new Virtualization\Clusters();
-    $clusters = $o->getList()->body;
+    $clusters = $o->get()->body;
 
     foreach( $clusters->results as $cluster )
     {
-        $o->deleteDetail( id: $cluster->id) ;
+        $o->delete( id: $cluster->id) ;
     }
 }
 
@@ -175,11 +175,11 @@ function clearClusters() : void
 function clearRackRoles() : void
 {
     $o = new DCIM\RackRoles();
-    $roles = $o->getList()->body;
+    $roles = $o->get()->body;
 
     foreach( $roles->results as $role )
     {
-        $o->deleteDetail( id: $role->id);
+        $o->delete( id: $role->id);
     }
 }
 
@@ -191,12 +191,12 @@ function clearRackRoles() : void
 function clearRacks() : void
 {
     $o = new DCIM\Racks();
-    $rack = $o->getList()->body;
+    $rack = $o->get()->body;
 
     foreach( $rack->results as $rack )
     {
         $a = new DCIM\Racks();
-        $a->deleteDetail( id: $rack->id) ;
+        $a->delete( id: $rack->id) ;
     }
 }
 
@@ -208,11 +208,11 @@ function clearRacks() : void
 function clearVirtualChassis() : void
 {
     $o = new DCIM\VirtualChassis();
-    $chassis = $o->getList()->body;
+    $chassis = $o->get()->body;
 
     foreach( $chassis->results as $chas )
     {
-        $o->deleteDetail( id: $chas->id );
+        $o->delete( id: $chas->id );
     }
 }
 
@@ -224,11 +224,11 @@ function clearVirtualChassis() : void
 function clearDeviceRole() : void
 {
     $o = new DCIM\DeviceRoles();
-    $roles = $o->getList()->body;
+    $roles = $o->get()->body;
 
     foreach( $roles->results as $role )
     {
-        $o->deleteDetail( id: $role->id );
+        $o->delete( id: $role->id );
     }
 }
 
@@ -240,11 +240,11 @@ function clearDeviceRole() : void
 function clearLocation() : void
 {
     $o = new DCIM\Locations();
-    $locs = $o->getList()->body;
+    $locs = $o->get()->body;
 
     foreach( $locs->results as $loc )
     {
-        $o->deleteDetail( id: $loc->id );
+        $o->delete( id: $loc->id );
     }
 }
 
@@ -256,12 +256,12 @@ function clearLocation() : void
 function clearDeviceType() : void
 {
     $o = new DCIM\DeviceTypes();
-    $dts = $o->getList()->body;
+    $dts = $o->get()->body;
 
     foreach( $dts->results as $dt )
     {
         $a = new DCIM\DeviceTypes();
-        $test = $a->deleteDetail( id: $dt->id );
+        $test = $a->delete( id: $dt->id );
     }
 }
 
@@ -273,11 +273,11 @@ function clearDeviceType() : void
 function clearTenants() : void
 {
     $o = new Tenancy\Tenants();
-    $tenants = $o->getList()->body;
+    $tenants = $o->get()->body;
 
     foreach( $tenants->results as $tenant )
     {
-        $o->deleteDetail( id: $tenant->id );
+        $o->delete( id: $tenant->id );
     }
 }
 
@@ -289,11 +289,11 @@ function clearTenants() : void
 function clearManufacturers() : void
 {
     $o = new DCIM\Manufacturers();
-    $manfs = $o->getList()->body;
+    $manfs = $o->get()->body;
 
     foreach( $manfs->results as $manf )
     {
-       $test = $o->deleteDetail( id: $manf->id );
+       $test = $o->delete( id: $manf->id );
     }
 }
 
@@ -305,11 +305,11 @@ function clearManufacturers() : void
 function clearPlatforms() : void
 {
     $o = new DCIM\Platforms();
-    $platforms = $o->getList()->body;
+    $platforms = $o->get()->body;
 
     foreach( $platforms->results as $platform )
     {
-       $test = $o->deleteDetail( id: $platform->id );
+       $test = $o->delete( id: $platform->id );
     }
 }
 
@@ -321,12 +321,12 @@ function clearPlatforms() : void
 function clearSites() : void
 {
     $o = new DCIM\Sites();
-    $sites = $o->getList()->body;
+    $sites = $o->get()->body;
 
     foreach( $sites->results as $site )
     {
         $a = new DCIM\Sites();
-        $a->deleteDetail( id: $site->id );
+        $a->delete( id: $site->id );
     }
 }
 
@@ -338,11 +338,11 @@ function clearSites() : void
 function clearModuleBays() : void
 {
     $o = new DCIM\ModuleBays();
-    $bays = $o->getList()->body;
+    $bays = $o->get()->body;
 
     foreach( $bays->results as $bay )
     {
-        $o->deleteDetail( id: $bay->id );
+        $o->delete( id: $bay->id );
     }
 }
 
@@ -354,11 +354,11 @@ function clearModuleBays() : void
 function clearProviders() : void
 {
     $o = new Circuits\Providers();
-    $provs = $o->getList()->body;
+    $provs = $o->get()->body;
 
     foreach( $provs->results as $prov )
     {
-        $test = $o->deleteDetail( id: $prov->id );
+        $test = $o->delete( id: $prov->id );
     }
 }
 
@@ -370,11 +370,11 @@ function clearProviders() : void
 function clearProviderNetworks() : void
 {
     $o = new Circuits\ProviderNetworks();
-    $provs = $o->getList()->body;
+    $provs = $o->get()->body;
 
     foreach( $provs->results as $prov )
     {
-        $test = $o->deleteDetail( id: $prov->id );
+        $test = $o->delete( id: $prov->id );
     }
 }
 
@@ -386,11 +386,11 @@ function clearProviderNetworks() : void
 function clearCircuitType() : void
 {
     $o = new Circuits\CircuitTypes();
-    $cts = $o->getList()->body;
+    $cts = $o->get()->body;
 
     foreach( $cts->results as $ct )
     {
-        $o->deleteDetail( id: $ct->id );
+        $o->delete( id: $ct->id );
     }
 }
 
@@ -402,11 +402,11 @@ function clearCircuitType() : void
 function clearCircuit() : void
 {
     $o = new Circuits\Circuits();
-    $cts = $o->getList()->body;
+    $cts = $o->get()->body;
 
     foreach( $cts->results as $ct )
     {
-        $o->deleteDetail( id: $ct->id );
+        $o->delete( id: $ct->id );
     }
 }
 
@@ -418,11 +418,11 @@ function clearCircuit() : void
 function clearContactGroup() : void
 {
     $o = new Tenancy\ContactGroups();
-    $groups = $o->getList()->body;
+    $groups = $o->get()->body;
 
     foreach( $groups->results as $group )
     {
-        $o->deleteDetail( id: $group->id );
+        $o->delete( id: $group->id );
     }
 }
 
@@ -434,11 +434,11 @@ function clearContactGroup() : void
 function clearContact() : void
 {
     $o = new Tenancy\Contacts();
-    $contacts = $o->getList()->body;
+    $contacts = $o->get()->body;
 
     foreach( $contacts->results as $contact )
     {
-        $o->deleteDetail( id: $contact->id );
+        $o->delete( id: $contact->id );
     }
 }
 
@@ -450,11 +450,11 @@ function clearContact() : void
 function clearCotactRole() : void
 {
     $o = new Tenancy\ContactRoles();
-    $roles = $o->getList()->body;
+    $roles = $o->get()->body;
 
     foreach( $roles->results as $role )
     {
-        $o->deleteDetail( id: $role->id );
+        $o->delete( id: $role->id );
     }
 }
 
@@ -466,11 +466,11 @@ function clearCotactRole() : void
 function clearCustomLinks() : void
 {
     $o = new Extras\CustomLinks();
-    $links = $o->getList()->body;
+    $links = $o->get()->body;
 
     foreach( $links->results as $link )
     {
-        $o->deleteDetail( id: $link->id );
+        $o->delete( id: $link->id );
     }
 }
 
@@ -482,11 +482,11 @@ function clearCustomLinks() : void
 function clearExportTemplates() : void
 {
     $o = new Extras\ExportTemplates();
-    $temps = $o->getList()->body;
+    $temps = $o->get()->body;
 
     foreach( $temps->results as $temp )
     {
-        $o->deleteDetail( id: $temp->id );
+        $o->delete( id: $temp->id );
     }
 }
 
@@ -498,11 +498,11 @@ function clearExportTemplates() : void
 function clearTags() : void
 {
     $o = new Extras\Tags();
-    $tags = $o->getList()->body;
+    $tags = $o->get()->body;
 
     foreach( $tags->results as $tag )
     {
-        $o->deleteDetail( id: $tag->id );
+        $o->delete( id: $tag->id );
     }
 }
 
@@ -515,11 +515,11 @@ function clearTags() : void
 function clearWirelessLanGroups() : void
 {
     $o = new Wireless\WirelessLanGroups();
-    $groups = $o->getList()->body;
+    $groups = $o->get()->body;
 
     foreach( $groups->results as $group )
     {
-        $o->deleteDetail( id: $group->id );
+        $o->delete( id: $group->id );
     }
 }
 
@@ -529,11 +529,11 @@ function clearWirelessLanGroups() : void
 function clearRegions() : void
 {
     $o = new DCIM\Regions();
-    $regions = $o->getList()->body;
+    $regions = $o->get()->body;
 
     foreach( $regions->results as $region )
     {
-        $o->deleteDetail( id: $region->id );
+        $o->delete( id: $region->id );
     }
 }
 
@@ -543,11 +543,11 @@ function clearRegions() : void
 function clearSiteGroups() : void
 {
     $o = new DCIM\SiteGroups();
-    $groups = $o->getList()->body;
+    $groups = $o->get()->body;
 
     foreach( $groups->results as $group )
     {
-        $o->deleteDetail( id: $group->id );
+        $o->delete( id: $group->id );
     }
 }
 
@@ -558,11 +558,11 @@ function clearSiteGroups() : void
 function clearPowerPanels() : void
 {
     $o = new DCIM\PowerPanels();
-    $groups = $o->getList()->body;
+    $groups = $o->get()->body;
 
     foreach( $groups->results as $group )
     {
-        $o->deleteDetail( id: $group->id );
+        $o->delete( id: $group->id );
     }
 }
 
@@ -573,11 +573,11 @@ function clearPowerPanels() : void
 function clearPowerFeed() : void
 {
     $o = new DCIM\PowerFeeds();
-    $groups = $o->getList()->body;
+    $groups = $o->get()->body;
 
     foreach( $groups->results as $group )
     {
-        $o->deleteDetail( id: $group->id );
+        $o->delete( id: $group->id );
     }
 }
 
@@ -588,11 +588,11 @@ function clearPowerFeed() : void
 function clearRir() : void
 {
     $o = new IPAM\Aggregates();
-    $a = $o->getList()->body;
+    $a = $o->get()->body;
 
     foreach( $a->results as $a )
     {
-        $o->deleteDetail( id: $a->id );
+        $o->delete( id: $a->id );
     }
 }
 
@@ -603,10 +603,10 @@ function clearRir() : void
 function clearContactRoles() : void
 {
     $o = new Tenancy\ContactRoles();
-    $a = $o->getList()->body;
+    $a = $o->get()->body;
 
     foreach( $a->results as $a )
     {
-        $o->deleteDetail( id: $a->id );
+        $o->delete( id: $a->id );
     }
 }

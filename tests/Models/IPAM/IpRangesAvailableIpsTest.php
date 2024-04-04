@@ -17,11 +17,14 @@ final class IpRangesAvailableIpsTest extends testCore
 
 /* TEST GET DETAIL
 ---------------------------------------------------------------------------- */
- 
+
+    /**
+     * @throws GuzzleException
+     */
     public function testGetDetail() : void
     {
         $o = new IpRangesAvailableIps();
-        $result = $o->getDetail( id: self::$range->id );
+        $result = $o->get( id: self::$range->id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
@@ -37,7 +40,10 @@ final class IpRangesAvailableIpsTest extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
- 
+
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$range = self::createIpRange();
