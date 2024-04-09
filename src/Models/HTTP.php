@@ -201,7 +201,7 @@ class HTTP
      * Delete an existing object.
      *
      * @param string $uri
-     * @param array<string, object> $body
+     * @param array<object> $body
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException

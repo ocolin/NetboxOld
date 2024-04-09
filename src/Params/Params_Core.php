@@ -15,7 +15,7 @@ class Params_Core
 /* GETTER
 ----------------------------------------------------------------------------- */
 
-    public function __get( string $prop ) : mixed {
+    public function get( string $prop ) : mixed {
         if( property_exists( $this, $prop )) {
             $rp = new ReflectionProperty( $this, $prop );
             if( !$rp->isPrivate()) {
@@ -36,11 +36,11 @@ class Params_Core
      * @param string|int|array<string> $value value to assign to prop
      */
 
-    public function __set(string $param, string|int|float|array $value ) : void
+    public function set(string $param, string|int|float|array $value ) : void
     {
         if( property_exists( $this, $param )) {
             $rp = new ReflectionProperty( $this, $param );
-            if (!$rp->isPrivate()) {
+            if ( !$rp->isPrivate() ) {
                 $this->$param = $value;
             }
         }
@@ -66,5 +66,18 @@ class Params_Core
         }
 
         return $output;
+    }
+
+
+
+/* COLUMNS TO VALIDATE
+------------------------------------------------------------------------ */
+
+    /**
+     * @return array<string, string>
+     */
+    public static function validate() : array
+    {
+        return [];
     }
 }

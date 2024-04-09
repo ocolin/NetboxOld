@@ -5,8 +5,9 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Virtualization;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\ModelsInterface;
 
-class Interfaces extends Virtualization_Core
+class Interfaces extends Virtualization_Core implements ModelsInterface
 {
 
 /*

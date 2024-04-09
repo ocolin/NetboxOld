@@ -5,8 +5,9 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Users;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\ModelsInterface;
 
-class Config extends Users_Core
+class Config extends Users_Core implements ModelsInterface
 {
 
 /*

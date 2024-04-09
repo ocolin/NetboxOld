@@ -12,14 +12,15 @@ use stdClass;
 class Data_Core
 {
 
-
 /* RENDER DATA INTO AN OBJECT FOR HTTP
 ----------------------------------------------------------------------------- */
 
     /**
+     * @param bool $required
+     * @return object
      * @throws Exception
      */
-    public function render(bool $required = false ) : object|null
+    public function render( bool $required = false ) : object
     {
         $reflect = new ReflectionClass( $this );
         $props   = $reflect->getProperties( ReflectionProperty::IS_PROTECTED );
@@ -32,7 +33,7 @@ class Data_Core
                 $obj->$name = $this->$name;
             }
             
-            elseif( $required === true AND in_array($name, static::required() )) {
+            elseif( $required === true AND in_array( $name, static::required() )) {
                 throw new Exception("Property '$name' is required");
             }
         }
@@ -66,7 +67,7 @@ class Data_Core
 /* GETTER
 ----------------------------------------------------------------------------- */
 
-    public function __get( string $property ) : mixed
+    public function get( string $property ) : mixed
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );

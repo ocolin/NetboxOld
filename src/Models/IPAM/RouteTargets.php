@@ -5,8 +5,9 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\ModelsInterface;
 
-class RouteTargets extends IPAM_Core
+class RouteTargets extends IPAM_Core implements ModelsInterface
 {
     public function __construct( HTTP $http = null )
     {

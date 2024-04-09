@@ -69,7 +69,7 @@ abstract class Models_Core
     /**
      * Create a single Platform.
      *
-     * @param DataInterface|array<DataInterface> $data optional data to be sent.
+     * @param DataInterface $data  data to be sent.
      * @param array<string, string> $headers HTML request headers
      * @param array<string, string> $params URL Parameters
      * @return Response
@@ -77,25 +77,15 @@ abstract class Models_Core
      */
 
     public function post(
-        DataInterface|array $data,
-         array              $headers = [],
-         array              $params  = [],
+        DataInterface $data,
+         array        $headers = [],
+         array        $params  = [],
     ) : Response
     {
-        if( gettype($data) == 'array' ) {
-            $body = [];
-            foreach( $data as $part )
-            {
-                $body[] = $part->render( required: true );
-            }
-        }
-        else {
-            $body = $data->render( required: true );
-        }
 
         return $this->http->post(
                 uri: $this->uri,
-               body: $body,
+               body: $data->render( required: true ),
              params: $params,
             headers: $headers
         );
@@ -108,7 +98,7 @@ abstract class Models_Core
     /**
      * Update Site
      *
-     * @param DataInterface|array<DataInterface> $data Optional data to send.
+     * @param DataInterface $data data to send.
      * @param int|null $id Numerical ID of Site to update.
      * @param array<string, string> $headers HTML request headers
      * @param array<string, string> $params URL Parameters
@@ -117,7 +107,7 @@ abstract class Models_Core
      */
 
     public function put(
-        DataInterface|array $data,
+        DataInterface $data,
         int                 $id = null,
         array               $headers = [],
         array               $params  = []
@@ -125,20 +115,9 @@ abstract class Models_Core
     {
         if( $id !== null ) { $this->uri .= "{$id}/"; }
 
-        if( gettype($data) == 'array' ) {
-            $body = [];
-            foreach( $data as $part )
-            {
-                $body[] = $part->render();
-            }
-        }
-        else {
-            $body = $data->render();
-        }
-
         return $this->http->put(
                 uri: $this->uri,
-               body: $body,
+               body: $data->render(),
              params: $params,
             headers: $headers
         );
@@ -152,7 +131,7 @@ abstract class Models_Core
      * Update Site value(s).
      *
      * @param int|null $id Numerical ID of Site to update.
-     * @param DataInterface|array<DataInterface> $data Optional data to send.
+     * @param DataInterface $data  data to send.
      * @param array<string, string> $headers HTML request headers
      * @param array<string, string> $params URL Parameters
      * @return Response
@@ -160,7 +139,7 @@ abstract class Models_Core
      */
 
     public function patch(
-        DataInterface|array $data,
+        DataInterface $data,
         int                 $id = null,
         array               $headers = [],
         array               $params  = []
@@ -168,20 +147,9 @@ abstract class Models_Core
     {
         if( $id !== null ) { $this->uri .= "{$id}/"; }
 
-        if( gettype($data) == 'array' ) {
-            $body = [];
-            foreach( $data as $part )
-            {
-                $body[] = $part->render();
-            }
-        }
-        else {
-            $body = $data->render();
-        }
-
         return $this->http->patch(
                 uri: $this->uri,
-               body: $body,
+               body: $data->render(),
              params: $params,
             headers: $headers
         );
@@ -219,62 +187,12 @@ abstract class Models_Core
             }
         }
 
-        return $this->http->delete( uri: $this->uri, body: $body, headers: $headers );
-    }
-
-
-
-/* DELETE METHOD LIST
----------------------------------------------------------------------------- */
-
-    /**
-     * Delete a list of objects.
-     *
-     * @param array<string, string> $options List of object to delete. Each object must have an ID.
-     * @param array<string, string> $headers HTML request headers
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function deleteList( 
-        array $options, 
-        array $headers = [] 
-    ) : Response
-    {
-        return $this->http->delete( 
-                uri: $this->uri, 
-               body: $options, 
-            headers: $headers 
-        );
-    }
-
-
-
-/* PATCH METHOD DETAIL
----------------------------------------------------------------------------- */
-
-    /**
-     * Update a list of objects.
-     *
-     * @param array<string, string> $options Array of Objects to update.
-     * @param array<string, string> $headers HTML request headers
-     * @return Response
-     * @throws GuzzleException
-     */
-
-    public function patchList(
-        array $options = [],
-        array $headers = []
-    ) : Response
-    {
-        return $this->http->patch(
-                uri: $this->uri,
-               body: $options,
+        return $this->http->delete(
+            uri: $this->uri,
+            body: $body,
             headers: $headers
         );
     }
-
-
 
 
 
@@ -284,6 +202,7 @@ abstract class Models_Core
     /**
      * Get all Objects
      *
+     * @param int|null $id
      * @param ParamsInterface|null $params
      * @param array<string, string> $headers HTML request headers
      * @return Response
@@ -307,5 +226,4 @@ abstract class Models_Core
             headers: $headers
         );
     }
-
 }

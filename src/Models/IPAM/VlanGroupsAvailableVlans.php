@@ -5,11 +5,12 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\ModelsInterface;
 use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
-class VlanGroupsAvailableVlans extends IPAM_Core
+class VlanGroupsAvailableVlans extends IPAM_Core implements ModelsInterface
 {
     public function __construct( HTTP $http = null )
     {

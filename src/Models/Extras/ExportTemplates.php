@@ -5,8 +5,9 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models\Extras;
 
 use Cruzio\lib\Netbox\Models\HTTP;
+use Cruzio\lib\Netbox\Models\ModelsInterface;
 
-class ExportTemplates extends Extras_Core
+class ExportTemplates extends Extras_Core implements ModelsInterface
 {    
     public function __construct( HTTP $http = null )
     {

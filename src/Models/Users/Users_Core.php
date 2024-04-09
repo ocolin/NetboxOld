@@ -6,8 +6,9 @@ namespace Cruzio\lib\Netbox\Models\Users;
 
 use Cruzio\lib\Netbox\Models\HTTP;
 use Cruzio\lib\Netbox\Models\Models_Core;
+use Cruzio\lib\Netbox\Models\ModelsInterface;
 
-abstract class Users_Core extends Models_Core
+abstract class Users_Core extends Models_Core implements ModelsInterface
 {
     protected string $uri = 'users/';
 
