@@ -10,9 +10,9 @@ use Cruzio\lib\Netbox\Params\Circuits\CircuitTerminationsPaths as Params;
 
 class CircuitTerminationsPaths extends Controllers_Core
 {
-    public function __construct()
+    public function __construct( int $id )
     {
-        $this->model  = new Model();
+        $this->model  = new Model( id: $id );
         $this->params = new Params();
     }
 
