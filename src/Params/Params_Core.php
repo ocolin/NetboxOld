@@ -33,10 +33,10 @@ class Params_Core
 
     /**
      * @param string $param name of class property
-     * @param string|int|array<string> $value value to assign to prop
+     * @param string|int|float|array<string|int|float> $value value to assign to prop
      */
 
-    public function set(string $param, string|int|float|array $value ) : void
+    public function set( string $param, string|int|float|array $value ) : void
     {
         if( property_exists( $this, $param )) {
             $rp = new ReflectionProperty( $this, $param );

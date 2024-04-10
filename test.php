@@ -9,16 +9,21 @@ use GuzzleHttp\Exception\GuzzleException;
 
 require_once __DIR__ . '/vendor/autoload.php';
 
-$test = new \Cruzio\lib\Netbox\Models\DCIM\Sites();
-$param = new \Cruzio\lib\Netbox\Params\DCIM\Sites();
-$param->description = ['charry'];
+$test = new \Cruzio\lib\Netbox\Controllers\DCIM\Sites();
+//$param = new \Cruzio\lib\Netbox\Params\DCIM\Sites();
+//$param->description = ['charry'];
 
+$output = $test->post( data: [ 'name' => 'SiteB', 'slug' => 'siteb' ] );
+print_r( $output );
+
+/*
 try {
-    $output = $test->get(params: $param);
-    print_r( $output->body );
+    $output = $test->get();
+    print_r( $output );
 } catch (GuzzleException $e) {
     echo "Nah gone dew-it...";
 }
+*/
 //$data = new Data\DCIM\Cables();
 
 //use \Cruzio\lib\Netbox\Data\DCIM\Cables;

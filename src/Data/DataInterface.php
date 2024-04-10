@@ -18,5 +18,9 @@ interface DataInterface
      * @return array<string, string>
      */
     
-    public static function validate() : array ;
+    public static function validate() : array;
+
+    public function set( string $property, string|int|float $value ) : void;
+
+    public function get( string $property ) : mixed;
 }

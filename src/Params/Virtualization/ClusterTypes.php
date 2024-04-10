@@ -7,7 +7,7 @@ namespace Cruzio\lib\Netbox\Params\Virtualization;
 use Cruzio\lib\Netbox\Params\Params_Core;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 
-class ClusterTypess extends Params_Core implements ParamsInterface
+class ClusterTypes extends Params_Core implements ParamsInterface
 {
     /**
      * @var int|array<int> $created
