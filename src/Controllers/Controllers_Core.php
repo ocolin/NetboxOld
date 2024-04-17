@@ -57,6 +57,15 @@ class Controllers_Core
     }
 
 
+/* OPTIONS CALL
+----------------------------------------------------------------------------- */
+
+    public function options() : object
+    {
+        return $this->model->options()->body;
+    }
+
+
 
 /* GET CALL
 ----------------------------------------------------------------------------- */

@@ -117,7 +117,7 @@ abstract class Models_Core
 
         return $this->http->put(
                 uri: $this->uri,
-               body: $data->render(),
+               body: $data->render( required: true ),
              params: $params,
             headers: $headers
         );

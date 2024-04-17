@@ -199,7 +199,6 @@ final class FhrpGroupAssignmentsTest extends testCore
     #[Depends('testPostDetail')]
     public function testDeleteDetail( int $id ) : void
     {
-        $o = new FhrpGroupAssignments();
         $result = $o->delete( id: $id );
 
         $this->assertIsObject( $result );

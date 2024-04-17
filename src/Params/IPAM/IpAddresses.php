@@ -9,6 +9,9 @@ use \Cruzio\lib\Netbox\Params\ParamsInterface;
 
 class IpAddresses extends Params_Core implements ParamsInterface
 {
+    /**
+     * @var string|array<string> $address
+     */
     protected string|array $address;
     protected bool $assigned;
     protected bool $assigned_to_interface;
@@ -204,22 +207,22 @@ class IpAddresses extends Params_Core implements ParamsInterface
     protected int|array $id__n;
 
     /**
-     * @var string|array $interface
+     * @var string|array<string> $interface
      */
     protected string|array $interface;
 
     /**
-     * @var string|array $interface__n
+     * @var string|array<string> $interface__n
      */
     protected string|array $interface__n;
 
     /**
-     * @var string|array $interface_id
+     * @var string|array<string> $interface_id
      */
     protected string|array $interface_id;
 
     /**
-     * @var string|array $interface_id__n
+     * @var string|array<string> $interface_id__n
      */
     protected string|array $interface_id__n;
 
@@ -353,6 +356,10 @@ class IpAddresses extends Params_Core implements ParamsInterface
      * @var string|array<string> $virtual_machine
      */
     protected string|array $virtual_machine;
+
+    /**
+     * @var int|array<int> $virtual_machine_id
+     */
     protected int|array $virtual_machine_id;
 
     /**

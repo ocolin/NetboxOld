@@ -208,6 +208,9 @@ final class ConsolePortsTest extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site     = self::createSite();

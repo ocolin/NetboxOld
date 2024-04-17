@@ -63,7 +63,7 @@ final class WirelessLinksTest extends testCore
         $d->set( 'interface_a', self::$interfaceA->id );
         $d->set( 'interface_b', self::$interfaceB->id );
         $d->set( 'ssid', 'PHPUnit_WLinks-Post' );
-        $result = $o->post( data: $d, params: [ 'exclude' => 'config_context'] );
+        $result = $o->post( data: $d );
 
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

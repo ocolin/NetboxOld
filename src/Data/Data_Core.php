@@ -47,7 +47,11 @@ class Data_Core
     /*
     ----------------------------------------------------------------------------- */
 
-    public function set( string $property, string|int|float $value ) : void
+    /**
+     * @param string|int|float|array<int> $value
+     * @throws Exception
+     */
+    public function set( string $property, string|int|float|array $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );

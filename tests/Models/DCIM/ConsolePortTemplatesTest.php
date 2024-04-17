@@ -16,7 +16,7 @@ require_once __DIR__ . '/../testCore.php';
 final class ConsolePortTemplatesTest extends testCore
 {
     public static object $devtype;
-    public static object $manf;
+    public static object $manufacturer;
 
 
 
@@ -211,8 +211,8 @@ final class ConsolePortTemplatesTest extends testCore
      */
     public static function setUpBeforeClass() : void
     {    
-        self::$manf = self::createManufacturer();
-        self::$devtype = self::createDeviceType( manf: self::$manf );
+        self::$manufacturer = self::createManufacturer();
+        self::$devtype = self::createDeviceType( manf: self::$manufacturer );
     }
 
     
@@ -226,7 +226,7 @@ final class ConsolePortTemplatesTest extends testCore
     public static function tearDownAfterClass() : void
     {
         self::destroyDeviceType( self::$devtype );
-        self::destroyManufacturer( self::$manf );
+        self::destroyManufacturer( self::$manufacturer );
         sleep(1);
     }
 }

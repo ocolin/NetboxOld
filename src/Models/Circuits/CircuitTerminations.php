@@ -19,5 +19,4 @@ class CircuitTerminations extends Circuits_Core  implements ModelsInterface
         $this->uri .= 'circuit-terminations/';
     }
 
-
 }

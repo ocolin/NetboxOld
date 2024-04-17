@@ -37,31 +37,6 @@ final class PrefixesAvailablePrefixesTest extends testCore
     } 
 
 
-
-/* TEST POST DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPostDetail() : void
-    {
-        $o = new PrefixesAvailablePrefixes();
-        $result = $this->postDetail();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertObjectHasAttribute( 'id', $result->body );
-
-        //CLEAN UP
-        $test = $this->deleteDetail( $result->body->id );
-    }
- */
-
-
 /* SETUP
 ---------------------------------------------------------------------------- */
 

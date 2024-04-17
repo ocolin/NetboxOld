@@ -231,10 +231,9 @@ final class VirtualMachinesTest extends testCore
     public static function tearDownAfterClass() : void
     {
         self::destroyCluster( cluster: self::$cluster );
-        self::destroySite( site: self::$site );
         self::destroyClusterType( type: self::$type );
         self::destroyClusterGroup( group: self::$group );
-        sleep(1);
+        self::destroySite( site: self::$site );
     }
 
 }

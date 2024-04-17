@@ -353,6 +353,9 @@ final class PowerOutletsTest extends testCore
 /* SETUP AND CLOSING FUNCTIONS
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function setUpBeforeClass() : void
     {
         self::$site     = self::createSite();
@@ -369,6 +372,9 @@ final class PowerOutletsTest extends testCore
 /*
 ---------------------------------------------------------------------------- */
 
+    /**
+     * @throws GuzzleException
+     */
     public static function tearDownAfterClass() : void
     {
         self::destroyDevice( device: self::$device );

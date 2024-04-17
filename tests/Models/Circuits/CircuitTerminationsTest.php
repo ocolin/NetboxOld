@@ -71,7 +71,52 @@ final class CircuitTerminationsTest extends testCore
 
         return $result->body->id;
     }
- 
+
+
+
+/* TEST GET DETAIL
+---------------------------------------------------------------------------- */
+
+    /**
+     * @throws GuzzleException
+     */
+    #[Depends('testPostDetail')]
+    public function testGetDetail( int $id ) : void
+    {
+
+        $o = new CircuitTerminations();
+        $result = $o->get( id: $id );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 200, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+    }
+
+
+
+/* TEST GET LIST
+---------------------------------------------------------------------------- */
+
+        public function testGetList() : void
+        {
+            $o = new CircuitTerminations();
+            $result = $o->get();
+
+            $this->assertIsObject( $result );
+            $this->assertObjectHasProperty( 'status',  $result );
+            $this->assertObjectHasProperty( 'headers', $result );
+            $this->assertObjectHasProperty( 'body',    $result );
+            $this->assertIsInt( $result->status );
+            $this->assertEquals( 200, $result->status );
+            $this->assertIsArray( $result->headers );
+            $this->assertIsObject( $result->body );
+            $this->assertIsArray( $result->body->results );
+        }
 
 
 /* TEST DELETE DETAIL
@@ -112,7 +157,8 @@ final class CircuitTerminationsTest extends testCore
             circuit_type: self::$circuit_type
         );
     }
-    
+
+
 /* TEAR DOWN
 ---------------------------------------------------------------------------- */
 
@@ -127,260 +173,4 @@ final class CircuitTerminationsTest extends testCore
         self::destroySite( site: self::$site );
         sleep(1);
     }
-    
-
-/* TEST GET DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testGetDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTerminations();
-        $result = $o->getDetail( id: $term->id );   
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
-  */
-
-
-/* TEST GET LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testGetList() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTerminations();
-        $result = $o->getList();
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-        $this->assertIsArray( $result->body->results );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
- */
-
-
-/* TEST POST LIST
----------------------------------------------------------------------------- */
-/* 
-    // GETTING: A circuit termination must attach to either a site or a provider network.
-    public function testPostList() :void
-    {
-        $o = new CircuitTerminations();
-        $result = $o->postList( options: [ $this->options ] );
-        print_r( $result->body);
-
-        $this->assertIsArray( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 201, $result->status );
-        $this->assertIsArray( $result['headers'] );
-        $this->assertIsArray( $result->body );
-
-        //CLEAN UP
-        foreach( $result->body AS $term )
-        {
-            $this->deleteDetail( id: $term->id );
-        }
-    }
- */
-
-
-/* TEST PUT DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPutDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTerminations();
-        $result = $o->putDetail( 
-                   id: $term->id, 
-            term_side: 'A',
-              circuit: self::$circuit->id,   
-              options: $this->options
-        );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
- */
-
-
-/* TEST PUT LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPutList() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-        $this->options->id = $term->id;
-
-        $o = new CircuitTerminations();
-        $result = $o->putList( options: [ $this->options ] );
-        
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
- */
-
-
-/* TEST PATCH DETAIL
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchDetail() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTerminations();
-        $result = $o->patchDetail(
-                   id: $term->id, 
-            term_side: 'A',
-              circuit: self::$circuit->id,
-              options: $this->options
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsObject( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
- */
-
-
-/* TEST PATCH LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testPatchList() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTerminations();
-        $result = $o->patchList(
-            options: [
-                [ 
-                           'id' => $term->id,
-                    'term_side' => 'A',
-                      'circuit' => self::$circuit->id,
-                     'options'  => $this->options
-                ]
-            ]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 200, $result->status );
-        $this->assertIsArray( $result->headers );
-        $this->assertIsArray( $result->body );
-
-        // CLEAN UP
-        $this->deleteDetail( $term->id );
-    }
- */
-
-
-/* TEST DELETE LIST
----------------------------------------------------------------------------- */
-/* 
-    public function testDeleteList() : void
-    {
-        // SETUP
-        $term = $this->postDetail()->body;
-
-        $o = new CircuitTerminations();
-        $result = $o->deleteList(
-            options: [[ 'id' => $term->id ]]
-        );
-
-        $this->assertIsObject( $result );
-        $this->assertObjectHasProperty( 'status',  $result );
-        $this->assertObjectHasProperty( 'headers', $result );
-        $this->assertObjectHasProperty( 'body',    $result );
-        $this->assertIsInt( $result->status );
-        $this->assertEquals( 204, $result->status );
-    }
- */
-
-
-/* CREATE A RACK ROLES
----------------------------------------------------------------------------- */
-/* 
-    public function postDetail() : Response
-    {
-        $o = new CircuitTerminations();
-
-        return $o->postDetail( 
-            term_side: 'A',
-              circuit: self::$circuit->id,
-              options: $this->options
-        );
-    }
- */
-
-
-/* DELETE A RACK ROLES
----------------------------------------------------------------------------- */
-/* 
-    public function deleteDetail( int $id )
-    {
-        $o = new CircuitTerminations();
-
-        return $o->deleteDetail( id: $id  );
-    }
- */
 }
