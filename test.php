@@ -6,6 +6,8 @@ declare( strict_types = 1 );
 require_once __DIR__ . '/Netbox.php';
 use Cruzio\lib\Netbox\Netbox;
 
+$output = Netbox::get( module: 'DCIM\Sites' );
+/*
 $output = Netbox::create(
         module: 'DCIM\Sites',
         data: [
@@ -13,6 +15,7 @@ $output = Netbox::create(
                 'slug' => 'testSlug'
         ]
 );
+*/
 
 print_r( $output );
 

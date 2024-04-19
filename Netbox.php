@@ -232,7 +232,7 @@ class Netbox
 
     public static function get(
         string $module,
-        ParamsInterface|array $data,
+        ParamsInterface|array|null $data = null,
         ?int $id = null
     ) : object
     {
