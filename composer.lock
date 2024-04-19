@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "40d9140b737caf3deb4241d30bc2aaa4",
+    "content-hash": "8386d11e845d202612339482eb9c690f",
     "packages": [
         {
             "name": "guzzlehttp/guzzle",
@@ -434,7 +434,7 @@
         },
         {
             "name": "ocolin/env",
-            "version": "dev-main",
+            "version": "1.0.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ocolin/env.git",
@@ -464,7 +464,7 @@
             ],
             "description": "Very simple tool to load env variables from file",
             "support": {
-                "source": "https://github.com/ocolin/env/tree/main",
+                "source": "https://github.com/ocolin/env/tree/1.0",
                 "issues": "https://github.com/ocolin/env/issues"
             },
             "time": "2024-04-19T18:05:21+00:00"
