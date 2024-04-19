@@ -2,9 +2,16 @@
     "name": "cruzio/netbox",
     "description": "API to interface with Netbox server",
     "type": "library",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/ocolin/env"
+        }
+    ],
     "require": {
         "guzzlehttp/guzzle": "^7.8",
-        "monolog/monolog": "^3.5"
+        "monolog/monolog": "^3.5",
+        "ocolin/env": "dev-main"
     },
     "require-dev": {
         "phpunit/phpunit": "^11.0",
@@ -13,7 +20,6 @@
     "autoload": {
         "psr-4": {
             "Cruzio\\lib\\Netbox\\": "src/",
-            "Cruzio\\lib\\Env\\": "../Env/",
             "Tests\\": "tests/"
         }
     },

@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Query;
 use \Psr\Http\Message\ResponseInterface;
-use Cruzio\lib\Env\EnvLoad;
+use \Ocolin\Env\Env;
 
 class HTTP
 {
@@ -29,12 +30,13 @@ class HTTP
 /*
 ---------------------------------------------------------------------------- */
 
-/**
- * @param ?Client  $client
- * @param ?string  $base_uri
- * @param boolean $verify
- * @param boolean $errors
-*/
+    /**
+     * @param ?Client $client
+     * @param ?string $base_uri
+     * @param boolean $verify
+     * @param boolean $errors
+     * @throws Exception
+     */
 
     public function __construct(
         Client $client   = null,
@@ -43,7 +45,7 @@ class HTTP
           bool $errors   = false
     )
     {
-        EnvLoad::loadEnv( file_path: __DIR__ . '/../.env', silent: true, append: true );
+        Env::loadEnv( path: __DIR__ . '/../.env', silent: true, append: true );
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
         $this->headers  = self::default_Headers();
