@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait Duplex
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_Duplex( string $input ) : true|string

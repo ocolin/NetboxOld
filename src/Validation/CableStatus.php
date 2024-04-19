@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait CableStatus
 {
 
-/* 
+/*  VALIDATE CABLE STATUS
 ----------------------------------------------------------------------------- */
 
     public static function validate_CableStatus( string $input ) : true|string

@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait TerminalSide
 {
     
-/* 
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_TerminalSide( string $input ) : true|string

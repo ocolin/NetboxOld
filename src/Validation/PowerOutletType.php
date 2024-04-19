@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait PowerOutletType
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_PowerOutletType( string $input ) : true|string

@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait VMStatus
 {
 
-/* 
+/* VALIDATE VM STATUS
 ----------------------------------------------------------------------------- */
 
     public static function validate_VMStatus( string $input ) : true|string

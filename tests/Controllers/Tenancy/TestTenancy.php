@@ -128,13 +128,13 @@ abstract class TestTenancy extends TestCase
     public static function removeContactRole( int $id ) : void
     {
         $o = new Controllers\Tenancy\ContactRoles();
-        $o->delete( id: $id );
+        $test = $o->delete( id: $id );
     }
 
 
 
-    /* TENANCY
-    ---------------------------------------------------------------------------- */
+/* TENANCY
+---------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -155,6 +155,10 @@ abstract class TestTenancy extends TestCase
 
         return $o->create( data: $d );
     }
+
+
+/* TENANCY
+---------------------------------------------------------------------------- */
 
     public static function removeContactAssignment( int $id ) : void
     {

@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait RfRole
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_RfRole( string $input ) : true|string

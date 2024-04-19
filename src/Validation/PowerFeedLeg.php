@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait PowerFeedLeg
 {
     
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_PowerFeedLeg( string $input ) : true|string

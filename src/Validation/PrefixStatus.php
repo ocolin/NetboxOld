@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait PrefixStatus
 {
     
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_PrefixStatus( string $input ) : true|string

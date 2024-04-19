@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait PowerPortType
 {
 
-/* 
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_PowerPortType( string $input ) : true|string

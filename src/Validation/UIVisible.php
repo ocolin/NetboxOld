@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait UIVisible
 {
 
-/*
+/* VALIDATE UIVISIBLE
 ----------------------------------------------------------------------------- */
 
     public static function validate_UIVisible( string $input ) : true|string

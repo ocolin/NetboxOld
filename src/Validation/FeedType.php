@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait FeedType
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_FeedType( string $input ) : true|string

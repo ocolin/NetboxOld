@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait DeviceFace
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_DeviceFace( string $input ) : true|string

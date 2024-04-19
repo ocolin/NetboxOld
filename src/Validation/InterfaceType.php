@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait InterfaceType
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_InterfaceType( string $input ) : true|string

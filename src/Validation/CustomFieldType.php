@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait CustomFieldType
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_CustomFieldType( string $input ) : true|string

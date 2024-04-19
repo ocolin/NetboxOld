@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ConsoleSpeed
 {
 
-/*
+/* VALIDATE CONSOLE SPEED
 ----------------------------------------------------------------------------- */
 
     public static function validate_ConsoleSpeed( int $input ) : true|string

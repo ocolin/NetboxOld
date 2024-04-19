@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait WirelessAuthCipher
 {
     
-/* 
+/* VALIDATE WIRELESS AUTH TYPE
 ----------------------------------------------------------------------------- */
 
     public static function validate_WirelessAuthCipher( string $input ) : true|string

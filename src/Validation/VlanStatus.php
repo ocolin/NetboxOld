@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait VlanStatus
 {
 
-/*
+/* VALIDATE VLAN STATUS
 ----------------------------------------------------------------------------- */
 
     public static function validate_VlanStatus( string $input ) : true|string

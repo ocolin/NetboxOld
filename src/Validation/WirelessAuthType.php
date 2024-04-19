@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait WirelessAuthType
 {
     
-/* 
+/* VALIDATE WIRELESS AUTH TYPE
 ----------------------------------------------------------------------------- */
 
     public static function validate_WirelessAuthType( string $input ) : true|string

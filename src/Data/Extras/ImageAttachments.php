@@ -73,11 +73,11 @@ class ImageAttachments extends Data_Core implements DataInterface
     public static function validate() : array
     {
         return [
-            'content_type' => 'ImageContentType'
+            'content_type' => 'CustomFieldObjectType'
         ];
     }
 
-    use Validation\ImageContentType;
+    use Validation\CustomFieldObjectType;
 }
 
 /** 

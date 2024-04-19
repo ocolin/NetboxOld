@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait MacAddress
 {
         
-/* 
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_MacAddress( string $input ) : true|string

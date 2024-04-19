@@ -5,21 +5,75 @@
         stopOnFailure="true"
         beStrictAboutChangesToGlobalState="true"
         cacheDirectory=".phpunit.cache"
+        displayDetailsOnTestsThatTriggerWarnings="true"
 >
   <php>
     <env name="NETBOX_BASE_URI" value="10.211.55.6:8000/api/"/>
-    <env name="NETBOX_BASE_URI" value="23ba9d80db561bedbb115b0e15917eb073dad7c5"/>
+    <env name="NETBOX_TOKEN" value="23ba9d80db561bedbb115b0e15917eb073dad7c5"/>
   </php>
   <testsuites>
+      <testsuite name="Validations">
+          <file>tests/Validation/AirflowTest.php</file>
+          <file>tests/Validation/ButtonClassTest.php</file>
+          <file>tests/Validation/CableStatusTest.php</file>
+          <file>tests/Validation/CableTypeTest.php</file>
+          <file>tests/Validation/CIDRTest.php</file>
+          <file>tests/Validation/CircuitStatusTest.php</file>
+          <file>tests/Validation/ConsolePortTypeTest.php</file>
+          <file>tests/Validation/ConsoleSpeedTest.php</file>
+          <file>tests/Validation/ContactContentTypesTest.php</file>
+          <file>tests/Validation/ContactPriorityTest.php</file>
+          <file>tests/Validation/CustomFieldObjectTypeTest.php</file>
+          <file>tests/Validation/CustomFieldTypeTest.php</file>
+          <file>tests/Validation/DeviceFaceTest.php</file>
+          <file>tests/Validation/DeviceRoleTest.php</file>
+          <file>tests/Validation/DuplexTest.php</file>
+          <file>tests/Validation/FeedTypeTest.php</file>
+          <file>tests/Validation/FhrpGroupAuthTypeTest.php</file>
+          <file>tests/Validation/FhrpGroupProtocolTest.php</file>
+          <file>tests/Validation/FilterLogicTest.php</file>
+          <file>tests/Validation/InterfaceModeTest.php</file>
+          <file>tests/Validation/IpRangeStatusTest.php</file>
+          <file>tests/Validation/IpRoleTest.php</file>
+          <file>tests/Validation/IpStatusTest.php</file>
+          <file>tests/Validation/LengthUnitTest.php</file>
+          <file>tests/Validation/MacAddressTest.php</file>
+          <file>tests/Validation/ModuleBayStatusTest.php</file>
+          <file>tests/Validation/PoeModeTest.php</file>
+          <file>tests/Validation/PoeTypeTest.php</file>
+          <file>tests/Validation/PowerFeedLegTest.php</file>
+          <file>tests/Validation/PowerOutletTypeTest.php</file>
+          <file>tests/Validation/PowerPhaseTest.php</file>
+          <file>tests/Validation/PowerPortTypeTest.php</file>
+          <file>tests/Validation/PowerSupplyTest.php</file>
+          <file>tests/Validation/PrefixStatusTest.php</file>
+          <file>tests/Validation/RackOuterUnitTest.php</file>
+          <file>tests/Validation/RackTypeTest.php</file>
+          <file>tests/Validation/RackWidthTest.php</file>
+          <file>tests/Validation/RfChannelTest.php</file>
+          <file>tests/Validation/RfRoleTest.php</file>
+          <file>tests/Validation/ServiceProtocolTest.php</file>
+          <file>tests/Validation/SlugTest.php</file>
+          <file>tests/Validation/StatusTest.php</file>
+          <file>tests/Validation/TerminalSideTest.php</file>
+          <file>tests/Validation/TerminationTypeTest.php</file>
+          <file>tests/Validation/UIEditableTest.php</file>
+          <file>tests/Validation/UIVisibleTest.php</file>
+          <file>tests/Validation/VlanStatusTest.php</file>
+          <file>tests/Validation/VMInterfaceModeTest.php</file>
+          <file>tests/Validation/VMStatusTest.php</file>
+          <file>tests/Validation/WeightUnitTest.php</file>
+          <file>tests/Validation/WirelessAuthCipherTest.php</file>
+          <file>tests/Validation/WirelessAuthTypeTest.php</file>
+      </testsuite>
+
 
       <testsuite name="Circuit_Controllers">
-          <!--
-          <file>tests/Controllers/Circuits/CircuitsTest.php</file>
-          <file>tests/Controllers/Circuits/CircuitTerminationsTest.php</file>
-          <file>tests/Controllers/Circuits/CircuitTypesTest.php</file>
-          <file>tests/Controllers/Circuits/ProviderNetworksTest.php</file>
-          <file>tests/Controllers/Circuits/ProvidersTest.php</file>
-            -->
+<!--          <file>tests/Controllers/Circuits/CircuitsTest.php</file>-->
+<!--          <file>tests/Controllers/Circuits/CircuitTerminationsTest.php</file>-->
+<!--          <file>tests/Controllers/Circuits/CircuitTypesTest.php</file>-->
+<!--          <file>tests/Controllers/Circuits/ProviderNetworksTest.php</file>-->
+<!--          <file>tests/Controllers/Circuits/ProvidersTest.php</file>-->
       </testsuite>
       <testsuite name="DCIM_Controllers">
           <!--

@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait PoeMode
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_PoeMode( string $input ) : true|string

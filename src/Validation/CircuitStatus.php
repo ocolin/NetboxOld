@@ -4,7 +4,8 @@ namespace Cruzio\lib\Netbox\Validation;
 
 trait CircuitStatus
 {
-/* 
+
+/*  VALIDATE CIRCUIT STATUS
 ----------------------------------------------------------------------------- */
 
     public static function validate_CircuitStatus( string $input ) : true|string
@@ -14,6 +15,7 @@ trait CircuitStatus
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
+            return "Input must be of type $combined.";
         }
 
         return true;

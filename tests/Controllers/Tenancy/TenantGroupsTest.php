@@ -11,8 +11,8 @@ use PHPUnit\Framework\Attributes\Depends;
 final class TenantGroupsTest extends TestTenancy
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsTenantGroup() : void
     {
@@ -23,8 +23,8 @@ final class TenantGroupsTest extends TestTenancy
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateTenantGroupBad() : void
     {
@@ -37,8 +37,8 @@ final class TenantGroupsTest extends TestTenancy
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -55,8 +55,8 @@ final class TenantGroupsTest extends TestTenancy
 
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateTenantGroup')]
     public function testGetTenantGroup( int $id ) : void
@@ -70,8 +70,8 @@ final class TenantGroupsTest extends TestTenancy
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListTenantGroup() : void
     {
@@ -89,8 +89,8 @@ final class TenantGroupsTest extends TestTenancy
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -107,8 +107,8 @@ final class TenantGroupsTest extends TestTenancy
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -129,8 +129,8 @@ final class TenantGroupsTest extends TestTenancy
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -150,8 +150,8 @@ final class TenantGroupsTest extends TestTenancy
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateTenantGroup')]
     public function testDeleteTenantGroup( int $id ) : void

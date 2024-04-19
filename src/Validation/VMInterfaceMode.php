@@ -5,10 +5,10 @@ namespace Cruzio\lib\Netbox\Validation;
 trait VMInterfaceMode
 {
 
-/* 
+/* VALIDATE VM STATUS
 ----------------------------------------------------------------------------- */
 
-    public static function validate_VMStatus( string $input ) : true|string
+    public static function validate_VMInterfaceMode( string $input ) : true|string
     {
         $allowed = [
             'offline',

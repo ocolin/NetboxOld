@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ButtonClass
 {
 
-/* 
+/* VALIDATE BUTTON CLASS
 ----------------------------------------------------------------------------- */
 
     public static function validate_ButtonClass( string $input ) : true|string

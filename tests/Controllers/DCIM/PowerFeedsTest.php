@@ -191,7 +191,7 @@ final class PowerFeedsTest extends TestDCIM
 
     public static function tearDownAfterClass() : void
     {
-        self::removeSite( self::$site->id );
         self::removePowerPanel( id: self::$panel->id );
+        self::removeSite( self::$site->id );
     }
 }

@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait TerminationType
 {
     
-/* 
+/* VALIDATE TERMINATION TYPE
 ----------------------------------------------------------------------------- */
 
     public static function validate_TerminationType( string $input ) : true|string

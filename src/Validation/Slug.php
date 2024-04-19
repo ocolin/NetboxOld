@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait Slug
 {
     
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_Slug( string $input ) : true|string

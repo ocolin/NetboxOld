@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait LengthUnit
 {
     
-/* 
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_LengthUnit( string $input ) : true|string

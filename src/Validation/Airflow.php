@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait Airflow
 {
 
-/*
+/* VALIDATE AIRFLOW
 ----------------------------------------------------------------------------- */
 
     public static function validate_Airflow( string $input ) : true|string
@@ -19,7 +19,7 @@ trait Airflow
             'passive',
             'mixed'
         ];
-        if(!in_array( $input, $allowed)) {
+        if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
             return "Airflow '{$input}' must be one of: {$combined}";
         }

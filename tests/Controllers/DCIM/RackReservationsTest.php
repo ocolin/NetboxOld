@@ -196,8 +196,8 @@ final class RackReservationsTest extends TestDCIM
 
     public static function tearDownAfterClass() : void
     {
-        self::removeSite(id: self::$site->id);
-        self::removeRack(id: self::$rack->id);
         TestUsers::removeUser(id: self::$user->id);
+        self::removeRack(id: self::$rack->id);
+        self::removeSite(id: self::$site->id);
     }
 }

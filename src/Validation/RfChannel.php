@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait RfChannel
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_RfChannel( string $input ) : true|string

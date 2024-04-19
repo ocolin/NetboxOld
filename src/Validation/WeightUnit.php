@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait WeightUnit
 {
 
-/*
+/* VALIDATE WEIGHT UNIT
 ----------------------------------------------------------------------------- */
 
     public static function validate_WeightUnit( string $input ) : true|string

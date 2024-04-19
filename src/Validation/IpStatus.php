@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait IpStatus
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_IpStatus( string $input ) : true|string

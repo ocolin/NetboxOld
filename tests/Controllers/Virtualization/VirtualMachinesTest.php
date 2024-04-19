@@ -193,9 +193,9 @@ final class VirtualMachinesTest extends TestVirtualization
 
     public static function tearDownAfterClass() : void
     {
-        TestDCIM::removeSite( id: self::$site->id );
-        self::removeClusterType( id: self::$type->id );
-        self::removeClusterGroup( id: self::$group->id );
         self::removeCluster( id: self::$cluster->id );
+        self::removeClusterGroup( id: self::$group->id );
+        self::removeClusterType( id: self::$type->id );
+        TestDCIM::removeSite( id: self::$site->id );
     }
 }

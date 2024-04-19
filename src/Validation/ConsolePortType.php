@@ -5,8 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ConsolePortType
 {
 
-
-/*
+/* VALIDATE CONSOLE PORT TYPE
 ----------------------------------------------------------------------------- */
 
     public static function validate_ConsolePortType( string $input ) : true|string

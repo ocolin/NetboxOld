@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait UIEditable
 {
 
-/*
+/* VALIDATE UIEDITABLE
 ----------------------------------------------------------------------------- */
 
     public static function validate_UIEditable( string $input ) : true|string

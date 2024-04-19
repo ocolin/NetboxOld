@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ServiceProtocol
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_ServiceProtocol( string $input ) : true|string

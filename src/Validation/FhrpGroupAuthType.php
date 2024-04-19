@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait FhrpGroupAuthType
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_FhrpGroupAuthType( string $input ) : true|string

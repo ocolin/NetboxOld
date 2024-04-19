@@ -3,18 +3,31 @@
 
 declare( strict_types = 1 );
 
-namespace Cruzio\lib\Netbox;
+require_once __DIR__ . '/Netbox.php';
+use Cruzio\lib\Netbox\Netbox;
 
-use GuzzleHttp\Exception\GuzzleException;
+$output = Netbox::create(
+        module: 'DCIM\Sites',
+        data: [
+                'name' => 'testName',
+                'slug' => 'testSlug'
+        ]
+);
 
-require_once __DIR__ . '/vendor/autoload.php';
+print_r( $output );
 
-$test = new \Cruzio\lib\Netbox\Controllers\DCIM\Sites();
+//namespace Cruzio\lib\Netbox;
+
+//use GuzzleHttp\Exception\GuzzleException;
+
+//require_once __DIR__ . '/vendor/autoload.php';
+
+//$test = new \Cruzio\lib\Netbox\Controllers\DCIM\Sites();
 //$param = new \Cruzio\lib\Netbox\Params\DCIM\Sites();
 //$param->description = ['charry'];
 
-$output = $test->post( data: [ 'name' => 'SiteB', 'slug' => 'siteb' ] );
-print_r( $output );
+//$output = $test->post( data: [ 'name' => 'SiteB', 'slug' => 'siteb' ] );
+//print_r( $output );
 
 /*
 try {

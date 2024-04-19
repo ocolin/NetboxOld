@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait FilterLogic
 {
 
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_FilterLogic( string $input ) : true|string

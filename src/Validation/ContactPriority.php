@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ContactPriority
 {
 
-/* 
+/* VALIDATE CONTACT PRIORITY
 ----------------------------------------------------------------------------- */
 
     public static function validate_ContactPriority( string $input ) : true|string

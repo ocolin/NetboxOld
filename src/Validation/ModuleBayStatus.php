@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ModuleBayStatus
 {
         
-/*
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate_ModuleBayStatus( string $input ) : true|string

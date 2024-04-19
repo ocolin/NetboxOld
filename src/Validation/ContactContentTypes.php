@@ -5,7 +5,7 @@ namespace Cruzio\lib\Netbox\Validation;
 trait ContactContentTypes
 {
 
-/* 
+/* VALIDATE CONTACT CONTENT TYPES
 ----------------------------------------------------------------------------- */
 
     public static function validate_ContactContentTypes( string $input ) : true|string

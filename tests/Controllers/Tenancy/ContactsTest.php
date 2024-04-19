@@ -11,8 +11,8 @@ use PHPUnit\Framework\Attributes\Depends;
 final class ContactsTest extends TestTenancy
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsContact() : void
     {
@@ -23,8 +23,8 @@ final class ContactsTest extends TestTenancy
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateContactBad() : void
     {
@@ -37,8 +37,8 @@ final class ContactsTest extends TestTenancy
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -55,8 +55,8 @@ final class ContactsTest extends TestTenancy
 
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateContact')]
     public function testGetContact( int $id ) : void
@@ -70,8 +70,8 @@ final class ContactsTest extends TestTenancy
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListContact() : void
     {
@@ -89,8 +89,8 @@ final class ContactsTest extends TestTenancy
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -107,8 +107,8 @@ final class ContactsTest extends TestTenancy
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -128,8 +128,8 @@ final class ContactsTest extends TestTenancy
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -149,8 +149,8 @@ final class ContactsTest extends TestTenancy
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateContact')]
     public function testDeleteContact( int $id ) : void

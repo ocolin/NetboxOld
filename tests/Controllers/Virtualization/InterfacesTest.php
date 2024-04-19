@@ -196,9 +196,9 @@ final class InterfacesTest extends TestVirtualization
     public static function tearDownAfterClass() : void
     {
         self::removeVirtualMachine( id: self::$vm->id );
-        TestDCIM::removeSite( id: self::$site->id );
-        self::removeClusterType( id: self::$type->id );
-        self::removeClusterGroup( id: self::$group->id );
         self::removeCluster( id: self::$cluster->id );
+        self::removeClusterGroup( id: self::$group->id );
+        self::removeClusterType( id: self::$type->id );
+        TestDCIM::removeSite( id: self::$site->id );
     }
 }

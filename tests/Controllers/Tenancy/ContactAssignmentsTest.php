@@ -194,7 +194,7 @@ final class ContactAssignmentsTest extends TestTenancy
 
     public static function tearDownAfterClass() : void
     {
-        self::removeContactRole( id: self::$contact->id );
+        self::removeContactRole( id: self::$role->id );
         self::removeContact( id: self::$contact->id );
         TestDCIM::removeSite( id: self::$site->id );
     }
