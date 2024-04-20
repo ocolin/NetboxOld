@@ -63,6 +63,9 @@ class Tokens extends Data_Core implements DataInterface
     }
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "user": 0,

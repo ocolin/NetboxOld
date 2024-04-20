@@ -72,6 +72,9 @@ class RackReservations extends Data_Core implements DataInterface
 
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "rack": 0,

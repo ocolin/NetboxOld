@@ -66,6 +66,9 @@ class Users extends Data_Core implements DataInterface
     }
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "username": "+Iat0FfzYk3@hvkdqy+PQ2qP9H2w-cYTsq1n85-hJRb7_+IP.",

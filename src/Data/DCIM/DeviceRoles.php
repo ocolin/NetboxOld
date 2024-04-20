@@ -66,7 +66,7 @@ class DeviceRoles extends Data_Core implements DataInterface
 
     use Validation\Slug;
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
  
 /**
@@ -86,3 +86,29 @@ class DeviceRoles extends Data_Core implements DataInterface
         ];
     }
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
+/**
+ * {
+ * "name": "string",
+ * "slug": "8r97i1ZuYGMJ9QUJYyi-v4RDlgG11OajXQeM66qYkpOjiWdLACi2C4-_",
+ * "color": "a6a90b",
+ * "vm_role": true,
+ * "config_template": 0,
+ * "description": "string",
+ * "tags": [
+ * {
+ * "name": "string",
+ * "slug": "9ouCGj0piCDUcmd5Yvne6kLE8zqj8ZTiRGHhz-xZ7CrQKi76VDBo5MuyuzoxDWfe18-VLDTG_nC0YzKV-aSaSSrk",
+ * "color": "f4ed4d"
+ * }
+ * ],
+ * "custom_fields": {
+ * "additionalProp1": "string",
+ * "additionalProp2": "string",
+ * "additionalProp3": "string"
+ * }
+ * }
+ */

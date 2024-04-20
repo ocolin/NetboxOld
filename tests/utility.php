@@ -2,18 +2,23 @@
 
 declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Models;
-//use Symfony\Component\Dotenv\Dotenv;
 
 use GuzzleHttp\Exception\GuzzleException;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 
+try {
+    clearAll();
+}
+catch (GuzzleException $e) {
+    print_r( $e );
+}
 
-clearAll();
 
-
-
+/**
+ * @throws GuzzleException
+ */
 function clearAll() : void
 {
     clearRir();

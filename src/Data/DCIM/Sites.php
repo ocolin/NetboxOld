@@ -86,7 +86,7 @@ class Sites extends Data_Core implements DataInterface
         ];
     }
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -105,10 +105,7 @@ class Sites extends Data_Core implements DataInterface
     use Validation\Slug;
 }
 
-
-
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

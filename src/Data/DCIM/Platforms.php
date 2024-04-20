@@ -11,7 +11,6 @@ use Cruzio\lib\Netbox\Validation;
 
 class Platforms extends Data_Core implements DataInterface
 {
-
     protected int     $manufacturer;
     protected int     $config_template;
     protected string  $url;
@@ -73,7 +72,7 @@ class Platforms extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -88,6 +87,9 @@ class Platforms extends Data_Core implements DataInterface
     use Validation\Slug;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
  {

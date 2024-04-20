@@ -29,7 +29,7 @@ class RouteTargets extends Data_Core implements DataInterface
     protected string $last_modified;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -42,7 +42,7 @@ class RouteTargets extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -61,6 +61,9 @@ class RouteTargets extends Data_Core implements DataInterface
     }
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

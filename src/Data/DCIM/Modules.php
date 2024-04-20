@@ -67,7 +67,7 @@ class Modules extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -81,6 +81,9 @@ class Modules extends Data_Core implements DataInterface
 
     use Validation\ModuleBayStatus;    
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

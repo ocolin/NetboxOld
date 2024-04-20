@@ -68,7 +68,7 @@ class PowerPortTemplates extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -78,6 +78,9 @@ class PowerPortTemplates extends Data_Core implements DataInterface
 
     use Validation\PowerPortType;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

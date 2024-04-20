@@ -45,7 +45,7 @@ class HTTP
           bool $errors   = false
     )
     {
-        Env::loadEnv( path: __DIR__ . '/../.env', silent: true, append: true );
+        Env::loadEnv( path: __DIR__ . '/../../.env', silent: true, append: true );
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
         $this->headers  = self::default_Headers();

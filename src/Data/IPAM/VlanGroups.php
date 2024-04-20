@@ -36,7 +36,7 @@ class VlanGroups extends Data_Core implements DataInterface
     protected string $utilization;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -49,7 +49,7 @@ class VlanGroups extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -72,7 +72,7 @@ class VlanGroups extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -87,6 +87,9 @@ class VlanGroups extends Data_Core implements DataInterface
     use Validation\Slug;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

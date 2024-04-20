@@ -32,7 +32,7 @@ class Roles extends Data_Core implements DataInterface
     protected int    $vlan_count;
     
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -45,7 +45,7 @@ class Roles extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -67,7 +67,7 @@ class Roles extends Data_Core implements DataInterface
 
 
     
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -83,7 +83,7 @@ class Roles extends Data_Core implements DataInterface
 }
 
 
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

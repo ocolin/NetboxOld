@@ -68,7 +68,7 @@ class CustomLinks extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -84,6 +84,9 @@ class CustomLinks extends Data_Core implements DataInterface
 
     use Validation\ButtonClass;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

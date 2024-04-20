@@ -63,7 +63,7 @@ class ImageAttachments extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -79,6 +79,9 @@ class ImageAttachments extends Data_Core implements DataInterface
 
     use Validation\CustomFieldObjectType;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /** 
 {

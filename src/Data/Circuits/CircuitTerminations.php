@@ -81,7 +81,7 @@ class CircuitTerminations extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -94,6 +94,9 @@ class CircuitTerminations extends Data_Core implements DataInterface
 use TerminalSide;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 [

@@ -14,7 +14,7 @@ Interface ModelsInterface
      * @param array<string, string> $headers
      * @return \Cruzio\lib\Netbox\Models\Response
      */
-    public function options( array $headers ) : Response;
+    public function options( array $headers = [] ) : Response;
 
     /**
      * @param DataInterface $data

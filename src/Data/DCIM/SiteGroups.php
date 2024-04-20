@@ -13,7 +13,6 @@ class SiteGroups extends Data_Core implements DataInterface
 {
     protected int    $parent;
 
-
     protected string $name;
     protected string $slug;
     protected string $description;
@@ -68,7 +67,7 @@ class SiteGroups extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -87,6 +86,8 @@ class SiteGroups extends Data_Core implements DataInterface
     use Validation\Slug;
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
  {

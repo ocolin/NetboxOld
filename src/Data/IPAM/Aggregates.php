@@ -33,7 +33,7 @@ class Aggregates extends Data_Core implements DataInterface
     protected string $family;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -46,7 +46,7 @@ class Aggregates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -67,7 +67,7 @@ class Aggregates extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -82,6 +82,9 @@ class Aggregates extends Data_Core implements DataInterface
     use Validation\CIDR;
     
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

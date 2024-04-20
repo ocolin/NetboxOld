@@ -68,6 +68,9 @@ class Contacts extends Data_Core implements DataInterface
     }
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "group": 0,

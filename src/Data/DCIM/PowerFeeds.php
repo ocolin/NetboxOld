@@ -88,7 +88,7 @@ class PowerFeeds extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -111,6 +111,9 @@ class PowerFeeds extends Data_Core implements DataInterface
     use Validation\PowerPhase;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

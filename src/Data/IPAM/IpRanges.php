@@ -37,7 +37,7 @@ class IpRanges extends Data_Core implements DataInterface
     protected int    $size;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function required() : array
@@ -49,7 +49,7 @@ class IpRanges extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -71,7 +71,7 @@ class IpRanges extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -88,7 +88,7 @@ class IpRanges extends Data_Core implements DataInterface
 }
 
 
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

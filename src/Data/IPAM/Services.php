@@ -37,7 +37,6 @@ class Services extends Data_Core implements DataInterface
     protected object $custom_fields;
 
 
-
     // READ ONLY
     protected int    $id;
     protected string $url;
@@ -47,7 +46,7 @@ class Services extends Data_Core implements DataInterface
 
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -60,7 +59,7 @@ class Services extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -79,7 +78,7 @@ class Services extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -93,6 +92,9 @@ class Services extends Data_Core implements DataInterface
 
     use Validation\ServiceProtocol;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

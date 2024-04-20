@@ -45,7 +45,7 @@ class Vrfs extends Data_Core implements DataInterface
 
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -58,7 +58,7 @@ class Vrfs extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -79,6 +79,9 @@ class Vrfs extends Data_Core implements DataInterface
     }
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

@@ -36,7 +36,7 @@ class FhrpGroups extends Data_Core implements DataInterface
     protected int    $ip_addresses;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -49,7 +49,7 @@ class FhrpGroups extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -70,7 +70,7 @@ class FhrpGroups extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -85,6 +85,9 @@ class FhrpGroups extends Data_Core implements DataInterface
     use Validation\FhrpGroupAuthType;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

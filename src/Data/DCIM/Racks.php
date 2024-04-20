@@ -65,7 +65,7 @@ class Racks extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -87,7 +87,7 @@ class Racks extends Data_Core implements DataInterface
 
 
 
-/* READ ONLY PARAMETERS
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -113,9 +113,7 @@ class Racks extends Data_Core implements DataInterface
 
 }
 
-
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

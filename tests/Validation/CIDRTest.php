@@ -17,8 +17,8 @@ final class CIDRTest extends TestCase
 
     public function testGood() : void
     {
-
         $result = self::validate_CIDR( input: '10.10.10.10/24' );
+
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }

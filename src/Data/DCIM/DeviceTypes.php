@@ -98,7 +98,7 @@ class DeviceTypes extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -122,8 +122,7 @@ class DeviceTypes extends Data_Core implements DataInterface
 
 }
 
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

@@ -73,7 +73,7 @@ class Locations extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -89,7 +89,8 @@ class Locations extends Data_Core implements DataInterface
     use Validation\Status;
 }
 
-
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
  {

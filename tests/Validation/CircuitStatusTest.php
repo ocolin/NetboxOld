@@ -17,8 +17,8 @@ final class CircuitStatusTest extends TestCase
 
     public function testGood() : void
     {
-
         $result = self::validate_CircuitStatus( input: 'provisioning' );
+
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }

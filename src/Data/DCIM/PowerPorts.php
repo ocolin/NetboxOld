@@ -85,7 +85,7 @@ class PowerPorts extends Data_Core implements DataInterface
     }
 
 
-/* 
+/*  VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -96,6 +96,9 @@ class PowerPorts extends Data_Core implements DataInterface
     use Validation\PowerPortType;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

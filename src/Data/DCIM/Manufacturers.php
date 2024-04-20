@@ -67,7 +67,7 @@ class Manufacturers extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -83,7 +83,8 @@ class Manufacturers extends Data_Core implements DataInterface
     
 }
 
-
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
  {

@@ -56,7 +56,7 @@ class ConsoleServerPortTemplates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -71,3 +71,17 @@ class ConsoleServerPortTemplates extends Data_Core implements DataInterface
     use Validation\ConsolePortType;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
+/**
+ * {
+ * "device_type": 0,
+ * "module_type": 0,
+ * "name": "string",
+ * "label": "string",
+ * "type": "de-9",
+ * "description": "string"
+ * }
+ */

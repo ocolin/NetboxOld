@@ -83,7 +83,7 @@ class ConsoleServerPorts extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -99,6 +99,9 @@ class ConsoleServerPorts extends Data_Core implements DataInterface
     use Validation\ConsolePortType;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

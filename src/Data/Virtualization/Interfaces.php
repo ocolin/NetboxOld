@@ -77,7 +77,7 @@ class Interfaces extends Data_Core implements DataInterface
 
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -92,6 +92,9 @@ class Interfaces extends Data_Core implements DataInterface
     use Validation\VMInterfaceMode;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

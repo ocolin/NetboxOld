@@ -69,7 +69,7 @@ class WirelessLanGroups extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -83,6 +83,9 @@ class WirelessLanGroups extends Data_Core implements DataInterface
 
     use Validation\Slug;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

@@ -60,7 +60,7 @@ class ConsolePortTemplates extends Data_Core implements DataInterface
 
 
 
-/* R
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -77,8 +77,7 @@ class ConsolePortTemplates extends Data_Core implements DataInterface
 
 }
 
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

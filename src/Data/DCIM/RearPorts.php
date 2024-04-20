@@ -77,7 +77,7 @@ class RearPorts extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -91,6 +91,9 @@ class RearPorts extends Data_Core implements DataInterface
 
     use Validation\PortType;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

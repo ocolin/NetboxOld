@@ -56,6 +56,9 @@ class WirelessLinks extends Data_Core implements DataInterface
 
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "interface_a": 0,

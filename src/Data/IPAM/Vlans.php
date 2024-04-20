@@ -40,7 +40,7 @@ class Vlans extends Data_Core implements DataInterface
     protected int    $prefix_count;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -53,7 +53,7 @@ class Vlans extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -74,7 +74,7 @@ class Vlans extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -89,7 +89,8 @@ class Vlans extends Data_Core implements DataInterface
     use Validation\VlanStatus;
 }
 
-
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

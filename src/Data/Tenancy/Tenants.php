@@ -85,8 +85,7 @@ class Tenants extends Data_Core implements DataInterface
     }
 
 
-
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -97,8 +96,7 @@ class Tenants extends Data_Core implements DataInterface
     use Validation\Slug;
 }
 
-
-/* 
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

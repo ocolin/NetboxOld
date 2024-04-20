@@ -85,7 +85,7 @@ class VirtualMachines extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -100,6 +100,8 @@ class VirtualMachines extends Data_Core implements DataInterface
     use Validation\VMStatus;
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

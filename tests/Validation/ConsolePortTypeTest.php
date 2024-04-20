@@ -17,8 +17,8 @@ final class ConsolePortTypeTest extends TestCase
 
     public function testGood() : void
     {
-
         $result = self::validate_ConsolePortType( input: 'de-9' );
+
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }

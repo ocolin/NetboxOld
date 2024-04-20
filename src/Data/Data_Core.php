@@ -44,8 +44,8 @@ class Data_Core
 
 
 
-    /*
-    ----------------------------------------------------------------------------- */
+/* SET A DATA PARAMETER
+----------------------------------------------------------------------------- */
 
     /**
      * @param string|int|float|array<int> $value
@@ -68,7 +68,8 @@ class Data_Core
         }
     }
 
-/* GETTER
+
+/* GET A DATA PARAMETER
 ----------------------------------------------------------------------------- */
 
     public function get( string $property ) : mixed
@@ -85,7 +86,8 @@ class Data_Core
 
 
 
-
+/* GET REQUIRED PROPERTIES
+----------------------------------------------------------------------------- */
 
 /**
  *  @return array<string>

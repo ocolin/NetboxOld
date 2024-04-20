@@ -44,7 +44,6 @@ class CustomFields extends Data_Core implements DataInterface
 
 
 
-
 /* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
@@ -78,7 +77,7 @@ class CustomFields extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -103,6 +102,9 @@ class CustomFields extends Data_Core implements DataInterface
     use Validation\UIEditable;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

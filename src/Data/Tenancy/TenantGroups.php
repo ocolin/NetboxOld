@@ -68,6 +68,9 @@ class TenantGroups extends Data_Core implements DataInterface
 
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "name": "string",

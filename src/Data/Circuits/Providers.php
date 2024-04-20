@@ -80,6 +80,9 @@ class Providers extends Data_Core implements DataInterface
     }
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "name": "string",

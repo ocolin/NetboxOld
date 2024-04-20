@@ -14,7 +14,6 @@ class Params_Core
 
 /* GETTER
 ----------------------------------------------------------------------------- */
-
     public function get( string $prop ) : mixed {
         if( property_exists( $this, $prop )) {
             $rp = new ReflectionProperty( $this, $prop );
@@ -46,7 +45,8 @@ class Params_Core
         }
     }
 
-/*
+
+/* RENDER A PARAM OBJECT
 ------------------------------------------------------------------------ */
 
     /**

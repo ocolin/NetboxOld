@@ -68,7 +68,7 @@ class FrontPortTemplates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -82,6 +82,9 @@ class FrontPortTemplates extends Data_Core implements DataInterface
 
     use Validation\PortType;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

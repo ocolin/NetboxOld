@@ -49,7 +49,7 @@ class Cables extends Data_Core implements DataInterface
     protected string $last_updated;
 
 
-/* 
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -80,7 +80,7 @@ class Cables extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -100,6 +100,9 @@ class Cables extends Data_Core implements DataInterface
     use Validation\LengthUnit;
     use Validation\CableType;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

@@ -77,7 +77,7 @@ class Circuits extends Data_Core implements DataInterface
 
 
 
-/* 
+/* VALIDATE
 ----------------------------------------------------------------------------- */
 
 /**
@@ -91,6 +91,9 @@ class Circuits extends Data_Core implements DataInterface
 
      use CircuitStatus;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

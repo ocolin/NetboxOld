@@ -29,7 +29,7 @@ class Rirs extends Data_Core implements DataInterface
     protected int    $aggregate_count;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -43,7 +43,7 @@ class Rirs extends Data_Core implements DataInterface
 
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -64,7 +64,7 @@ class Rirs extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -81,7 +81,7 @@ class Rirs extends Data_Core implements DataInterface
 }
 
 
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

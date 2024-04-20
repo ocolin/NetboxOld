@@ -66,7 +66,7 @@ class RackRoles extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -84,6 +84,9 @@ class RackRoles extends Data_Core implements DataInterface
     use Validation\Status;
     use Validation\Slug;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

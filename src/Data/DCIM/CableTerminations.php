@@ -24,7 +24,7 @@ class CableTerminations extends Data_Core implements DataInterface
     protected string $termination;
 
     
-/* 
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function required() : array
@@ -33,7 +33,7 @@ class CableTerminations extends Data_Core implements DataInterface
     }
 
     
-/* 
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function readonly() : array
@@ -49,7 +49,7 @@ class CableTerminations extends Data_Core implements DataInterface
     }
 
     
-/* 
+/*  VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -60,6 +60,9 @@ class CableTerminations extends Data_Core implements DataInterface
     use Validation\TerminationType;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

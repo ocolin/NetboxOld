@@ -68,6 +68,9 @@ class ExportTemplates extends Data_Core implements DataInterface
     }
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "content_types": [

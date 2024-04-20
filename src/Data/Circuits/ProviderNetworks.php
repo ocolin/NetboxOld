@@ -62,6 +62,9 @@ class ProviderNetworks extends Data_Core implements DataInterface
     }
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "provider": 0,

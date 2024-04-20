@@ -40,7 +40,7 @@ class IpAddresses extends Data_Core implements DataInterface
     protected string $nat_outside;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -54,7 +54,7 @@ class IpAddresses extends Data_Core implements DataInterface
 
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -77,7 +77,7 @@ class IpAddresses extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -100,9 +100,8 @@ class IpAddresses extends Data_Core implements DataInterface
 }
 
 
-/* OBJECT STRUCTURE
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
-
 
 /**
 {

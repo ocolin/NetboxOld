@@ -62,7 +62,7 @@ class ContactRoles extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -72,6 +72,9 @@ class ContactRoles extends Data_Core implements DataInterface
 
     use Validation\Slug;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

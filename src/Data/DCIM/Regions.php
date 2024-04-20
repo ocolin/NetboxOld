@@ -48,7 +48,7 @@ class Regions extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -87,6 +87,9 @@ class Regions extends Data_Core implements DataInterface
         ];
     }
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
  x`{

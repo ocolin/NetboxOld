@@ -65,8 +65,7 @@ class ModuleBays extends Data_Core implements DataInterface
 
 }
 
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

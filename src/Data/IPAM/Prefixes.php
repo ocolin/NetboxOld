@@ -41,7 +41,7 @@ class Prefixes extends Data_Core implements DataInterface
     protected object $custom_fields;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -54,7 +54,7 @@ class Prefixes extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -77,7 +77,7 @@ class Prefixes extends Data_Core implements DataInterface
 
 
     
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -93,7 +93,7 @@ class Prefixes extends Data_Core implements DataInterface
     use Validation\PrefixStatus;
 
 
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

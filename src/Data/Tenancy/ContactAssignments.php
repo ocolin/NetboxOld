@@ -67,7 +67,7 @@ class ContactAssignments extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
     public static function validate() : array
@@ -81,6 +81,9 @@ class ContactAssignments extends Data_Core implements DataInterface
     use Validation\ContactPriority;
     use Validation\ContactContentTypes;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

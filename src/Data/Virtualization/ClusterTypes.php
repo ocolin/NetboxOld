@@ -66,7 +66,7 @@ class ClusterTypes extends Data_Core implements DataInterface
 
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -80,6 +80,9 @@ class ClusterTypes extends Data_Core implements DataInterface
 
     use Validation\Status;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

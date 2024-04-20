@@ -60,7 +60,7 @@ class RearPortTemplates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -74,6 +74,9 @@ class RearPortTemplates extends Data_Core implements DataInterface
 
     use Validation\PortType;
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

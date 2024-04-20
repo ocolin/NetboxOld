@@ -55,7 +55,7 @@ class InterfaceTemplates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -89,9 +89,7 @@ class InterfaceTemplates extends Data_Core implements DataInterface
     use Validation\InterfaceType;
 }
 
-
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

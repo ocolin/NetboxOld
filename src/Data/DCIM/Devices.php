@@ -120,7 +120,7 @@ class Devices extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -141,6 +141,9 @@ class Devices extends Data_Core implements DataInterface
     use Validation\Airflow;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

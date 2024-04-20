@@ -35,7 +35,7 @@ class ServiceTemplates extends Data_Core implements DataInterface
     protected string $last_modified;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -48,7 +48,7 @@ class ServiceTemplates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -67,7 +67,7 @@ class ServiceTemplates extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -82,6 +82,9 @@ class ServiceTemplates extends Data_Core implements DataInterface
     use Validation\ServiceProtocol;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

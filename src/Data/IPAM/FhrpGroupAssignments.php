@@ -23,7 +23,7 @@ class FhrpGroupAssignments extends Data_Core implements DataInterface
     protected string $interface;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -41,7 +41,7 @@ class FhrpGroupAssignments extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -59,6 +59,9 @@ class FhrpGroupAssignments extends Data_Core implements DataInterface
         ];
     }
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

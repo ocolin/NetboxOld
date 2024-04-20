@@ -11,7 +11,6 @@ class Groups extends Data_Core implements DataInterface
 {
     protected string $name;
 
-
     // READ ONLY
     protected int $id;
     protected string $url;
@@ -53,6 +52,9 @@ class Groups extends Data_Core implements DataInterface
         ];
     }
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

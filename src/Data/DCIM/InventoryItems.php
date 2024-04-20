@@ -78,6 +78,9 @@ class InventoryItems extends Data_Core implements DataInterface
 
 }
 
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
+
 /**
 {
   "device": 0,

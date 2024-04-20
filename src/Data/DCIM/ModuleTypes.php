@@ -66,7 +66,7 @@ class ModuleTypes extends Data_Core implements DataInterface
     }
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -81,8 +81,7 @@ class ModuleTypes extends Data_Core implements DataInterface
     use Validation\WeightUnit;
 }
 
-
-/*
+/* DATA EXAMPLE
 ----------------------------------------------------------------------------- */
 
 /**

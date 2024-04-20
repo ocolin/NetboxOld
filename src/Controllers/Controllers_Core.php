@@ -60,9 +60,12 @@ class Controllers_Core
 /* OPTIONS CALL
 ----------------------------------------------------------------------------- */
 
-    public function options() : object
+    /**
+     * @return object|array<object>|null
+     */
+    public function options() : object|array|null
     {
-        return $this->model->options()->body;
+        return $this->model->options([])->body;
     }
 
 

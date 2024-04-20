@@ -86,7 +86,7 @@ class PowerOutlets extends Data_Core implements DataInterface
 
 
 
-/*
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -102,6 +102,9 @@ class PowerOutlets extends Data_Core implements DataInterface
     use Validation\PowerFeedLeg;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

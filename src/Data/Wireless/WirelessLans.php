@@ -71,7 +71,7 @@ class WirelessLans extends Data_Core implements DataInterface
     }
 
 
-/* 
+/* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -92,6 +92,9 @@ class WirelessLans extends Data_Core implements DataInterface
     use Validation\WirelessAuthCipher;
 
 }
+
+/* DATA EXAMPLE
+----------------------------------------------------------------------------- */
 
 /**
 {

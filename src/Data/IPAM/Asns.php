@@ -32,7 +32,7 @@ class Asns extends Data_Core implements DataInterface
     protected int    $provider_count;
 
 
-/*
+/* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
@@ -45,7 +45,7 @@ class Asns extends Data_Core implements DataInterface
     }
 
 
-/*
+/* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
 /**
