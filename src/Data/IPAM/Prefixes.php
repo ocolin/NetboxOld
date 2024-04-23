@@ -80,13 +80,16 @@ class Prefixes extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string, string> 
- */
+    /**
+     *  @return array<string, array<string>>
+     */
 
     public static function validate() : array
     {
-        return [ 'prefix' => 'CIDR', 'status' => 'PrefixStatus' ];
+        return [
+            'prefix' => ['CIDR'],
+            'status' => ['PrefixStatus']
+        ];
     }
 
     use Validation\CIDR;

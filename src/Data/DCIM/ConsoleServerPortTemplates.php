@@ -60,12 +60,12 @@ class ConsoleServerPortTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => 'ConsolePortType' ];
+        return [ 'type' => ['ConsolePortType'] ];
     }
 
     use Validation\ConsolePortType;

@@ -87,7 +87,7 @@ class CircuitTerminations extends Data_Core implements DataInterface
     public static function validate() : array
     {
         return [
-            'term_side' => 'TerminalSide'
+            'term_side' => ['TerminalSide']
         ];
     }
 

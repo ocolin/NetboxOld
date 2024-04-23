@@ -73,11 +73,14 @@ class FhrpGroups extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
+    /**
+     * @return array<string, array<string>>
+     */
     public static function validate() : array
     {
         return [ 
-            'protocol'  => 'FhrpGroupProtocol',
-            'auth_type' => 'FhrpGroupAuthType'
+            'protocol'  => ['FhrpGroupProtocol'],
+            'auth_type' => ['FhrpGroupAuthType']
         ];
     }
 

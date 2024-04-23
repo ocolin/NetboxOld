@@ -8,25 +8,79 @@ use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
 use Cruzio\lib\Netbox\Validation\CircuitStatus;
+use Cruzio\lib\Netbox\Validation\Date;
 
 class Circuits extends Data_Core implements DataInterface
 {
-    protected string $cid; // Unique circuit ID. Max: 100
-    protected int    $provider; // Class: Providers
-    protected int    $provider_account; // Class;
-    protected int    $type; // Class: CircuitTypes
+    /**
+     * @var string $cid
+     * Unique circuit ID
+     * Max: 100
+     */
+    protected string $cid;
+
+    /**
+     * @var int $provider
+     * ID of Providers class
+     */
+    protected int    $provider;
+
+    /**
+     * @var int $provider_account
+     * ID of provider account class
+     */
+    protected int    $provider_account;
+
+    /**
+     * @var int $type
+     * ID of CircuitType class
+     */
+    protected int    $type;
+
+    /**
+     * @var string $status
+     */
     protected string $status;
-    protected int    $tenant; // Class: Tenants
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $install_date
+     * Date of install
+     */
     protected string $install_date; // Date
-    protected string $termination_date; // Date
-    protected int    $commit_rate; // Commit rate (Kbps)
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $termination_date
+     * Date of termination
+     */
+    protected string $termination_date;
+
+    /**
+     * @var int $commit_rate
+     * In Kbps
+     */
+    protected int    $commit_rate;
+
+    /**
+     * @var string $description
+     * Max: 20 char
+     */
+    protected string $description;
+
+    /**
+     * @var string $comments
+     */
     protected string $comments;
 
     /**
      * @var array<TagType> $tags
+     * Array of tag strings
      */
-
      protected array $tags;
      protected object $custom_fields;
 
@@ -81,15 +135,20 @@ class Circuits extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'status' => 'CircuitStatus' ];
+        return [
+            'status'           => ['CircuitStatus'] ,
+            'install_date'     => ['Date'],
+            'termination_date' => ['Date']
+        ];
     }
 
-     use CircuitStatus;
+    use CircuitStatus;
+    use Date;
 }
 
 /* DATA EXAMPLE

@@ -70,12 +70,12 @@ class ModuleTypes extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'weight_unit' => 'WeightUnit' ];
+        return [ 'weight_unit' => ['WeightUnit'] ];
     }
 
     use Validation\WeightUnit;

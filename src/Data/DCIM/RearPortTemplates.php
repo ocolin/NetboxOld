@@ -64,12 +64,12 @@ class RearPortTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => 'PortType' ];
+        return [ 'type' => ['PortType'] ];
     }
 
     use Validation\PortType;

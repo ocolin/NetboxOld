@@ -88,9 +88,12 @@ class PowerPorts extends Data_Core implements DataInterface
 /*  VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
+    /**
+     * @return array<string, array<string>>
+     */
     public static function validate() : array
     {
-        return [ 'type' => 'PowerPortType' ];
+        return [ 'type' => ['PowerPortType'] ];
     }
 
     use Validation\PowerPortType;

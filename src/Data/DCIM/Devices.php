@@ -124,15 +124,15 @@ class Devices extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [ 
-            'face' => 'DeviceFace', 
-            'status' => 'Status',
-            'airflow' => 'Airflow'
+            'face'    => ['DeviceFace'],
+            'status'  => ['Status'],
+            'airflow' => ['Airflow']
         ];
     }
 

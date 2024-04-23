@@ -53,14 +53,14 @@ class DeviceRoles extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [
-            'status' => 'Status',
-            'slug'   => 'Slug'
+            'status' => ['Status'],
+            'slug'   => ['Slug']
         ];
     }
 

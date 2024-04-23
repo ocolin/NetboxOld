@@ -119,20 +119,20 @@ class Interfaces extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [ 
-            'type'        => 'InterfaceType', 
-            'mac_address' => 'MacAddress',
-            'duplex'      => 'Duplex',
-            'mode'        => 'InterfaceMode',
-            'rf_role'     => 'RfRole',
-            'rf_channel'  => 'RfChannel',
-            'poe_mode'    => 'PoeMode',
-            'poe_type'    => 'PoeType'
+            'type'        => ['InterfaceType'],
+            'mac_address' => ['MacAddress'],
+            'duplex'      => ['Duplex'],
+            'mode'        => ['InterfaceMode'],
+            'rf_role'     => ['RfRole'],
+            'rf_channel'  => ['RfChannel'],
+            'poe_mode'    => ['PoeMode'],
+            'poe_type'    => ['PoeType']
         ];
     }
 

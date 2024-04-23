@@ -80,13 +80,13 @@ class Interfaces extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string, string> 
- */
+    /**
+    *  @return array<string, array<string>>
+    */
 
     public static function validate() : array
     {
-        return [ 'mode' => 'VMInterfaceMode' ];
+        return [ 'mode' => ['VMInterfaceMode'] ];
     }
 
     use Validation\VMInterfaceMode;

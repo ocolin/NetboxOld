@@ -78,12 +78,12 @@ class Vlans extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'status' => 'VlanStatus' ];
+        return [ 'status' => ['VlanStatus'] ];
     }
 
     use Validation\VlanStatus;

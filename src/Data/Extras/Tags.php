@@ -69,12 +69,12 @@ class Tags extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => 'Slug' ];
+        return [ 'slug' => ['Slug'] ];
     }
 
     use Validation\Slug;

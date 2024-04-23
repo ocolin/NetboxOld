@@ -65,12 +65,15 @@ class PowerOutletTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => 'PowerOutletType', 'feed_leg' => 'PowerFeedLeg' ];
+        return [
+            'type'     => ['PowerOutletType'],
+            'feed_leg' => ['PowerFeedLeg']
+        ];
     }
 
     use Validation\PowerOutletType;

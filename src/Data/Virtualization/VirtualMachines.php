@@ -89,12 +89,12 @@ class VirtualMachines extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'status' => 'VMStatus' ];
+        return [ 'status' => ['VMStatus'] ];
     }
 
     use Validation\VMStatus;

@@ -81,17 +81,17 @@ class CustomFields extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [
-            'type'         => 'CustomFieldType',
-            'object_type'  => 'CustomFieldObjectType',
-            'filter_logic' => 'FilterLogic',
-            'ui_visible'   => 'UIVisible',
-            'ui_editable'  => 'UIEditable'
+            'type'         => ['CustomFieldType'],
+            'object_type'  => ['CustomFieldObjectType'],
+            'filter_logic' => ['FilterLogic'],
+            'ui_visible'   => ['UIVisible'],
+            'ui_editable'  => ['UIEditable']
         ];
     }
 

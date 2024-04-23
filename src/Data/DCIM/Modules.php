@@ -71,12 +71,12 @@ class Modules extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'status' => 'ModuleBayStatus' ]; 
+        return [ 'status' => ['ModuleBayStatus'] ];
     }
 
     use Validation\ModuleBayStatus;    

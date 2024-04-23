@@ -75,15 +75,15 @@ class WirelessLans extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [ 
-            'status'      => 'Status', 
-            'auth_type'   => 'WirelessAuthType',
-            'auth_cipher' => 'WirelessAuthCipher'
+            'status'      => ['Status'],
+            'auth_type'   => ['WirelessAuthType'],
+            'auth_cipher' => ['WirelessAuthCipher']
         ];
     }
 

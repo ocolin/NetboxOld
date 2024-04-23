@@ -4,13 +4,14 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/DeviceFace.php';
+require_once __DIR__ . '/../../src/Validation/Date.php';
 
 use PHPUnit\Framework\TestCase;
 
-final class DeviceFaceTest extends TestCase
+final class DateTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\DeviceFace;
+    use \Cruzio\lib\Netbox\Validation\Date;
+
 
 /*
 ----------------------------------------------------------------------------- */
@@ -18,7 +19,7 @@ final class DeviceFaceTest extends TestCase
     public function testGood() : void
     {
 
-        $result = self::validate_DeviceFace( input: 'front' );
+        $result = self::validate_Date( input: '2024-12-12' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
@@ -28,7 +29,7 @@ final class DeviceFaceTest extends TestCase
 
     public function testBad() : void
     {
-        $result = self::validate_DeviceFace( input: 'bad input' );
+        $result = self::validate_Date( input: 'bad input' );
         self::assertIsString( $result );
     }
 }

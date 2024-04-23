@@ -84,15 +84,15 @@ class Cables extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [
-            'type'        => 'CableType',
-            'status'      => 'CableStatus',
-            'length_unit' => 'LengthUnit'
+            'type'        => ['CableType'],
+            'status'      => ['CableStatus'],
+            'length_unit' => ['LengthUnit']
         ];
     }
 

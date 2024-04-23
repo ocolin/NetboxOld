@@ -71,12 +71,12 @@ class ServiceTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'protocol' => 'ServiceProtocol' ];
+        return [ 'protocol' => ['ServiceProtocol'] ];
     }
 
     use Validation\ServiceProtocol;

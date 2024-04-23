@@ -102,16 +102,16 @@ class DeviceTypes extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [ 
-            'subdevice_role' => 'DeviceRole', 
-            'airflow'        => 'Airflow',
-            'weight_unit'    => 'WeightUnit',
-            'slug'           => 'Slug'
+            'subdevice_role' => ['DeviceRole'],
+            'airflow'        => ['Airflow'],
+            'weight_unit'    => ['WeightUnit'],
+            'slug'           => ['Slug']
         ];
     }
 

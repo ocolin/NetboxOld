@@ -15,7 +15,7 @@ interface DataInterface
     public static function readonly() : array;
 
     /**
-     * @return array<string, string>
+     * @return array<string, array<string>>
      */
     
     public static function validate() : array;

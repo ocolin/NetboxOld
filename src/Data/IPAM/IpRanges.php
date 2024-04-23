@@ -74,12 +74,15 @@ class IpRanges extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
+    /**
+     * @return array<string, array<string>>
+     */
     public static function validate() : array
     {
         return [
-            'start_address' => 'CIDR',
-            'end_address'   => 'CIDR',
-            'status'        => 'IpRangeStatus'
+            'start_address' => ['CIDR'] ,
+            'end_address'   => ['CIDR'],
+            'status'        => ['IpRangeStatus']
         ];
     }
 

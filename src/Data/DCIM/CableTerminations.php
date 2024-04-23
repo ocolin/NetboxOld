@@ -54,7 +54,7 @@ class CableTerminations extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'termination_type' => 'TerminationType' ];
+        return [ 'termination_type' => ['TerminationType'] ];
     }
 
     use Validation\TerminationType;

@@ -49,7 +49,7 @@ final class CircuitsTest extends TestCircuits
     {
         $result = self::createCircuit(
             provider_id: self::$provider->id,
-            type_id: self::$type->id
+            type_id: self::$type->id,
         );
         //print_r( $result );
 

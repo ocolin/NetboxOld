@@ -88,12 +88,15 @@ class ConsolePorts extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => 'ConsolePortType', 'speed' => 'ConsoleSpeed' ];
+        return [
+            'type'  => ['ConsolePortType'],
+            'speed' => ['ConsoleSpeed']
+        ];
     }
 
     use Validation\ConsoleSpeed;

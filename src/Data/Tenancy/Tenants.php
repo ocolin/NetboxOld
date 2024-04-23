@@ -88,9 +88,12 @@ class Tenants extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
+    /**
+     * @return array<string, array<string>>
+     */
     public static function validate() : array
     {
-        return [ 'slug' => 'Slug' ];
+        return [ 'slug' => ['Slug'] ];
     }
 
     use Validation\Slug;

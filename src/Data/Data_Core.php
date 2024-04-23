@@ -48,24 +48,58 @@ class Data_Core
 ----------------------------------------------------------------------------- */
 
     /**
-     * @param string|int|float|array<int> $value
+     * @param string $property
+     * @param string|int|float|bool $value
      * @throws Exception
      */
-    public function set( string $property, string|int|float|array $value ) : void
+    public function set( string $property, string|int|float|bool $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );
             if( !$rp->isPrivate() ) {
                 if( array_key_exists( $property, $this->validate())) {
+                    self::build_Validate( property: $property, value: $value );
+/*
                     $val_func = 'validate_' . static::validate()[$property];
                     $result = static::$val_func( $value );
                     if(  $result !== true ) {
                         throw new Exception( $result );
                     }
+*/
                 }
                 $this->$property = $value;
             }
         }
+    }
+
+
+    /**
+     * @param  string $property
+     * @param string|int|float|bool $value
+     * @throws Exception
+     *
+     */
+    protected static function build_Validate( string $property, string|int|float|bool  $value ) : void
+    {
+        $params = static::validate()[$property];
+        $val_func =  'validate_' . array_shift( $params );
+        $result = static::$val_func( $value );
+        if(  $result !== true ) {
+            throw new Exception( $result );
+        }
+
+        /*
+        $type = static::validate()[$property] );
+        if( gettype( $value ) === 'array' ) {
+
+        } else {
+            $val_func = 'validate_' . $type;
+            $result = static::$val_func( $value );
+            if(  $result !== true ) {
+                throw new Exception( $result );
+            }
+        }
+        */
     }
 
 
@@ -103,7 +137,7 @@ class Data_Core
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string>
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array

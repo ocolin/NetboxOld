@@ -91,17 +91,17 @@ class Racks extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [ 
-            'status'      => 'Status', 
-            'type'        => 'RackType',
-            'width'       => 'RackWidth',
-            'weight_unit' => 'WeightUnit',
-            'outer_unit'  => 'RackOuterUnit'
+            'status'      => ['Status'],
+            'type'        => ['RackType'],
+            'width'       => ['RackWidth'],
+            'weight_unit' => ['WeightUnit'],
+            'outer_unit'  => ['RackOuterUnit']
         ];
     }
 

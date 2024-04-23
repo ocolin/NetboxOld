@@ -81,15 +81,15 @@ class IpAddresses extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [
-            'address' => 'CIDR',
-            'status'  => 'IpStatus',
-            'role'    => 'IpRole'
+            'address' => ['CIDR'],
+            'status'  => ['IpStatus'],
+            'role'    => ['IpRole']
         ];
     }
 

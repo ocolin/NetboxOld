@@ -71,12 +71,12 @@ class Aggregates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
-        return [ 'prefix' => 'CIDR' ];
+        return [ 'prefix' => ['CIDR'] ];
     }
 
     use Validation\CIDR;

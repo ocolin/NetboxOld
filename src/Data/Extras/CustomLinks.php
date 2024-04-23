@@ -72,13 +72,13 @@ class CustomLinks extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string>>
  */
 
     public static function validate() : array
     {
         return [
-            'button_class' => 'ButtonClass'
+            'button_class' => ['ButtonClass']
         ];
     }
 

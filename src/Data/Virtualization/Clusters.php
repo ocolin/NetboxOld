@@ -75,13 +75,13 @@ class Clusters extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string, string> 
- */
+    /**
+     *  @return array<string, array<string>>
+     */
 
     public static function validate() : array
     {
-        return [ 'status' => 'Status' ];
+        return [ 'status' => ['Status'] ];
     }
 
     use Validation\Status;

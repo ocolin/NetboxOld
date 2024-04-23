@@ -101,6 +101,7 @@ abstract class TestCircuits extends TestCase
         $d->set( 'provider', $provider_id );
         $d->set( 'cid', 'PHPUnit_Circuit-' . $rand );
         $d->set( 'type', $type_id );
+        $d->set( 'install_date', '2023-01-01' );
 
         return $o->create( data: $d );
     }
