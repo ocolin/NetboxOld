@@ -23,6 +23,7 @@
           <file>tests/Validation/CustomFieldObjectTypeTest.php</file>
           <file>tests/Validation/CustomFieldTypeTest.php</file>
           <file>tests/Validation/DateTest.php</file>
+          <file>tests/Validation/DateTimeTest.php</file>
           <file>tests/Validation/DeviceFaceTest.php</file>
           <file>tests/Validation/DeviceRoleTest.php</file>
           <file>tests/Validation/DuplexTest.php</file>
@@ -51,6 +52,7 @@
           <file>tests/Validation/RackTypeTest.php</file>
           <file>tests/Validation/RackWidthTest.php</file>
           <file>tests/Validation/RangeIntTest.php</file>
+          <file>tests/Validation/RangeStringTest.php</file>
           <file>tests/Validation/RfChannelTest.php</file>
           <file>tests/Validation/RfRoleTest.php</file>
           <file>tests/Validation/ServiceProtocolTest.php</file>
@@ -60,6 +62,7 @@
           <file>tests/Validation/TerminationTypeTest.php</file>
           <file>tests/Validation/UIEditableTest.php</file>
           <file>tests/Validation/UIVisibleTest.php</file>
+          <file>tests/Validation/UsernameTest.php</file>
           <file>tests/Validation/VlanStatusTest.php</file>
           <file>tests/Validation/VMInterfaceModeTest.php</file>
           <file>tests/Validation/VMStatusTest.php</file>

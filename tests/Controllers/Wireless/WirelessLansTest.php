@@ -11,8 +11,8 @@ use PHPUnit\Framework\Attributes\Depends;
 final class WirelessLansTest extends TestWireless
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsWirelessLan() : void
     {
@@ -22,8 +22,8 @@ final class WirelessLansTest extends TestWireless
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateWirelessLanBad() : void
     {

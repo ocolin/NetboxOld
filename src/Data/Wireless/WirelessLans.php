@@ -11,15 +11,62 @@ use Cruzio\lib\Netbox\Validation;
 
 class WirelessLans extends Data_Core implements DataInterface
 {
-    protected string $ssid; // Max: 32
-    protected string $description; // Max: 200
-    protected int    $group; // Class: WirelessLanGroups
+    /**
+     * @var string $ssid
+     * REQUIRED
+     */
+    protected string $ssid;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var int $group
+     * ID of WirelessLanGroups class
+     */
+    protected int $group;
+
+    /**
+     * @var string $status
+     * ENUM
+     */
     protected string $status;
-    protected int    $vlan; // Class IPAM\Vlans
-    protected int    $tenant; // Class Yenancy\Tenants
-    protected string $auth_type; 
+
+    /**
+     * @var int $vlan
+     * ID of Vlans class
+     */
+    protected int $vlan;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $auth_type
+     * ENUM
+     */
+    protected string $auth_type;
+
+    /**
+     * @var string $auth_cipher
+     * ENUM
+     */
     protected string $auth_cipher;
-    protected string $auth_psk; // Max: 64
+
+    /**
+     * @var string $auth_psk
+     */
+    protected string $auth_psk;
+
+    /**
+     * @var string $comments
+     */
     protected string $comments;
 
     /**
@@ -35,7 +82,6 @@ class WirelessLans extends Data_Core implements DataInterface
     protected string $display;
     protected string $created;
     protected string $last_updated;
-
 
 
 /* REQUIRED PARAMETERS
@@ -75,21 +121,25 @@ class WirelessLans extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 
-            'status'      => ['Status'],
-            'auth_type'   => ['WirelessAuthType'],
-            'auth_cipher' => ['WirelessAuthCipher']
+        return [
+            'ssid'              => [ 'MaxString', 32 ],
+            'description'       => [ 'MaxString', 200 ],
+            'status'            => [ 'Status' ],
+            'auth_type'         => [ 'WirelessAuthType' ],
+            'auth_cipher'       => [ 'WirelessAuthCipher' ],
+            'auth_psk'          => [ 'MaxString', 64 ],
         ];
     }
 
     use Validation\Status;
     use Validation\WirelessAuthType;
     use Validation\WirelessAuthCipher;
+    use Validation\MaxString;
 
 }
 

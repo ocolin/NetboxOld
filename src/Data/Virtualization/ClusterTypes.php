@@ -11,9 +11,23 @@ use Cruzio\lib\Netbox\Validation;
 
 class ClusterTypes extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
@@ -75,10 +89,17 @@ class ClusterTypes extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'status' => ['Status'] ];
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'slug'          => [ 'Slug' ],
+            'status'        => [ 'Status' ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Status;
+    use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

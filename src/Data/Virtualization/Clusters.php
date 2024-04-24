@@ -11,19 +11,58 @@ use Cruzio\lib\Netbox\Validation;
 
 class Clusters extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected int    $type; // Class: ClusterTypes
-    protected int    $group; // Class: ClusterTypes
-    protected string $status; 
-    protected int    $tenant; // Class: Tenancy\Tenatns
-    protected int    $site; // Class: DCIM\Sites
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var int $type
+     * REQUIRED
+     * ID of ClusterTypes class
+     */
+    protected int $type;
+
+    /**
+     * @var int $group
+     * ID of ClusterGroups class
+     */
+    protected int $group;
+
+    /**
+     * @var string $status
+     * ENUM
+     */
+    protected string $status;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var int $site
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var string $comments
+     */
     protected string $comments;
 
     /**
      * @var array<TagType> $tags
      */
-    protected array  $tags;
+    protected array $tags;
     protected object $custom_fields;
 
 
@@ -76,15 +115,20 @@ class Clusters extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     *  @return array<string, array<string>>
+     *  @return array<string, array<string|int>>
      */
 
     public static function validate() : array
     {
-        return [ 'status' => ['Status'] ];
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'status'        => [ 'Status' ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Status;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

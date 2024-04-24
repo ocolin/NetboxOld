@@ -11,10 +11,29 @@ use Cruzio\lib\Netbox\Validation;
 
 class WirelessLanGroups extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected int    $parent; // Class: WirelessLanGroups
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var int $parent
+     * ID of parent object class
+     */
+    protected int $parent;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
@@ -73,15 +92,20 @@ class WirelessLanGroups extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'slug'          => [ 'Slug', 100 ],
+            'name'          => [ 'MaxString', 100 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

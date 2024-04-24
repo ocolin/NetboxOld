@@ -12,8 +12,8 @@ final class WirelessLanGroupsTest extends TestWireless
 {
     public static object $user;
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsWirelessLanGroup() : void
     {
@@ -23,8 +23,8 @@ final class WirelessLanGroupsTest extends TestWireless
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateWirelessLanGroupBad() : void
     {
@@ -37,8 +37,8 @@ final class WirelessLanGroupsTest extends TestWireless
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -54,8 +54,8 @@ final class WirelessLanGroupsTest extends TestWireless
     }
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateWirelessLanGroup')]
     public function testGetWirelessLanGroup( int $id ) : void
@@ -69,8 +69,8 @@ final class WirelessLanGroupsTest extends TestWireless
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListWirelessLanGroup() : void
     {
@@ -88,8 +88,8 @@ final class WirelessLanGroupsTest extends TestWireless
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -106,8 +106,8 @@ final class WirelessLanGroupsTest extends TestWireless
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -128,8 +128,8 @@ final class WirelessLanGroupsTest extends TestWireless
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -149,8 +149,8 @@ final class WirelessLanGroupsTest extends TestWireless
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateWirelessLanGroup')]
     public function testDeleteWirelessLanGroup( int $id ) : void

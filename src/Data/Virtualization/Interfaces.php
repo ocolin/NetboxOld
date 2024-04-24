@@ -11,19 +11,78 @@ use Cruzio\lib\Netbox\Validation;
 
 class Interfaces extends Data_Core implements DataInterface
 {
-    protected int    $virtual_machine; // Class: Virtualization\VirtualMachines
-    protected string $name; // Max: 64
-    protected bool   $enabled;
-    protected int    $parent; // Class: Virtualization\VirtualMachines
-    protected int    $bridge;
-    protected int    $mtu; // Max: 65536
+    /**
+     * @var int $virtual_machine
+     * REQUIRED
+     * ID of VirtualMachines class
+     */
+    protected int $virtual_machine;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var bool $enabled
+     * Is interface enabled?
+     */
+    protected bool $enabled;
+
+    /**
+     * @var int $parent
+     * ID of parent class object
+     */
+    protected int $parent;
+
+    /**
+     * @var int $bridge
+     * ID of Bridges class
+     */
+    protected int $bridge;
+
+    /**
+     * @var int $mtu
+     * Maximum Transmission Unit
+     */
+    protected int $mtu;
+
+    /**
+     * @var string $mac_address
+     * MAC Address
+     */
     protected string $mac_address;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var string $mode
+     * ENUM
+     */
     protected string $mode;
-    protected int    $untagged_vlan; // Class: Vlans
-    protected string $tagged_vlans;
-    protected int    $vrf; // Class: Vrfs
-    protected int    $l2vpn_termination; // Class:
+
+    /**
+     * @var int $untagged_vlan
+     * ID of Vlans class
+     */
+    protected int $untagged_vlan;
+
+    /**
+     * @var array<int> $tagged_vlans
+     * List of tagged Vlans IDs
+     */
+    protected array $tagged_vlans;
+
+    /**
+     * @var int $vrf
+     * ID of Vrfs class
+     */
+    protected int $vrf;
 
     /**
      * @var array<TagType> $tags
@@ -39,6 +98,7 @@ class Interfaces extends Data_Core implements DataInterface
     protected string $last_updated;
     protected int    $count_ipaddresses;
     protected int    $count_fhrp_groups;
+    protected int $l2vpn_termination;
 
 
 /* REQUIRED PARAMETERS
@@ -86,10 +146,19 @@ class Interfaces extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'mode' => ['VMInterfaceMode'] ];
+        return [
+            'mode'          => [ 'VMInterfaceMode' ],
+            'name'          => [ 'MaxString', 64 ],
+            'mtu'           => [ 'RangeInt', 1, 65536 ],
+            'mac_address'   => [ 'MacAddress' ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\VMInterfaceMode;
+    use Validation\MaxString;
+    use Validation\RangeInt;
+    use Validation\MacAddress;
 
 }
 
