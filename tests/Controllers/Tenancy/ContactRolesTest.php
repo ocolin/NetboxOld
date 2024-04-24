@@ -18,7 +18,6 @@ final class ContactRolesTest extends TestTenancy
     {
         $o = new ContactRoles();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

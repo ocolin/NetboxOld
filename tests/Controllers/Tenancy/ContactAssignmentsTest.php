@@ -24,7 +24,6 @@ final class ContactAssignmentsTest extends TestTenancy
     {
         $o = new ContactAssignments();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

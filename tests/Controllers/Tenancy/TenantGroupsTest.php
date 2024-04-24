@@ -18,7 +18,6 @@ final class TenantGroupsTest extends TestTenancy
     {
         $o = new TenantGroups();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

@@ -7,13 +7,33 @@ namespace Cruzio\lib\Netbox\Data\Tenancy;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class TenantGroups extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected int    $parent; // Class: TenantGroups
-    protected string $description; // MAx: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var int $parent
+     * ID of parent object class
+     */
+    protected int $parent;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
@@ -66,6 +86,24 @@ class TenantGroups extends Data_Core implements DataInterface
         ];
     }
 
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     * @return array<string, array<string|int>>
+     */
+    public static function validate() : array
+    {
+        return [
+            'slug'          => [ 'Slug', 100 ],
+            'name'          => [ 'MaxString', 100 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

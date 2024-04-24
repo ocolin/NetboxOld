@@ -11,9 +11,23 @@ use Cruzio\lib\Netbox\Validation;
 
 class ContactRoles extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected string $description; // MAx: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
@@ -66,14 +80,19 @@ class ContactRoles extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     * @return array<string, array<string>>
+     * @return array<string, array<string|int>>
      */
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'slug'          => [ 'Slug', 100 ],
+            'name'          => [ 'MaxString', 100 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

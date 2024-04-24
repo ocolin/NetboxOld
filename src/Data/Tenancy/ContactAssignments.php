@@ -11,10 +11,35 @@ use Cruzio\lib\Netbox\Validation;
 
 class ContactAssignments extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $content_type
+     * REQUIRED
+     */
     protected string $content_type;
-    protected int    $object_id;
-    protected int    $role;
-    protected int    $contact;
+
+    /**
+     * @var int $object_id
+     * REQUIRED
+     */
+    protected int $object_id;
+
+    /**
+     * @var int $role
+     * ID for ContactRoles class
+     */
+    protected int $role;
+
+    /**
+     * @var int $contact
+     * REQUIRED
+     * ID of Contacts class
+     */
+    protected int $contact;
+
+    /**
+     * @var string $priority
+     * ENUM
+     */
     protected string $priority;
 
     // READ ONLY
@@ -42,7 +67,7 @@ class ContactAssignments extends Data_Core implements DataInterface
 
     public static function required() : array
     {
-        return [ 'content_type', 'object_id', 'contact', 'role' ];
+        return [ 'content_type', 'object_id', 'contact' ];
     }
 
 
@@ -71,18 +96,20 @@ class ContactAssignments extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     * @return array<string, array<string>>
+     * @return array<string, array<string|int>>
      */
     public static function validate() : array
     {
         return [ 
-            'priority'      => ['ContactPriority'],
-            'content_type'  => ['ContactContentTypes']
+            'priority'      => [ 'ContactPriority' ],
+            'content_type'  => [ 'ContactContentTypes' ],
+            'object_id'     => [ 'RangeInt', 0, 9223372036854775807 ],
         ];
     }
 
     use Validation\ContactPriority;
     use Validation\ContactContentTypes;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

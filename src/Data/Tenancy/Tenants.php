@@ -11,17 +11,39 @@ use Cruzio\lib\Netbox\Validation;
 
 class Tenants extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected int    $group; // Class: TenatGroup
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var int $group
+     * ID of ContactGroups class
+     */
+    protected int $group;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var string $comments
+     */
     protected string $comments;
     protected object $custom_fields;
 
     /**
      * @var array<TagType> $tags
      */
-    
     protected array $tags;
 
     // READ ONLY
@@ -93,10 +115,16 @@ class Tenants extends Data_Core implements DataInterface
      */
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'slug'          => [ 'Slug', 100 ],
+            'description'   => [ 'MaxString', 200 ],
+
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE
@@ -122,4 +150,4 @@ class Tenants extends Data_Core implements DataInterface
     "additionalProp3": "string"
   }
 }
- */
+*/

@@ -7,17 +7,56 @@ namespace Cruzio\lib\Netbox\Data\Tenancy;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class Contacts extends Data_Core implements DataInterface
 {
-    protected int    $group; // Class: ContactGroups
-    protected string $name; // Max: 100
-    protected string $title; // Max: 100
-    protected string $phone; // Max: 50
-    protected string $email; // MAx: 254
-    protected string $address; // Max: 200
-    protected string $link; // Max: 200
-    protected string $description; // Max: 200
+    /**
+     * @var int $group
+     * ID of ContactGroups class
+     */
+    protected int $group;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $title
+     * Title of contact
+     */
+    protected string $title;
+
+    /**
+     * @var string $phone
+     */
+    protected string $phone;
+
+    /**
+     * @var string $email
+     */
+    protected string $email;
+
+    /**
+     * @var string $address
+     */
+    protected string $address;
+
+    /**
+     * @var string $link
+     */
+    protected string $link;
+
+    /**
+     * @var string $description
+     */
+    protected string $description;
+
+    /**
+     * @var string $comments
+     */
     protected string $comments;
 
     /**
@@ -66,6 +105,29 @@ class Contacts extends Data_Core implements DataInterface
             'last_updated',
         ];
     }
+
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     * @return array<string, array<string|int>>
+     */
+    public static function validate() : array
+    {
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'title'         => [ 'MaxString', 100 ],
+            'phone'         => [ 'MaxString', 50 ],
+            'email'         => [ 'MaxString', 254 ],
+            'address'       => [ 'MaxString', 200 ],
+            'link'          => [ 'MaxString', 200 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE
