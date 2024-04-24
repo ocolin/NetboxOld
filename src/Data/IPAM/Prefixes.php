@@ -11,17 +11,72 @@ use Cruzio\lib\Netbox\Validation;
 
 class Prefixes extends Data_Core implements DataInterface
 {
-    protected string $prefix; // CIDR
-    protected int    $site; // CLass: DCIM/Sites
-    protected int    $vrf; // Class: IPAM/Vrfs
-    protected int    $tenant; // Class: Tenacy/tenants
-    protected int    $vlan; // Class: IPAM/vlans
+    /**
+     * @var string $prefix
+     * REQUIRED
+     */
+    protected string $prefix;
+
+    /**
+     * @var int $site
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int $vrf
+     * ID of Vrfs class
+     */
+    protected int $vrf;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var int $vlan
+     * Id of Vlans class
+     */
+    protected int $vlan;
+
+    /**
+     * @var string $status
+     * ENUM
+     */
     protected string $status;
-    protected int    $role; // Class: Roles
-    protected bool   $is_pool; // All IP addresses within this prefix are considered usable
-    protected bool   $mark_utilized; //  Treat as fully utilized
-    protected string $description; // Max: 200
+
+    /**
+     * @var int $role
+     * ID of Roles class
+     */
+    protected int $role;
+
+    /**
+     * @var bool $is_pool
+     * All IP addresses within this prefix are considered usable
+     */
+    protected bool $is_pool;
+
+    /**
+     * @var bool $mark_utilized
+     * Treat as fully utilized
+     */
+    protected bool $mark_utilized;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
+
+    /**
+     * @var array<TagType> $tags
+     */
+    protected array  $tags;
+    protected object $custom_fields;
 
     // READ ONLY
     protected int    $id;
@@ -32,13 +87,6 @@ class Prefixes extends Data_Core implements DataInterface
     protected string $family;
     protected int    $children;
     protected int    $_depth;
-
-
-    /**
-     * @var array<TagType> $tags
-     */
-    protected array  $tags;
-    protected object $custom_fields;
 
 
 /* REQUIRED PARAMETERS
@@ -81,19 +129,21 @@ class Prefixes extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     *  @return array<string, array<string>>
+     *  @return array<string, array<string|int>>
      */
 
     public static function validate() : array
     {
         return [
-            'prefix' => ['CIDR'],
-            'status' => ['PrefixStatus']
+            'prefix'        => ['CIDR'],
+            'status'        => ['PrefixStatus'],
+            'description'   => [ 'MaxString', 200 ]
         ];
     }
 
     use Validation\CIDR;
     use Validation\PrefixStatus;
+    use Validation\MaxString;
 
 
 /* DATA EXAMPLE

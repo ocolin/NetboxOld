@@ -31,6 +31,7 @@ class InterfaceTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of template
      */
     protected string $name;
@@ -44,6 +45,7 @@ class InterfaceTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $type
+     * REQUIRED
      * Choose from list of types
      */
     protected string $type;
@@ -74,22 +76,21 @@ class InterfaceTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $poe_mode
-     * Choose from list of modes
+     * ENUM
      */
     protected string $poe_mode;
 
     /**
      * @var string $poe_type
-     * Choose from list of types
+     * ENUM
      */
     protected string $poe_type;
 
     /**
      * @var string $rf_role
-     * Choose from list of RF roles
+     * ENUM
      */
     protected string $rf_role;
-
 
     // READ ONLY
     protected int    $id;
@@ -101,7 +102,6 @@ class InterfaceTemplates extends Data_Core implements DataInterface
     /**
      * @var array<TagType>
      */
-    
     protected array  $tags;
     protected object $custom_fields;
 

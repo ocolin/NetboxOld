@@ -24,6 +24,7 @@ class ConsoleServerPortTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * {module} is accepted as a substitution for the module
      * bay position when attached to a module type.
      */
@@ -37,7 +38,7 @@ class ConsoleServerPortTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $type
-     * Choose from a list of types
+     * ENUM
      */
     protected string $type;
 

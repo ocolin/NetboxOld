@@ -11,8 +11,8 @@ final class PrefixesAvailableIpsTest extends TestIPAM
 {
     public static object $prefix;
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetPrefixesAvailable() : void
     {
@@ -25,8 +25,8 @@ final class PrefixesAvailableIpsTest extends TestIPAM
     }
 
 
-    /* SETUP
-    ---------------------------------------------------------------------------- */
+/* SETUP
+---------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -37,8 +37,8 @@ final class PrefixesAvailableIpsTest extends TestIPAM
     }
 
 
-    /* TEAR DOWN
-    ---------------------------------------------------------------------------- */
+/* TEAR DOWN
+---------------------------------------------------------------------------- */
 
     public static function tearDownAfterClass() : void
     {

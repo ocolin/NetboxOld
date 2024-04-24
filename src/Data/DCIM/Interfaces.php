@@ -13,6 +13,7 @@ class Interfaces extends Data_Core implements DataInterface
 {
     /**
      * @var int $device
+     * REQUIRED
      * ID of Devices class
      */
     protected int $device;
@@ -31,6 +32,7 @@ class Interfaces extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of interface
      */
     protected string $name;
@@ -43,6 +45,7 @@ class Interfaces extends Data_Core implements DataInterface
 
     /**
      * @var string $type
+     * REQUIRED
      * Choose from list of types
      */
     protected string $type;
@@ -91,7 +94,7 @@ class Interfaces extends Data_Core implements DataInterface
 
     /**
      * @var string $duplex
-     * Full, Half, Auto
+     * ENUM - Full, Half, Auto
      */
     protected string $duplex;
     protected string $wwn;

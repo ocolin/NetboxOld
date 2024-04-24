@@ -11,11 +11,35 @@ use Cruzio\lib\Netbox\Validation;
 
 class Aggregates extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $prefix
+     * REQUIRED
+     */
     protected string $prefix;
-    protected int    $rir; // Class: IPAM/Rirs
-    protected int    $tenant; // Class: Tenancy/Tenants
-    protected string $date_added; // Date
-    protected string $description; // Max: 200
+
+    /**
+     * @var int $rir
+     * REQUIRED
+     * ID of Rirs class
+     */
+    protected int $rir;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $date_added
+     */
+    protected string $date_added;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
@@ -71,15 +95,21 @@ class Aggregates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'prefix' => ['CIDR'] ];
+        return [
+            'prefix'        => [ 'CIDR' ],
+            'date_added'    => [ 'Date' ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\CIDR;
+    use Validation\Date;
+    use Validation\MaxString;
     
 }
 

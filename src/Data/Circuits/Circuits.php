@@ -15,12 +15,14 @@ class Circuits extends Data_Core implements DataInterface
 {
     /**
      * @var string $cid
+     * REQUIRED
      * Unique circuit ID
      */
     protected string $cid;
 
     /**
      * @var int $provider
+     * REQUIRED
      * ID of Providers class
      */
     protected int $provider;
@@ -33,6 +35,7 @@ class Circuits extends Data_Core implements DataInterface
 
     /**
      * @var int $type
+     * REQUIRED
      * ID of CircuitType class
      */
     protected int $type;

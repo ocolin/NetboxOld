@@ -11,13 +11,45 @@ use Cruzio\lib\Netbox\Validation;
 
 class VlanGroups extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
     protected string $slug;
+
+    /**
+     * @var string $scope_type
+     */
     protected string $scope_type;
-    protected int    $scope_id;
-    protected int    $min_vid; // Lowest permissible ID of a child VLAN. 1-4094
-    protected int    $max_vid; // Highest permissible ID of a child VLAN. 1-4094
-    protected string $description; // Max: 200
+
+    /**
+     * @var int $scope_id
+     */
+    protected int $scope_id;
+
+    /**
+     * @var int $min_vid
+     * Lowest permissible ID of a child VLAN.
+     */
+    protected int $min_vid;
+
+    /**
+     * @var int $max_vid
+     * Highest permissible ID of a child VLAN.
+     */
+    protected int $max_vid;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     
     /**
      * @var array<TagType> $tags
@@ -76,15 +108,23 @@ class VlanGroups extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'slug'          => [ 'Slug', 100 ],
+            'min_vid'       => [ 'RangeInt', 1, 4094 ],
+            'max_vid'       => [ 'RangeInt', 1, 4094 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 
 }
 

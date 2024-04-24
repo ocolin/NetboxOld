@@ -34,7 +34,7 @@ class Modules extends Data_Core implements DataInterface
 
     /**
      * @var string $status
-     * Choose from list of module statuses
+     * ENUM
      */
     protected string $status;
 

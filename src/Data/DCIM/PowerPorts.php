@@ -39,7 +39,7 @@ class PowerPorts extends Data_Core implements DataInterface
 
     /**
      * @var string $type
-     * Choose from list of port types
+     * ENUM
      */
     protected string $type;
 

@@ -24,6 +24,7 @@ class ConsolePortTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * {module} is accepted as a substitution for the module
      * bay position when attached to a module type.
      */

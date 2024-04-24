@@ -13,12 +13,14 @@ class Providers extends Data_Core implements DataInterface
 {
     /**
      * @var string $name
+     * REQUIRED
      * Full name of the provider
      */
     protected string $name;
 
     /**
      * @var string $slug
+     * REQUIRED
      */
     protected string $slug;
 

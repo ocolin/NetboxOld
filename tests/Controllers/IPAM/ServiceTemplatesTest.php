@@ -11,20 +11,19 @@ use PHPUnit\Framework\Attributes\Depends;
 final class ServiceTemplatesTest extends TestIPAM
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsServiceTemplate() : void
     {
         $o = new ServiceTemplates();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateServiceTemplateBad() : void
     {
@@ -37,8 +36,8 @@ final class ServiceTemplatesTest extends TestIPAM
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -56,8 +55,8 @@ final class ServiceTemplatesTest extends TestIPAM
 
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateServiceTemplate')]
     public function testGetServiceTemplate( int $id ) : void
@@ -71,8 +70,8 @@ final class ServiceTemplatesTest extends TestIPAM
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListServiceTemplate() : void
     {
@@ -90,8 +89,8 @@ final class ServiceTemplatesTest extends TestIPAM
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -108,8 +107,8 @@ final class ServiceTemplatesTest extends TestIPAM
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -131,8 +130,8 @@ final class ServiceTemplatesTest extends TestIPAM
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -152,8 +151,8 @@ final class ServiceTemplatesTest extends TestIPAM
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateServiceTemplate')]
     public function testDeleteServiceTemplate( int $id ) : void

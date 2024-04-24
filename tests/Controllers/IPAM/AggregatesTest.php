@@ -19,7 +19,6 @@ final class AggregatesTest extends TestIPAM
     {
         $o = new Aggregates();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

@@ -13,6 +13,7 @@ class PowerPortTemplates extends Data_Core implements DataInterface
 {
     /**
      * @var int $device_type
+     * REQUIRED
      * ID of DeviceTypes class
      */
     protected int $device_type;
@@ -39,7 +40,7 @@ class PowerPortTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $type
-     * Choose from a list of port types
+     * ENUM
      */
     protected string $type;
 
@@ -84,7 +85,7 @@ class PowerPortTemplates extends Data_Core implements DataInterface
 
     public static function required() : array
     {
-        return [ 'device', 'name' ];
+        return [ 'device_type', 'name' ];
     }
 
 

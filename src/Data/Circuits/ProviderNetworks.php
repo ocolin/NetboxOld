@@ -13,12 +13,26 @@ class ProviderNetworks extends Data_Core implements DataInterface
 {
     /**
      * @var int $provider
+     * REQUIRED
      * ID of Providers class
      */
     protected int $provider;
-    protected string $name; // Max: 100
-    protected string $service_id; // Max: 100
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $service_id
+     */
+    protected string $service_id;
+
+    /**
+     * @var string $description
+     */
+    protected string $description;
     protected string $comments;
 
     /**

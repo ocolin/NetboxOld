@@ -11,18 +11,47 @@ use Cruzio\lib\Netbox\Validation;
 
 class FhrpGroups extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $name
+     * Name of group
+     */
     protected string $name;
+
+    /**
+     * @var string $protocol
+     * REQUIRED
+     * Choose from list of protocols
+     */
     protected string $protocol;
-    protected int    $group_id;
+
+    /**
+     * @var int $group_id
+     * REQUIRED
+     */
+    protected int $group_id;
+
+    /**
+     * @var string $auth_type
+     * Choose from list of authentication types
+     */
     protected string $auth_type;
-    protected string $auth_key; // Authentication key. Max: 255
+
+    /**
+     * @var string $auth_key
+     * Authentication key
+     */
+    protected string $auth_key;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
     protected string $comments;
 
     /**
      * @var array<TagType> $tags
      */
-    
     protected array  $tags;
     protected object $custom_fields;
 
@@ -74,18 +103,24 @@ class FhrpGroups extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     * @return array<string, array<string>>
+     * @return array<string, array<string|int>>
      */
     public static function validate() : array
     {
-        return [ 
-            'protocol'  => ['FhrpGroupProtocol'],
-            'auth_type' => ['FhrpGroupAuthType']
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'group_id'      => [ 'RangeInt', 0, 32767 ],
+            'auth_key'      => [ 'MaxString', 255 ],
+            'description'   => [ 'MaxString', 200 ],
+            'protocol'      => [ 'FhrpGroupProtocol' ],
+            'auth_type'     => [ 'FhrpGroupAuthType' ]
         ];
     }
 
     use Validation\FhrpGroupProtocol;
     use Validation\FhrpGroupAuthType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 
 }
 

@@ -39,7 +39,7 @@ class PowerOutlets extends Data_Core implements DataInterface
 
     /**
      * @var string $type
-     * Choose type of outlet
+     * ENUM
      */
     protected string $type;
 
@@ -51,7 +51,7 @@ class PowerOutlets extends Data_Core implements DataInterface
 
     /**
      * @var string $feed_leg
-     * Choose type of feed leg
+     * ENUM
      */
     protected string $feed_leg;
 

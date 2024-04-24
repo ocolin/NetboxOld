@@ -11,15 +11,33 @@ use Cruzio\lib\Netbox\Validation\MaxString;
 
 class CircuitTypes extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected string $color; // Max: 6
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var string $color
+     * Color code of Circuit
+     */
+    protected string $color;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
      */
-
      protected array  $tags;
      protected object $custom_fields;
 

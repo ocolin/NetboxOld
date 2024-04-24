@@ -19,7 +19,6 @@ final class AsnsTest extends TestIPAM
     {
         $o = new Asns();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

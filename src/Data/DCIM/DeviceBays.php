@@ -13,12 +13,14 @@ class DeviceBays extends Data_Core implements DataInterface
 {
     /**
      * @var int $device
+     * REQUIRED
      * ID of Devices class
      */
     protected int $device;
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of bay
      */
     protected string $name;

@@ -37,8 +37,8 @@ final class IpRangesAvailableIpsTest extends TestIPAM
     }
 
 
-    /* TEAR DOWN
-    ---------------------------------------------------------------------------- */
+/* TEAR DOWN
+---------------------------------------------------------------------------- */
 
     public static function tearDownAfterClass() : void
     {

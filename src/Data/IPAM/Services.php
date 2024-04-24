@@ -11,23 +11,48 @@ use Cruzio\lib\Netbox\Validation;
 
 class Services extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class: DCIM/Devices
-    protected int    $virtual_machine;
+    /**
+     * @var int $device
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var int $virtual_machine
+     * ID of VirtualMachines class
+     */
+    protected int $virtual_machine;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     */
     protected string $name;
 
     /**
      * @var array<int> $ports
+     * REQUIRED
+     * List of port number
      */
-
     protected array  $ports;
+
+    /**
+     * @var string $protocol
+     * ENUM - TCP, UDP, SCTP
+     */
     protected string $protocol;
 
     /**
      * @var array<int> $ipaddresses
+     * List of IDs for IP address classes
      */
-
     protected array  $ipaddresses;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
@@ -43,7 +68,6 @@ class Services extends Data_Core implements DataInterface
     protected string $display;
     protected string $created;
     protected string $last_modified;
-
 
 
 /* REQUIRED PARAMETERS
@@ -87,10 +111,15 @@ class Services extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'protocol' => ['ServiceProtocol'] ];
+        return [
+            'protocol'          => [ 'ServiceProtocol' ],
+            'name'              => [ 'MaxString', 100 ],
+            'description'       => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\ServiceProtocol;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

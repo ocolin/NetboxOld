@@ -18,7 +18,6 @@ final class RirsTest extends TestIPAM
     {
         $o = new Rirs();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

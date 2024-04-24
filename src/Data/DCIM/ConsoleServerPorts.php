@@ -13,6 +13,7 @@ class ConsoleServerPorts extends Data_Core implements DataInterface
 {
     /**
      * @var int $device
+     * REQUIRED
      * ID of Devices class
      */
     protected int $device;
@@ -25,6 +26,7 @@ class ConsoleServerPorts extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of port
      */
     protected string $name;

@@ -9,14 +9,37 @@ use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Validation;
 
 class ImageAttachments extends Data_Core implements DataInterface
-{ 
+{
+    /**
+     * @var string $content_type
+     */
     protected string $content_type;
-    protected int    $object_id;
-    protected string $name;
-    protected string $image; // Max: 100
-    protected int    $image_height; // Max: 32767
-    protected int    $image_width; // Max: 32767
 
+    /**
+     * @var int $object_id
+     */
+    protected int $object_id;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $image
+     */
+    protected string $image;
+
+    /**
+     * @var int $image_height
+     */
+    protected int $image_height;
+
+    /**
+     * @var int $image_width
+     */
+    protected int $image_width;
 
     // READ ONLY
     protected int    $id;
@@ -25,7 +48,6 @@ class ImageAttachments extends Data_Core implements DataInterface
     protected string $created;
     protected string $last_updated;
     protected string $parent;
-
 
 
 /* REQUIRED PARAMETERS
@@ -67,17 +89,22 @@ class ImageAttachments extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'content_type' => ['CustomFieldObjectType']
+            'content_type'  => [ 'CustomFieldObjectType' ],
+            'image'         => [ 'MaxString', 100 ],
+            'image_height'  => [ 'MaxInt', 32767 ],
+            'image_width'   => [ 'MaxInt', 32767 ],
         ];
     }
 
     use Validation\CustomFieldObjectType;
+    use Validation\MaxString;
+    use Validation\MaxInt;
 }
 
 /* DATA EXAMPLE

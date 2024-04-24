@@ -11,14 +11,53 @@ use Cruzio\lib\Netbox\Validation;
 
 class Vlans extends Data_Core implements DataInterface
 {
-    protected int    $site; // Class: DCIM/Sites
-    protected int    $group; // Class: VlanGroups
-    protected int    $vid; // Numeric VLAN ID (1-4094)
-    protected string $name; // Max: 64
-    protected int    $tenant; // Class: Tenacy\Tenants
+    /**
+     * @var int $site
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int $group
+     * ID of VlanGroups class
+     */
+    protected int $group;
+
+    /**
+     * @var int $vid
+     * REQUIRED
+     * Numeric VLAN ID (1-4094)
+     */
+    protected int $vid;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var int $tenant
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $status
+     * ENUM - active, reserved, deprecated
+     */
     protected string $status;
-    protected int    $role; // Class: Roles
-    protected string $description; // Max: 200
+
+    /**
+     * @var int $role
+     * ID of Roles class
+     */
+    protected int $role;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
     
     /**
@@ -26,8 +65,6 @@ class Vlans extends Data_Core implements DataInterface
      */
     protected array  $tags;
     protected object $custom_fields;
-
-
 
     // READ ONLY
     protected int    $id;
@@ -78,15 +115,22 @@ class Vlans extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'status' => ['VlanStatus'] ];
+        return [
+            'status'        => [ 'VlanStatus' ],
+            'vid'           => [ 'RangeInt', 1, 4094 ],
+            'name'          => [ 'MaxString', 64 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\VlanStatus;
+    use Validation\RangeInt;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

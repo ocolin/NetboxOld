@@ -11,17 +11,64 @@ use Cruzio\lib\Netbox\Validation;
 
 class IpAddresses extends Data_Core implements DataInterface
 {
-    protected string  $family;
-    protected string  $address;
-    protected int     $vrf; // Class: Vrfs
-    protected int     $tenant; // Class: Tenacy/Tenants
-    protected string  $status;
-    protected string  $role;
-    protected string  $assigned_object_type;
-    protected int     $assigned_object_id;
-    protected int     $nat_inside; // Class: 
-    protected string  $dns_name; // Hostname or FQDN (not case-sensitive)
-    protected string  $description;
+    /**
+     * @var string $address
+     * REQUIRED
+     */
+    protected string $address;
+
+    /**
+     * @var int $vrf
+     * ID of Vrfs class
+     */
+    protected int $vrf;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $status
+     * ENUM
+     */
+    protected string $status;
+
+    /**
+     * @var string $role
+     * ENUM
+     */
+    protected string $role;
+
+    /**
+     * @var string $assigned_object_type
+     */
+    protected string $assigned_object_type;
+
+    /**
+     * @var int $assigned_object_id
+     * Assigned object id
+     */
+    protected int $assigned_object_id;
+
+    /**
+     * @var int $nat_inside
+     * ID of NAT inside object
+     */
+    protected int $nat_inside;
+
+    /**
+     * @var string $dns_name
+     * Hostname or FQDN (not case-sensitive)
+     */
+    protected string $dns_name;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string  $comment;
 
     /**
@@ -34,6 +81,7 @@ class IpAddresses extends Data_Core implements DataInterface
     protected int    $id;
     protected string $url;
     protected string $display;
+    protected string $family;
     protected string $create;
     protected string $last_modified;
     protected string $assigned_object;
@@ -81,21 +129,26 @@ class IpAddresses extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'address' => ['CIDR'],
-            'status'  => ['IpStatus'],
-            'role'    => ['IpRole']
+            'address'               => [ 'CIDR' ],
+            'status'                => [ 'IpStatus' ],
+            'role'                  => [ 'IpRole' ],
+            'assigned_object_id'    => [ 'RangeInt', 0, 9223372036854775807 ],
+            'dns_name'              => [ 'MaxString', 255 ],
+            'description'           => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\CIDR;
     use Validation\IpStatus;
     use Validation\IpRole;
+    use Validation\RangeInt;
+    use Validation\MaxString;
 
 }
 

@@ -25,6 +25,7 @@ class FrontPortTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * {module} is accepted as a substitution for the module
      * bay position when attached to a module type.
      */
@@ -38,6 +39,7 @@ class FrontPortTemplates extends Data_Core implements DataInterface
 
     /**
      * @var string $type
+     * REQUIRED
      * Choose port type
      */
     protected string $type;
@@ -69,7 +71,6 @@ class FrontPortTemplates extends Data_Core implements DataInterface
     /**
      * @var array<TagType> $tags
      */
-    
     protected array $tags;
 
     // READ ONLY

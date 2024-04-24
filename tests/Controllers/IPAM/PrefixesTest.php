@@ -11,20 +11,19 @@ use PHPUnit\Framework\Attributes\Depends;
 final class PrefixesTest extends TestIPAM
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsPrefix() : void
     {
         $o = new Prefixes();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreatePrefixBad() : void
     {
@@ -37,8 +36,8 @@ final class PrefixesTest extends TestIPAM
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -56,8 +55,8 @@ final class PrefixesTest extends TestIPAM
 
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreatePrefix')]
     public function testGetPrefix( int $id ) : void
@@ -71,8 +70,8 @@ final class PrefixesTest extends TestIPAM
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListPrefix() : void
     {
@@ -90,8 +89,8 @@ final class PrefixesTest extends TestIPAM
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -108,8 +107,8 @@ final class PrefixesTest extends TestIPAM
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -130,8 +129,8 @@ final class PrefixesTest extends TestIPAM
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -151,8 +150,8 @@ final class PrefixesTest extends TestIPAM
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreatePrefix')]
     public function testDeletePrefix( int $id ) : void

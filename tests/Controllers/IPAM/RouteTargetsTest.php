@@ -18,7 +18,6 @@ final class RouteTargetsTest extends TestIPAM
     {
         $o = new RouteTargets();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

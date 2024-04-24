@@ -18,7 +18,6 @@ final class RolesTest extends TestIPAM
     {
         $o = new Roles();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

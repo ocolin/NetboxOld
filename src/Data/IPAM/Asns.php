@@ -7,13 +7,35 @@ namespace Cruzio\lib\Netbox\Data\IPAM;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class Asns extends Data_Core implements DataInterface
 {
-    protected int    $asn;
-    protected int    $rir; // Class: IPAM/Rirs
-    protected int    $tenant; // Class: Tenancy/Tenants
-    protected string $description; // Max: 200
+    /**
+     * @var int $asn
+     * REQUIRED
+     * 16- or 32-bit autonomous system number
+     *
+     */
+    protected int $asn;
+
+    /**
+     * @var int $rir
+     * ID of Rirs class
+     */
+    protected int $rir;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
@@ -64,6 +86,25 @@ class Asns extends Data_Core implements DataInterface
             'provider_count',
         ];
     }
+
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'asn'           => [ 'RangeInt', 1, 4294967295 ],
+            'description'   => [ 'MaxString', 200 ]
+        ];
+    }
+
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /**

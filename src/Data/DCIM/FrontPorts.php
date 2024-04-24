@@ -13,9 +13,10 @@ class FrontPorts extends Data_Core implements DataInterface
 {
     /**
      * @var int $device
+     * REQUIRED
      * ID of Devices class
      */
-    protected int    $device;
+    protected int $device;
 
     /**
      * @var int $module
@@ -25,6 +26,7 @@ class FrontPorts extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of port
      */
     protected string $name;
@@ -37,7 +39,8 @@ class FrontPorts extends Data_Core implements DataInterface
 
     /**
      * @var string $type
-     * Choose from list of port types
+     * REQUIRED
+     * ENUM
      */
     protected string $type;
 
@@ -49,6 +52,7 @@ class FrontPorts extends Data_Core implements DataInterface
 
     /**
      * @var int $rear_port
+     * REQUIRED
      * ID of RearPorts class
      */
     protected int $rear_port;

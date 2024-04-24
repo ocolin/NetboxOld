@@ -7,12 +7,28 @@ namespace Cruzio\lib\Netbox\Data\IPAM;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class RouteTargets extends Data_Core implements DataInterface
 {
-    protected string $name; // Route target value (formatted in accordance with RFC 4360)
-    protected int    $tenant; // Class: Tenacy/Tenants
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     * Route target value (formatted in accordance with RFC 4360)
+     */
+    protected string $name;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
@@ -60,6 +76,23 @@ class RouteTargets extends Data_Core implements DataInterface
         ];
     }
 
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'          => [ 'MaxString', 21 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

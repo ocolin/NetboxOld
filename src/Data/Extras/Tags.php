@@ -9,10 +9,31 @@ use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Validation;
 
 class Tags extends Data_Core implements DataInterface
-{ 
+{
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of tag
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     * URL friendly name
+     */
     protected string $slug;
+
+    /**
+     * @var string $color
+     * Color code for Tag
+     */
     protected string $color;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     /**
@@ -74,10 +95,16 @@ class Tags extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'slug'          => [ 'Slug', 100 ],
+            'color'         => [ 'MaxString', 6 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

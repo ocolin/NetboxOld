@@ -13,12 +13,14 @@ class DeviceBayTemplates extends Data_Core implements DataInterface
 {
     /**
      * @var int $device_type
+     * REQUIRED
      * ID of Devices class
      */
     protected int $device_type;
 
     /**
      * @var string $name
+     * REQUIRED
      * {module} is accepted as a substitution for the module
      * bay position when attached to a module type.
      */

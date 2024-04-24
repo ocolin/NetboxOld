@@ -13,12 +13,14 @@ class InventoryItemRoles extends Data_Core implements DataInterface
 {
     /**
      * @var string $name
+     * REQUIRED
      * Name of Item
      */
     protected string $name;
 
     /**
      * @var string $slug
+     * REQUIRED
      * URL friendly name for item
      */
     protected string $slug;

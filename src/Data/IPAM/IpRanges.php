@@ -11,12 +11,48 @@ use Cruzio\lib\Netbox\Validation;
 
 class IpRanges extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $start_address
+     * REQUIRED
+     * Starting IP address
+     */
     protected string $start_address;
+
+    /**
+     * @var string $end_address
+     * REQUIRED
+     * Ending IP Address
+     */
     protected string $end_address;
-    protected int    $vrf; // Class: Vrfs
-    protected int    $tenant;
+
+    /**
+     * @var int $vrf
+     * ID of Vrfs class
+     */
+    protected int $vrf;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $status
+     * ENUM
+     */
     protected string $status;
-    protected int    $role; // Class: Roles
+
+    /**
+     * @var int $role
+     * ID of Roles class
+     */
+    protected int $role;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
     protected string $comments;
 
@@ -75,19 +111,21 @@ class IpRanges extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     * @return array<string, array<string>>
+     * @return array<string, array<string|int>>
      */
     public static function validate() : array
     {
         return [
             'start_address' => ['CIDR'] ,
             'end_address'   => ['CIDR'],
-            'status'        => ['IpRangeStatus']
+            'status'        => ['IpRangeStatus'],
+            'description'   => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\CIDR;
     use Validation\IpRangeStatus;
+    use Validation\MaxString;
 }
 
 

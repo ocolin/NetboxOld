@@ -11,15 +11,33 @@ use Cruzio\lib\Netbox\Validation;
 
 class Roles extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $name
+     * REQUIRED
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
     protected string $slug;
-    protected int    $weight;
-    protected string $description; // Max: 200
+
+    /**
+     * @var int $weight
+     */
+    protected int $weight;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
      */
-    protected array  $tags;
+    protected array $tags;
     protected object $custom_fields;
 
     // READ ONLY
@@ -71,15 +89,22 @@ class Roles extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'slug'          => [ 'Slug', 100 ],
+            'name'          => [ 'MaxString', 100 ],
+            'weight'        => [ 'RangeInt', 0, 32767 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 

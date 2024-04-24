@@ -14,6 +14,7 @@ class ConsolePorts extends Data_Core implements DataInterface
 {
     /**
      * @var int $device
+     * REQUIRED
      * ID of Devices class
      */
     protected int    $device;
@@ -26,6 +27,7 @@ class ConsolePorts extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of Port
      */
     protected string $name;
@@ -58,20 +60,19 @@ class ConsolePorts extends Data_Core implements DataInterface
      * @var bool $mark_connected
      *Treat as if a cable is connected
      */
-    protected bool   $mark_connected; // Treat as if a cable is connected
+    protected bool   $mark_connected;
     protected object $custom_fields;
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array $tags;
 
     // READ ONLY
     protected int    $id;
     protected string $url;
     protected string $display;
-    protected object $cable; // Class: Cables
+    protected object $cable;
     protected string $cable_end;
     protected string $link_peers;
     protected string $link_peers_type;
@@ -92,7 +93,7 @@ class ConsolePorts extends Data_Core implements DataInterface
 
     public static function required() : array
     {
-        return [ 'device', 'name'];
+        return [ 'device', 'name' ];
     }
 
 

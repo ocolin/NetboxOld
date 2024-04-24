@@ -28,7 +28,6 @@ final class FhrpGroupAssignmentsTest extends TestIPAM
     {
         $o = new FhrpGroupAssignments();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

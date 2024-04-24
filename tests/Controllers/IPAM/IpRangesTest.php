@@ -18,7 +18,7 @@ final class IpRangesTest extends TestIPAM
     {
         $o = new IpRanges();
         $result = $o->options();
-        ;
+        print_r($result);
         $this->assertIsObject( $result );
     }
 

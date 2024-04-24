@@ -13,6 +13,7 @@ class InventoryItems extends Data_Core implements DataInterface
 {
     /**
      * @var int $device
+     * REQUIRED
      * ID of Devices class
      */
     protected int $device; // Class: Devices
@@ -26,6 +27,7 @@ class InventoryItems extends Data_Core implements DataInterface
 
     /**
      * @var string $name
+     * REQUIRED
      * Name of item
      */
     protected string $name;

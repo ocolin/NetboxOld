@@ -29,7 +29,7 @@ class ModuleBays extends Data_Core implements DataInterface
      * @var int $installed_module
      * ID of Modules class
      */
-    protected int    $installed_module;
+    protected int $installed_module;
 
     /**
      * @var string $label

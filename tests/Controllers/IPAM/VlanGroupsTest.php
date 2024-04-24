@@ -18,7 +18,6 @@ final class VlanGroupsTest extends TestIPAM
     {
         $o = new VlanGroups();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

@@ -11,18 +11,46 @@ use Cruzio\lib\Netbox\Validation;
 
 class DeviceRoles extends Data_Core implements DataInterface
 {
-    protected int $config_template;
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
+    protected string $slug;
+
+    /**
+     * @var string $color
+     * Color code for role
+     */
+    protected string $color;
+
+    /**
+     * @var bool $vm_role
+     * Virtual machines may be assigned to this role
+     */
     protected bool $vm_role;
+
+    /**
+     * @var int $config_template
+     * ID of ConfigTemplate class
+     */
+    protected int $config_template;
 
     /**
      * @var array<TagType> $tags
      */
-    
     protected array  $tags;
     protected object $custom_fields;
-    protected string $name;
-    protected string $slug;
-    protected string $color;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     // READ ONLY

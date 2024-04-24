@@ -11,8 +11,8 @@ final class VlanGroupsAvailableVlansTest extends TestIPAM
 {
     public static object $vlangroup;
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetVlanGroupsAvailableVlans() : void
     {
@@ -25,8 +25,8 @@ final class VlanGroupsAvailableVlansTest extends TestIPAM
     }
 
 
-    /* SETUP
-    ---------------------------------------------------------------------------- */
+/* SETUP
+---------------------------------------------------------------------------- */
 
     /**
      * @throws Exception

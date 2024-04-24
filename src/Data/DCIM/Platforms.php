@@ -33,7 +33,7 @@ class Platforms extends Data_Core implements DataInterface
 
     /**
      * @var int $config_template
-     * Id of ConfigTemplate class
+     * ID of ConfigTemplate class
      */
     protected int $config_template;
 

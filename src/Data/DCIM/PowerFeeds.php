@@ -33,25 +33,25 @@ class PowerFeeds extends Data_Core implements DataInterface
 
     /**
      * @var string $status
-     * Choose status type
+     * ENUM
      */
     protected string $status;
 
     /**
      * @var string $type
-     * Choose type of power feed
+     * ENUM
      */
     protected string $type;
 
     /**
      * @var string $supply
-     * Choose type of power supply
+     * ENUM
      */
     protected string $supply;
 
     /**
      * @var string $phase
-     * Choose single-phase or three-phase
+     * ENUM - single-phase or three-phase
      */
     protected string $phase;
 
@@ -77,7 +77,7 @@ class PowerFeeds extends Data_Core implements DataInterface
      * @var bool $mark_connected
      * Treat as if a cable is connected
      */
-    protected bool   $mark_connected;
+    protected bool $mark_connected;
 
     /**
      * @var string $description

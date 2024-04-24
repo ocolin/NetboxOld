@@ -6,13 +6,34 @@ namespace Cruzio\lib\Netbox\Data\IPAM;
 
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
+use Cruzio\lib\Netbox\Validation;
 
 class FhrpGroupAssignments extends Data_Core implements DataInterface
 {
-    protected int    $group; // Class: FhrpGroyps
+    /**
+     * @var int $group
+     * REQUIRED
+     * ID of FhrpGroups class
+     */
+    protected int $group;
+
+    /**
+     * @var string $interface_type
+     * REQUIRED
+     */
     protected string $interface_type;
-    protected int    $interface_id;
-    protected int    $priority;
+
+    /**
+     * @var int $interface_id
+     * REQUIRED
+     */
+    protected int $interface_id;
+
+    /**
+     * @var int $priority
+     * REQUIRED
+     */
+    protected int $priority;
 
     // READ ONLY
     protected int    $id;
@@ -58,6 +79,24 @@ class FhrpGroupAssignments extends Data_Core implements DataInterface
             'last_modified',
         ];
     }
+
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'interface_id'  => [ 'RangeInt', 0, 9223372036854775807 ],
+            'priority'      => [ 'RangeInt', 0, 255 ],
+        ];
+    }
+
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

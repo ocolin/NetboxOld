@@ -11,14 +11,30 @@ use Cruzio\lib\Netbox\Validation;
 
 class ServiceTemplates extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
 
     /**
      * @var array<int> $ports
+     * REQUIRED
+     * List of service ports
      */
     protected array  $ports;
+
+    /**
+     * @var string $protocol
+     * ENUM - tcp, udp, sctp
+     */
     protected string $protocol;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
     protected object $custom_fields;
 
@@ -76,10 +92,15 @@ class ServiceTemplates extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'protocol' => ['ServiceProtocol'] ];
+        return [
+            'protocol'      => ['ServiceProtocol'],
+            'name'          => [ 'MaxString', 100 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\ServiceProtocol;
+    use Validation\MaxString;
 
 }
 

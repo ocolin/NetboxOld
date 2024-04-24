@@ -25,12 +25,14 @@ class DeviceTypes extends Data_Core implements DataInterface
 
     /**
      * @var string $model
+     * REQUIRED
      * Name of device model
      */
     protected string $model;
 
     /**
      * @var string $slug
+     * REQUIRED
      * URL friendly slug name
      */
     protected string $slug;
@@ -61,7 +63,7 @@ class DeviceTypes extends Data_Core implements DataInterface
 
     /**
      * @var string $subdevice_role
-     * Select parent or child
+     * ENUM - Select parent or child
      */
     protected string $subdevice_role;
 
@@ -176,7 +178,7 @@ class DeviceTypes extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string>|int>
  */
 
     public static function validate() : array

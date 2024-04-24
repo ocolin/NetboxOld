@@ -18,7 +18,6 @@ final class VrfsTest extends TestIPAM
     {
         $o = new Vrfs();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

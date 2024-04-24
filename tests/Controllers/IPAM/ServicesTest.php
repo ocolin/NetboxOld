@@ -27,7 +27,6 @@ final class ServicesTest extends TestIPAM
     {
         $o = new Services();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

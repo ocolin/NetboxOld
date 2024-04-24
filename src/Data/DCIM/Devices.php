@@ -19,12 +19,14 @@ class Devices extends Data_Core implements DataInterface
 
     /**
      * @var int $device_type
+     * REQUIRED
      * ID of DeviceTypes class
      */
     protected int $device_type;
 
     /**
      * @var int $role
+     * REQUIRED
      * ID of DeviceRoles class
      */
     protected int $role;
@@ -55,6 +57,7 @@ class Devices extends Data_Core implements DataInterface
 
     /**
      * @var int $site
+     * REQUIRED
      * ID of Sites class
      */
     protected int $site;
@@ -79,7 +82,7 @@ class Devices extends Data_Core implements DataInterface
 
     /**
      * @var string $face
-     * Choose front or rear
+     * ENUM
      */
     protected string $face;
 
@@ -93,7 +96,7 @@ class Devices extends Data_Core implements DataInterface
      * @var float $longitude
      * GPS coordinate in decimal format (xx.yyyyyy)
      */
-    protected float  $longitude;
+    protected float $longitude;
 
     /**
      * @var string $status
@@ -103,7 +106,7 @@ class Devices extends Data_Core implements DataInterface
 
     /**
      * @var string $airflow
-     * Choose Ariflow type from list
+     * ENUM
      */
     protected string $airflow;
 
@@ -251,7 +254,7 @@ class Devices extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array

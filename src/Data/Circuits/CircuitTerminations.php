@@ -13,9 +13,15 @@ class CircuitTerminations extends Data_Core implements DataInterface
 {
     /**
      * @var int $circuit
+     * REQUIRED
      * ID of Circuit class
      */
     protected int $circuit;
+
+    /**
+     * @var string $term_side
+     * REQUIRED
+     */
     protected string $term_side;
 
     /**
@@ -53,7 +59,12 @@ class CircuitTerminations extends Data_Core implements DataInterface
      * Patch panel ID and port number(s)
      */
     protected string $pp_info;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var bool $mark_connected

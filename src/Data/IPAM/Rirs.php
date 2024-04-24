@@ -11,10 +11,29 @@ use Cruzio\lib\Netbox\Validation;
 
 class Rirs extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $name
+     * REQUIRED
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     */
     protected string $slug;
-    protected bool   $is_private; // IP space managed by this RIR is considered private
-    protected string $description; // Max: 200
+
+    /**
+     * @var bool $is_private
+     * IP space managed by this RIR is considered private
+     */
+    protected bool $is_private;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
@@ -68,15 +87,20 @@ class Rirs extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'slug'         => [ 'Slug', 100 ],
+            'name'         => [ 'MaxString', 100 ],
+            'description'  => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 
 }
 

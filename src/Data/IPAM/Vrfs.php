@@ -7,14 +7,39 @@ namespace Cruzio\lib\Netbox\Data\IPAM;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class Vrfs extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $rd; // Unique route distinguisher (as defined in RFC 4364)
-    protected int    $tenant; // Class: Tenancy\Tenants
-    protected bool   $enforce_unique; // Prevent duplicate prefixes/IP addresses within this VRF
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * REQUIRED
+     */
+    protected string $name;
+
+    /**
+     * @var string $rd
+     * Unique route distinguisher (as defined in RFC 4364)
+     */
+    protected string $rd;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var bool $enforce_unique
+     * Prevent duplicate prefixes/IP addresses within this VRF
+     */
+    protected bool $enforce_unique;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
@@ -78,6 +103,24 @@ class Vrfs extends Data_Core implements DataInterface
         ];
     }
 
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'          => [ 'MaxString', 100 ],
+            'rd'            => [ 'MaxString', 21 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

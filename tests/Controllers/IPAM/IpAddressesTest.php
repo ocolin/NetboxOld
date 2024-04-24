@@ -18,7 +18,6 @@ final class IpAddressesTest extends TestIPAM
     {
         $o = new IpAddresses();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

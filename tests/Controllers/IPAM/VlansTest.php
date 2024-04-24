@@ -11,20 +11,19 @@ use PHPUnit\Framework\Attributes\Depends;
 final class VlansTest extends TestIPAM
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsVlan() : void
     {
         $o = new Vlans();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateVlanBad() : void
     {
@@ -37,8 +36,8 @@ final class VlansTest extends TestIPAM
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -56,8 +55,8 @@ final class VlansTest extends TestIPAM
 
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateVlan')]
     public function testGetVlan( int $id ) : void
@@ -71,8 +70,8 @@ final class VlansTest extends TestIPAM
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListVlan() : void
     {
@@ -90,8 +89,8 @@ final class VlansTest extends TestIPAM
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -108,8 +107,8 @@ final class VlansTest extends TestIPAM
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -130,8 +129,8 @@ final class VlansTest extends TestIPAM
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -151,8 +150,8 @@ final class VlansTest extends TestIPAM
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateVlan')]
     public function testDeleteVlan( int $id ) : void
