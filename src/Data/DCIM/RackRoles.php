@@ -11,16 +11,35 @@ use Cruzio\lib\Netbox\Validation;
 
 class RackRoles extends Data_Core implements DataInterface
 {
-    protected int    $rack_count;
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of Role
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     * URL friendly Role name
+     */
     protected string $slug;
+
+    /**
+     * @var string $color
+     * Color code for Role
+     */
     protected string $color;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     /**
      * @var array<TagType> $tags
      */
-    
     protected array  $tags;
     protected object $custom_fields;
 
@@ -30,6 +49,7 @@ class RackRoles extends Data_Core implements DataInterface
     protected string $display;
     protected string $created;
     protected string $last_updated;
+    protected int    $rack_count;
 
 
 /* REQUIRED PARAMETERS
@@ -70,19 +90,23 @@ class RackRoles extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'status' => ['Status'],
-            'slug'   => ['Slug']
+            'status'      => [ 'Status' ],
+            'slug'        => [ 'Slug', 100 ],
+            'name'        => [ 'MaxString', 100 ],
+            'color'       => [ 'MaxString', 6 ],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\Status;
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

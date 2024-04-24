@@ -9,15 +9,55 @@ use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
 use Cruzio\lib\Netbox\Validation;
 
+
 class ConsolePorts extends Data_Core implements DataInterface
-{ 
-    protected int    $device; // Class: Devices
-    protected int    $module; // Class: Module
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $type; 
-    protected int    $speed;
-    protected string $description; // Max: 200
+{
+    /**
+     * @var int $device
+     * ID of Devices class
+     */
+    protected int    $device;
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * Name of Port
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label of port
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Field
+     */
+    protected string $type;
+
+    /**
+     * @var int $speed
+     * Choose from list of speed integers in Kbps
+     */
+    protected int $speed;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var bool $mark_connected
+     *Treat as if a cable is connected
+     */
     protected bool   $mark_connected; // Treat as if a cable is connected
     protected object $custom_fields;
 
@@ -87,19 +127,23 @@ class ConsolePorts extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string, array<string>>
- */
+    /**
+     *  @return array<string, array<string|int>>
+     */
 
     public static function validate() : array
     {
         return [
-            'type'  => ['ConsolePortType'],
-            'speed' => ['ConsoleSpeed']
+            'type'        => [ 'ConsolePortType' ],
+            'speed'       => [ 'ConsoleSpeed' ],
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\ConsoleSpeed;
+    use Validation\MaxString;
 
 }
 

@@ -23,7 +23,6 @@ final class DeviceBaysTest extends TestDCIM
     {
         $o = new DeviceBays();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

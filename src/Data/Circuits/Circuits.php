@@ -9,13 +9,13 @@ use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
 use Cruzio\lib\Netbox\Validation\CircuitStatus;
 use Cruzio\lib\Netbox\Validation\Date;
+use Cruzio\lib\Netbox\Validation\MaxString;
 
 class Circuits extends Data_Core implements DataInterface
 {
     /**
      * @var string $cid
      * Unique circuit ID
-     * Max: 100
      */
     protected string $cid;
 
@@ -23,19 +23,19 @@ class Circuits extends Data_Core implements DataInterface
      * @var int $provider
      * ID of Providers class
      */
-    protected int    $provider;
+    protected int $provider;
 
     /**
      * @var int $provider_account
      * ID of provider account class
      */
-    protected int    $provider_account;
+    protected int $provider_account;
 
     /**
      * @var int $type
      * ID of CircuitType class
      */
-    protected int    $type;
+    protected int $type;
 
     /**
      * @var string $status
@@ -64,7 +64,7 @@ class Circuits extends Data_Core implements DataInterface
      * @var int $commit_rate
      * In Kbps
      */
-    protected int    $commit_rate;
+    protected int $commit_rate;
 
     /**
      * @var string $description
@@ -134,21 +134,25 @@ class Circuits extends Data_Core implements DataInterface
 /* VALIDATE
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string, array<string>>
- */
+    /**
+     *  @return array<string, array<string|int>>
+     */
 
     public static function validate() : array
     {
         return [
-            'status'           => ['CircuitStatus'] ,
-            'install_date'     => ['Date'],
-            'termination_date' => ['Date']
+            'status'           => [ 'CircuitStatus' ] ,
+            'install_date'     => [ 'Date' ],
+            'termination_date' => [ 'Date' ],
+            'cid'              => [ 'MaxString', 100 ],
+            'commit_rate'      => [ 'MaxInt', 2147483647 ],
+            'description'      => [ 'MaxString', 200 ]
         ];
     }
 
     use CircuitStatus;
     use Date;
+    use MaxString;
 }
 
 /* DATA EXAMPLE

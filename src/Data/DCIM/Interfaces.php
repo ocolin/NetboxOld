@@ -11,23 +11,102 @@ use Cruzio\lib\Netbox\Validation;
 
 class Interfaces extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class: Devices
+    /**
+     * @var int $device
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var string $vdcs
+     * Virtual Device Context
+     */
     protected string $vdcs;
-    protected int    $module; // Class: Modules
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * Name of interface
+     */
     protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label of interface
+     */
     protected string $label;
+
+    /**
+     * @var string $type
+     * Choose from list of types
+     */
     protected string $type;
-    protected bool   $enabled;
-    protected int    $parent;
-    protected int    $bridge;
-    protected int    $lag;
-    protected int    $mtu; // Max: 65536
+
+    /**
+     * @var bool $enabled
+     * Interface is enabled or disabled
+     */
+    protected bool $enabled;
+
+    /**
+     * @var int $parent
+     * ID of object class Interface belongs to
+     */
+    protected int $parent;
+
+    /**
+     * @var int $bridge
+     * ID of Bridge class
+     */
+    protected int $bridge;
+
+    /**
+     * @var int $lag
+     * ID of LAG class
+     */
+    protected int $lag;
+
+    /**
+     * @var int $mtu
+     * Maximum Transmit Unit
+     */
+    protected int $mtu;
+
+    /**
+     * @var string $mac_address
+     * Physical MAC address
+     */
     protected string $mac_address;
-    protected int    $speed;
+
+    /**
+     * @var int $speed
+     * Interface speed in Kbps
+     */
+    protected int $speed;
+
+    /**
+     * @var string $duplex
+     * Full, Half, Auto
+     */
     protected string $duplex;
     protected string $wwn;
-    protected bool   $mgmt_only;
-    protected string $description; // Max: 200
+
+    /**
+     * @var bool $mgmt_only
+     * This interface is used only for out-of-band management
+     */
+    protected bool $mgmt_only;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $mode;
     protected string $rf_role;
     protected string $rf_channel;
@@ -119,7 +198,7 @@ class Interfaces extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
@@ -132,7 +211,12 @@ class Interfaces extends Data_Core implements DataInterface
             'rf_role'     => ['RfRole'],
             'rf_channel'  => ['RfChannel'],
             'poe_mode'    => ['PoeMode'],
-            'poe_type'    => ['PoeType']
+            'poe_type'    => ['PoeType'],
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'mtu'         => [ 'RangeInt', 1, 65536 ],
+            'speed'       => [ 'RangeInt', 0, 2147483647 ],
+            'description' => [ 'MaxString', 200 ]
         ];
     }
 
@@ -144,6 +228,8 @@ class Interfaces extends Data_Core implements DataInterface
     use Validation\RfChannel;
     use Validation\PoeMode;
     use Validation\PoeType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 
 }
 

@@ -7,6 +7,7 @@ namespace Cruzio\lib\Netbox\Data\Circuits;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation\MaxString;
 
 class CircuitTypes extends Data_Core implements DataInterface
 {
@@ -63,7 +64,28 @@ class CircuitTypes extends Data_Core implements DataInterface
             'circuit_count'
         ];
     }
+
+
+/* VALIDATE
+----------------------------------------------------------------------------- */
+
+    /**
+     * @return array<string, array<string|int>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'        => [ 'MaxString', 100 ],
+            'slug'        => [ 'MaxString', 100 ],
+            'color'       => [ 'MaxString', 6 ],
+            'description' => [ 'MaxString', 200 ]
+        ];
+    }
+
+    use MaxString;
 }
+
 
 /* DATA EXAMPLE
 ----------------------------------------------------------------------------- */

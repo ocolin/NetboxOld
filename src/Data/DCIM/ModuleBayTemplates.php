@@ -6,15 +6,41 @@ namespace Cruzio\lib\Netbox\Data\DCIM;
 
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
+use Cruzio\lib\Netbox\Validation;
 
 class ModuleBayTemplates extends Data_Core implements DataInterface
 {
+    /**
+     * @var int $device_type
+     * REQUIRED
+     * ID of DeviceTypes class
+     */
+    protected int $device_type;
 
-    protected int    $device_type; // Class: DeviceTypes
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $position; // Identifier to reference when renaming installed components
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * {module} is accepted as a substitution for the module
+     * bay position when attached to a module type.
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label
+     */
+    protected string $label;
+
+    /**
+     * @var string $position
+     * Identifier to reference when renaming installed components
+     */
+    protected string $position;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     // READ ONLY
     protected int    $id;
@@ -54,6 +80,27 @@ class ModuleBayTemplates extends Data_Core implements DataInterface
             'last_updated',
         ];
     }
+
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'position'    => [ 'MaxString', 30 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use Validation\Slug;
+    use Validation\MaxString;
 
 }
 

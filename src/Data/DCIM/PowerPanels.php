@@ -7,15 +7,42 @@ namespace Cruzio\lib\Netbox\Data\DCIM;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class PowerPanels extends Data_Core implements DataInterface
 {
-    protected int    $site;
-    protected int    $location;
-    protected int    $powerfeed_count;
+    /**
+     * @var int $site
+     * REQUIRED
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int $location
+     * ID of Locations class
+     */
+    protected int $location;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of power panel
+     */
     protected string $name;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
     protected string $comment;
+
+    /**
+     * @var array<TagType>
+     */
+    protected array  $tags;
+    protected object $custom_fields;
 
     // READ ONLY
     protected int    $id;
@@ -23,14 +50,8 @@ class PowerPanels extends Data_Core implements DataInterface
     protected string $display;
     protected string $created;
     protected string $last_updated;
+    protected int $powerfeed_count;
 
-    /**
-     * @var array<TagType>
-     */
-    
-    protected array  $tags;
-    
-    protected object $custom_fields;
 
 
 /* REQUIRED PARAMETERS
@@ -65,6 +86,33 @@ class PowerPanels extends Data_Core implements DataInterface
             'powerfeed_count'
         ];
     }
+
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'        => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ],
+
+            'type'        => [ 'PowerOutletType' ],
+            'feed_leg'    => [ 'PowerFeedLeg' ],
+
+            'label'       => [ 'MaxString', 64 ],
+
+        ];
+    }
+
+    use Validation\PowerOutletType;
+    use Validation\PowerFeedLeg;
+    use Validation\MaxString;
+
 }
 
 /* DATA EXAMPLE

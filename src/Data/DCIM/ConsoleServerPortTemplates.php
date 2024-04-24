@@ -10,13 +10,44 @@ use Cruzio\lib\Netbox\Validation;
 
 class ConsoleServerPortTemplates extends Data_Core implements DataInterface
 {
-    protected int    $device_type; // Class: DeviceTypes
-    protected int    $module_type; // Class: ModuleTypes
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $type;
-    protected string $description; // Max: 200
+    /**
+     * @var int $device_type
+     * ID of DeviceTypes class
+     */
+    protected int $device_type;
 
+    /**
+     * @var int $module_type
+     * ID of ModuleTypes class
+     */
+    protected int $module_type;
+
+    /**
+     * @var string $name
+     * {module} is accepted as a substitution for the module
+     * bay position when attached to a module type.
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Choose from a list of types
+     */
+    protected string $type;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    // READ ONLY
     protected int    $id;
     protected string $url;
     protected string $display;
@@ -60,15 +91,21 @@ class ConsoleServerPortTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => ['ConsolePortType'] ];
+        return [
+            'type'        => [ 'ConsolePortType' ],
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ]
+        ];
     }
 
     use Validation\ConsolePortType;
+    use Validation\MaxString;
 
 }
 

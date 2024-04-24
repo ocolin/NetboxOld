@@ -11,19 +11,55 @@ use Cruzio\lib\Netbox\Validation;
 
 class Modules extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class: Devices
-    protected int    $module_bay; // Class: ModuleBays
-    protected int    $module_type; // Class: ModuleTypes
+    /**
+     * @var int $device
+     * REQUIRED
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var int $module_bay
+     * REQUIRED
+     * ID of ModuleBays class
+     */
+    protected int $module_bay;
+
+    /**
+     * @var int $module_type
+     * REQUIRED
+     * ID of ModuleTypes class
+     */
+    protected int $module_type;
+
+    /**
+     * @var string $status
+     * Choose from list of module statuses
+     */
     protected string $status;
-    protected string $serial; // Serial number. Max: 50
-    protected string $asset_tag; // A unique tag used to identify this device. Max 50
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $serial
+     * Serial Number
+     */
+    protected string $serial;
+
+    /**
+     * @var string $asset_tag
+     * A unique tag used to identify this device.
+     */
+    protected string $asset_tag;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array $tags;
     protected object $custom_fields;
 
@@ -71,15 +107,21 @@ class Modules extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'status' => ['ModuleBayStatus'] ];
+        return [
+            'status'      => [ 'ModuleBayStatus' ],
+            'serial'      => [ 'MaxString', 50 ],
+            'asset_tag'   => [ 'MaxString', 50 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
     }
 
-    use Validation\ModuleBayStatus;    
+    use Validation\ModuleBayStatus;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

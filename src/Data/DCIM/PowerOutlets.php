@@ -11,20 +11,65 @@ use Cruzio\lib\Netbox\Validation;
 
 class PowerOutlets extends Data_Core implements DataInterface
 {
-    protected int    $device; // CLass: Devices
-    protected int    $module; // Class: Modules
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $type; 
-    protected int    $power_port; // Class: PowerPorts
+    /**
+     * @var int $device
+     * REQUIRED
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of power outlet
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Choose type of outlet
+     */
+    protected string $type;
+
+    /**
+     * @var int $power_port
+     * ID of PowerPorts class
+     */
+    protected int $power_port;
+
+    /**
+     * @var string $feed_leg
+     * Choose type of feed leg
+     */
     protected string $feed_leg;
-    protected string $description; // Max: 200
-    protected bool   $mark_connected; // Treat as if a cable is connected
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
+    protected bool   $mark_connected;
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array $tags;
     protected object $custom_fields;
 
@@ -96,13 +141,17 @@ class PowerOutlets extends Data_Core implements DataInterface
     public static function validate() : array
     {
         return [
-            'type'     => ['PowerOutletType'],
-            'feed_leg' => ['PowerFeedLeg']
+            'type'        => ['PowerOutletType'],
+            'feed_leg'    => ['PowerFeedLeg'],
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\PowerOutletType;
     use Validation\PowerFeedLeg;
+    use Validation\MaxString;
 
 }
 

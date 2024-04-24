@@ -17,20 +17,19 @@ final class RackReservationsTest extends TestDCIM
     public static object $rack;
     public static object $user;
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsRackReservation() : void
     {
         $o = new RackReservations();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateRackReservationBad() : void
     {
@@ -43,8 +42,8 @@ final class RackReservationsTest extends TestDCIM
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -64,8 +63,8 @@ final class RackReservationsTest extends TestDCIM
     }
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateRackReservation')]
     public function testGetRackReservation( int $id ) : void
@@ -79,8 +78,8 @@ final class RackReservationsTest extends TestDCIM
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListRackReservation() : void
     {
@@ -99,8 +98,8 @@ final class RackReservationsTest extends TestDCIM
 
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -118,8 +117,8 @@ final class RackReservationsTest extends TestDCIM
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -142,8 +141,8 @@ final class RackReservationsTest extends TestDCIM
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -163,8 +162,8 @@ final class RackReservationsTest extends TestDCIM
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateRackReservation')]
     public function testDeleteRackReservation( int $id ) : void
@@ -177,8 +176,8 @@ final class RackReservationsTest extends TestDCIM
 
 
 
-    /* SETUP
-    ---------------------------------------------------------------------------- */
+/* SETUP
+---------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -191,8 +190,8 @@ final class RackReservationsTest extends TestDCIM
     }
 
 
-    /* TEAR DOWN
-    ---------------------------------------------------------------------------- */
+/* TEAR DOWN
+---------------------------------------------------------------------------- */
 
     public static function tearDownAfterClass() : void
     {

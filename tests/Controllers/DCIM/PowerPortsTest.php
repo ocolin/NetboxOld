@@ -23,7 +23,6 @@ final class PowerPortsTest extends TestDCIM
     {
         $o = new PowerPorts();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

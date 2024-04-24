@@ -11,14 +11,29 @@ use Cruzio\lib\Netbox\Validation;
 
 class Manufacturers extends Data_Core implements DataInterface
 {
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of Manufacturer
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     * URL friendly name of manufacturer
+     */
     protected string $slug;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     /**
      * @var array<TagType>
      */
-    
     protected array  $tags;
     protected object $custom_fields;
 
@@ -71,15 +86,20 @@ class Manufacturers extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'name'        => [ 'MaxString', 100 ],
+            'slug'        => [ 'Slug', 100 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
     
 }
 

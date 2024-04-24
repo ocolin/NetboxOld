@@ -11,21 +11,67 @@ use Cruzio\lib\Netbox\Validation;
 
 class RearPorts extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class: Devices
-    protected int    $module; // Class: Modules
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $type; 
-    protected string $color; // Max: 6
-    protected int    $positions; // Number of front ports which may be mapped 1-1024
-    protected string $description; // Max: 200
-    protected bool   $mark_connected; // Treat as if a cable is connected
+    /**
+     * @var int $device
+     * REQUIRED
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of port
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * REQUIRED
+     * Choose from list of port types
+     */
+    protected string $type;
+
+    /**
+     * @var string $color
+     * Color code for port
+     */
+    protected string $color;
+
+    /**
+     * @var int $positions
+     * Number of front ports which may be mapped
+     */
+    protected int $positions;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
+    protected bool $mark_connected;
     protected object $custom_fields;
 
     /**
      *  @var array<TagType> $tags
      */
-
     protected array $tags;
 
     // READ ONLY
@@ -81,15 +127,24 @@ class RearPorts extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => ['PortType'] ];
+        return [
+            'type'          => ['PortType'],
+            'name'          => [ 'MaxString', 64 ],
+            'label'         => [ 'MaxString', 64 ],
+            'color'         => [ 'MaxString', 6 ],
+            'description'   => [ 'MaxString', 200 ],
+            'positions'     => [ 'RangeInt', 1, 1024 ],
+        ];
     }
 
     use Validation\PortType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

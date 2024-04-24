@@ -23,7 +23,6 @@ final class ModuleBaysTest extends TestDCIM
     {
         $o = new ModuleBays();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

@@ -11,14 +11,50 @@ use Cruzio\lib\Netbox\Validation;
 
 class ModuleTypes extends Data_Core implements DataInterface
 {
-    protected int    $manufacturer;
-    protected string $model; // Max: 100
-    protected string $part_number; // Discrete part number (optional). Max 50
-    protected float  $weight; 
+    /**
+     * @var int $manufacturer
+     * REQUIRED
+     * ID of Manufacturers class
+     */
+    protected int $manufacturer;
+
+    /**
+     * @var string $model
+     * REQUIRED
+     * Name of module model
+     */
+    protected string $model;
+
+    /**
+     * @var string $part_number
+     * Discrete part number (optional)
+     */
+    protected string $part_number;
+
+    /**
+     * @var float $weight
+     * Value of module weight
+     */
+    protected float $weight;
+
+    /**
+     * @var string $weight_unit
+     * Unit of measurement for weight
+     */
     protected string $weight_unit;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
     protected object $custom_fields;
+
+    /**
+     * @var array<TagType> $tags
+     */
+    protected array $tags;
 
     // READ ONLY
     protected int    $id;
@@ -27,11 +63,6 @@ class ModuleTypes extends Data_Core implements DataInterface
     protected string $created;
     protected string $last_updated;
 
-    /**
-     * @var array<TagType> $tags
-     */
-
-    protected array $tags;
 
 
 /* REQUIRED PARAMETERS
@@ -75,10 +106,16 @@ class ModuleTypes extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 'weight_unit' => ['WeightUnit'] ];
+        return [
+            'weight_unit' => [ 'WeightUnit' ],
+            'model'       => [ 'MaxString', 100 ],
+            'part_number' => [ 'MaxString', 50 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\WeightUnit;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

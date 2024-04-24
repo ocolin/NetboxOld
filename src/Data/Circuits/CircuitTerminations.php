@@ -11,16 +11,55 @@ use Cruzio\lib\Netbox\Validation\TerminalSide;
 
 class CircuitTerminations extends Data_Core implements DataInterface
 {
-    protected int    $circuit; // Class: Circuits
+    /**
+     * @var int $circuit
+     * ID of Circuit class
+     */
+    protected int $circuit;
     protected string $term_side;
-    protected int    $site; // Class: Sites
-    protected int    $provider_network; // Class ProviderNetworks
-    protected int    $port_speed; // Port speed (Kbps)
-    protected int    $upstream_speed; // Upstream speed (Kbps)
-    protected string $xconnect_id; //ID of the local cross-connect
-    protected string $pp_info; // Patch panel ID and port number(s)
+
+    /**
+     * @var int $site
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int $provider_network
+     * ID of ProviderNetworks class
+     */
+    protected int $provider_network;
+
+    /**
+     * @var int $port_speed
+     * Physical circuit speed in Kbps
+     */
+    protected int $port_speed;
+
+    /**
+     * @var int $upstream_speed
+     * Upstream speed, if different from port speed in Kbps
+     */
+    protected int $upstream_speed;
+
+    /**
+     * @var string $xconnect_id
+     * ID of the local cross-connect
+     */
+    protected string $xconnect_id;
+
+    /**
+     * @var string $pp_info
+     * Patch panel ID and port number(s)
+     */
+    protected string $pp_info;
     protected string $description; // Max: 200
-    protected bool   $mark_connected; // Treat as if a cable is connected
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
+    protected bool $mark_connected;
 
     /**
      * @var array<TagType> $tags
@@ -84,10 +123,19 @@ class CircuitTerminations extends Data_Core implements DataInterface
 /* VALIDATE
 ----------------------------------------------------------------------------- */
 
+    /**
+     * @return array<string, array<string|int>
+     */
+
     public static function validate() : array
     {
         return [
-            'term_side' => ['TerminalSide']
+            'term_side'      => [ 'TerminalSide' ],
+            'port_speed'     => [ 'RangeInt', 0, 2147483647 ],
+            'upstream_speed' => [ 'RangeInt', 0, 2147483647 ],
+            'xconnect_id'    => [ 'MaxString', 50 ],
+            'pp_info'        => [ 'MaxString', 100 ],
+            'description'    => [ 'MaxString', 200 ]
         ];
     }
 

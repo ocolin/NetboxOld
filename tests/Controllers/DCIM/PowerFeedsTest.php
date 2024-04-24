@@ -21,7 +21,6 @@ final class PowerFeedsTest extends TestDCIM
     {
         $o = new PowerFeeds();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

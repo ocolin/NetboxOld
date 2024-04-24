@@ -10,13 +10,54 @@ use Cruzio\lib\Netbox\Validation;
 
 class RearPortTemplates extends Data_Core implements DataInterface
 {
-    protected int    $device_type; // Class DeviceType
-    protected int    $module_type; // CLass ModuleType
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64 Physical label
+    /**
+     * @var int $device_type
+     * ID of DeviceTypes class
+     */
+    protected int $device_type;
+
+    /**
+     * @var int $module_type
+     * ID of ModuleTypes class
+     */
+    protected int $module_type;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     * {module} is accepted as a substitution for the module
+     * bay position when attached to a module type.
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * REQUIRED
+     * Choose from list of port types
+     */
     protected string $type;
-    protected string $color; // Max: 6
-    protected int    $positions; // Min :1 Max: 1024
+
+    /**
+     * @var string $color
+     * Color code of Port
+     */
+    protected string $color;
+
+    /**
+     * @var int $positions
+     */
+    protected int $positions;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     // READ ONLY
@@ -64,15 +105,24 @@ class RearPortTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => ['PortType'] ];
+        return [
+            'type'          => [ 'PortType' ],
+            'name'          => [ 'MaxString', 64 ],
+            'label'         => [ 'MaxString', 64 ],
+            'color'         => [ 'MaxString', 6 ],
+            'positions'     => [ 'RangeInt', 1, 1024 ],
+            'description'   => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\PortType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

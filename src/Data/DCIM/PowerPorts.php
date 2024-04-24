@@ -11,20 +11,65 @@ use Cruzio\lib\Netbox\Validation;
 
 class PowerPorts extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class: Devices
-    protected int    $module; // Class: Modules
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
+    /**
+     * @var int $device
+     * REQUIRED
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     *
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Choose from list of port types
+     */
     protected string $type;
-    protected int    $maximum_draw; // Maximum power draw (watts)
-    protected int    $allocated_draw; // Allocated power draw (watts)
-    protected string $description; // Max: 200
-    protected bool   $mark_connected; // Treat as if a cable is connected
+
+    /**
+     * @var int $maximum_draw
+     * Maximum power draw (watts)
+     */
+    protected int $maximum_draw;
+
+    /**
+     * @var int $allocated_draw
+     * Allocated power draw (watts)
+     */
+    protected int $allocated_draw;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
+    protected bool $mark_connected;
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array $tags;
     protected object $custom_fields;
 
@@ -47,9 +92,9 @@ class PowerPorts extends Data_Core implements DataInterface
 /* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string> 
- */
+    /**
+     *  @return array<string>
+     */
 
     public static function required() : array
     {
@@ -61,9 +106,9 @@ class PowerPorts extends Data_Core implements DataInterface
 /* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string> 
- */
+    /**
+    *  @return array<string>
+    */
 
     public static function readonly() : array
     {
@@ -93,10 +138,19 @@ class PowerPorts extends Data_Core implements DataInterface
      */
     public static function validate() : array
     {
-        return [ 'type' => ['PowerPortType'] ];
+        return [
+            'type'           => [ 'PowerPortType' ],
+            'name'           => [ 'MaxString', 64 ],
+            'label'          => [ 'MaxString', 64 ],
+            'maximum_draw'   => [ 'RangeInt', 1, 2147483647 ],
+            'allocated_draw' => [ 'RangeInt', 1, 2147483647 ],
+            'description'    => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\PowerPortType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 
 }
 

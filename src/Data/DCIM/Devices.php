@@ -11,45 +11,177 @@ use Cruzio\lib\Netbox\Validation;
 
 class Devices extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 64
-    protected int    $device_type; // Class: DeviceTypes
-    protected int    $role; // Class: DeviceRols
-    
-    protected int    $tenant; // Class: Tenants
-    protected int    $platform; // Class: Platforms
-    protected string $serial; // Chassis serial number, assigned by the manufacturer
-    protected string $asset_tag; // A unique tag used to identify this device
-    protected int    $site; // Class: Sites
-    protected int    $location; // Class: Locations
-    protected int    $rack;
-    protected float  $position; // Position (U)
+    /**
+     * @var string $name
+     * Name of device
+     */
+    protected string $name;
+
+    /**
+     * @var int $device_type
+     * ID of DeviceTypes class
+     */
+    protected int $device_type;
+
+    /**
+     * @var int $role
+     * ID of DeviceRoles class
+     */
+    protected int $role;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var int $platform
+     * ID of Platforms class
+     */
+    protected int $platform;
+
+    /**
+     * @var string $serial
+     * Chassis serial number, assigned by the manufacturer
+     */
+    protected string $serial;
+
+    /**
+     * @var string $asset_tag
+     * A unique tag used to identify this device
+     */
+    protected string $asset_tag;
+
+    /**
+     * @var int $site
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int
+     * ID of Locations class
+     */
+    protected int $location;
+
+    /**
+     * @var int $rack
+     * ID of Racks class
+     */
+    protected int $rack;
+
+    /**
+     * @var float $position
+     * Position in rack
+     */
+    protected float $position;
+
+    /**
+     * @var string $face
+     * Choose front or rear
+     */
     protected string $face;
-    protected float  $latitude; // GPS coordinate in decimal format (xx.yyyyyy)
-    protected float  $longitude; // GPS coordinate in decimal format (xx.yyyyyy)
+
+    /**
+     * @var float $latitude
+     * GPS coordinate in decimal format (xx.yyyyyy)
+     */
+    protected float $latitude;
+
+    /**
+     * @var float $longitude
+     * GPS coordinate in decimal format (xx.yyyyyy)
+     */
+    protected float  $longitude;
+
+    /**
+     * @var string $status
+     * Device status from list
+     */
     protected string $status;
-    protected string $airflow; 
-    
-    protected object $primary_ip4; // look into this one
-    protected object $primary_ip6; // Look into this one
-    protected object $oob_ip; // Look into this one
-    protected int    $cluster; // Class: Clusters
-    protected int    $virtual_chassis; // Class: VirtualChassis
-    protected int    $vc_position; // Max: 255
-    protected int    $vc_priority; // Max: 255
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $airflow
+     * Choose Ariflow type from list
+     */
+    protected string $airflow;
+
+    /**
+     * @var int $primary_ip4
+     * ID of IpAddresses class
+     */
+    protected int $primary_ip4;
+
+    /**
+     * @var int $primary_ip6
+     * ID of IpAddresses class
+     */
+    protected int $primary_ip6;
+
+    /**
+     * @var int $oob_ip
+     * ID of IpAddresses class
+     */
+    protected int $oob_ip;
+
+    /**
+     * @var int $cluster
+     * ID of Clusters class
+     */
+    protected int $cluster;
+
+    /**
+     * @var int $virtual_chassis
+     * ID of VirtualChassis class
+     */
+    protected int $virtual_chassis;
+
+    /**
+     * @var int $vc_position
+     * Position in virtual chassis
+     */
+    protected int $vc_position;
+
+    /**
+     * @var int $vc_priority
+     * Virtual chassis master election priority
+     */
+    protected int $vc_priority;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
-    protected int    $config_template; // Class: ConfigTemplates
-    protected string $config_context;
-    protected string $local_context_data; 
+
+    /**
+     * @var int $config_template
+     * ID of ConfigTemplate class
+     */
+    protected int $config_template;
+
+    /**
+     * @var string $local_context_data
+     * Local config context data takes precedence over
+     * source contexts in the final rendered config context
+    */
+    protected string $local_context_data;
+
+    /**
+     * @var array<TagType> $tags
+     */
+
+    protected array $tags;
     protected object $custom_fields;
 
     // READ ONLY
     protected int    $id;
     protected string $url;
     protected string $display;
-    protected int    $device_role; 
-    protected object $primary_ip;
-    protected int    $parent_device;
+    protected int    $device_role;
+    protected string $config_context;
     protected string $created;
     protected string $last_updated;
     protected int    $console_port_count;
@@ -63,11 +195,6 @@ class Devices extends Data_Core implements DataInterface
     protected int    $module_bay_count;
     protected int    $inventory_item_count;
 
-    /**
-     * @var array<TagType> $tags
-     */
-
-    protected array $tags;
 
 
 /* REQUIRED PARAMETERS
@@ -130,15 +257,23 @@ class Devices extends Data_Core implements DataInterface
     public static function validate() : array
     {
         return [ 
-            'face'    => ['DeviceFace'],
-            'status'  => ['Status'],
-            'airflow' => ['Airflow']
+            'face'        => [ 'DeviceFace' ],
+            'status'      => [ 'Status' ],
+            'airflow'     => [ 'Airflow' ],
+            'name'        => [ 'MaxString', 64 ],
+            'serial'      => [ 'MaxString', 50 ],
+            'asset_tag'   => [ 'MaxString', 50 ],
+            'vc_position' => [ 'RangeInt', 0, 255 ],
+            'vc_priority' => [ 'RangeInt', 0, 255 ],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\DeviceFace;
     use Validation\Status;
     use Validation\Airflow;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 
 }
 

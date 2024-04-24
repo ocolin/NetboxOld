@@ -11,23 +11,56 @@ use Cruzio\lib\Netbox\Validation;
 
 class Locations extends Data_Core implements DataInterface
 {
-
-    protected int    $site;
-    protected int    $parent;
-    protected int    $tenant;
-    protected int    $rack_count;
-    protected int    $device_count;
-    protected int    $_depth;
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of location
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     */
     protected string $slug;
+
+    /**
+     * @var int $site
+     * REQUIRED
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int $parent
+     * REQUIRED
+     * ID of parent Locations class
+     */
+    protected int $parent;
+
+    /**
+     * @var string $status
+     * Location status
+     */
+    protected string $status;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     /**
      * @var array<TagType>
      */
-    
     protected array  $tags;
     protected object $custom_fields;
+
 
     // READ ONLY
     protected int    $id;
@@ -35,6 +68,9 @@ class Locations extends Data_Core implements DataInterface
     protected string $display;
     protected string $created;
     protected string $last_updated;
+    protected int $rack_count;
+    protected int $device_count;
+    protected int $_depth;
 
 
 /* REQUIRED PARAMETERS
@@ -77,19 +113,22 @@ class Locations extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'slug'   => ['Slug'],
-            'status' => ['Status']
+            'name'        => [ 'MaxString', 100 ],
+            'slug'        => [ 'Slug', 100 ],
+            'status'      => [ 'Status'],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\Slug;
     use Validation\Status;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

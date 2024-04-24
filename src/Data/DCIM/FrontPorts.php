@@ -11,21 +11,69 @@ use Cruzio\lib\Netbox\Validation;
 
 class FrontPorts extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class: Devices
-    protected int    $module; // Class: Modules
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $type; 
-    protected string $color; // Max: 6
-    protected int    $rear_port; // Class; RearPorts
-    protected int    $rear_port_position; // Mapped position on corresponding rear port
-    protected string $description; // Max: 200
-    protected bool   $mark_connected; // Treat as if a cable is connected
+    /**
+     * @var int $device
+     * ID of Devices class
+     */
+    protected int    $device;
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * Name of port
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label for port
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Choose from list of port types
+     */
+    protected string $type;
+
+    /**
+     * @var string $color
+     * Color code for port
+     */
+    protected string $color;
+
+    /**
+     * @var int $rear_port
+     * ID of RearPorts class
+     */
+    protected int $rear_port;
+
+    /**
+     * @var int $rear_port_position
+     * Mapped position on corresponding rear port
+     */
+    protected int $rear_port_position;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
+    protected bool $mark_connected; // Treat as if a cable is connected
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array $tags;
     protected object $custom_fields;
 
@@ -82,15 +130,24 @@ class FrontPorts extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, string> 
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => 'PortType' ];
+        return [
+            'type'               => [ 'PortType' ],
+            'name'               => [ 'MaxString', 64 ],
+            'label'              => [ 'MaxString', 64 ],
+            'color'              => [ 'MaxString', 6 ],
+            'rear_port_position' => [ 'RangeInt', 1, 1024 ],
+            'description'        => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\PortType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

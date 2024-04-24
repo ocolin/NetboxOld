@@ -11,21 +11,85 @@ use Cruzio\lib\Netbox\Validation;
 
 class InterfaceTemplates extends Data_Core implements DataInterface
 {
-    
-    protected int    $site;
-    protected int    $device_type;
-    protected int    $module_type;
-    protected int    $bridge;
+    /**
+     * @var int $site
+     * ID of Sites class
+     */
+    protected int $site;
 
+    /**
+     * @var int $device_type
+     * ID of DeviceTypes class
+     */
+    protected int $device_type;
+
+    /**
+     * @var int $module_type
+     * ID of ModuleTypes class
+     */
+    protected int $module_type;
+
+    /**
+     * @var string $name
+     * Name of template
+     */
     protected string $name;
+
+    /**
+     * @var string $label
+     * {module} is accepted as a substitution for the module
+     * bay position when attached to a module type.
+     */
     protected string $label;
-    protected string $description;
+
+    /**
+     * @var string $type
+     * Choose from list of types
+     */
     protected string $type;
+
+    /**
+     * @var bool $enabled
+     * Is interface enabled or disabled
+     */
+    protected bool $enabled;
+
+    /**
+     * @var bool $mgmt_only
+     * Is interface only used for out of band management
+     */
+    protected bool $mgmt_only;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var int $bridge
+     * ID of Bridges class
+     */
+    protected int $bridge;
+
+    /**
+     * @var string $poe_mode
+     * Choose from list of modes
+     */
     protected string $poe_mode;
+
+    /**
+     * @var string $poe_type
+     * Choose from list of types
+     */
     protected string $poe_type;
+
+    /**
+     * @var string $rf_role
+     * Choose from list of RF roles
+     */
     protected string $rf_role;
-    protected bool   $enabled;
-    protected bool   $mgmt_only;
+
 
     // READ ONLY
     protected int    $id;
@@ -78,15 +142,21 @@ class InterfaceTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => ['InterfaceType']];
+        return [
+            'type'        => ['InterfaceType'],
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ]
+        ];
     }
 
     use Validation\InterfaceType;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

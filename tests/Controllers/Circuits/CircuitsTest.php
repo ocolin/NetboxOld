@@ -20,7 +20,6 @@ final class CircuitsTest extends TestCircuits
     {
         $o = new Circuits();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

@@ -7,33 +7,46 @@ namespace Cruzio\lib\Netbox\Data\Circuits;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation\MaxString;
 
 class Providers extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
+    /**
+     * @var string $name
+     * Full name of the provider
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     */
+    protected string $slug;
 
     /**
      * @var array<int> $accounts
      */
-
     protected array $accounts;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     */
+    protected string $description;
+
+    /**
+     * @var string $comments
+     */
     protected string $comments;
 
     /**
      * @var array<int> $asns
      */
-
     protected array $asns;
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array $tags;
     protected object $custom_fields;
-
 
 
     // READ ONLY
@@ -43,7 +56,6 @@ class Providers extends Data_Core implements DataInterface
     protected string $created;
     protected string $last_updated;
     protected int    $circuit_count;
-
 
 
 
@@ -78,6 +90,26 @@ class Providers extends Data_Core implements DataInterface
             'circuit_count'
         ];
     }
+
+
+
+/* VALIDATE
+----------------------------------------------------------------------------- */
+
+    /**
+     * @return array<string, array<string|int>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'        => [ 'MaxString', 100 ],
+            'slug'        => [ 'MaxString', 100 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use MaxString;
 }
 
 /* DATA EXAMPLE

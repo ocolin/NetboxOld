@@ -7,25 +7,47 @@ namespace Cruzio\lib\Netbox\Data\DCIM;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class RackReservations extends Data_Core implements DataInterface
 {
-    protected int    $rack; // Class: Racks
+    /**
+     * @var int $rack
+     * REQUIRED
+     * ID of Racks class
+     */
+    protected int $rack;
 
     /**
      * @var array<int> $units
+     * REQUIRED
+     * Array of Unit IDs
      */
+    protected array  $units;
 
-    protected array  $units; 
-    protected int    $user; // Class: Users
-    protected int    $tenant; // Class: Tenants
-    protected string $description; // Max: 200
+    /**
+     * @var int $user
+     * REQUIRED
+     * ID of Users class
+     */
+    protected int $user;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
      * @var array<TagType> $tags
      */
-
     protected array  $tags;
     protected string $custom_fields;
 
@@ -70,6 +92,23 @@ class RackReservations extends Data_Core implements DataInterface
         ];
     }
 
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     * @return array<string, array<string|int>>
+     */
+    public static function validate() : array
+    {
+        return [
+            'description' => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use Validation\PowerPortType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

@@ -19,7 +19,6 @@ final class ProviderNetworksTest extends TestCircuits
     {
         $o = new ProviderNetworks();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

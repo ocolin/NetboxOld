@@ -7,10 +7,15 @@ namespace Cruzio\lib\Netbox\Data\Circuits;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation\MaxString;
 
 class ProviderNetworks extends Data_Core implements DataInterface
 {
-    protected int $provider; // Class: Providers
+    /**
+     * @var int $provider
+     * ID of Providers class
+     */
+    protected int $provider;
     protected string $name; // Max: 100
     protected string $service_id; // Max: 100
     protected string $description; // Max: 200
@@ -60,6 +65,26 @@ class ProviderNetworks extends Data_Core implements DataInterface
             'last_updated',
         ];
     }
+
+
+
+/* VALIDATE
+----------------------------------------------------------------------------- */
+
+    /**
+     * @return array<string, array<string|int>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'        => [ 'MaxString', 100 ],
+            'service_id'  => [ 'MaxString', 100 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
+    }
+
+    use MaxString;
 }
 
 /* DATA EXAMPLE

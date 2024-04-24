@@ -18,7 +18,6 @@ final class ProvidersTest extends TestCircuits
     {
         $o = new Providers();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

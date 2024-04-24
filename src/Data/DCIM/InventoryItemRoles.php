@@ -11,10 +11,34 @@ use Cruzio\lib\Netbox\Validation;
 
 class InventoryItemRoles extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $slug; // Max: 100
-    protected string $color; // Max: 6
-    protected string $description; // Max: 200
+    /**
+     * @var string $name
+     * Name of Item
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * URL friendly name for item
+     */
+    protected string $slug;
+
+    /**
+     * @var string $color
+     * Name of item color
+     */
+    protected string $color;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var array<TagType> $tags
+     */
+    protected array $tags;
     protected object $custom_fields;
 
     // READ ONLY
@@ -25,19 +49,14 @@ class InventoryItemRoles extends Data_Core implements DataInterface
     protected string $last_updated;
     protected int    $inventoryitem_count;
 
-    /**
-     * @var array<TagType> $tags
-     */
-    
-    protected array $tags;
 
 
 /* REQUIRED PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string> 
- */
+    /**
+     *  @return array<string>
+     */
 
     public static function required() : array
     {
@@ -48,9 +67,9 @@ class InventoryItemRoles extends Data_Core implements DataInterface
 /* READ ONLY PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string> 
- */
+    /**
+    *  @return array<string>
+    */
 
     public static function readonly() : array
     {
@@ -68,16 +87,22 @@ class InventoryItemRoles extends Data_Core implements DataInterface
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */
 
-/**
- *  @return array<string, array<string>>
- */
+    /**
+     *  @return array<string, array<string|int>>
+     */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'name'        => [ 'MaxString', 100 ],
+            'slug'        => [ 'Slug', 100 ],
+            'color'       => [ 'MaxString', 6 ],
+            'description' => [ 'MaxString', 200 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

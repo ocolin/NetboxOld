@@ -11,16 +11,36 @@ use Cruzio\lib\Netbox\Validation;
 
 class VirtualChassis extends Data_Core implements DataInterface
 {
-    protected int    $master;
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of virtual chassis
+     */
     protected string $name;
+
+    /**
+     * @var string $domain
+     * DNS domain name
+     */
     protected string $domain;
+
+    /**
+     * @var int $master
+     * ID of master VC if there is one
+     */
+    protected int $master;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
     protected string $comments;
+
 
     /**
      * @var array<TagType> $tags
      */
-    
     protected array  $tags;
     protected object $custom_fields;
 
@@ -40,7 +60,7 @@ class VirtualChassis extends Data_Core implements DataInterface
 
     public static function required() : array
     {
-        return [ 'name', 'slug' ];
+        return [ 'name' ];
     }
 
 
@@ -75,13 +95,15 @@ class VirtualChassis extends Data_Core implements DataInterface
     public static function validate() : array
     {
         return [
-            'status' => ['Status'],
-            'slug'   => ['Slug']
+            'status'      => ['Status'],
+            'name'        => [ 'MaxString', 64 ],
+            'domain'      => [ 'MaxString', 30 ],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\Status;
-    use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

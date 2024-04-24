@@ -49,23 +49,16 @@ class Data_Core
 
     /**
      * @param string $property
-     * @param string|int|float|bool $value
+     * @param string|int|float|bool|array<int|string> $value
      * @throws Exception
      */
-    public function set( string $property, string|int|float|bool $value ) : void
+    public function set( string $property, string|int|float|bool|array $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );
             if( !$rp->isPrivate() ) {
                 if( array_key_exists( $property, $this->validate())) {
                     self::build_Validate( property: $property, value: $value );
-/*
-                    $val_func = 'validate_' . static::validate()[$property];
-                    $result = static::$val_func( $value );
-                    if(  $result !== true ) {
-                        throw new Exception( $result );
-                    }
-*/
                 }
                 $this->$property = $value;
             }
@@ -83,23 +76,29 @@ class Data_Core
     {
         $params = static::validate()[$property];
         $val_func =  'validate_' . array_shift( $params );
-        $result = static::$val_func( $value );
+        $count = count( $params );
+
+        switch( $count ) {
+            case 0:
+                $result = static::$val_func( $value );
+                break;
+            case 1:
+                $param1 = array_shift( $params );
+                $result = static::$val_func( $value, $param1 );
+                break;
+            case 2:
+                $param1 = array_shift( $params );
+                $param2 = array_shift( $params );
+                $result = static::$val_func( $value, $param1, $param2 );
+                break;
+            default:
+                $result = static::$val_func( $value );
+        }
+
         if(  $result !== true ) {
             throw new Exception( $result );
         }
 
-        /*
-        $type = static::validate()[$property] );
-        if( gettype( $value ) === 'array' ) {
-
-        } else {
-            $val_func = 'validate_' . $type;
-            $result = static::$val_func( $value );
-            if(  $result !== true ) {
-                throw new Exception( $result );
-            }
-        }
-        */
     }
 
 

@@ -22,7 +22,6 @@ final class ConsolePortTemplatesTest extends TestDCIM
     {
         $o = new ConsolePortTemplates();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

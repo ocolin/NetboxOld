@@ -25,7 +25,6 @@ final class CircuitTerminationsTest extends TestCircuits
     {
         $o = new CircuitTerminations();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

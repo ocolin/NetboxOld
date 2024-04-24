@@ -11,15 +11,60 @@ use Cruzio\lib\Netbox\Validation;
 
 class FrontPortTemplates extends Data_Core implements DataInterface
 {
-    protected int    $device_type; // Class: DeviceTypes
-    protected int    $module_type; // Class: ModuleTypess
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $type; 
-    protected string $color; // Max: 6
-    protected int    $rear_port; // Class; RearPorts
-    protected int    $rear_port_position; // Mapped position on corresponding rear port
-    protected string $description; // Max: 200
+    /**
+     * @var int $device_type
+     * ID of DeviceTypes class
+     */
+    protected int $device_type;
+
+    /**
+     * @var int $module_type
+     * ID of ModuleTypes class
+     */
+    protected int $module_type;
+
+    /**
+     * @var string $name
+     * {module} is accepted as a substitution for the module
+     * bay position when attached to a module type.
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label of template
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Choose port type
+     */
+    protected string $type;
+
+    /**
+     * @var string $color
+     * Color of port
+     */
+    protected string $color;
+
+    /**
+     * @var int $rear_port
+     * ID of RearPorts class
+     */
+    protected int $rear_port;
+
+    /**
+     * @var int $rear_port_position
+     * Mapped position on corresponding rear port
+     */
+    protected int $rear_port_position;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType> $tags
@@ -72,15 +117,24 @@ class FrontPortTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'type' => ['PortType'] ];
+        return [
+            'type'               => ['PortType' ],
+            'name'               => [ 'MaxString', 64 ],
+            'label'              => [ 'MaxString', 64 ],
+            'rear_port_position' => [ 'RangeInt', 1, 1024 ],
+            'description'        => [ 'MaxString', 200 ]
+
+        ];
     }
 
     use Validation\PortType;
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

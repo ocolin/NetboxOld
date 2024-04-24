@@ -11,10 +11,36 @@ use Cruzio\lib\Netbox\Validation;
 
 class Regions extends Data_Core implements DataInterface
 {
-    protected int    $parent;
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of region
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     * URL friendly name of region
+     */
     protected string $slug;
+
+    /**
+     * @var int $parent
+     * ID of a parent region
+     */
+    protected int $parent;
+
+    /**
+     * @var string $description
+     */
     protected string $description;
+
+    /**
+     * @var array<TagType>
+     */
+    protected array  $tags;
+    protected object  $custom_fields;
 
     // READ ONLY
     protected int    $id;
@@ -25,13 +51,6 @@ class Regions extends Data_Core implements DataInterface
     protected string $created;
     protected string $last_updated;
 
-    /**
-     * @var array<TagType>
-     */
-    
-    protected array  $tags;
-
-    protected object  $custom_fields;
 
 
 /* REQUIRED PARAMETERS
@@ -52,19 +71,22 @@ class Regions extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'status' => ['Status'],
-            'slug'   => ['Slug']
+            'status'        => [ 'Status' ],
+            'slug'          => [ 'Slug', 100 ],
+            'name'          => [ 'MaxString', 100 ],
+            'description'    => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\Status;
     use Validation\Slug;
+    use Validation\MaxString;
 
 
 /* READ ONLY PARAMETERS

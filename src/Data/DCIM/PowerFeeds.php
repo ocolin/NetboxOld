@@ -11,19 +11,91 @@ use Cruzio\lib\Netbox\Validation;
 
 class PowerFeeds extends Data_Core implements DataInterface
 {
-    protected int    $power_panel; // Class: PowerPanel
-    protected string $name; // Max: 100
+    /**
+     * @var int $power_panel
+     * REQUIRED
+     * ID of PowerPanel class
+     */
+    protected int $power_panel;
+
+    /**
+     * @var int $rack
+     * ID or Racks class
+     */
+    protected int $rack;
+
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of power feed
+     */
+    protected string $name;
+
+    /**
+     * @var string $status
+     * Choose status type
+     */
     protected string $status;
+
+    /**
+     * @var string $type
+     * Choose type of power feed
+     */
     protected string $type;
+
+    /**
+     * @var string $supply
+     * Choose type of power supply
+     */
     protected string $supply;
+
+    /**
+     * @var string $phase
+     * Choose single-phase or three-phase
+     */
     protected string $phase;
-    protected int    $voltage; // Min: -32768 Max: 32767
-    protected int    $amperage; // Max: 32767
-    protected int    $max_utilization; // Maximum permissible draw (percentage)
-    protected bool   $mark_connected; // Treat as if a cable is connected
-    protected string $description; // Max: 200
+
+    /**
+     * @var int $voltage
+     * How many volts of power
+     */
+    protected int $voltage;
+
+    /**
+     * @var int $amperage
+     * Amperage provided by feed
+     */
+    protected int $amperage;
+
+    /**
+     * @var int $max_utilization
+     * Maximum permissible draw (percentage)
+     */
+    protected int $max_utilization;
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
+    protected bool   $mark_connected;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
     protected int    $tenant;
     protected string $comments;
+
+    /**
+     * @var array<TagType> $tags
+     */
+    protected array $tags;
     protected object $custom_fields;
 
     // READ ONLY
@@ -41,11 +113,6 @@ class PowerFeeds extends Data_Core implements DataInterface
     protected string $last_updated;
     protected string $_occupied;
 
-    /**
-     * @var array<TagType> $tags
-     */
-
-    protected array $tags;
 
 
 /* REQUIRED PARAMETERS
@@ -97,11 +164,16 @@ class PowerFeeds extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 
-            'status' => ['Status'],
-            'type'   => ['FeedType'],
-            'supply' => ['Supply'],
-            'phase'  => ['PowerPhase']
+        return [
+            'name'            => [ 'MaxString', 100 ],
+            'status'          => [ 'Status' ],
+            'type'            => [ 'FeedType' ],
+            'supply'          => [ 'Supply' ],
+            'phase'           => [ 'PowerPhase' ],
+            'voltage'         => [ 'RangeInt', -32768, 32767 ],
+            'amperage'        => [ 'MaxInt', 32767 ],
+            'max_utilization' => [ 'RangeInt', 1, 100 ],
+            'description'     => [ 'MaxString', 200 ],
         ];
     }
 
@@ -109,6 +181,9 @@ class PowerFeeds extends Data_Core implements DataInterface
     use Validation\FeedType;
     use Validation\PowerSupply;
     use Validation\PowerPhase;
+    use Validation\MaxString;
+    use Validation\RangeInt;
+    use Validation\MaxInt;
 
 }
 

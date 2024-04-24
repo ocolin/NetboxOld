@@ -18,7 +18,6 @@ final class CircuitTypesTest extends TestCircuits
     {
         $o = new CircuitTypes();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

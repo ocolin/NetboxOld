@@ -23,7 +23,6 @@ final class ConsolePortsTest extends TestDCIM
     {
         $o = new ConsolePorts();
         $result = $o->options();
-        ;
         $this->assertIsObject( $result );
     }
 

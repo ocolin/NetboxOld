@@ -7,14 +7,39 @@ namespace Cruzio\lib\Netbox\Data\DCIM;
 use Cruzio\lib\Netbox\Data\Data_Core;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Types\TagType;
+use Cruzio\lib\Netbox\Validation;
 
 class DeviceBays extends Data_Core implements DataInterface
 {
-    protected int    $device; // CLass: Devices
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
-    protected string $description; // Max: 200
-    protected int    $installed_device; 
+    /**
+     * @var int $device
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var string $name
+     * Name of bay
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Label of bay
+     */
+    protected string $label;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var int $installed_device
+     * ID of Devices class
+     */
+    protected int $installed_device;
     protected object $custom_fields;
 
     // READ ONLY
@@ -61,6 +86,28 @@ class DeviceBays extends Data_Core implements DataInterface
             'last_updated'
         ];
     }
+
+
+
+/* VALIDATE PARAMETERS
+----------------------------------------------------------------------------- */
+
+    /**
+     *  @return array<string, array<string|int>>
+     */
+
+    public static function validate() : array
+    {
+        return [
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ]
+        ];
+    }
+
+    use Validation\ConsolePortType;
+    use Validation\MaxString;
+
 }
 
 /* DATA EXAMPLE

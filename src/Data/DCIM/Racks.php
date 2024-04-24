@@ -11,34 +11,147 @@ use Cruzio\lib\Netbox\Validation;
 
 class Racks extends Data_Core implements DataInterface
 {
-    protected string $name; // Max: 100
-    protected string $facility_id; // Max: 50
-    protected int    $site;    // Class: Site
-    protected int    $location;    // Class Location
-    protected int    $tenant;  // Class Tenant
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of Rack
+     */
+    protected string $name;
+
+    /**
+     * @var string $facility_id
+     * ID of Facility Rack is located in
+     */
+    protected string $facility_id;
+
+    /**
+     * @var int $site
+     * REQUIRED
+     * ID of Sites class
+     */
+    protected int $site;
+
+    /**
+     * @var int $location
+     * ID of Locations class
+     */
+    protected int $location;
+
+    /**
+     * @var int $tenant
+     * ID of Tenants class
+     */
+    protected int $tenant;
+
+    /**
+     * @var string $status
+     * Choose from list of statuses
+     */
     protected string $status;
-    protected int    $role;    // Class RackRole
-    protected string $serial;   // Serial number
-    protected string $asset_tag;    // A unique tag used to identify this rack
+
+    /**
+     * @var int $role
+     * ID of RackRoles class
+     */
+    protected int $role;
+
+    /**
+     * @var string $serial
+     * Serial number
+     */
+    protected string $serial;
+
+    /**
+     * @var string $asset_tag
+     * A unique tag used to identify this rack
+     */
+    protected string $asset_tag;
+
+    /**
+     * @var string $type
+     * Choose from list or rack types
+     */
     protected string $type;
-    protected int    $width;
-    protected int    $u_height;    // Height in rack units
-    protected int    $starting_unit;   // Starting unit for rack
-    protected float  $weight;    
-    protected int    $max_weight;  // Maximum load capacity for the rack
-    protected string $weight_unit; // Weight unit
-    protected bool   $desc_units; // Descending units
-    protected int    $outer_width; // Outer dimension of rack (width). max: 32767
-    protected int    $outer_depth; // Outer dimension of rack (depth) max: 32767
+
+    /**
+     * @var int $width
+     * Choose from list of width integers
+     */
+    protected int $width;
+
+    /**
+     * @var int $u_height
+     * Height in rack units
+     */
+    protected int $u_height;
+
+    /**
+     * @var int $starting_unit
+     * Starting unit for rack
+     */
+    protected int $starting_unit;
+
+    /**
+     * @var float $weight
+     * Weight of empty rack
+     */
+    protected float $weight;
+
+    /**
+     * @var int $max_weight
+     * Maximum load capacity for the rack
+     */
+    protected int $max_weight;
+
+    /**
+     * @var string $weight_unit
+     * Weight unit of measurement
+     */
+    protected string $weight_unit;
+
+    /**
+     * @var bool $desc_units
+     * Descending units
+     */
+    protected bool $desc_units;
+
+    /**
+     * @var int $outer_width
+     * Outer dimension of rack (width).
+     */
+    protected int $outer_width;
+
+    /**
+     * @var int $outer_depth
+     * Outer dimension of rack (depth)
+     */
+    protected int $outer_depth;
+
+    /**
+     * @var string $outer_unit
+     * Choose a unit of measurement
+     */
     protected string $outer_unit;
-    protected int    $mounting_depth;  // Maximum depth of a mounted device, in millimeters. For four-post racks, this is the distance between the front and rear rails.
-    protected string $description;  // Max: 200
+
+    /**
+     * @var int $mounting_depth
+     * Maximum depth of a mounted device, in millimeters.
+     * For four-post racks, this is the distance between
+     * the front and rear rails.
+     *
+     */
+    protected int    $mounting_depth;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
     protected string $comments;
 
     /**
      *  @var array<TagType> $tags
      */
-
     protected array  $tags;
     protected object $custom_fields;
 
@@ -91,17 +204,28 @@ class Racks extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [ 
-            'status'      => ['Status'],
-            'type'        => ['RackType'],
-            'width'       => ['RackWidth'],
-            'weight_unit' => ['WeightUnit'],
-            'outer_unit'  => ['RackOuterUnit']
+            'status'         => [ 'Status' ],
+            'type'           => [ 'RackType' ],
+            'width'          => [ 'RackWidth' ],
+            'weight_unit'    => [ 'WeightUnit' ],
+            'outer_unit'     => [ 'RackOuterUnit' ],
+            'name'           => [ 'MaxString', 100 ],
+            'facility_id'    => [ 'MaxString', 50 ],
+            'serial'         => [ 'MaxString', 50 ],
+            'asset_tag'      => [ 'MaxString', 50 ],
+            'u_height'       => [ 'RangeInt', 1, 100 ],
+            'starting_unit'  => [ 'RangeInt', 1, 32767 ],
+            'max_weight'     => [ 'RangeInt', 0, 2147483647 ],
+            'outer_width'    => [ 'RangeInt', 0, 32767 ],
+            'outer_depth'    => [ 'RangeInt', 0, 32767 ],
+            'mounting_depth' => [ 'RangeInt', 0, 32767 ],
+            'description'    => [ 'MaxString', 200 ],
         ];
     }
 
@@ -110,7 +234,8 @@ class Racks extends Data_Core implements DataInterface
     use Validation\RackWidth;
     use Validation\WeightUnit;
     use Validation\RackOuterUnit;
-
+    use Validation\MaxString;
+    use Validation\RangeInt;
 }
 
 /* DATA EXAMPLE

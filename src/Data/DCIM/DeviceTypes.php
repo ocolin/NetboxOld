@@ -11,22 +11,101 @@ use Cruzio\lib\Netbox\Validation;
 
 class DeviceTypes extends Data_Core implements DataInterface
 {
-    protected int    $manufacturer; // Class: Manufacturers
-    protected int    $default_platform; // Class: Platforms
-    protected string $model; // Max: 100
-    protected string $slug; // Max: 100
-    protected string $part_number; // Discrete part number (optional). Max: 50
-    protected float  $u_height; // Position (U)
-    protected bool   $exclude_from_utilization; // Exclude from utilization
-    protected bool   $is_full_depth; // Device consumes both front and rear rack faces.
-    protected string $subdevice_role; 
+    /**
+     * @var int $manufacturer
+     * ID of Manufacturers class
+     */
+    protected int $manufacturer;
+
+    /**
+     * @var int $default_platform
+     * ID of Platforms class
+     */
+    protected int $default_platform;
+
+    /**
+     * @var string $model
+     * Name of device model
+     */
+    protected string $model;
+
+    /**
+     * @var string $slug
+     * URL friendly slug name
+     */
+    protected string $slug;
+
+    /**
+     * @var string $part_number
+     * Discrete part number (optional)
+     */
+    protected string $part_number;
+
+    /**
+     * @var float $u_height
+     * Rack height of device
+     */
+    protected float $u_height;
+
+    /**
+     * @var bool $exclude_from_utilization
+     * Devices of this type are excluded when calculating rack utilization.
+     */
+    protected bool $exclude_from_utilization;
+
+    /**
+     * @var bool $is_full_depth
+     * Device consumes both front and rear rack faces.
+     */
+    protected bool $is_full_depth;
+
+    /**
+     * @var string $subdevice_role
+     * Select parent or child
+     */
+    protected string $subdevice_role;
+
+    /**
+     * @var string $airflow
+     * Choose the type of airflow
+     */
     protected string $airflow;
-    protected float  $weight;
+
+    /**
+     * @var float $weight
+     * Weight of device
+     */
+    protected float $weight;
+
+    /**
+     * @var string $weight_unit
+     * What unit of measurement for device height
+     */
     protected string $weight_unit;
-    protected string $front_image; // URL
-    protected string $rear_image; // URL
-    protected string $description; // Max: 200
-    protected string $comments; 
+
+    /**
+     * @var string $front_image
+     * URL for image of device front
+     */
+    protected string $front_image;
+
+    /**
+     * @var string $rear_image
+     * URL to image of device rear
+     */
+    protected string $rear_image;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+    protected string $comments;
+
+    /**
+     * @var array<TagType> $tags
+     */
+    protected array $tags;
     protected object $custom_fields;
 
     // READ ONLY
@@ -47,11 +126,6 @@ class DeviceTypes extends Data_Core implements DataInterface
     protected int    $module_bay_template_count;
     protected int    $inventory_item_template_count;
 
-    /**
-     * @var array<TagType> $tags
-     */
-
-    protected array $tags;
 
 
 /* REQUIRED PARAMETERS
@@ -107,11 +181,15 @@ class DeviceTypes extends Data_Core implements DataInterface
 
     public static function validate() : array
     {
-        return [ 
-            'subdevice_role' => ['DeviceRole'],
-            'airflow'        => ['Airflow'],
-            'weight_unit'    => ['WeightUnit'],
-            'slug'           => ['Slug']
+        return [
+            'model'          => [ 'MaxString', 100 ],
+            'subdevice_role' => [ 'DeviceRole' ],
+            'airflow'        => [ 'Airflow' ],
+            'weight_unit'    => [ 'WeightUnit' ],
+            'slug'           => [ 'Slug', 100 ],
+            'part_number'    => [ 'MaxString', 50 ],
+            'u_height'       => [ 'MinNumber', 0 ],
+            'description'    => [ 'MaxString', 200 ]
         ];
     }
 
@@ -119,6 +197,8 @@ class DeviceTypes extends Data_Core implements DataInterface
     use Validation\DeviceRole;
     use Validation\WeightUnit;
     use Validation\Slug;
+    use Validation\MaxString;
+    use Validation\MinNumber;
 
 }
 

@@ -11,16 +11,35 @@ use Cruzio\lib\Netbox\Validation;
 
 class SiteGroups extends Data_Core implements DataInterface
 {
-    protected int    $parent;
-
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of site group
+     */
     protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     * URL friendly name of site group
+     */
     protected string $slug;
+
+    /**
+     * @var int $parent
+     * ID of parent site group
+     */
+    protected int $parent;
+
+    /**
+     * @var string $description
+     * Long description
+     */
     protected string $description;
 
     /**
      * @var array<TagType> $tags
      */
-    
     protected array  $tags;
     protected object $custom_fields;
 
@@ -71,19 +90,22 @@ class SiteGroups extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'status' => ['Status'],
-            'slug'   => ['Slug']
+            'status'        => [ 'Status' ],
+            'slug'          => [ 'Slug', 100 ],
+            'name'          => [ 'MaxString', 100 ],
+            'description'   => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\Status;
     use Validation\Slug;
+    use Validation\MaxString;
 }
 
 /* DATA EXAMPLE

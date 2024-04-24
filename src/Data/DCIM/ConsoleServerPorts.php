@@ -11,13 +11,52 @@ use Cruzio\lib\Netbox\Validation;
 
 class ConsoleServerPorts extends Data_Core implements DataInterface
 {
-    protected int    $device; // Class Devices
-    protected int    $module; // Class: Modules
-    protected string $name; // Max: 64
-    protected string $label; // Max: 64
+    /**
+     * @var int $device
+     * ID of Devices class
+     */
+    protected int $device;
+
+    /**
+     * @var int $module
+     * ID of Modules class
+     */
+    protected int $module;
+
+    /**
+     * @var string $name
+     * Name of port
+     */
+    protected string $name;
+
+    /**
+     * @var string $label
+     * Physical label of port
+     */
+    protected string $label;
+
+    /**
+     * @var string $type
+     * Choose from list of types
+     */
     protected string $type;
+
+    /**
+     * @var int $speed
+     * Choose from list of speed integers
+     */
     protected int    $speed;
-    protected string $description; // Max: 200
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
+
+    /**
+     * @var bool $mark_connected
+     * Treat as if a cable is connected
+     */
     protected bool   $mark_connected;
 
     protected object $custom_fields;
@@ -87,19 +126,23 @@ class ConsoleServerPorts extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'type'  => ['ConsolePortType'],
-            'speed' => ['ConsoleSpeed' ]
+            'type'        => ['ConsolePortType'],
+            'speed'       => ['ConsoleSpeed' ],
+            'name'        => [ 'MaxString', 64 ],
+            'label'       => [ 'MaxString', 64 ],
+            'description' => [ 'MaxString', 200 ],
         ];
     }
 
     use Validation\ConsoleSpeed;
     use Validation\ConsolePortType;
+    use Validation\MaxString;
 
 }
 

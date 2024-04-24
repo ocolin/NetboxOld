@@ -18,7 +18,6 @@ final class SitesTest extends TestDCIM
     {
         $o = new Sites();
         $result = $o->options();
-;
         $this->assertIsObject( $result );
     }
 

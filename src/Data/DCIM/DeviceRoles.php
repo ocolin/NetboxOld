@@ -53,18 +53,20 @@ class DeviceRoles extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'status' => ['Status'],
-            'slug'   => ['Slug']
+            'status' => [ 'Status' ],
+            'name'   => [ 'MaxString', 100 ],
+            'slug'   => [ 'Slug', 100 ]
         ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 
 /* VALIDATE PARAMETERS
 ----------------------------------------------------------------------------- */

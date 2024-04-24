@@ -11,29 +11,53 @@ use Cruzio\lib\Netbox\Validation;
 
 class Platforms extends Data_Core implements DataInterface
 {
-    protected int     $manufacturer;
-    protected int     $config_template;
-    protected string  $url;
-    protected string  $display;
-    protected string  $name;
-    protected string  $slug;
-    protected string  $napalm_driver;
-    protected ?string $napalm_args;
-    protected string  $description;
+    /**
+     * @var string $name
+     * REQUIRED
+     * Name of platform
+     */
+    protected string $name;
+
+    /**
+     * @var string $slug
+     * REQUIRED
+     * URL friendly name for platform
+     */
+    protected string $slug;
+
+    /**
+     * @var int $manufacturer
+     * ID of Manufacturers class
+     */
+    protected int $manufacturer;
+
+    /**
+     * @var int $config_template
+     * Id of ConfigTemplate class
+     */
+    protected int $config_template;
+
+    /**
+     * @var string $description
+     * Long description
+     */
+    protected string $description;
 
     /**
      * @var array<TagType>
      */
-    
     protected array   $tags;
     protected object  $custom_fields;
 
     // READ ONLY
     protected int     $id;
-    protected int     $device_count;
-    protected int     $virtualmachine_count;
+    protected string  $url;
+    protected string  $display;
     protected string  $created;
     protected string  $last_updated;
+    protected int     $device_count;
+    protected int     $virtualmachine_count;
+
 
 
 
@@ -76,15 +100,20 @@ class Platforms extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
-        return [ 'slug' => ['Slug'] ];
+        return [
+            'name'        => [ 'MaxString', 100 ],
+            'slug'        => [ 'Slug', 100 ],
+            'description' => [ 'MaxString', 100 ],
+        ];
     }
 
     use Validation\Slug;
+    use Validation\MaxString;
 
 }
 
