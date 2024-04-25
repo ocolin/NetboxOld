@@ -99,6 +99,7 @@ class Netbox
             module: 'DCIM\Sites',
             id: 1234
       );
+*/
 
     public static function get(
         string $module,
@@ -110,7 +111,7 @@ class Netbox
 
         return $o->get( params: $data, id: $id );
     }
-*/
+
 
 
 /* REPLACE

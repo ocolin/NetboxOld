@@ -12,7 +12,7 @@ use stdClass;
 class Data_Core
 {
 
-/* RENDER DATA INTO AN OBJECT FOR HTTP
+/* RENDER DATA INTO A SIMPLE OBJECT
 ----------------------------------------------------------------------------- */
 
     /**
@@ -43,7 +43,6 @@ class Data_Core
 
 
 
-
 /* SET A DATA PARAMETER
 ----------------------------------------------------------------------------- */
 
@@ -65,6 +64,10 @@ class Data_Core
         }
     }
 
+
+
+/* BUILD VALIDATION FUNCTIONS
+----------------------------------------------------------------------------- */
 
     /**
      * @param string $property
@@ -100,6 +103,7 @@ class Data_Core
         }
 
     }
+
 
 
 /* GET A DATA PARAMETER
@@ -143,6 +147,7 @@ class Data_Core
     {
         return [];
     }
+
 
 
 /* GET ALL READ ONLY PROPERTIES
