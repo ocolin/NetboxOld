@@ -87,13 +87,13 @@ class ServiceTemplates extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'protocol'      => ['ServiceProtocol'],
+            'protocol'      => [ 'ServiceProtocol' ],
             'name'          => [ 'MaxString', 100 ],
             'description'   => [ 'MaxString', 200 ],
         ];

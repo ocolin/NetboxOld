@@ -177,7 +177,7 @@ class ConfigContexts extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
     /**
-     *  @return array<string, array<string>>
+     *  @return array<string, array<string|int>>
      */
 
     public static function validate() : array

@@ -49,10 +49,10 @@ class Data_Core
 
     /**
      * @param string $property
-     * @param string|int|float|bool|array<int|string> $value
+     * @param int|string|float $value
      * @throws Exception
      */
-    public function set( string $property, string|int|float|bool|array $value ) : void
+    public function set( string $property, int|string|float $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );
@@ -67,12 +67,12 @@ class Data_Core
 
 
     /**
-     * @param  string $property
-     * @param string|int|float|bool $value
+     * @param string $property
+     * @param string|int|float $value
      * @throws Exception
      *
      */
-    protected static function build_Validate( string $property, string|int|float|bool  $value ) : void
+    protected static function build_Validate( string $property, string|int|float $value ) : void
     {
         $params = static::validate()[$property];
         $val_func =  'validate_' . array_shift( $params );

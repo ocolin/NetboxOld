@@ -173,7 +173,7 @@ class VirtualMachines extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int|float>>
  */
 
     public static function validate() : array

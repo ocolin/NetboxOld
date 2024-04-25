@@ -135,14 +135,14 @@ class PowerOutlets extends Data_Core implements DataInterface
 ----------------------------------------------------------------------------- */
 
 /**
- *  @return array<string, array<string>>
+ *  @return array<string, array<string|int>>
  */
 
     public static function validate() : array
     {
         return [
-            'type'        => ['PowerOutletType'],
-            'feed_leg'    => ['PowerFeedLeg'],
+            'type'        => [ 'PowerOutletType' ],
+            'feed_leg'    => [ 'PowerFeedLeg' ],
             'name'        => [ 'MaxString', 64 ],
             'label'       => [ 'MaxString', 64 ],
             'description' => [ 'MaxString', 200 ],
