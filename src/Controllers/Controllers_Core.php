@@ -7,6 +7,7 @@ namespace Cruzio\lib\Netbox\Controllers;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Models\ModelsInterface;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
+use function PHPUnit\Framework\stringStartsWith;
 
 class Controllers_Core
 {
@@ -26,7 +27,7 @@ class Controllers_Core
     {
         foreach( $array as $key => $value )
         {
-            if( property_exists( $params, $key )) {
+            if( property_exists( $params, $key ) OR str_starts_with( $key, 'cf_' )) {
                 $params->set( $key, $value );
             }
         }

@@ -4,9 +4,12 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Params;
 
+use AllowDynamicProperties;
 use ReflectionProperty;
 use ReflectionClass;
+use function PHPUnit\Framework\stringStartsWith;
 
+#[AllowDynamicProperties]
 class Params_Core
 {
 
@@ -37,6 +40,9 @@ class Params_Core
 
     public function set( string $param, string|int|float|array $value ) : void
     {
+        if( str_starts_with( $param, 'cf_' )) {
+            $this->$param = $value;
+        }
         if( property_exists( $this, $param )) {
             $rp = new ReflectionProperty( $this, $param );
             if ( !$rp->isPrivate() ) {
@@ -54,14 +60,24 @@ class Params_Core
      */
     public function render() : array
     {
+
         $output = [];
         $reflect = new ReflectionClass( $this );
-        $props   = $reflect->getProperties( ReflectionProperty::IS_PROTECTED );
+        $props   = $reflect->getProperties( filter: ReflectionProperty::IS_PROTECTED );
+        $all_props = get_object_vars( $this );
+
         foreach( $props as $prop )
         {
             if( $prop->isInitialized( $this )) {
                 $name = $prop->getName();
                 $output[$name] = $this->$name;
+            }
+        }
+
+        foreach( $all_props as $key => $value )
+        {
+            if( str_starts_with( haystack: $key, needle: 'cf_' )) {
+                $output[$key] = $value;
             }
         }
 
