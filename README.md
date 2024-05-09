@@ -1,3 +1,4 @@
+
 ## Functions
 
 ### CREATE:
@@ -91,6 +92,31 @@ Delete an existing object
         id: 1234
     );
 
+## CUSTOM FIELDS
+
+### GET Method
+
+custom fields in GET requests must be appended with 'cf_' to the parameter name. Example:
+
+    $module = Netbox::get(
+        module: 'DCIM\Sites',
+        data: [
+          'cf_pop_id' => 1234
+        ]
+    );
+
+### Create, Replace, Update methods
+
+With these calls, the custom fields parameter is an array or object called 'custom_fields' containing a list of parameters and value.
+
+    $module = Netbox::get(
+        module: 'DCIM\Sites',
+        data: [
+          'custom_fields' => [
+              'pop_id' => 1234
+          ]
+        ]
+    );
 
 ## STRUCTURE
 
