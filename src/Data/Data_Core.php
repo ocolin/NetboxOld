@@ -11,6 +11,10 @@ use stdClass;
 
 class Data_Core
 {
+    /**
+     * @var array<string, string|int|float> $custom_fields
+     */
+    //protected array $custom_fields;
 
 /* RENDER DATA INTO A SIMPLE OBJECT
 ----------------------------------------------------------------------------- */
@@ -48,10 +52,10 @@ class Data_Core
 
     /**
      * @param string $property
-     * @param int|string|float $value
+     * @param int|string|float|object $value
      * @throws Exception
      */
-    public function set( string $property, int|string|float $value ) : void
+    public function set( string $property, int|string|float|object $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );
@@ -62,6 +66,7 @@ class Data_Core
                 $this->$property = $value;
             }
         }
+
     }
 
 

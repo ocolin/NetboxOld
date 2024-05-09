@@ -7,6 +7,8 @@ namespace Cruzio\lib\Netbox\Controllers;
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Models\ModelsInterface;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
+use Exception;
+use stdClass;
 use function PHPUnit\Framework\stringStartsWith;
 
 class Controllers_Core
@@ -50,6 +52,10 @@ class Controllers_Core
         foreach( $array as $key => $value )
         {
             if( property_exists( $data, $key )) {
+                // Allow array to be used for custom fields
+                if( $key === 'custom_fields') {
+                    $value = (object)$value;
+                }
                 $data->set( $key, $value );
             }
         }
@@ -97,13 +103,13 @@ class Controllers_Core
      */
     public function create( DataInterface|array $data ) : object|array|null
     {
-        $output = new \stdClass();
+        $output = new stdClass();
         $data = gettype( $data ) === 'array' ? self::arrayToData( $data, $this->data ) : $data;
 
         try {
             $output = $this->model->post( data: $data )->body;
         }
-        catch( \Exception $e ) {
+        catch( Exception $e ) {
             $output->error = $e->getMessage();
         }
 
@@ -121,13 +127,13 @@ class Controllers_Core
      */
     public function replace( DataInterface|array $data, int $id = null ) : object|array|null
     {
-        $output = new \stdClass();
+        $output = new stdClass();
         $data = gettype( $data ) === 'array' ? self::arrayToData( $data, $this->data ) : $data;
 
         try {
             $output = $this->model->put( data: $data, id: $id )->body;
         }
-        catch( \Exception $e ) {
+        catch( Exception $e ) {
             $output->error = $e->getMessage();
         }
 
@@ -145,13 +151,13 @@ class Controllers_Core
      */
     public function update( DataInterface|array $data, int $id = null ) : object|array|null
     {
-        $output = new \stdClass();
+        $output = new stdClass();
         $data = gettype( $data ) === 'array' ? self::arrayToData( $data, $this->data ) : $data;
 
         try {
             $output = $this->model->patch( data: $data, id: $id )->body;
         }
-        catch( \Exception $e ) {
+        catch( Exception $e ) {
             $output->error = $e->getMessage();
         }
 
@@ -169,11 +175,11 @@ class Controllers_Core
      */
     public function delete( int $id ) : object|array|null
     {
-        $output = new \stdClass();
+        $output = new stdClass();
         try {
             $output = $this->model->delete( id: $id )->body;
         }
-        catch( \Exception $e ) {
+        catch( Exception $e ) {
             $output->error = $e->getMessage();
         }
 
