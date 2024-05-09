@@ -166,6 +166,7 @@ arguments
           data: [ 'name' => 'newName' ],
           id: 1234
         );
+*/
 
     public static function update(
         string $module,
@@ -177,7 +178,7 @@ arguments
 
         return $o->update( data: $data, id: $id );
     }
-*/
+
 
 
 /* OPTIONS
