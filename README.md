@@ -1,6 +1,18 @@
 
 ## Functions
 
+### OPTIONS:
+
+Get details on the data provided by a module, what fields are required, the format of each property, etc.
+
+#### Example:
+
+```
+  $output = Netbox::options(
+    module: 'IPAM\IpAddresses'
+  );
+```
+
 ### CREATE:
 
 Create a new object
@@ -12,7 +24,7 @@ Create a new object
     - DataInterface - a data object using the Data classes
 
 #### Example:
-    $module = Netbox::create(
+    $output = Netbox::create(
         module: 'DCIM\Sites',
         data: [ 'name' => 'mySite, 'slug' => 'mySlug' ]
     );
@@ -29,12 +41,12 @@ Get existing objects
   - **id** - Optional id value. Without this, gets every object that matches and with the id, it gets only object with that id
 
 #### Example 1 - Get all sites:
-    $module = Netbox::get(
+    $output = Netbox::get(
         module: 'DCIM\Sites'
     );
 
 #### Example 2 - Get site by ID:
-    $module = Netbox::get(
+    $output = Netbox::get(
         module: 'DCIM\Sites',
             id: 1234
     );
@@ -51,7 +63,7 @@ Update values in an existing object
    - **id** - Optional id value. Without this, updates every object that matches and with the id, it updates only object with that id
 
 ### Example:
-    $module = Netbox::update(
+    $output = Netbox::update(
         module: 'DCIM\Sites',
         data: [ 'name' => 'newName' ],
         id: 1234
@@ -69,7 +81,7 @@ Replace an existing object. All required field needed.
   - **id** - Optional id value. Without this, updates every object that matches and with the id, it updates only object with that id
 
 #### Example:
-    $module = Netbox::replace(
+    $output = Netbox::replace(
         module: 'DCIM\Sites',
         data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
         id: 1234
@@ -87,7 +99,7 @@ Delete an existing object
    - **id** - ID of existing object to delete
 
 #### Example:
-    $module = Netbox::delete(
+    $output = Netbox::delete(
         module: 'DCIM\Sites',
         id: 1234
     );
@@ -98,7 +110,7 @@ Delete an existing object
 
 custom fields in GET requests must be appended with 'cf_' to the parameter name. Example:
 
-    $module = Netbox::get(
+    $output = Netbox::get(
         module: 'DCIM\Sites',
         data: [
           'cf_pop_id' => 1234
@@ -109,7 +121,7 @@ custom fields in GET requests must be appended with 'cf_' to the parameter name.
 
 With these calls, the custom fields parameter is an array or object called 'custom_fields' containing a list of parameters and value.
 
-    $module = Netbox::get(
+    $output = Netbox::get(
         module: 'DCIM\Sites',
         data: [
           'custom_fields' => [
