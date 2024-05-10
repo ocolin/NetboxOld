@@ -48,10 +48,10 @@ class Data_Core
 
     /**
      * @param string $property
-     * @param int|string|float|object $value
+     * @param int|string|float|object|array<string|int> $value
      * @throws Exception
      */
-    public function set( string $property, int|string|float|object $value ) : void
+    public function set( string $property, int|string|float|object|array $value ) : void
     {
         if( property_exists( $this, $property )) {
             $rp = new ReflectionProperty( $this, $property );

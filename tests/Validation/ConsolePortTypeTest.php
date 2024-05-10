@@ -4,26 +4,23 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/ConsolePortType.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class ConsolePortTypeTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\ConsolePortType;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
         $result = self::validate_ConsolePortType( input: 'de-9' );
-
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

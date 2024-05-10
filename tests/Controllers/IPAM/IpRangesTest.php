@@ -11,20 +11,19 @@ use PHPUnit\Framework\Attributes\Depends;
 final class IpRangesTest extends TestIPAM
 {
 
-    /* OPTIONS TEST
-    ----------------------------------------------------------------------------- */
+/* OPTIONS TEST
+----------------------------------------------------------------------------- */
 
     public function testOptionsIpRange() : void
     {
         $o = new IpRanges();
         $result = $o->options();
-        print_r($result);
         $this->assertIsObject( $result );
     }
 
 
-    /* BAD CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD CREATE TEST
+----------------------------------------------------------------------------- */
 
     public function testCreateIpRangeBad() : void
     {
@@ -37,8 +36,8 @@ final class IpRangesTest extends TestIPAM
     }
 
 
-    /* CREATE TEST
-    ----------------------------------------------------------------------------- */
+/* CREATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -56,8 +55,8 @@ final class IpRangesTest extends TestIPAM
 
 
 
-    /* GET TEST
-    ----------------------------------------------------------------------------- */
+/* GET TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateIpRange')]
     public function testGetIpRange( int $id ) : void
@@ -71,8 +70,8 @@ final class IpRangesTest extends TestIPAM
     }
 
 
-    /* GET LIST TEST
-    ----------------------------------------------------------------------------- */
+/* GET LIST TEST
+----------------------------------------------------------------------------- */
 
     public function testGetListIpRange() : void
     {
@@ -90,8 +89,8 @@ final class IpRangesTest extends TestIPAM
     }
 
 
-    /* BAD REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* BAD REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -108,8 +107,8 @@ final class IpRangesTest extends TestIPAM
     }
 
 
-    /* REPLACE TEST
-    ----------------------------------------------------------------------------- */
+/* REPLACE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -131,8 +130,8 @@ final class IpRangesTest extends TestIPAM
 
 
 
-    /* UPDATE TEST
-    ----------------------------------------------------------------------------- */
+/* UPDATE TEST
+----------------------------------------------------------------------------- */
 
     /**
      * @throws Exception
@@ -152,8 +151,8 @@ final class IpRangesTest extends TestIPAM
 
 
 
-    /* DELETE TEST
-    ----------------------------------------------------------------------------- */
+/* DELETE TEST
+----------------------------------------------------------------------------- */
 
     #[Depends('testCreateIpRange')]
     public function testDeleteIpRange( int $id ) : void

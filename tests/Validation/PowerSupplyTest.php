@@ -4,27 +4,24 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/PowerSupply.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class PowerSupplyTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\PowerSupply;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_PowerSupply( input: 'ac' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

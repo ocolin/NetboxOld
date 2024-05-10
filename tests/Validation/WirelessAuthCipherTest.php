@@ -12,19 +12,18 @@ final class WirelessAuthCipherTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\WirelessAuthCipher;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_WirelessAuthCipher( input: 'auto' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

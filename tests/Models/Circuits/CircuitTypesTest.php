@@ -11,7 +11,6 @@ use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\Circuits\CircuitTypes;
 use Cruzio\lib\Netbox\Data\Circuits\CircuitTypes AS Data;
 
-require_once __DIR__ . '/../testCore.php';
 
 final class CircuitTypesTest extends testCore
 {

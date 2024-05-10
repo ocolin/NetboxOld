@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/Airflow.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class AirflowTest extends TestCase
@@ -13,19 +11,18 @@ final class AirflowTest extends TestCase
     use \Cruzio\lib\Netbox\Validation\Airflow;
 
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_Airflow( input: 'front-to-rear' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

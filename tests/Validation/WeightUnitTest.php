@@ -4,15 +4,13 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/WeightUnit.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class WeightUnitTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\WeightUnit;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
@@ -24,7 +22,7 @@ final class WeightUnitTest extends TestCase
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

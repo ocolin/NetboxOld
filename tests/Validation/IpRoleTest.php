@@ -4,27 +4,24 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/IpRole.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class IpRoleTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\IpRole;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_IpRole( input: 'loopback' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

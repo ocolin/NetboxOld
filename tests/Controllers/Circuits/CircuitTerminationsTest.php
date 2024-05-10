@@ -4,8 +4,6 @@ declare( strict_types = 1 );
 
 namespace Tests\Controllers\Circuits;
 
-require_once __DIR__ . '/../DCIM/TestDCIM.php';
-
 use Cruzio\lib\Netbox\Controllers\Circuits\CircuitTerminations;
 use Exception;
 use PHPUnit\Framework\Attributes\Depends;

@@ -4,16 +4,14 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/MinNumber.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class MinNumberTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\MinNumber;
 
-    /*
-    ----------------------------------------------------------------------------- */
+/* GOOD TEST
+----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
@@ -23,8 +21,8 @@ final class MinNumberTest extends TestCase
     }
 
 
-    /*
-    ----------------------------------------------------------------------------- */
+/* BAD TEST
+----------------------------------------------------------------------------- */
 
     public function testBad() : void
     {

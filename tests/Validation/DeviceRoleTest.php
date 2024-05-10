@@ -4,27 +4,24 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/DeviceRole.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class DeviceRoleTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\DeviceRole;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_DeviceRole( input: 'parent' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

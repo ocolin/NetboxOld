@@ -4,27 +4,24 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/FhrpGroupProtocol.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class FhrpGroupProtocolTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\FhrpGroupProtocol;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_FhrpGroupProtocol( input: 'vrrp2' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void

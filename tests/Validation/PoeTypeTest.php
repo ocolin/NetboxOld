@@ -4,27 +4,24 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
-require_once __DIR__ . '/../../src/Validation/PoeType.php';
-
 use PHPUnit\Framework\TestCase;
 
 final class PoeTypeTest extends TestCase
 {
     use \Cruzio\lib\Netbox\Validation\PoeType;
 
-/*
+/* GOOD TEST
 ----------------------------------------------------------------------------- */
 
     public function testGood() : void
     {
-
         $result = self::validate_PoeType( input: 'passive-24v-4pair' );
         self::assertIsBool( $result );
         self::assertTrue( $result );
     }
 
 
-/*
+/* BAD TEST
 ----------------------------------------------------------------------------- */
 
     public function testBad() : void
