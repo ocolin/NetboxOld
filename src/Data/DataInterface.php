@@ -20,7 +20,7 @@ interface DataInterface
     
     public static function validate() : array;
 
-    public function set( string $property, string|int|float $value ) : void;
+    public function set( string $property, string|int|float|object $value ) : void;
 
     public function get( string $property ) : mixed;
 }

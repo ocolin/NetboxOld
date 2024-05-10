@@ -11,16 +11,12 @@ use stdClass;
 
 class Data_Core
 {
-    /**
-     * @var array<string, string|int|float> $custom_fields
-     */
-    //protected array $custom_fields;
 
 /* RENDER DATA INTO A SIMPLE OBJECT
 ----------------------------------------------------------------------------- */
 
     /**
-     * @param bool $required
+     * @param bool $required Check for required fields
      * @return object
      * @throws Exception
      */
@@ -76,11 +72,11 @@ class Data_Core
 
     /**
      * @param string $property
-     * @param string|int|float $value
+     * @param string|int|float|object $value
      * @throws Exception
      *
      */
-    protected static function build_Validate( string $property, string|int|float $value ) : void
+    protected static function build_Validate( string $property, string|int|float|object $value ) : void
     {
         $params = static::validate()[$property];
         $val_func =  'validate_' . array_shift( $params );

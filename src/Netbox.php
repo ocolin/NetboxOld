@@ -39,7 +39,7 @@ class Netbox
  *      );
   *
   * @param string $module Name of module to use
-  * @param DataInterface|array $data Data for creating module.
+  * @param DataInterface|array<string, string|int|float> $data Data for creating module.
   *
  */
 
@@ -47,6 +47,7 @@ class Netbox
     {
         $o = self::controller( module: $module );
 
+        /** @phpstan-ignore-next-line */
         return $o->create( data: $data );
     }
 
@@ -69,10 +70,11 @@ class Netbox
         );
 */
 
-    public static function delete( string $module, int $id )
+    public static function delete( string $module, int $id ) : object
     {
         $o = self::controller( module: $module );
 
+        /** @phpstan-ignore-next-line */
         return $o->delete( id: $id );
     }
 
@@ -99,6 +101,11 @@ class Netbox
             module: 'DCIM\Sites',
             id: 1234
       );
+ *
+ * @param string $module namespace and name of module to load
+ * @param null|ParamsInterface|array<string, string|int|float> $data
+ * @param null|int $id Optional ID to get specific module
+ * @return object
 */
 
     public static function get(
@@ -109,6 +116,7 @@ class Netbox
     {
         $o = self::controller( module: $module );
 
+        /** @phpstan-ignore-next-line */
         return $o->get( params: $data, id: $id );
     }
 
@@ -118,20 +126,25 @@ class Netbox
 ----------------------------------------------------------------------------- */
 
  /**
-    arguments
-        module - Path to module. Example: DCIM\Sites
-        data - Enter data two ways, via array or Data object
-            array - An associative array of parameter names and values
-            DataInterface - Use a Data class object
-        id - Optional id value. Without this, updates every object that matches
-                and with the id, it updates only object with that id
-
-  @example - replace a site:
-        $module = Netbox::replace(
-           module: 'DCIM\Sites',
-           data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
-           id: 1234
-         );
+    * arguments
+        * module - Path to module. Example: DCIM\Sites
+        * data - Enter data two ways, via array or Data object
+            * array - An associative array of parameter names and values
+            * DataInterface - Use a Data class object
+        * id - Optional id value. Without this, updates every object that matches
+                * and with the id, it updates only object with that id
+ *
+* @example - replace a site:
+        * $module = Netbox::replace(
+           * module: 'DCIM\Sites',
+           * data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
+           * id: 1234
+   );
+  *
+  * @param string $module namespace and name of module to load
+  * @param DataInterface|array<string, string|int|float> $data
+  * @param null|int $id Optional ID to get specific module
+  * @return object
 */
 
     public static function replace(
@@ -143,6 +156,7 @@ class Netbox
     {
         $o = self::controller( module: $module );
 
+        /** @phpstan-ignore-next-line */
         return $o->replace( data: $data, id: $id );
     }
 
@@ -166,6 +180,11 @@ arguments
           data: [ 'name' => 'newName' ],
           id: 1234
         );
+ *
+ * @param string $module Namespace and name of module to load
+ * @param DataInterface|array<string, string|int|float> $data data to send to query
+ * @param int|null $id Optional ID to specify individual object
+ * @return object
 */
 
     public static function update(
@@ -176,6 +195,7 @@ arguments
     {
         $o = self::controller( module: $module );
 
+        /** @phpstan-ignore-next-line */
         return $o->update( data: $data, id: $id );
     }
 
@@ -188,6 +208,7 @@ arguments
     {
         $o = self::controller( module: $module );
 
+        /** @phpstan-ignore-next-line */
         return $o->options();
     }
 
@@ -200,7 +221,7 @@ arguments
      * Create a controller
      *
      * @param string $module Long name of the module class
-     * @return mixed
+     * @return object
      */
     public static function controller( string $module ) : object
     {
@@ -217,7 +238,7 @@ arguments
      * Create a model
      *
      * @param string $module Long name of model
-     * @return mixed
+     * @return object
      */
     public static function model( string $module ) : object
     {
