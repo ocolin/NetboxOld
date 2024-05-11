@@ -45,7 +45,9 @@ class HTTP
           bool $errors   = false
     )
     {
-        EasyEnv::loadEnv( path: __DIR__ . '/../../.env', silent: true, append: true );
+        if( empty( $_ENV['NETBOX_BASE_URI']) or empty( $_ENV['NETBOX_TOKEN'] )) {
+            EasyEnv::loadEnv(path: __DIR__ . '/../../.env', silent: true, append: true);
+        }
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
         $this->headers  = self::default_Headers();

@@ -1,3 +1,4 @@
+- [Environment](#Environment)
 - [Functions](#functions)
   - [Options](#OPTIONS)
   - [Create](#CREATE)
@@ -8,6 +9,15 @@
 - [Custom Fields](#CUSTOM-FIELDS)
 - [Structure](#STRUCTURE)
 - [Todo](#TODO)
+
+## Environment
+
+This tool requires the following environment variables.
+
+- NETBOX_BASE_URI
+- NETBOX_TOKEN
+
+They can be set from either outside of this library, or within a .env file in the root directory. There is a .env.example file that can be used as a template. The .env will be loaded if the environment variables are not already set.
 
 ## Functions
 
