@@ -1,3 +1,4 @@
+- [Overview](#overview)
 - [Environment](#Environment)
 - [Functions](#functions)
   - [Options](#OPTIONS)
@@ -9,6 +10,10 @@
 - [Custom Fields](#CUSTOM-FIELDS)
 - [Structure](#STRUCTURE)
 - [Todo](#TODO)
+
+## Overview
+
+Netbox is a datacenter management tool for keeping track of equipment, power, cabling, etc. This is a PHP library to help integrate API calls to a Netbox server. The goal is to make making calls as easy as possible. 
 
 ## Environment
 
