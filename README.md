@@ -1,3 +1,13 @@
+- [Functions](#functions)
+  - [Options](#OPTIONS)
+  - [Create](#CREATE)
+  - [Get](#GET)
+  - [Update](#UPDATE)
+  - [Replace](#REPLACE)
+  - [Delete](#DELETE)
+- [Custom Fields](#CUSTOM-FIELDS)
+- [Structure](#STRUCTURE)
+- [Todo](#TODO)
 
 ## Functions
 
