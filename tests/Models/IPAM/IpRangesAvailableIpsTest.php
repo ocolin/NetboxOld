@@ -4,6 +4,8 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Cruzio\lib\Netbox\Data\IPAM\IpRangesAvailableIps as Data;
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use Tests\Models\testCore;
 use Cruzio\lib\Netbox\Models\IPAM\IpRangesAvailableIps;
@@ -25,7 +27,7 @@ final class IpRangesAvailableIpsTest extends testCore
     {
         $o = new IpRangesAvailableIps();
         $result = $o->get( id: self::$range->id );
-        
+
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );
         $this->assertObjectHasProperty( 'headers', $result );
@@ -34,9 +36,37 @@ final class IpRangesAvailableIpsTest extends testCore
         $this->assertEquals( 200, $result->status );
         $this->assertIsArray( $result->headers );
         $this->assertIsArray( $result->body );
-    } 
- 
-    
+    }
+
+
+/* TEST POST
+---------------------------------------------------------------------------- */
+
+    /**
+     * @throws Exception
+     * @throws GuzzleException
+     */
+    public function testPostDetail() : void
+    {
+
+        $o = new IpRangesAvailableIps();
+        $d = new Data();
+        $d->set( 'status', 'active' );
+        $d->set( 'description', 'unit testing' );
+        $d->set( 'range', self::$range->id);
+        $result = $o->post( data: $d );
+
+        $this->assertIsObject( $result );
+        $this->assertObjectHasProperty( 'status',  $result );
+        $this->assertObjectHasProperty( 'headers', $result );
+        $this->assertObjectHasProperty( 'body',    $result );
+        $this->assertIsInt( $result->status );
+        $this->assertEquals( 201, $result->status );
+        $this->assertIsArray( $result->headers );
+        $this->assertIsObject( $result->body );
+
+    }
+
 /*
 ---------------------------------------------------------------------------- */
 

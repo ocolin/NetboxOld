@@ -881,7 +881,7 @@ abstract class testCore extends TestCase
     {
         $o = new Models\IPAM\IpRanges();
         $d = new Data\IPAM\IpRanges();
-        $d->set('start_address', '192.168.77.0/24' );
+        $d->set('start_address', '192.168.77.1/24' );
         $d->set('end_address', '192.168.77.254/24' );
         $d->set('description', 'PHPUnit_IpRange-Post' );
         return (object)$o->post( data: $d)->body;

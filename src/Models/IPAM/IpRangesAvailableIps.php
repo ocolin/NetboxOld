@@ -4,13 +4,14 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models\IPAM;
 
+use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Models\HTTP;
 use Cruzio\lib\Netbox\Models\ModelsInterface;
 use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 use GuzzleHttp\Exception\GuzzleException;
 
-class IpRangesAvailableIps extends IPAM_Core  implements ModelsInterface
+class IpRangesAvailableIps extends IPAM_Core
 {
     
     public function __construct( HTTP $http = null )
@@ -65,4 +66,33 @@ class IpRangesAvailableIps extends IPAM_Core  implements ModelsInterface
             headers: $headers 
         );
     }
+
+
+
+/* POST METHOD DETAIL
+---------------------------------------------------------------------------- */
+
+    /**
+     * @param DataInterface $data Body data
+     * @param array $headers HTML request headers
+     * @param array $params Optional URL parameters
+     * @return Response
+     * @throws GuzzleException
+     */
+    public function post(
+        DataInterface $data,
+        array        $headers = [],
+        array        $params  = [],
+    ) : Response
+    {
+        $obj = $data->render( required: true );
+        $this->uri .= "{$obj->range}/available-ips/";
+        return $this->http->post(
+            uri: $this->uri,
+            body: $obj,
+            params: $params,
+            headers: $headers
+        );
+    }
+
 }
