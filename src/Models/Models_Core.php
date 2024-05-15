@@ -78,8 +78,8 @@ abstract class Models_Core
 
     public function post(
         DataInterface $data,
-         array        $headers = [],
-         array        $params  = [],
+                array $headers = [],
+                array $params  = [],
     ) : Response
     {
 
@@ -108,9 +108,9 @@ abstract class Models_Core
 
     public function put(
         DataInterface $data,
-        int                 $id = null,
-        array               $headers = [],
-        array               $params  = []
+                 ?int $id = null,
+                array $headers = [],
+                array $params  = []
     ) : Response
     {
         if( $id !== null ) { $this->uri .= "{$id}/"; }
@@ -140,9 +140,9 @@ abstract class Models_Core
 
     public function patch(
         DataInterface $data,
-        int                 $id = null,
-        array               $headers = [],
-        array               $params  = []
+                 ?int $id = null,
+                array $headers = [],
+                array $params  = []
     ) : Response
     {
         if( $id !== null ) { $this->uri .= "{$id}/"; }
@@ -171,7 +171,7 @@ abstract class Models_Core
      */
 
     public function delete(
-        int $id = null,
+         ?int $id = null,
         array $data = [],
         array $headers = []
     ) : Response
@@ -210,9 +210,9 @@ abstract class Models_Core
      */
 
     public function get(
-        int             $id = null,
-        ParamsInterface $params = null,
-        array           $headers = []
+                    ?int $id = null,
+        ?ParamsInterface $params = null,
+                   array $headers = []
     ) : Response
     {
         $params = $params === null ? [] : $params->render();
@@ -221,8 +221,8 @@ abstract class Models_Core
         }
 
         return $this->http->get(
-            uri:     $this->uri,
-            params:  $params,
+                uri: $this->uri,
+             params: $params,
             headers: $headers
         );
     }

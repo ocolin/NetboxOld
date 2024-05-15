@@ -39,10 +39,10 @@ class HTTP
      */
 
     public function __construct(
-        Client $client   = null,
-        string $base_uri = null,
-          bool $verify   = false,
-          bool $errors   = false
+        ?Client $client = null,
+        ?string $base_uri = null,
+           bool $verify = false,
+           bool $errors = false
     )
     {
         if( empty( $_ENV['NETBOX_BASE_URI']) or empty( $_ENV['NETBOX_TOKEN'] )) {
@@ -52,10 +52,10 @@ class HTTP
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
         $this->headers  = self::default_Headers();
         $this->client   = $client ?? new Client([
-            'base_uri'    => $this->base_uri,
-            'verify'      => $verify,
-            'http_errors' => $errors,
-            'timeout'     => 10,
+            'base_uri'        => $this->base_uri,
+            'verify'          => $verify,
+            'http_errors'     => $errors,
+            'timeout'         => 10,
             'connect_timeout' => 10
         ]);
     }
@@ -213,15 +213,15 @@ class HTTP
 
     public function delete(
         string $uri,
-        array $body = [],
-        array $headers = []
+         array $body = [],
+         array $headers = []
     ) : Response
     {
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
             'DELETE', $uri, [ 
                 'headers' => $this->headers,
-                'body'    => json_encode( $body )
+                   'body' => json_encode( $body )
             ]
         );
 
@@ -269,8 +269,8 @@ class HTTP
     {
         return [
             'Authorization' => 'Token ' . $_ENV['NETBOX_TOKEN'],
-            'Content-type'  => 'application/json; charset=utf-8',
-            'User-Agent'    => 'Netbox API Client 1.0',
+             'Content-type' => 'application/json; charset=utf-8',
+               'User-Agent' => 'Netbox API Client 1.0',
         ];
     }
 
@@ -306,7 +306,7 @@ class HTTP
  * Format an array of parameters into a URL query
  *
  * @param array<string, string> $params
- * @param string  $uri
+ * @param string $uri
  * @return string final URI with parameters encoded into it, or plain uri.
 */
 

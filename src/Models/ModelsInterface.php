@@ -20,7 +20,7 @@ Interface ModelsInterface
      * @param DataInterface $data
      * @param array<string, string> $headers
      * @param array<string, int|float|string|array<int|float|string>> $params
-     * @return \Cruzio\lib\Netbox\Models\Response
+     * @return Response
      */
     public function post( DataInterface $data, array $headers = [], array $params = [] ) : Response;
 
@@ -29,24 +29,24 @@ Interface ModelsInterface
      * @param null|int $id
      * @param array<string, string> $headers
      * @param array<string, int|float|string|array<int|float|string>> $params
-     * @return \Cruzio\lib\Netbox\Models\Response
+     * @return Response
      */
-    public function put( DataInterface $data, int $id = null, array $headers = [], array $params = [] ) : Response;
+    public function put( DataInterface $data, ?int $id, array $headers = [], array $params = [] ) : Response;
 
     /**
      * @param DataInterface $data
      * @param int|null $id
      * @param array<string, string> $headers
      * @param array<string, int|float|string|array<int|float|string>> $params
-     * @return \Cruzio\lib\Netbox\Models\Response
+     * @return Response
      */
-    public function patch( DataInterface $data, int $id = null, array $headers = [], array $params = [] ) : Response;
+    public function patch( DataInterface $data, ?int $id = null, array $headers = [], array $params = [] ) : Response;
 
     /**
      * @param int $id
      * @param array<string, string> $headers
      * @param array<string, int|float|string|array<int|float|string>> $params
-     * @return \Cruzio\lib\Netbox\Models\Response
+     * @return Response
      */
     public function delete( int $id, array $headers = [], array $params = [] ) : Response;
 
@@ -56,5 +56,5 @@ Interface ModelsInterface
      * @param array<string, string> $headers
      * @return mixed
      */
-    public function get( int $id = null, ParamsInterface $params = null, array $headers = [] ) : Response;
+    public function get( ?int $id = null, ?ParamsInterface $params = null, array $headers = [] ) : Response;
 }
