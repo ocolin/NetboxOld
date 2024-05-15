@@ -69,7 +69,8 @@ Get existing objects
 
 #### Example 1 - Get all sites:
     $output = Netbox::get(
-        module: 'DCIM\Sites'
+        module: 'DCIM\Sites',
+          data: [ 'id__gt' => 10 ]
     );
 
 #### Example 2 - Get site by ID:
