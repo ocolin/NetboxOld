@@ -36,7 +36,7 @@ trait CableType
             'power'
         ];
         if( !in_array( $input, $allowed )) {
-            return "CableType '{$input}' is not valid cable type.";
+            return "CableType '$input' is not valid cable type.";
         }
 
         return true;

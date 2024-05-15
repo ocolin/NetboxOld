@@ -18,7 +18,7 @@ trait PrefixStatus
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "PrefixStatus '{$input}' Needs to be of type {$combined}.";
+            return "PrefixStatus '$input' Needs to be of type $combined.";
         }
 
         return true;

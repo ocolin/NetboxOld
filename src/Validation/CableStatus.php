@@ -13,7 +13,7 @@ trait CableStatus
         $allowed = [ 'connected', 'planned', 'decommissioning' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "CableStatus '{$input}' Needs to be in: {$combined}";
+            return "CableStatus '$input' Needs to be in: $combined";
         }
 
         return true;

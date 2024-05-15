@@ -21,7 +21,7 @@ trait RackType
         ];
 
         if( !in_array( $input, $allowed )) {
-            return "Type '{$input}' is not a valid rack type.";
+            return "Type '$input' is not a valid rack type.";
         }
 
         return true;

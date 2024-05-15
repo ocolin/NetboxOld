@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\Status;
 use PHPUnit\Framework\TestCase;
 
 final class StatusTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\Status;
+    use Status;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

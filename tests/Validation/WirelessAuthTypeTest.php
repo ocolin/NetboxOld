@@ -6,11 +6,12 @@ namespace Tests\Validation;
 
 require_once __DIR__ . '/../../src/Validation/WirelessAuthType.php';
 
+use Cruzio\lib\Netbox\Validation\WirelessAuthType;
 use PHPUnit\Framework\TestCase;
 
 final class WirelessAuthTypeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\WirelessAuthType;
+    use WirelessAuthType;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

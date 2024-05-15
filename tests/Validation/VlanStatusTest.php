@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\VlanStatus;
 use PHPUnit\Framework\TestCase;
 
 final class VlanStatusTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\VlanStatus;
+    use VlanStatus;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

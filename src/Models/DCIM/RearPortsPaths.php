@@ -12,6 +12,6 @@ class RearPortsPaths extends DCIM_Core implements ModelsInterface
     public function __construct( int $id, HTTP $http = null )
     {
         parent::__construct( http: $http );
-        $this->uri .= "rear-ports/{$id}/paths/";
+        $this->uri .= "rear-ports/$id/paths/";
     }
 }

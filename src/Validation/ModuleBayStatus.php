@@ -20,7 +20,7 @@ trait ModuleBayStatus
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "ModBayStatus '{$input}' Needs to be in: {$combined}";
+            return "ModBayStatus '$input' Needs to be in: $combined";
         }
 
         return true;

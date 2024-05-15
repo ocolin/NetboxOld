@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\MacAddress;
 use PHPUnit\Framework\TestCase;
 
 final class MacAddressTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\MacAddress;
+    use MacAddress;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

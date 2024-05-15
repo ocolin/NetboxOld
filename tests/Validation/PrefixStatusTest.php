@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\PrefixStatus;
 use PHPUnit\Framework\TestCase;
 
 final class PrefixStatusTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\PrefixStatus;
+    use PrefixStatus;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

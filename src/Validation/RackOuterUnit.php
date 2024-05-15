@@ -13,7 +13,7 @@ trait RackOuterUnit
         $allowed = [ 'mm', 'in' ];
         if( !in_array( $input, $allowed )) {
             $choices = implode( ',', $allowed );
-            return "Outer unit '{$input}' must be one of: {$choices}";
+            return "Outer unit '$input' must be one of: $choices";
         }
 
         return true;

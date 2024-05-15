@@ -117,7 +117,7 @@ class Asns extends Data_Core implements DataInterface
   "tags": [
     {
       "name": "string",
-      "slug": "I84LBGgstwKQwtWx5ELMor9B6SiQGld55Vgi02vYHxo6P5GaArv5L8w1I1gKcsFN",
+      "slug": "Slug_name",
       "color": "7e1bbb"
     }
   ],

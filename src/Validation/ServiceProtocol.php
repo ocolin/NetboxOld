@@ -13,7 +13,7 @@ trait ServiceProtocol
         $allowed = [ 'tcp', 'udp', 'sctp' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "ServiceProtocol '{$input}' Must be of type: {$combined}.";
+            return "ServiceProtocol '$input' Must be of type: $combined.";
         }
 
         return true;

@@ -6,7 +6,7 @@ namespace Tests\Models\DCIM;
 
 use GuzzleHttp\Exception\GuzzleException;
 use Tests\Models\testCore;
-use Cruzio\lib\Netbox\Models\DCIM\CableTerminations;;
+use Cruzio\lib\Netbox\Models\DCIM\CableTerminations;
 use Cruzio\lib\Netbox\Data\DCIM\CableTerminations AS Data;
 use PHPUnit\Framework\Attributes\Depends;
 

@@ -13,7 +13,7 @@ trait PowerSupply
         $allowed = [ 'ac', 'dc' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return  "Supply '{$input}' Needs to be: {$combined}";
+            return  "Supply '$input' Needs to be: $combined";
         }
 
         return true;

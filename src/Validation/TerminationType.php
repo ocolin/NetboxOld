@@ -22,7 +22,7 @@ trait TerminationType
             'dcim.rearport'
         ];
         if( !in_array( $input, $allowed )) {
-            return "erminationType '{$input}' is not valid.";
+            return "TerminationType '$input' is not valid.";
         }
 
         return true;

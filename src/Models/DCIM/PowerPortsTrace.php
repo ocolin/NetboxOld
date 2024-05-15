@@ -12,6 +12,6 @@ class PowerPortsTrace extends DCIM_Core implements ModelsInterface
     public function __construct( int $id, HTTP $http = null )
     {
         parent::__construct( http: $http );
-        $this->uri .= "power-ports/{$id}/trace/";
+        $this->uri .= "power-ports/$id/trace/";
     }
 }

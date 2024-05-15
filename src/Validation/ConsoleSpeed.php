@@ -22,7 +22,7 @@ trait ConsoleSpeed
         ];
         if( !in_array( $input, $allowed )) {
             $combine = implode( ',', $allowed );
-            return "Speed '{$input}' should be: {$combine}";
+            return "Speed '$input' should be: $combine";
         }
 
         return true;

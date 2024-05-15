@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\TerminationType;
 use PHPUnit\Framework\TestCase;
 
 final class TerminationTypeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\TerminationType;
+    use TerminationType;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

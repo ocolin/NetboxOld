@@ -21,7 +21,7 @@ trait Airflow
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "Airflow '{$input}' must be one of: {$combined}";
+            return "Airflow '$input' must be one of: $combined";
         }
 
         return true;

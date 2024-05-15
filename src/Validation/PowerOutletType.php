@@ -107,7 +107,7 @@ trait PowerOutletType
         ];
 
         if( !in_array( $input, $allowed )) {
-            return "OutletType '{$input}' Not a valid Power Outlet type.";
+            return "OutletType '$input' Not a valid Power Outlet type.";
         }
 
         return true;

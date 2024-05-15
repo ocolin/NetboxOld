@@ -102,7 +102,10 @@ final class CircuitTerminationsTest extends testCore
 /* TEST GET LIST
 ---------------------------------------------------------------------------- */
 
-        public function testGetList() : void
+    /**
+     * @throws GuzzleException
+     */
+    public function testGetList() : void
         {
             $o = new CircuitTerminations();
             $result = $o->get();

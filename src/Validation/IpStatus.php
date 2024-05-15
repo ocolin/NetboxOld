@@ -15,7 +15,7 @@ trait IpStatus
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "IpStatus '{$input}' must be of type: {$combined}.";
+            return "IpStatus '$input' must be of type: $combined.";
         }
 
         return true;

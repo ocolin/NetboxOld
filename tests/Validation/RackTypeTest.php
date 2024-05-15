@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\RackType;
 use PHPUnit\Framework\TestCase;
 
 final class RackTypeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\RackType;
+    use RackType;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

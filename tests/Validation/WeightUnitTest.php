@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\WeightUnit;
 use PHPUnit\Framework\TestCase;
 
 final class WeightUnitTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\WeightUnit;
+    use WeightUnit;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

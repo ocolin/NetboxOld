@@ -13,7 +13,7 @@ trait FilterLogic
         $allowed = [ 'disabled', 'loose', 'exact' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "FilterLogic '{$input}' Needs to be of type: {$combined}.";
+            return "FilterLogic '$input' Needs to be of type: $combined.";
          }
 
         return true;

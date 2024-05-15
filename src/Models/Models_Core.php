@@ -113,7 +113,7 @@ abstract class Models_Core
                 array $params  = []
     ) : Response
     {
-        if( $id !== null ) { $this->uri .= "{$id}/"; }
+        if( $id !== null ) { $this->uri .= "$id/"; }
 
         return $this->http->put(
                 uri: $this->uri,
@@ -145,7 +145,7 @@ abstract class Models_Core
                 array $params  = []
     ) : Response
     {
-        if( $id !== null ) { $this->uri .= "{$id}/"; }
+        if( $id !== null ) { $this->uri .= "$id/"; }
 
         return $this->http->patch(
                 uri: $this->uri,
@@ -177,7 +177,7 @@ abstract class Models_Core
     ) : Response
     {
         if( $id !== null ) {
-            $this->uri .= "{$id}/";
+            $this->uri .= "$id/";
         }
 
         $body = [];
@@ -217,7 +217,7 @@ abstract class Models_Core
     {
         $params = $params === null ? [] : $params->render();
         if( $id !== null ) {
-            $this->uri .= "{$id}/";
+            $this->uri .= "$id/";
         }
 
         return $this->http->get(

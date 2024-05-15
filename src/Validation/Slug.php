@@ -16,7 +16,7 @@ trait Slug
 
         return preg_match("#^[a-z0-9_-]+$#i", $input ) 
             ? true 
-            : "'{$input}' is not a valid slug.";
+            : "'$input' is not a valid slug.";
     }
 
 }

@@ -30,12 +30,12 @@ class PrefixesAvailablePrefixes extends IPAM_Core implements ModelsInterface
      * @throws GuzzleException
      */
     public function get(
-        int             $id = null,
+                   ?int $id = null,
         ParamsInterface $params = null,
-        array           $headers = []
+                  array $headers = []
     ) : Response
     {
-        $this->uri .= "{$id}/available-prefixes/";
+        $this->uri .= "$id/available-prefixes/";
         $params = $params === null ? [] : $params->render();
 
         return $this->http->get( 

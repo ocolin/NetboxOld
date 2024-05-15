@@ -211,7 +211,7 @@ trait RfChannel
         ];
         if( !in_array( $input, $allowed )) {
             $combine = implode( ',', $allowed );
-            return "RfChannel '{$input}' is not  valid channel.";
+            return "RfChannel '$input' is not  valid channel.";
         }
 
         return true;

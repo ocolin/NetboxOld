@@ -13,7 +13,7 @@ trait VlanStatus
         $allowed = [ 'active', 'reserved', 'deprecated' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "VlanStatus '{$input}' Needs to be of type: {$combined}.";
+            return "VlanStatus '$input' Needs to be of type: $combined.";
         }
 
         return true;

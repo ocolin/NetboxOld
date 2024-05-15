@@ -28,7 +28,7 @@ trait ConsolePortType
             'other'
         ];
         if( !in_array( $input, $allowed )) {
-            return "ConsolePort '{$input}' is not valid type.";
+            return "ConsolePort '$input' is not valid type.";
         }
 
         return true;

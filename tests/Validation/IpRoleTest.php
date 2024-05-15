@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\IpRole;
 use PHPUnit\Framework\TestCase;
 
 final class IpRoleTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\IpRole;
+    use IpRole;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

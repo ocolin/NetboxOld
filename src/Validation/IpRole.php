@@ -22,7 +22,7 @@ trait IpRole
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "IpRole '{$input}' must be of type: {$combined}.";
+            return "IpRole '$input' must be of type: $combined.";
         }
 
         return true;

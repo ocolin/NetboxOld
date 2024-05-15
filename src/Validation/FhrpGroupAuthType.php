@@ -13,7 +13,7 @@ trait FhrpGroupAuthType
          $allowed = [ 'plaintext', 'md5' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "hrpGroupProtocol '{$input}' Needs to be type: {$combined}.";
+            return "hrpGroupProtocol '$input' Needs to be type: $combined.";
         }
 
         return true;

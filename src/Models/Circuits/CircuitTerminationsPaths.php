@@ -13,6 +13,6 @@ class CircuitTerminationsPaths extends Circuits_Core  implements ModelsInterface
     public function __construct( int $id, HTTP $http = null )
     {
         parent::__construct( http: $http );
-        $this->uri .= "circuit-terminations/{$id}/paths";
+        $this->uri .= "circuit-terminations/$id/paths";
     }
 }

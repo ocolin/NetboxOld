@@ -22,7 +22,7 @@ trait Status
         }
         $statuses = implode( ',', $allowed );
 
-        return "'{$input}' is not in statuses: {$statuses}";
+        return "'$input' is not in statuses: $statuses";
     }
 
 }

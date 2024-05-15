@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\CIDR;
 use PHPUnit\Framework\TestCase;
 
 final class CIDRTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\CIDR;
+    use CIDR;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

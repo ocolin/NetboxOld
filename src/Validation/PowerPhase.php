@@ -13,7 +13,7 @@ trait PowerPhase
         $allowed = [ 'single-phase', 'three-phase' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return  "Phase '{$input}' Needs to be: {$combined}";
+            return  "Phase '$input' Needs to be: $combined";
         }
 
         return true;

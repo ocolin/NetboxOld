@@ -52,7 +52,7 @@ final class CustomLinksTest extends testCore
         $d = new Data();
         $d->set( 'content_types', [ 'dcim.sitegroup' ] );
         $d->set( 'name', 'PHPUnit_CustomLinks_Post' );
-        $d->set( 'link_url', 'http://test.com' );
+        $d->set( 'link_url', 'https://test.com' );
         $d->set( 'link_text', 'testing' );
         $result = $o->post( data: $d );
 

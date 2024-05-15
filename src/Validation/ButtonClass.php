@@ -29,7 +29,7 @@ trait ButtonClass
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "ButtonClass '{$input}' Needs to be in: {$combined}";
+            return "ButtonClass '$input' Needs to be in: $combined";
         }
 
         return true;

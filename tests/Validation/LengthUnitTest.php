@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\LengthUnit;
 use PHPUnit\Framework\TestCase;
 
 final class LengthUnitTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\LengthUnit;
+    use LengthUnit;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

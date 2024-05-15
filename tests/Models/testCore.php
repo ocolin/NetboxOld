@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models;
 
+use Cruzio\lib\Netbox\Data\DCIM\Sites;
 use Cruzio\lib\Netbox\Models AS Models;
 use Cruzio\lib\Netbox\Data AS Data;
 use Exception;
@@ -216,7 +217,7 @@ abstract class testCore extends TestCase
     public static function createSite() : object
     {
         $rand = rand( 1, 100000 );
-        $d = new \Cruzio\lib\Netbox\Data\DCIM\Sites();
+        $d = new Sites();
         $d->set( 'name', 'PHPUnit_Site-' . $rand );
         $d->set( 'slug', 'PHPUnit_Site-' . $rand );
         $o = new Models\DCIM\Sites();
@@ -910,7 +911,7 @@ abstract class testCore extends TestCase
         $rand = rand( 2, 254 );
         $o = new Models\IPAM\IpAddresses();
         $d = new Data\IPAM\IpAddresses();
-        $d->set( 'address', "192.168.44.{$rand}/24" );
+        $d->set( 'address', "192.168.44.$rand/24" );
         $d->set( 'description', 'PHPUnit_IP-Post-' . $rand );
         return (object)$o->post( data: $d )->body;
     }
@@ -918,7 +919,7 @@ abstract class testCore extends TestCase
     /**
      * @throws GuzzleException
      */
-    public static function destroyIpAddress(object $ip ) : void
+    public static function destroyIpAddress( object $ip ) : void
     {
         $o = new Models\IPAM\IpAddresses();
         $o->delete( id: $ip->id );

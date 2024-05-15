@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\MaxString;
 use PHPUnit\Framework\TestCase;
 
 final class MaxStringTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\MaxString;
+    use MaxString;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

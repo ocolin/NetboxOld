@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\Slug;
 use PHPUnit\Framework\TestCase;
 
 final class SlugTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\Slug;
+    use Slug;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

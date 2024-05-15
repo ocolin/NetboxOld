@@ -4,7 +4,6 @@ declare( strict_types = 1 );
 
 namespace Cruzio\lib\Netbox\Models;
 
-use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 use Cruzio\lib\Netbox\Data\DataInterface;
 
@@ -12,7 +11,7 @@ Interface ModelsInterface
 {
     /**
      * @param array<string, string> $headers
-     * @return \Cruzio\lib\Netbox\Models\Response
+     * @return Response
      */
     public function options( array $headers = [] ) : Response;
 

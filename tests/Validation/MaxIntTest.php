@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\MaxInt;
 use PHPUnit\Framework\TestCase;
 
 final class MaxIntTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\MaxInt;
+    use MaxInt;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

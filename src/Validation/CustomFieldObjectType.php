@@ -152,7 +152,7 @@ trait CustomFieldObjectType
             'wireless.wirelesslink'
          ];
          if( !in_array( $input, $allowed )) {
-            return "CustomFieldObjectType '{$input}' is not a valid type.";
+            return "CustomFieldObjectType '$input' is not a valid type.";
          }
 
         return true;

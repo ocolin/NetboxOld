@@ -13,7 +13,7 @@ trait FeedType
         $allowed = [ 'primary', 'redundant' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return  "FeedType '{$input}' Needs to be: {$combined}";
+            return  "FeedType '$input' Needs to be: $combined";
         }
 
         return true;

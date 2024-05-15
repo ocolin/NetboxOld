@@ -13,7 +13,7 @@ trait RfRole
         $allowed = [ 'ap', 'station' ];
         if( !in_array( $input, $allowed )) {
             $combine = implode( ',', $allowed );
-            return "RfRol '{$input}' needs to be of: {$combine}.";
+            return "RfRol '$input' needs to be of: $combine.";
         }
 
         return true;

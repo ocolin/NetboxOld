@@ -6,7 +6,6 @@ namespace Cruzio\lib\Netbox\Models\IPAM;
 
 use Cruzio\lib\Netbox\Data\DataInterface;
 use Cruzio\lib\Netbox\Models\HTTP;
-use Cruzio\lib\Netbox\Models\ModelsInterface;
 use Cruzio\lib\Netbox\Models\Response;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 use GuzzleHttp\Exception\GuzzleException;
@@ -52,12 +51,12 @@ class IpRangesAvailableIps extends IPAM_Core
      */
 
     public function get(
-        int             $id = null,
+                   ?int $id = null,
         ParamsInterface $params = null,
-        array           $headers = []
+                  array $headers = []
     ) : Response
     {
-        $this->uri .= "{$id}/available-ips/";
+        $this->uri .= "$id/available-ips/";
         $params = $params === null ? [] : $params->render();
 
         return $this->http->get( 
@@ -81,12 +80,12 @@ class IpRangesAvailableIps extends IPAM_Core
      */
     public function post(
         DataInterface $data,
-        array        $headers = [],
-        array        $params  = [],
+                array $headers = [],
+                array $params  = [],
     ) : Response
     {
         $obj = $data->render( required: true );
-        $this->uri .= "{$obj->range}/available-ips/";
+        $this->uri .= "$obj->range/available-ips/";
         return $this->http->post(
             uri: $this->uri,
             body: $obj,

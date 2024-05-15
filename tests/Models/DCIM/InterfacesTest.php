@@ -143,7 +143,7 @@ final class InterfacesTest extends testCore
         $d->set( 'name', 'PHPUnit_Interface-Put' );
         $d->set( 'device', self::$device->id );
         $d->set( 'type', 'ieee802.11ac' );
-        $result = $o->put( data: $d, id: $id, );
+        $result = $o->put( data: $d, id: $id );
         
         $this->assertIsObject( $result );
         $this->assertObjectHasProperty( 'status',  $result );

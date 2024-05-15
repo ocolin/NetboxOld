@@ -9,7 +9,6 @@ use Cruzio\lib\Netbox\Models\ModelsInterface;
 use Cruzio\lib\Netbox\Params\ParamsInterface;
 use Exception;
 use stdClass;
-use function PHPUnit\Framework\stringStartsWith;
 
 class Controllers_Core
 {
@@ -72,7 +71,7 @@ class Controllers_Core
      */
     public function options() : object|array|null
     {
-        return $this->model->options([])->body;
+        return $this->model->options()->body;
     }
 
 

@@ -13,7 +13,7 @@ trait Duplex
         $allowed = [ 'half', 'full', 'auto' ];
         if( !in_array( $input, $allowed )) {
             $combine = implode( ',', $allowed );
-            return "Duplex '{$input}' needs to be of: {$combine}.";
+            return "Duplex '$input' needs to be of: $combine.";
         }
 
         return true;

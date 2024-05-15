@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\PoeMode;
 use PHPUnit\Framework\TestCase;
 
 final class PoeModeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\PoeMode;
+    use PoeMode;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

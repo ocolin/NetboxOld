@@ -5,7 +5,7 @@ declare( strict_types = 1 );
 namespace Cruzio\lib\Netbox\Params\IPAM;
 
 use Cruzio\lib\Netbox\Params\Params_Core;
-use \Cruzio\lib\Netbox\Params\ParamsInterface;
+use Cruzio\lib\Netbox\Params\ParamsInterface;
 
 class Vlans extends Params_Core implements ParamsInterface
 {

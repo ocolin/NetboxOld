@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\DateTime;
 use PHPUnit\Framework\TestCase;
 
 final class DateTimeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\DateTime;
+    use DateTime;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

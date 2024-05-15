@@ -13,7 +13,7 @@ trait IpRangeStatus
         $allowed = [ 'active', 'reserved', 'deprecated' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "RangeStatus '{$input}' must be of type: {$combined}.";
+            return "RangeStatus '$input' must be of type: $combined.";
         }
 
         return true;

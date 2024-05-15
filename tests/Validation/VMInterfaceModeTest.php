@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\VMInterfaceMode;
 use PHPUnit\Framework\TestCase;
 
 final class VMInterfaceModeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\VMInterfaceMode;
+    use VMInterfaceMode;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

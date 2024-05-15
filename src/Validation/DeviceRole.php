@@ -12,7 +12,7 @@ trait DeviceRole
     {
         $allowed = [ 'parent','child' ];
         if(!in_array( $input, $allowed)) {
-            return "SubRole '{$input}' must be either parent of child.";
+            return "SubRole '$input' must be either parent of child.";
         }
 
         return true;

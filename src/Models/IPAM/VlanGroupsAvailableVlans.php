@@ -23,19 +23,19 @@ class VlanGroupsAvailableVlans extends IPAM_Core implements ModelsInterface
 ---------------------------------------------------------------------------- */
 
     /**
-     * @param integer $id
+     * @param int|null $id
      * @param ParamsInterface|null $params
      * @param array<string, string> $headers HTML request headers
      * @return Response
      * @throws GuzzleException
      */
     public function get(
-        int             $id = null,
+                   ?int $id = null,
         ParamsInterface $params = null,
-        array           $headers = []
+                  array $headers = []
     ) : Response
     {
-        $this->uri .= "{$id}/available-vlans/";
+        $this->uri .= "$id/available-vlans/";
         $params = $params === null ? [] : $params->render();
 
         return $this->http->get( 

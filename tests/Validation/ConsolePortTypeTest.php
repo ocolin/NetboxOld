@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\ConsolePortType;
 use PHPUnit\Framework\TestCase;
 
 final class ConsolePortTypeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\ConsolePortType;
+    use ConsolePortType;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

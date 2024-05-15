@@ -13,7 +13,7 @@ trait PoeMode
         $allowed = [ 'pd', 'pse' ];
         if( !in_array( $input, $allowed )) {
             $combine = implode( ',', $allowed );
-            return "PoeMode '{$input}' needs to be of: {$combine}.";
+            return "PoeMode '$input' needs to be of: $combine.";
         }
 
         return true;

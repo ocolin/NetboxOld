@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\Airflow;
 use PHPUnit\Framework\TestCase;
 
 final class AirflowTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\Airflow;
+    use Airflow;
 
 
 /* GOOD TEST

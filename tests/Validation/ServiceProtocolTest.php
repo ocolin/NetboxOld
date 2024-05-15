@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\ServiceProtocol;
 use PHPUnit\Framework\TestCase;
 
 final class ServiceProtocolTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\ServiceProtocol;
+    use ServiceProtocol;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

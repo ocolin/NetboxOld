@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\ConsoleSpeed;
 use PHPUnit\Framework\TestCase;
 
 final class ConsoleSpeedTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\ConsoleSpeed;
+    use ConsoleSpeed;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

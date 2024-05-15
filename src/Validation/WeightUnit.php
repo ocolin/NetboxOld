@@ -14,7 +14,7 @@ trait WeightUnit
 
         if( !in_array( $input, $allowed )) {
             $choices = implode( ',', $allowed );
-            return "Weight unit '{$input}' must be one of: {$choices}";
+            return "Weight unit '$input' must be one of: $choices";
         }
 
         return true;

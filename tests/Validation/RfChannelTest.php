@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\RfChannel;
 use PHPUnit\Framework\TestCase;
 
 final class RfChannelTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\RfChannel;
+    use RfChannel;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

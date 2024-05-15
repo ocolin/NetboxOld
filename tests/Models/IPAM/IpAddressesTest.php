@@ -51,7 +51,7 @@ final class IpAddressesTest extends testCore
         $rand = rand( 2, 254 );
         $o = new IpAddresses();
         $d = new Data();
-        $d->set( 'address', "192.168.44.{$rand}/24" );
+        $d->set( 'address', "192.168.44.$rand/24" );
         $d->set( 'description', 'PHPUnit_IP-Post-' . $rand );
         $result = $o->post( data: $d );
 
@@ -134,7 +134,7 @@ final class IpAddressesTest extends testCore
         $rand = rand( 2, 254 );
         $o = new IpAddresses();
         $d = new Data();
-        $d->set( 'address', "192.168.44.{$rand}/24" );
+        $d->set( 'address', "192.168.44.$rand/24" );
         $d->set( 'description', 'PHPUnit_IP-Put-' . $rand );
         $result = $o->put( data: $d, id: $id );
         

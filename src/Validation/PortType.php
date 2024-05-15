@@ -61,7 +61,7 @@ trait PortType
         ];
 
         if( !in_array( $input, $allowed )) {
-            return "'{$input}' is not a valid type.";
+            return "'$input' is not a valid type.";
         }
 
         return true;

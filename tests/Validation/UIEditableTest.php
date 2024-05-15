@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\UIEditable;
 use PHPUnit\Framework\TestCase;
 
 final class UIEditableTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\UIEditable;
+    use UIEditable;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

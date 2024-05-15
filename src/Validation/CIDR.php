@@ -10,7 +10,7 @@ trait CIDR
 
     public static function validate_CIDR( string $input ) : true|string
     {
-        $error = "'{$input}' is not a valid CIDR.";
+        $error = "'$input' is not a valid CIDR.";
         if( !str_contains( $input, '/' )) { return $error; }
         $allowed_netmask = [
             '32','31','30','29','28','27','26','25','24','23','22','21','20',

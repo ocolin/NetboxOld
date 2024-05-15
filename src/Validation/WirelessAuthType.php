@@ -13,7 +13,7 @@ trait WirelessAuthType
         $allowed = [ 'open', 'wep', 'wpa-personal', 'wpa-enterprise' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "WirelessAuthType '{$input}' should be in: {$combined}";
+            return "WirelessAuthType '$input' should be in: $combined";
         }
 
         return true;

@@ -127,7 +127,7 @@ class Aggregates extends Data_Core implements DataInterface
   "tags": [
     {
       "name": "string",
-      "slug": "LMAvtQtytlcF1NmCSLLEzY-md47BEC-NYucd1uyCAj",
+      "slug": "bubba",
       "color": "84cc2a"
     }
   ],

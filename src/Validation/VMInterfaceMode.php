@@ -20,7 +20,7 @@ trait VMInterfaceMode
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "VMStatus '{$input}' Needs to be of type: {$combined}.";
+            return "VMStatus '$input' Needs to be of type: $combined.";
         }
 
         return true;

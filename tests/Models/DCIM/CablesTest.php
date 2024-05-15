@@ -6,8 +6,9 @@ namespace Tests\Models\DCIM;
 
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
+use stdClass;
 use Tests\Models\testCore;
-use Cruzio\lib\Netbox\Models\DCIM\Cables;;
+use Cruzio\lib\Netbox\Models\DCIM\Cables;
 use Cruzio\lib\Netbox\Data\DCIM\Cables AS Data;
 use Cruzio\lib\Netbox\Types\TerminationType;
 use PHPUnit\Framework\Attributes\Depends;
@@ -62,10 +63,10 @@ final class CablesTest extends testCore
     {
         $o = new Cables();
         $d = new Data();
-        $testA = new \stdClass();
+        $testA = new stdClass();
         $testA->object_type = 'dcim.interface';
         $testA->object_id = self::$deviceA->id;
-        $testB = new \stdClass();
+        $testB = new stdClass();
         $testB->object_type = 'dcim.interface';
         $testB->object_id = self::$deviceB->id;
         $d->set( 'a_terminations', [ $testA ] );

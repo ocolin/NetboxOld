@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\PowerPortType;
 use PHPUnit\Framework\TestCase;
 
 final class PowerPortTypeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\PowerPortType;
+    use PowerPortType;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

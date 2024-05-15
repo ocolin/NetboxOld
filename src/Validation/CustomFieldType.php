@@ -26,7 +26,7 @@ trait CustomFieldType
          ];
          if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "CustomFieldType '{$input}' Needs to be of type: {$combined}.";
+            return "CustomFieldType '$input' Needs to be of type: $combined.";
          }
 
         return true;

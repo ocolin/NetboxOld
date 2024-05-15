@@ -18,7 +18,7 @@ class Response
     public string $status_message;
 
     /**
-     * @var array<string, mixed> $headers HTTP Respone headers
+     * @var array<string, mixed> $headers HTTP Response headers
      */
 
     public array $headers = [];

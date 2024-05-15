@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\ContactPriority;
 use PHPUnit\Framework\TestCase;
 
 final class ContactPriorityTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\ContactPriority;
+    use ContactPriority;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

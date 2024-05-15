@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\FilterLogic;
 use PHPUnit\Framework\TestCase;
 
 final class FilterLogicTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\FilterLogic;
+    use FilterLogic;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

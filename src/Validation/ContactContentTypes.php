@@ -28,7 +28,7 @@ trait ContactContentTypes
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ', ', $allowed );
-            return "ContactPriority '{$input}' must be of type: {$combined}.";
+            return "ContactPriority '$input' must be of type: $combined.";
         }
 
         return true;

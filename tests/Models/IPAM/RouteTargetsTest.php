@@ -4,6 +4,7 @@ declare( strict_types = 1 );
 
 namespace Tests\Models\IPAM;
 
+use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 use PHPUnit\Framework\Attributes\Depends;
 use Tests\Models\testCore;
@@ -43,7 +44,7 @@ final class RouteTargetsTest extends testCore
 
     /**
      * @throws GuzzleException
-     * @throws \Exception
+     * @throws Exception
      */
     public function testPostDetail() : int
     {
@@ -122,7 +123,7 @@ final class RouteTargetsTest extends testCore
 
     /**
      * @throws GuzzleException
-     * @throws \Exception
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]
@@ -150,7 +151,7 @@ final class RouteTargetsTest extends testCore
 
     /**
      * @throws GuzzleException
-     * @throws \Exception
+     * @throws Exception
      */
 
     #[Depends('testPostDetail')]

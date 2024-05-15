@@ -15,7 +15,7 @@ trait LengthUnit
         ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "LengthUnit '{$input}' must be of: {$combined}";
+            return "LengthUnit '$input' must be of: $combined";
         }
 
         return true;

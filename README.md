@@ -163,7 +163,7 @@ With these calls, the custom fields parameter is an array or object called 'cust
 - Circuits
   - Circuits
   - CircuitTerminations
-  - CircuitTerminasionsPaths
+  - CircuitTerminationsPaths
   - CircuitTypes
   - ProviderNetworks
   - Providers

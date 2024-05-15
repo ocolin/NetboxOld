@@ -126,6 +126,11 @@ trait InterfaceType
             'extreme-summitstack-512',
             'other'
         ];
+
+        if( !in_array( $input, $allowed )) {
+            return "Interface '$input' not valid.";
+        }
+
         return true;
     }
 }

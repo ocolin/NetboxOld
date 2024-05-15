@@ -48,7 +48,7 @@ abstract class TestIPAM extends TestCase
         $rand = rand( 2, 254 );
         $o = new Controllers\IPAM\IpAddresses();
         $d = new Data\IPAM\IpAddresses();
-        $d->set( 'address', "192.168.44.{$rand}/24" );
+        $d->set( 'address', "192.168.44.$rand/24" );
         $d->set( 'description', 'PHPUnit_IP-' . $rand );
 
         return $o->create( data: $d );

@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\ContactContentTypes;
 use PHPUnit\Framework\TestCase;
 
 final class ContactContentTypesTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\ContactContentTypes;
+    use ContactContentTypes;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

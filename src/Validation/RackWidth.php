@@ -14,7 +14,7 @@ trait RackWidth
 
         if(!in_array( $input, $allowed )) {
             $choices = implode( ',', $allowed );
-            return "Wisth '{$input}' must be one of: {$choices}";
+            return "Wisth '$input' must be one of: $choices";
         }
 
         return true;

@@ -57,11 +57,6 @@ class ExportTemplates extends Data_Core implements DataInterface
      */
     protected bool $as_attachment;
 
-    /**
-     * @var int $data_source
-     * ID of data source class
-     */
-
     protected string $data_synced; // Datedime
 
 

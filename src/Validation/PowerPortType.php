@@ -113,7 +113,7 @@ trait PowerPortType
             'other'
         ];
         if( !in_array( $input, $allowed )) {
-            return "PowerportType '{$input}' is not a valid Port Port Type.";
+            return "PowerportType '$input' is not a valid Port Port Type.";
         }
 
         return true;

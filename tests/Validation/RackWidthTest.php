@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\RackWidth;
 use PHPUnit\Framework\TestCase;
 
 final class RackWidthTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\RackWidth;
+    use RackWidth;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

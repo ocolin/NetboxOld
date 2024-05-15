@@ -13,7 +13,7 @@ trait DeviceFace
         $allowed = [ 'front', 'rear' ];
         if( !in_array( $input, $allowed )) {
             $combine = implode( ',', $allowed );
-            return "Face '{$input}' Must be: {$combine}";
+            return "Face '$input' Must be: $combine";
         }
 
         return true;

@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\CableType;
 use PHPUnit\Framework\TestCase;
 
 final class CableTypeTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\CableType;
+    use CableType;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */

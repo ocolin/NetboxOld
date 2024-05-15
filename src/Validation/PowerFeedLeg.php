@@ -13,7 +13,7 @@ trait PowerFeedLeg
         $allowed = [ 'A', 'B', 'C' ];
         if( !in_array( $input, $allowed )) {
             $combined = implode( ',', $allowed );
-            return "FeedLeg '{$input}' must be of {$combined}.";
+            return "FeedLeg '$input' must be of $combined.";
         }
 
         return true;

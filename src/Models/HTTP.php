@@ -8,8 +8,8 @@ use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Query;
-use \Psr\Http\Message\ResponseInterface;
-use \Ocolin\Env\EasyEnv;
+use Psr\Http\Message\ResponseInterface;
+use Ocolin\Env\EasyEnv;
 
 class HTTP
 {
@@ -19,7 +19,7 @@ class HTTP
      * @var array<string, string>
      */
 
-    private array $headers = [];
+    private array $headers;
 
     /**
      * @var string $base_uri Beginning URL of request
@@ -46,7 +46,7 @@ class HTTP
     )
     {
         if( empty( $_ENV['NETBOX_BASE_URI']) or empty( $_ENV['NETBOX_TOKEN'] )) {
-            EasyEnv::loadEnv(path: __DIR__ . '/../../.env', silent: true, append: true);
+            EasyEnv::loadEnv(path: __DIR__ . '/../../.env' );
         }
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
@@ -260,7 +260,7 @@ class HTTP
 
 /**
  * Generate a default set of headers so none are needed for most queries. Includes
- *  the authentication token which can be overiden with each call if specified.
+ *  the authentication token which can be overridden with each call if specified.
  *
  *  @return array<string, string> Array of HTTP request headers
 */

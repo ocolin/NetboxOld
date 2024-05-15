@@ -4,11 +4,12 @@ declare( strict_types = 1 );
 
 namespace Tests\Validation;
 
+use Cruzio\lib\Netbox\Validation\IpRangeStatus;
 use PHPUnit\Framework\TestCase;
 
 final class IpRangeStatusTest extends TestCase
 {
-    use \Cruzio\lib\Netbox\Validation\IpRangeStatus;
+    use IpRangeStatus;
 
 /* GOOD TEST
 ----------------------------------------------------------------------------- */
