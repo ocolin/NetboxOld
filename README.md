@@ -34,7 +34,7 @@ Get details on the data provided by a module, what fields are required, the form
 
 #### Example:
 
-```
+```php
   $output = Netbox::options(
     module: 'IPAM\IpAddresses'
   );
@@ -51,10 +51,14 @@ Create a new object
     - DataInterface - a data object using the Data classes
 
 #### Example:
+
+```php
     $output = Netbox::create(
         module: 'DCIM\Sites',
         data: [ 'name' => 'mySite, 'slug' => 'mySlug' ]
     );
+```
+
 
 ### GET:
 
@@ -68,16 +72,22 @@ Get existing objects
   - **id** - Optional id value. Without this, gets every object that matches and with the id, it gets only object with that id
 
 #### Example 1 - Get all sites:
+```php
     $output = Netbox::get(
         module: 'DCIM\Sites',
           data: [ 'id__gt' => 10 ]
     );
+```
+
 
 #### Example 2 - Get site by ID:
+```php
     $output = Netbox::get(
         module: 'DCIM\Sites',
             id: 1234
     );
+```
+
 
 ### UPDATE:
 
@@ -91,11 +101,14 @@ Update values in an existing object
    - **id** - Optional id value. Without this, updates every object that matches and with the id, it updates only object with that id
 
 ### Example:
+```php
     $output = Netbox::update(
         module: 'DCIM\Sites',
         data: [ 'name' => 'newName' ],
         id: 1234
     );
+```
+
 
 ### REPLACE:
 
@@ -109,11 +122,14 @@ Replace an existing object. All required field needed.
   - **id** - Optional id value. Without this, updates every object that matches and with the id, it updates only object with that id
 
 #### Example:
+```php
     $output = Netbox::replace(
         module: 'DCIM\Sites',
         data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
         id: 1234
     );
+```
+
 
 ### DELETE:
 
@@ -127,28 +143,32 @@ Delete an existing object
    - **id** - ID of existing object to delete
 
 #### Example:
+```php
     $output = Netbox::delete(
         module: 'DCIM\Sites',
         id: 1234
     );
+```
+
 
 ## CUSTOM FIELDS
 
 ### GET Method
 
 custom fields in GET requests must be appended with 'cf_' to the parameter name. Example:
-
+```php
     $output = Netbox::get(
         module: 'DCIM\Sites',
         data: [
           'cf_pop_id' => 1234
         ]
     );
+```
 
 ### Create, Replace, Update methods
 
 With these calls, the custom fields parameter is an array or object called 'custom_fields' containing a list of parameters and value.
-
+```php
     $output = Netbox::get(
         module: 'DCIM\Sites',
         data: [
@@ -157,6 +177,7 @@ With these calls, the custom fields parameter is an array or object called 'cust
           ]
         ]
     );
+```
 
 ## STRUCTURE
 
