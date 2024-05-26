@@ -55,7 +55,7 @@ Create a new object
 ```php
     $output = Netbox::create(
         module: 'DCIM\Sites',
-        data: [ 'name' => 'mySite, 'slug' => 'mySlug' ]
+          data: [ 'name' => 'mySite, 'slug' => 'mySlug' ]
     );
 ```
 
@@ -104,8 +104,8 @@ Update values in an existing object
 ```php
     $output = Netbox::update(
         module: 'DCIM\Sites',
-        data: [ 'name' => 'newName' ],
-        id: 1234
+          data: [ 'name' => 'newName' ],
+            id: 1234
     );
 ```
 
@@ -125,8 +125,8 @@ Replace an existing object. All required field needed.
 ```php
     $output = Netbox::replace(
         module: 'DCIM\Sites',
-        data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
-        id: 1234
+          data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
+            id: 1234
     );
 ```
 
@@ -146,7 +146,7 @@ Delete an existing object
 ```php
     $output = Netbox::delete(
         module: 'DCIM\Sites',
-        id: 1234
+            id: 1234
     );
 ```
 
@@ -159,7 +159,7 @@ custom fields in GET requests must be appended with 'cf_' to the parameter name.
 ```php
     $output = Netbox::get(
         module: 'DCIM\Sites',
-        data: [
+          data: [
           'cf_pop_id' => 1234
         ]
     );
@@ -171,7 +171,7 @@ With these calls, the custom fields parameter is an array or object called 'cust
 ```php
     $output = Netbox::get(
         module: 'DCIM\Sites',
-        data: [
+          data: [
           'custom_fields' => [
               'pop_id' => 1234
           ]
