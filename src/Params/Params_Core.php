@@ -18,8 +18,8 @@ class Params_Core
 /* GETTER
 ----------------------------------------------------------------------------- */
     public function get( string $prop ) : mixed {
-        if( property_exists( $this, $prop )) {
-            $rp = new ReflectionProperty( $this, $prop );
+        if( property_exists( $this, property: $prop )) {
+            $rp = new ReflectionProperty( class: $this, property: $prop );
             if( !$rp->isPrivate()) {
                 return $this->$prop;
             }
@@ -40,11 +40,11 @@ class Params_Core
 
     public function set( string $param, string|int|float|array $value ) : void
     {
-        if( str_starts_with( $param, 'cf_' )) {
+        if( str_starts_with( haystack: $param, needle: 'cf_' )) {
             $this->$param = $value;
         }
-        if( property_exists( $this, $param )) {
-            $rp = new ReflectionProperty( $this, $param );
+        if( property_exists( $this, property: $param )) {
+            $rp = new ReflectionProperty( class: $this, property: $param );
             if ( !$rp->isPrivate() ) {
                 $this->$param = $value;
             }
@@ -64,11 +64,11 @@ class Params_Core
         $output = [];
         $reflect = new ReflectionClass( $this );
         $props   = $reflect->getProperties( filter: ReflectionProperty::IS_PROTECTED );
-        $all_props = get_object_vars( $this );
+        $all_props = get_object_vars( object: $this );
 
         foreach( $props as $prop )
         {
-            if( $prop->isInitialized( $this )) {
+            if( $prop->isInitialized( object: $this )) {
                 $name = $prop->getName();
                 $output[$name] = $this->$name;
             }

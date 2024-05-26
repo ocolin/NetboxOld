@@ -22,19 +22,22 @@ class Data_Core
      */
     public function render( bool $required = false ) : object
     {
-        $reflect = new ReflectionClass( $this );
-        $props   = $reflect->getProperties( ReflectionProperty::IS_PROTECTED );
+        $reflect = new ReflectionClass( objectOrClass: $this );
+        $props   = $reflect->getProperties( filter: ReflectionProperty::IS_PROTECTED );
         $obj = new stdClass();
         foreach( $props as $prop )
         {
             $name = $prop->getName();
             
-            if( $prop->isInitialized( $this )) {
+            if( $prop->isInitialized( object: $this )) {
                 $obj->$name = $this->$name;
             }
             
-            elseif( $required === true AND in_array( $name, static::required() )) {
-                throw new Exception("Property '$name' is required");
+            elseif(
+                $required === true AND
+                in_array( needle: $name, haystack: static::required())
+            ) {
+                throw new Exception( message:"Property '$name' is required" );
             }
         }
 
@@ -53,10 +56,10 @@ class Data_Core
      */
     public function set( string $property, int|string|float|object|array $value ) : void
     {
-        if( property_exists( $this, $property )) {
+        if( property_exists( $this, property: $property )) {
             $rp = new ReflectionProperty( $this, $property );
             if( !$rp->isPrivate() ) {
-                if( array_key_exists( $property, $this->validate())) {
+                if( array_key_exists( key: $property, array: $this->validate())) {
                     self::build_Validate( property: $property, value: $value );
                 }
                 $this->$property = $value;
@@ -79,20 +82,20 @@ class Data_Core
     protected static function build_Validate( string $property, string|int|float|object $value ) : void
     {
         $params = static::validate()[$property];
-        $val_func =  'validate_' . array_shift( $params );
-        $count = count( $params );
+        $val_func =  'validate_' . array_shift( array: $params );
+        $count = count( value: $params );
 
         switch( $count ) {
             case 0:
                 $result = static::$val_func( $value );
                 break;
             case 1:
-                $param1 = array_shift( $params );
+                $param1 = array_shift(array: $params );
                 $result = static::$val_func( $value, $param1 );
                 break;
             case 2:
-                $param1 = array_shift( $params );
-                $param2 = array_shift( $params );
+                $param1 = array_shift( array: $params );
+                $param2 = array_shift( array: $params );
                 $result = static::$val_func( $value, $param1, $param2 );
                 break;
             default:
@@ -112,8 +115,8 @@ class Data_Core
 
     public function get( string $property ) : mixed
     {
-        if( property_exists( $this, $property )) {
-            $rp = new ReflectionProperty( $this, $property );
+        if( property_exists( $this, property: $property )) {
+            $rp = new ReflectionProperty( class: $this, property: $property );
             if( !$rp->isPrivate() ) {
                 return $this->$property;
             }

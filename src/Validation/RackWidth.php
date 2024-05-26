@@ -12,9 +12,9 @@ trait RackWidth
     {
         $allowed = [ 10, 19, 21, 23 ];
 
-        if(!in_array( $input, $allowed )) {
-            $choices = implode( ',', $allowed );
-            return "Wisth '$input' must be one of: $choices";
+        if(!in_array( needle: $input, haystack: $allowed )) {
+            $choices = implode( separator: ',', array: $allowed );
+            return "Width '$input' must be one of: $choices";
         }
 
         return true;

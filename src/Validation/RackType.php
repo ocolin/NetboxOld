@@ -20,7 +20,7 @@ trait RackType
             'wall-cabinet-vertical'
         ];
 
-        if( !in_array( $input, $allowed )) {
+        if( !in_array( needle: $input, haystack: $allowed )) {
             return "Type '$input' is not a valid rack type.";
         }
 

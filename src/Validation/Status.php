@@ -17,10 +17,10 @@ trait Status
             'decommissioning',
             'retired'
         ];
-        if( in_array( $input, $allowed )) {
+        if( in_array( needle: $input, haystack: $allowed )) {
             return true;
         }
-        $statuses = implode( ',', $allowed );
+        $statuses = implode( separator: ',', array: $allowed );
 
         return "'$input' is not in statuses: $statuses";
     }

@@ -12,7 +12,7 @@ trait InterfaceMode
     {
         $allowed = [ 'access', 'tagged', 'tagged-all' ];
         if( !in_array( $input, $allowed )) {
-            $combine = implode( ',', $allowed );
+            $combine = implode( separator: ',', array: $allowed);
             return "Mode '$input' needs to be of: $combine.";
         }
 

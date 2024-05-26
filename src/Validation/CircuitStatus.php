@@ -14,7 +14,7 @@ trait CircuitStatus
             'planned', 'provisioning', 'active', 'offline', 'deprovisioning', 'decommissioned'
         ];
         if( !in_array( $input, $allowed )) {
-            $combined = implode( ',', $allowed );
+            $combined = implode( separator: ',', array: $allowed );
             return "Input must be of type $combined.";
         }
 

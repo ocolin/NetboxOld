@@ -31,11 +31,11 @@ abstract class Models_Core
  */
     public static function autoOptions( string $class, array $optionsArray ) : object
     {
-        $class = str_replace( 'Models', 'Options', $class );
+        $class = str_replace( search: 'Models', replace: 'Options', subject: $class );
         $options = new $class();
         foreach( $optionsArray as $key => $value )
         {
-            if( property_exists( $options, $key )) {
+            if( property_exists( $options, property: $key )) {
                 $options->$key = $value;
             }
         }
@@ -188,8 +188,8 @@ abstract class Models_Core
         }
 
         return $this->http->delete(
-            uri: $this->uri,
-            body: $body,
+                uri: $this->uri,
+               body: $body,
             headers: $headers
         );
     }
@@ -210,8 +210,8 @@ abstract class Models_Core
      */
 
     public function get(
-                    ?int $id = null,
-        ?ParamsInterface $params = null,
+                    ?int $id      = null,
+        ?ParamsInterface $params  = null,
                    array $headers = []
     ) : Response
     {

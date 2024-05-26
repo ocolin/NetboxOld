@@ -12,8 +12,8 @@ trait WeightUnit
     {
         $allowed = [ 'kg', 'g', 'lb', 'oz' ];
 
-        if( !in_array( $input, $allowed )) {
-            $choices = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $choices = implode( separator: ',', array: $allowed );
             return "Weight unit '$input' must be one of: $choices";
         }
 

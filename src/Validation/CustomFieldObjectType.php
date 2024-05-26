@@ -151,7 +151,7 @@ trait CustomFieldObjectType
             'wireless.wirelesslangroup',
             'wireless.wirelesslink'
          ];
-         if( !in_array( $input, $allowed )) {
+         if( !in_array( needle: $input, haystack: $allowed )) {
             return "CustomFieldObjectType '$input' is not a valid type.";
          }
 

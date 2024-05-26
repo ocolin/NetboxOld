@@ -27,7 +27,7 @@ trait ConsolePortType
             'usb-micro-ab',
             'other'
         ];
-        if( !in_array( $input, $allowed )) {
+        if( !in_array( needle: $input, haystack: $allowed )) {
             return "ConsolePort '$input' is not valid type.";
         }
 

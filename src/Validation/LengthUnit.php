@@ -13,8 +13,8 @@ trait LengthUnit
         $allowed = [
             'km', 'm', 'cm', 'mi', 'ft', 'in'
         ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "LengthUnit '$input' must be of: $combined";
         }
 

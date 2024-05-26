@@ -209,8 +209,8 @@ trait RfChannel
             '60g-26-63720-6480',
             '60g-27-65880-6480'
         ];
-        if( !in_array( $input, $allowed )) {
-            $combine = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combine = implode( separator: ',', array: $allowed);
             return "RfChannel '$input' is not  valid channel.";
         }
 

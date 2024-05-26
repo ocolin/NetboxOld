@@ -20,8 +20,8 @@ trait ConsoleSpeed
             57600,
             115200
         ];
-        if( !in_array( $input, $allowed )) {
-            $combine = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combine = implode( separator: ',', array: $allowed );
             return "Speed '$input' should be: $combine";
         }
 

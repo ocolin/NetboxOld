@@ -10,7 +10,7 @@ trait MaxString
 
     public static function validate_MaxString( string $input, int $length ): true|string
     {
-        if( strlen( $input ) > $length ) {
+        if( strlen( string: $input ) > $length ) {
             return "String cannot be more than $length characters.";
         }
 

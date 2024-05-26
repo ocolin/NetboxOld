@@ -28,7 +28,7 @@ class Controllers_Core
     {
         foreach( $array as $key => $value )
         {
-            if( property_exists( $params, $key ) OR str_starts_with( $key, 'cf_' )) {
+            if( property_exists( $params, property: $key ) OR str_starts_with( $key, 'cf_' )) {
                 $params->set( $key, $value );
             }
         }
@@ -50,9 +50,9 @@ class Controllers_Core
     {
         foreach( $array as $key => $value )
         {
-            if( property_exists( $data, $key )) {
+            if( property_exists( $data, property: $key )) {
                 // Allow array to be used for custom fields
-                if( $key === 'custom_fields') {
+                if( $key === 'custom_fields' ) {
                     $value = (object)$value;
                 }
                 $data->set( $key, $value );
@@ -86,7 +86,10 @@ class Controllers_Core
      */
     public function get( ParamsInterface|array $params = null, int $id = null ): object|array|null
     {
-        $data = gettype( $params ) === 'array' ? self::arrayToParam( $params, $this->params ) : $params;
+        $data = is_array( value: $params ) ? self::arrayToParam(
+             array: $params,
+            params: $this->params
+        ) : $params;
 
         return $this->model->get( id: $id, params: $data )->body;
     }
@@ -103,7 +106,10 @@ class Controllers_Core
     public function create( DataInterface|array $data ) : object|array|null
     {
         $output = new stdClass();
-        $data = gettype( $data ) === 'array' ? self::arrayToData( $data, $this->data ) : $data;
+        $data = is_array( value: $data ) ? self::arrayToData(
+            array: $data,
+             data: $this->data
+        ) : $data;
 
         try {
             $output = $this->model->post( data: $data )->body;
@@ -127,7 +133,7 @@ class Controllers_Core
     public function replace( DataInterface|array $data, int $id = null ) : object|array|null
     {
         $output = new stdClass();
-        $data = gettype( $data ) === 'array' ? self::arrayToData( $data, $this->data ) : $data;
+        $data = is_array( $data ) ? self::arrayToData( array: $data, data: $this->data ) : $data;
 
         try {
             $output = $this->model->put( data: $data, id: $id )->body;
@@ -151,7 +157,7 @@ class Controllers_Core
     public function update( DataInterface|array $data, int $id = null ) : object|array|null
     {
         $output = new stdClass();
-        $data = gettype( $data ) === 'array' ? self::arrayToData( $data, $this->data ) : $data;
+        $data = is_array( $data ) ? self::arrayToData( array: $data, data: $this->data ) : $data;
 
         try {
             $output = $this->model->patch( data: $data, id: $id )->body;

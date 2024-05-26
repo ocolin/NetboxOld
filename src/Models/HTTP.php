@@ -46,7 +46,7 @@ class HTTP
     )
     {
         if( empty( $_ENV['NETBOX_BASE_URI']) or empty( $_ENV['NETBOX_TOKEN'] )) {
-            EasyEnv::loadEnv(path: __DIR__ . '/../../.env' );
+            EasyEnv::loadEnv( path: __DIR__ . '/../../.env' );
         }
 
         $this->base_uri = $base_uri ?? $_ENV['NETBOX_BASE_URI'];
@@ -87,9 +87,11 @@ class HTTP
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
-            'POST', $uri, [
+             method: 'POST',
+                uri: $uri,
+            options: [
                 'headers' => $this->headers,
-                'body'    => json_encode( $body )
+                'body'    => json_encode( value: $body )
             ]
         );
 
@@ -122,9 +124,11 @@ class HTTP
         $uri = self::formatParams( params: $params, uri: $uri );
         $this->headers = array_merge( $this->headers, $headers );
         $request = $this->client->request(
-            'PUT', $uri, [
+             method: 'PUT',
+                uri: $uri,
+            options: [
                 'headers' => $this->headers,
-                'body'    => json_encode( $body )
+                'body'    => json_encode( value: $body )
             ]
         );
 
@@ -159,7 +163,7 @@ class HTTP
         $request = $this->client->request(
             'PATCH', $uri, [
                 'headers' => $this->headers,
-                'body'    => json_encode( $body )
+                'body'    => json_encode( value: $body )
             ]
         );
 
@@ -190,7 +194,9 @@ class HTTP
         $this->headers = array_merge( $this->headers, $headers );
 
         $request = $this->client->request(
-            'GET', $uri, [ 'headers' => $this->headers, 'query' => Query::build($params)]
+            method: 'GET',
+            uri: $uri,
+            options: [ 'headers' => $this->headers, 'query' => Query::build( $params )]
         );
 
         return self::returnResults( request: $request );

@@ -11,8 +11,8 @@ trait UIEditable
     public static function validate_UIEditable( string $input ) : true|string
     {
         $allowed = [ 'yes', 'no', 'hidden' ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ', ', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "UIEditable '$input' Needs to be of type: $combined.";
          }
 

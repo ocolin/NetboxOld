@@ -20,8 +20,8 @@ trait PoeType
             'passive-48v-2pair',
             'passive-48v-4pair'
          ];
-        if( !in_array( $input, $allowed )) {
-            $combine = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combine = implode( separator: ',', array: $allowed );
             return "PoeMode '$input' needs to be of: $combine.";
         }
 

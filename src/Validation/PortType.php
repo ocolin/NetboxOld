@@ -60,7 +60,7 @@ trait PortType
             'other'
         ];
 
-        if( !in_array( $input, $allowed )) {
+        if( !in_array( needle: $input, haystack: $allowed )) {
             return "'$input' is not a valid type.";
         }
 

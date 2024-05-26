@@ -66,7 +66,7 @@ class Netbox
     @example - delete a site:
         $module = Netbox::delete(
             module: 'DCIM\Sites',
-            id: 1234
+                id: 1234
         );
 */
 
@@ -99,7 +99,7 @@ class Netbox
   @example 2 - Get a site by id:
       $module = Netbox::get(
             module: 'DCIM\Sites',
-            id: 1234
+                id: 1234
       );
  *
  * @param string $module namespace and name of module to load
@@ -137,8 +137,8 @@ class Netbox
 * @example - replace a site:
         * $module = Netbox::replace(
            * module: 'DCIM\Sites',
-           * data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
-           * id: 1234
+           *   data: [ 'name' => 'newName', 'slug' => 'newSlug' ],
+           *     id: 1234
    );
   *
   * @param string $module namespace and name of module to load
@@ -177,8 +177,8 @@ arguments
 @example - update a site:
        $module = Netbox::update(
           module: 'DCIM\Sites',
-          data: [ 'name' => 'newName' ],
-          id: 1234
+            data: [ 'name' => 'newName' ],
+              id: 1234
         );
  *
  * @param string $module Namespace and name of module to load

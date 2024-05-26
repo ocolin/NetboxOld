@@ -13,8 +13,8 @@ trait IpStatus
         $allowed = [
             'active', 'reserved', 'deprecated', 'dhcp', 'slaac'
         ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "IpStatus '$input' must be of type: $combined.";
         }
 

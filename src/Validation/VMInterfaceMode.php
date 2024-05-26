@@ -18,8 +18,8 @@ trait VMInterfaceMode
             'failed',
             'decommissioning',
         ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ', ', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "VMStatus '$input' Needs to be of type: $combined.";
         }
 

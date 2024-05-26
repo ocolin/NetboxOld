@@ -21,7 +21,7 @@ trait TerminationType
             'dcim.powerport',
             'dcim.rearport'
         ];
-        if( !in_array( $input, $allowed )) {
+        if( !in_array( needle: $input, haystack: $allowed )) {
             return "TerminationType '$input' is not valid.";
         }
 

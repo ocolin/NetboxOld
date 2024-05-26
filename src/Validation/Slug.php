@@ -10,11 +10,11 @@ trait Slug
 
     public static function validate_Slug( string $input, int $max = null ) : true|string
     {
-        if( $max !== null AND strlen( $input ) > $max ) {
+        if( $max !== null AND strlen( string: $input ) > $max ) {
             return "Length of slug must not be over $max characters.";
         }
 
-        return preg_match("#^[a-z0-9_-]+$#i", $input ) 
+        return preg_match( pattern: "#^[a-z0-9_-]+$#i", subject: $input )
             ? true 
             : "'$input' is not a valid slug.";
     }

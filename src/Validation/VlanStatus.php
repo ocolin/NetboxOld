@@ -11,8 +11,8 @@ trait VlanStatus
     public static function validate_VlanStatus( string $input ) : true|string
     {
         $allowed = [ 'active', 'reserved', 'deprecated' ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ', ', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "VlanStatus '$input' Needs to be of type: $combined.";
         }
 

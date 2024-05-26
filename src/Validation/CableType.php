@@ -35,7 +35,7 @@ trait CableType
             'aoc',
             'power'
         ];
-        if( !in_array( $input, $allowed )) {
+        if( !in_array( needle: $input, haystack: $allowed )) {
             return "CableType '$input' is not valid cable type.";
         }
 

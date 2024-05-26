@@ -26,8 +26,8 @@ trait ContactContentTypes
             'virtualization.clusterGroup',
             'virtualization.virtualMachine'
         ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ', ', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ', ', array: $allowed );
             return "ContactPriority '$input' must be of type: $combined.";
         }
 

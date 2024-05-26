@@ -11,8 +11,8 @@ trait WirelessAuthType
     public static function validate_WirelessAuthType( string $input ) : true|string
     {
         $allowed = [ 'open', 'wep', 'wpa-personal', 'wpa-enterprise' ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "WirelessAuthType '$input' should be in: $combined";
         }
 

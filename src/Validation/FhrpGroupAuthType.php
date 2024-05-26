@@ -11,8 +11,8 @@ trait FhrpGroupAuthType
     public static function validate_FhrpGroupAuthType( string $input ) : true|string
     {
          $allowed = [ 'plaintext', 'md5' ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "hrpGroupProtocol '$input' Needs to be type: $combined.";
         }
 

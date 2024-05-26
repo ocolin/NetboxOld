@@ -112,7 +112,7 @@ trait PowerPortType
             'hardwired',
             'other'
         ];
-        if( !in_array( $input, $allowed )) {
+        if( !in_array( needle: $input, haystack: $allowed )) {
             return "PowerportType '$input' is not a valid Port Port Type.";
         }
 

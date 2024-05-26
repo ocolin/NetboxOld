@@ -21,7 +21,7 @@ class CableStatus
 
     public function __construct( string $value )
     {
-        if( !in_array( $value, $this->allowed_values )) {
+        if( !in_array( needle: $value, haystack: $this->allowed_values )) {
             // THROW EXCEPTION
         }
 

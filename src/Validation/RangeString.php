@@ -10,7 +10,7 @@ trait RangeString
 
     public static function validate_RangeString( string $input, int $min, int $max ): true|string
     {
-        if( strlen( $input ) < $min OR strlen( $input ) > $max ) {
+        if( strlen( string: $input ) < $min OR strlen( string: $input ) > $max ) {
             return "String must be between $min and $max characters.";
         }
 

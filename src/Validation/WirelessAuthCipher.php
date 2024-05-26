@@ -11,8 +11,8 @@ trait WirelessAuthCipher
     public static function validate_WirelessAuthCipher( string $input ) : true|string
     {
         $allowed = [ 'auto', 'tkip', 'aes' ];
-        if( !in_array( $input, $allowed )) {
-            $combined = implode( ',', $allowed );
+        if( !in_array( needle: $input, haystack: $allowed )) {
+            $combined = implode( separator: ',', array: $allowed );
             return "WirelessAuthCipher '$input' should be in: $combined";
         }
 
