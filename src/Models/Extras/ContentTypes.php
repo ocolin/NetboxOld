@@ -11,7 +11,7 @@ use Cruzio\lib\Netbox\Models\ModelsInterface;
 class ContentTypes extends Models_Core implements ModelsInterface
 {
 
-    public function __construct( HTTP $http = null )
+    public function __construct( ?HTTP $http = null )
     {
         $this->uri = 'extras/content-types/';
         parent::__construct( http: $http );

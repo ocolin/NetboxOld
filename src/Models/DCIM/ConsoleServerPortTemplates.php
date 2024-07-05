@@ -10,7 +10,7 @@ use Cruzio\lib\Netbox\Models\ModelsInterface;
 class ConsoleServerPortTemplates extends DCIM_Core  implements ModelsInterface
 {
     
-    public function __construct( HTTP $http = null )
+    public function __construct( ?HTTP $http = null )
     {
         parent::__construct( http: $http );
         $this->uri .= 'console-server-port-templates/';

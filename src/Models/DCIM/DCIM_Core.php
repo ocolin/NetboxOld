@@ -10,7 +10,7 @@ use Cruzio\lib\Netbox\Models\ModelsInterface;
 
 abstract class DCIM_Core extends Models_Core  implements ModelsInterface
 {
-    public function __construct( HTTP $http = null )
+    public function __construct( ?HTTP $http = null )
     {
         $this->uri = 'dcim/';
         $this->http = $http ?? new HTTP();

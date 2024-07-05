@@ -9,7 +9,7 @@ use Cruzio\lib\Netbox\Models\ModelsInterface;
 
 class ConsoleServerPortsTrace extends DCIM_Core implements ModelsInterface
 {
-    public function __construct( int $id, HTTP $http = null )
+    public function __construct( int $id, ?HTTP $http = null )
     {
         parent::__construct( http: $http );
         $this->uri .= "console-server-ports/$id/trace/";

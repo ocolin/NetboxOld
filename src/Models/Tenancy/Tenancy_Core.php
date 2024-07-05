@@ -11,7 +11,7 @@ use Cruzio\lib\Netbox\Models\ModelsInterface;
 abstract class Tenancy_Core extends Models_Core implements ModelsInterface
 {
 
-    public function __construct( HTTP $http = null )
+    public function __construct( ?HTTP $http = null )
     {
         $this->uri = 'tenancy/';
         $this->http = $http ?? new HTTP();

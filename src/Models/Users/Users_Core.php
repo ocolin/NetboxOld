@@ -14,7 +14,7 @@ abstract class Users_Core extends Models_Core implements ModelsInterface
 
     protected HTTP $http;
 
-    public function __construct( HTTP $http = null )
+    public function __construct( ?HTTP $http = null )
     {
         $this->uri = 'users/';
         $this->http = $http ?? new HTTP();

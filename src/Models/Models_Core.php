@@ -16,7 +16,7 @@ abstract class Models_Core
     protected HTTP $http;
     protected string $uri = '';
 
-    public function __construct( HTTP $http = null )
+    public function __construct( ?HTTP $http = null )
     {
         $this->http = $http ?? new HTTP();
     }
